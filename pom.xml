@@ -17,7 +17,7 @@
         <assertj.version>3.4.1</assertj.version>
         <mockito.verion>2.0.2-beta</mockito.verion>
         <jsoup.version>1.8.3</jsoup.version>
-        <hibernate-core.version>5.1.0.Final</hibernate-core.version>
+        <hibernate.version>5.2.1.Final</hibernate.version>
         <mySqlConnector.version>5.1.38</mySqlConnector.version>
         <maven-javadoc-plugin>2.10.4</maven-javadoc-plugin>
         <maven-surefire-plugin>2.19.1</maven-surefire-plugin>
@@ -27,7 +27,8 @@
         <aspectj.version>1.8.9</aspectj.version>
         <derby.version>10.12.1.1</derby.version>
         <jpa.version>1.0.2</jpa.version>
-        <spring.version>4.2.5.RELEASE</spring.version>
+        <spring.version>4.3.1.RELEASE</spring.version>
+        <lombok.version>1.16.10</lombok.version>
     </properties>
 
     <build>
@@ -145,6 +146,7 @@
             <artifactId>aspectjweaver</artifactId>
             <version>${aspectj.version}</version>
         </dependency>
+
         <!--SPRING-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -156,6 +158,12 @@
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <!--DATABASE-->
         <dependency>
             <groupId>org.apache.derby</groupId>
@@ -165,8 +173,14 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>${hibernate-core.version}</version>
+            <version>${hibernate.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
         <!--UTILITY-->
         <dependency>
             <groupId>javax.persistence</groupId>
@@ -180,7 +194,12 @@
         </dependency>        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.8</version>
+            <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
         </dependency>
         <!--dependency>
             <groupId>log4j</groupId>
