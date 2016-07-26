@@ -13,7 +13,9 @@ public class AppInitializer {
         System.out.println("finished");
         DAOPlayer daoPlayer = (DAOPlayer) context.getBean("daoPlayer");
         Player player = new Player();
-        player.setName("Name");
+        player.setName("Name2");
         daoPlayer.commit(player);
+        System.out.println("commited");
+        System.out.println(daoPlayer.read(""));
     }
 }
