@@ -26,4 +26,5 @@ public class DAOPlayer {
     public void commit(Player player) {
         commitPlayer(player);
     }
+
 }

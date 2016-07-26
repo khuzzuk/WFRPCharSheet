@@ -3,14 +3,16 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="wfrpChar" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>pl.khuzzuk.wfrpchar.entities.Player</class>
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
-            <property name="javax.persistence.jdbc.url"    value="jdbc:derby:d:/Java/WFRPCharSheet/db/wfrp;create=true" />
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+            <property name="javax.persistence.jdbc.url"    value="jdbc:h2:./db/wfrp" />
             <property name="javax.persistence.jdbc.user" value="wfrp" />
             <property name="javax.persistence.jdbc.password" value="1q2w3e4r" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyTenSevenDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="show_sql" value="true"/>
-            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
+            <!--property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/-->
         </properties>
     </persistence-unit>
 </persistence>

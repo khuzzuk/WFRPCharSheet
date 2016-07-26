@@ -25,7 +25,6 @@
         <awaitility.version>1.7.0</awaitility.version>
         <jdepend-maven-plugin.version>2.0</jdepend-maven-plugin.version>
         <aspectj.version>1.8.9</aspectj.version>
-        <derby.version>10.12.1.1</derby.version>
         <jpa.version>1.0.2</jpa.version>
         <spring.version>4.3.1.RELEASE</spring.version>
         <lombok.version>1.16.10</lombok.version>
@@ -166,9 +165,9 @@
 
         <!--DATABASE-->
         <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <version>${derby.version}</version>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.192</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
