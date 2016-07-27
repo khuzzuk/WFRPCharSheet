@@ -1,6 +1,7 @@
 package pl.khuzzuk.wfrpchar.db;
 
 import lombok.NoArgsConstructor;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
@@ -55,6 +56,12 @@ public class DBInitializer {
     }
 
     private <T> void save(List<T> list, Session session) {
-        list.stream().map(session::save);
+        try {
+            for (T t : list) {
+                session.save(t);
+            }
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
     }
 }
