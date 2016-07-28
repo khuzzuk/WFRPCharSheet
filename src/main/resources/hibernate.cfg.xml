@@ -14,8 +14,13 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.connection.characterEncoding">utf8</property>
         <property name="hibernate.connection.useUnicode">true</property>
+
+        <!-- MAPPED CLASSES -->
         <mapping class="pl.khuzzuk.wfrpchar.entities.Player"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.Character"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.Currency"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.Item"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.MiscItem"/>
+
     </session-factory>
 </hibernate-configuration>

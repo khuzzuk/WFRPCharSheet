@@ -4,12 +4,12 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import javax.inject.Named;
 
 @Configuration
-@EnableTransactionManagement
+@EnableAspectJAutoProxy
 @ComponentScan({"pl.khuzzuk.wfrpchar.db"})
 public class DAOConfig {
         @Bean

@@ -5,10 +5,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
+import pl.khuzzuk.wfrpchar.db.annot.Transaction;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
+import pl.khuzzuk.wfrpchar.entities.Price;
+import pl.khuzzuk.wfrpchar.entities.items.Item;
+import pl.khuzzuk.wfrpchar.entities.items.MiscItem;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -22,27 +25,32 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Initializer
 public class DBInitializer {
-    @Inject
-    private DAOManager daoManager;
-    public void resetDatabase(){
-        Session session = daoManager.openNewSession();
-        session.beginTransaction();
+    @Transaction(close = true)
+    void resetDatabase(Session session) {
         loadCurrencies(session);
         loadCharacters(session);
-        session.getTransaction().commit();
-        session.close();
+        loadMiscItems(session);
     }
 
     private void loadCurrencies(Session session) {
-            List<Currency> currencyList = readResource("/currencies.csv").stream().map(values ->
-                    new Currency(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])))
-                    .collect(Collectors.toList());
-            save(currencyList, session);
+        save(readResource("/currencies.csv").stream().map(values ->
+                new Currency(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])))
+                .collect(Collectors.toList()), session);
     }
 
     private void loadCharacters(Session session) {
-        List<String[]> lines = readResource("/characters.csv");
-        save(readResource("/characters.csv").stream().map(s -> new Character(s[0])).collect(Collectors.toList()), session);
+        save(readResource("/characters.csv")
+                .stream()
+                .map(s -> new Character(s[0]))
+                .collect(Collectors.toList()), session);
+    }
+
+    private void loadMiscItems(Session session) {
+        save(readResource("/items.csv")
+                .stream()
+                .map(s -> new MiscItem(s[0], Float.parseFloat(s[1]),
+                        Price.parsePrice(s[2]), Item.Accessibility.forName(s[3])))
+                .collect(Collectors.toList()), session);
     }
 
     private List<String[]> readResource(String location) {

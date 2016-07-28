@@ -4,7 +4,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Constants;
+import pl.khuzzuk.wfrpchar.db.annot.Manager;
+import pl.khuzzuk.wfrpchar.db.annot.Transaction;
 import pl.khuzzuk.wfrpchar.entities.Character;
+import pl.khuzzuk.wfrpchar.entities.items.Item;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -15,18 +18,22 @@ import java.util.List;
 @Constants
 public class DAOConstants {
     @Inject
-    private DAOManager daoManager;
+    @Manager
+    private DAOManager manager;
     private Session session;
+
     @PostConstruct
-    private void setupSession(){
-        session = daoManager.openNewSession();
+    private void setupSession() {
+        session = manager.openNewSession();
     }
 
-
+    @Transaction
     public List<Character> getCharacters() {
-        session.beginTransaction();
-        List<Character> results = (List<Character>) session.createQuery("FROM Character").list();
-        session.getTransaction().commit();
-        return results;
+        return (List<Character>) session.createQuery("FROM Character").list();
+    }
+
+    @Transaction
+    public List<Item> getAllItems() {
+        return (List<Item>) session.createQuery("FROM Item").list();
     }
 }

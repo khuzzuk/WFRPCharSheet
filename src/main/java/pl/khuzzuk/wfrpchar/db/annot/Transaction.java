@@ -7,4 +7,5 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Inherited
 public @interface Transaction {
+    boolean close() default false;
 }
