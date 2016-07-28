@@ -26,7 +26,7 @@ public abstract class AbstractDeterminant {
     @NonNull
     @Getter
     @Setter
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Extension> extensions;
 
     public int getActualValue() {

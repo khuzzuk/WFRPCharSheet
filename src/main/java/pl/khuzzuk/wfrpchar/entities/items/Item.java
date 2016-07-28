@@ -1,9 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import pl.khuzzuk.wfrpchar.entities.Price;
 
 import javax.persistence.*;
@@ -13,32 +10,33 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.INTEGER)
 @DiscriminatorValue(value = "0")
 @ToString(exclude = "id")
+@NoArgsConstructor
 public abstract class Item {
     @Id
     @GeneratedValue
     @Getter
     @Setter
-    protected long id;
+    long id;
     @Getter
     @Setter
     @NonNull
-    protected String name;
+    String name;
     @Getter
     @Setter
     @NonNull
-    protected float weight;
+    float weight;
     @Getter
     @Setter
     @NonNull
     @Embedded
-    protected Price price;
+    Price price;
     @Getter
     @Setter
     @NonNull
-    protected Accessibility accessibility;
+    Accessibility accessibility;
     @Getter
     @Setter
-    private String specialFeature;
+    String specialFeature;
 
     public enum Accessibility {
         COMMON, UNCOMMON, SCARCE, RARE, EXCEPTIONAL;
