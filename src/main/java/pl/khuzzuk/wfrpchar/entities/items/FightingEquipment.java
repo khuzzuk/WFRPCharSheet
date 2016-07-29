@@ -43,16 +43,16 @@ public abstract class FightingEquipment extends Item {
             Map<LangElement, String> names;
 
     String getLangToCsv() {
-        return (names.get(LangElement.ADJECTIVE_MASC_SING) != null ? names.get(LangElement.ADJECTIVE_FEM_SING) : "") +
-                "\\|" +
+        return (names.get(LangElement.ADJECTIVE_MASC_SING) != null ? names.get(LangElement.ADJECTIVE_MASC_SING) : "") +
+                "|" +
                 (names.get(LangElement.ADJECTIVE_FEM_SING) != null ? names.get(LangElement.ADJECTIVE_FEM_SING) : "") +
-                "\\|" +
-                (names.get(LangElement.ADJECTIVE_NEUTR_SING) != null ? names.get(LangElement.ADJECTIVE_FEM_SING) : "") +
-                "\\|" +
-                (names.get(LangElement.ADIECTIVUM) != null ? names.get(LangElement.ADJECTIVE_FEM_SING) : "");
+                "|" +
+                (names.get(LangElement.ADJECTIVE_NEUTR_SING) != null ? names.get(LangElement.ADJECTIVE_NEUTR_SING) : "") +
+                "|" +
+                (names.get(LangElement.ADIECTIVUM) != null ? names.get(LangElement.ADIECTIVUM) : "");
     }
 
-    String determinatsToCsv() {
+    String determinantsToCsv(List<Determinant> determinants) {
         return determinants.stream().map(Determinant::toCSV).collect(Collectors.joining("|"));
     }
 }

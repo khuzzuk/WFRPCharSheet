@@ -3,7 +3,7 @@ package pl.khuzzuk.wfrpchar.entities.items;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import pl.khuzzuk.wfrpchar.determinants.Extension;
+import pl.khuzzuk.wfrpchar.determinants.Determinant;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -21,10 +21,17 @@ public class BastardWeaponType extends WhiteWeaponType {
     @Getter
     @Setter
     @OneToMany
-    List<Extension> oneHandedExtension;
+    List<Determinant> oneHandedDeterminants;
+
+    public BastardWeaponType() {
+        placement = Placement.BASTARD;
+    }
 
     @Override
     public String toCsv() {
-        return null;
+        StringBuilder builder = new StringBuilder(super.toCsv());
+        builder.append(";").append(oneHandedStrength);
+        builder.append(";").append(determinantsToCsv(oneHandedDeterminants));
+        return builder.toString();
     }
 }

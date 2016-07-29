@@ -11,22 +11,6 @@ public class OneHandedWeaponType extends WhiteWeaponType {
     }
 
     @Override
-    public String toCsv() {
-        getLangToCsv();
-        return name + ";" +
-                weight + ";" +
-                price.getGold() + "\\|" + price.getSilver() + "\\|" + price.getLead() + ";" +
-                accessibility + ";" +
-                specialFeature + ";" +
-                strength + ";" +
-                type + ";" +
-                placement + ";" +
-                getLangToCsv() + ";"
-
-                ;
-    }
-
-    @Override
     public String toString() {
         return "OneHandedWeaponType{" +
                 "name: " + name + ", weight: " + weight + ", " + price + ", accessibility: " + accessibility +

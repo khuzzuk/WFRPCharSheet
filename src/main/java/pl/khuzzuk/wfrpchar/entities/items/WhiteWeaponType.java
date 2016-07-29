@@ -22,4 +22,22 @@ public abstract class WhiteWeaponType extends WeaponType {
     @Getter
     @Setter
     int rolls;
+    @Override
+    public String toCsv() {
+        getLangToCsv();
+        return name + ";" +
+                weight + ";" +
+                price.getGold() + "|" + price.getSilver() + "|" + price.getLead() + ";" +
+                accessibility + ";" +
+                specialFeature + ";" +
+                strength + ";" +
+                type + ";" +
+                placement + ";" +
+                getLangToCsv() + ";" +
+                determinantsToCsv(determinants) + ";" +
+                typeName + ";" +
+                dices + ";" +
+                rolls
+                ;
+    }
 }

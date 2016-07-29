@@ -1,6 +1,5 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
@@ -11,10 +10,14 @@ import javax.inject.Inject;
 import java.util.Arrays;
 
 @Component
-@NoArgsConstructor
 public class WeaponParser {
-    @Inject
     private DeterminantFactory determinantFactory;
+
+    @Inject
+    public WeaponParser(DeterminantFactory determinantFactory) {
+        this.determinantFactory = determinantFactory;
+    }
+
     public FightingEquipment parseEquipment(String[] columns) {
         EquipmentType type = EquipmentType.valueOf(columns[6]);
         if (type == EquipmentType.WEAPON) {
@@ -27,13 +30,18 @@ public class WeaponParser {
     private WeaponType parseWeapon(String[] columns) {
         Placement placement = Placement.valueOf(columns[7]);
         if (placement == Placement.ONE_HAND) {
-            return parseOneHandedWeaponType(columns);
+            return fillWhiteWeaponsVariables(new OneHandedWeaponType(), columns);
+        } else if (placement == Placement.TWO_HANDS) {
+            return fillWhiteWeaponsVariables(new TwoHandedWeaponType(), columns);
+        } else if (placement == Placement.BASTARD){
+            BastardWeaponType bastardWeaponType =
+                    (BastardWeaponType) fillWhiteWeaponsVariables(new BastardWeaponType(), columns);
+            return addBastardFields(bastardWeaponType, columns);
         }
         throw new IllegalArgumentException(Arrays.toString(columns));
     }
 
-    private OneHandedWeaponType parseOneHandedWeaponType(String[] columns) {
-        OneHandedWeaponType weaponType = new OneHandedWeaponType();
+    private WhiteWeaponType fillWhiteWeaponsVariables(WhiteWeaponType weaponType, String[] columns) {
         weaponType.name = columns[0];
         weaponType.weight = Float.parseFloat(columns[1]);
         weaponType.price = Price.parsePrice(columns[2]);
@@ -45,6 +53,12 @@ public class WeaponParser {
         weaponType.typeName = columns[10];
         weaponType.dices = Dices.valueOf(columns[11]);
         weaponType.rolls = Integer.parseInt(columns[12]);
+        return weaponType;
+    }
+
+    private BastardWeaponType addBastardFields(BastardWeaponType weaponType, String[] columns) {
+        weaponType.oneHandedStrength = Integer.parseInt(columns[13]);
+        weaponType.oneHandedDeterminants = determinantFactory.createDeterminants(columns[14]);
         return weaponType;
     }
 
