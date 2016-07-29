@@ -8,10 +8,14 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("4")
+@DiscriminatorValue("3")
 public abstract class WeaponType extends FightingEquipment {
     @NonNull
     @Getter
     @Setter
     String typeName;
+
+    public WeaponType() {
+        type = EquipmentType.WEAPON;
+    }
 }

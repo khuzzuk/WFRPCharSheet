@@ -3,6 +3,7 @@ package pl.khuzzuk.wfrpchar;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.db.DAOConstants;
 import pl.khuzzuk.wfrpchar.db.DAOManager;
 
@@ -13,8 +14,9 @@ public class AppInitializer {
         System.out.println("finished");
         DAOManager manager = context.getBean(DAOManager.class);
         manager.resetDB();
+        DAO dao = context.getBean(DAO.class);
+        System.out.println(dao.getAllWeapons());
         DAOConstants constants = context.getBean(DAOConstants.class);
-        System.out.println(constants.getCharacters());
-        System.out.println(constants.getAllItems());
+        System.out.println(dao.getAllCharacters());
     }
 }

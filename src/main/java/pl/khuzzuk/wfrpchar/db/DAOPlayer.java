@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.db;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.db.annot.Transaction;
 import pl.khuzzuk.wfrpchar.entities.Player;
 
 import javax.annotation.PostConstruct;
@@ -21,14 +22,9 @@ public class DAOPlayer {
         session = daoManager.openNewSession();
     }
 
-    private void commitPlayer(final Player player) {
-        session.beginTransaction();
-        session.save(player);
-        session.getTransaction().commit();
-    }
-
+    @Transaction
     public void commit(Player player) {
-        commitPlayer(player);
+        session.save(player);
     }
 
     public List read(String name) {

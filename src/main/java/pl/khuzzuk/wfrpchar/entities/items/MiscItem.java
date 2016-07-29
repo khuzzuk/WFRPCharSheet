@@ -16,4 +16,9 @@ public class MiscItem extends Item {
         this.price = price;
         this.accessibility = accessibility;
     }
+
+    @Override
+    public String toCsv() {
+        return name + ";" + weight + ";" + price + ";" + accessibility;
+    }
 }

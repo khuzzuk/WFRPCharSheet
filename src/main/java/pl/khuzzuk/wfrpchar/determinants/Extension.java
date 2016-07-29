@@ -11,8 +11,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public abstract class Extension {
-    private static final String MISC_DESC = "MISC";
-    //private static final String PROF_DESC = "PROF";
     @Id
     @GeneratedValue
     @Getter
@@ -23,14 +21,16 @@ public abstract class Extension {
     @NonNull
     protected int modifier;
 
-    public static Extension parseExtension(String[] columns) {
+    public static Extension parseExtension(String data) {
         Extension extension;
-        if (columns[1].equals(MISC_DESC)) {
-            extension = new MiscExtension(Integer.parseInt(columns[0]), columns[2]);
+        String[] columns = data.split("-");
+        if (columns[2].equals("true")) {
+            extension = new ProfessionExtension(Integer.parseInt(columns[0]), Integer.parseInt(columns[1]));
         } else {
-            extension = new ProfessionExtension(Integer.parseInt(columns[0]), Integer.parseInt(columns[2]));
+            extension = new MiscExtension(Integer.parseInt(columns[0]), columns[1]);
         }
         return extension;
     }
-    abstract boolean isFromProfession();
+
+    public abstract String toCsv();
 }

@@ -1,21 +1,22 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
+import pl.khuzzuk.wfrpchar.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @DiscriminatorValue("2")
+@Entity
 @NoArgsConstructor
 public abstract class FightingEquipment extends Item {
     @NonNull
     @Getter
     @Setter
-    float strength;
+    int strength;
     @NonNull
     @Getter
     @Setter
@@ -27,9 +28,31 @@ public abstract class FightingEquipment extends Item {
     @NonNull
     @Setter
     @Getter
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "DET_EQ_MAP",
+            joinColumns = {@JoinColumn(name = "EQ_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
+    List<Determinant> determinants;
+    @NonNull
+    @Setter
+    @Getter
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "TEXT", nullable = false)
     @JoinTable(name = "LAN_NAMES_MAP",
-            joinColumns = {@JoinColumn(name = "ITEM_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "LANG_NAME_ID")})
-    private Map<LangElement, String> names;
+            joinColumns = {@JoinColumn(name = "ITEM_ID")})
+            Map<LangElement, String> names;
+
+    String getLangToCsv() {
+        return (names.get(LangElement.ADJECTIVE_MASC_SING) != null ? names.get(LangElement.ADJECTIVE_FEM_SING) : "") +
+                "\\|" +
+                (names.get(LangElement.ADJECTIVE_FEM_SING) != null ? names.get(LangElement.ADJECTIVE_FEM_SING) : "") +
+                "\\|" +
+                (names.get(LangElement.ADJECTIVE_NEUTR_SING) != null ? names.get(LangElement.ADJECTIVE_FEM_SING) : "") +
+                "\\|" +
+                (names.get(LangElement.ADIECTIVUM) != null ? names.get(LangElement.ADJECTIVE_FEM_SING) : "");
+    }
+
+    String determinatsToCsv() {
+        return determinants.stream().map(Determinant::toCSV).collect(Collectors.joining("|"));
+    }
 }

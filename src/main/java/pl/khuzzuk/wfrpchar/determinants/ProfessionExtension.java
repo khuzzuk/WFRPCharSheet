@@ -19,4 +19,11 @@ public class ProfessionExtension extends Extension {
         super(modifier);
         this.expSequence = expSequence;
     }
+
+    @Override
+    public String toCsv() {
+        StringBuilder csvEntry = new StringBuilder();
+        csvEntry.append(modifier);
+        return modifier + "-" + expSequence + "-true";
+    }
 }

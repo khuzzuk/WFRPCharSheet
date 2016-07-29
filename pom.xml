@@ -28,6 +28,7 @@
         <jpa.version>1.0.2</jpa.version>
         <spring.version>4.3.1.RELEASE</spring.version>
         <lombok.version>1.16.10</lombok.version>
+        <validation-api.version>1.1.0.Final</validation-api.version>
     </properties>
 
     <build>
@@ -206,6 +207,11 @@
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation-api.version}</version>
         </dependency>
         <!--dependency>
             <groupId>log4j</groupId>

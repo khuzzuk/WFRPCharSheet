@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorColumn(name = "class", discriminatorType = DiscriminatorType.INTEGER)
 @DiscriminatorValue(value = "0")
 @ToString(exclude = "id")
 @NoArgsConstructor
@@ -37,6 +37,8 @@ public abstract class Item {
     @Getter
     @Setter
     String specialFeature;
+
+    public abstract String toCsv();
 
     public enum Accessibility {
         COMMON, UNCOMMON, SCARCE, RARE, EXCEPTIONAL;

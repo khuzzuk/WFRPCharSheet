@@ -3,13 +3,16 @@ package pl.khuzzuk.wfrpchar.determinants;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
-@DiscriminatorValue("1")
-public abstract class AbstractDeterminant {
+@DiscriminatorValue("0")
+@ToString(exclude = "id")
+public abstract class Determinant {
     @Id
     @GeneratedValue
     @Getter
@@ -39,9 +42,22 @@ public abstract class AbstractDeterminant {
 
     public int getProfessionExtensionCount() {
         return extensions.stream()
-                .filter(Extension::isFromProfession)
+                .filter(e -> e instanceof ProfessionExtension)
                 .map(e -> (ProfessionExtension) e)
                 .max((e1, e2) -> e1.getExpSequence() - e2.getExpSequence())
                 .orElse(new ProfessionExtension()).getExpSequence();
+    }
+
+    public String toCSV() {
+        return baseValue + "," + type + (extensions != null && extensions.size()>0 ? "," + extensionsToCsv() : "");
+    }
+
+    private String extensionsToCsv() {
+        return extensions.stream().map(Extension::toCsv).collect(Collectors.joining(":"));
+    }
+
+    void addExtension(Extension extension) {
+        if (extensions==null) extensions = new ArrayList<>();
+        extensions.add(extension);
     }
 }

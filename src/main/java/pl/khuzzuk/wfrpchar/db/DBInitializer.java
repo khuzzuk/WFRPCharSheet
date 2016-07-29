@@ -11,7 +11,9 @@ import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
 import pl.khuzzuk.wfrpchar.entities.items.MiscItem;
+import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -25,11 +27,15 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Initializer
 public class DBInitializer {
+    private static final String DISCLAIMER = "spec:";
+    @Inject
+    WeaponParser weaponParser;
     @Transaction(close = true)
     void resetDatabase(Session session) {
         loadCurrencies(session);
         loadCharacters(session);
         loadMiscItems(session);
+        loadWeaponsTypes(session);
     }
 
     private void loadCurrencies(Session session) {
@@ -48,8 +54,17 @@ public class DBInitializer {
     private void loadMiscItems(Session session) {
         save(readResource("/items.csv")
                 .stream()
+                .filter(s -> !s[0].startsWith(DISCLAIMER))
                 .map(s -> new MiscItem(s[0], Float.parseFloat(s[1]),
                         Price.parsePrice(s[2]), Item.Accessibility.forName(s[3])))
+                .collect(Collectors.toList()), session);
+    }
+
+    private void loadWeaponsTypes(Session session) {
+        save(readResource("/whiteWeaponTypes.csv")
+                .stream()
+                .filter(s -> !s[0].startsWith(DISCLAIMER))
+                .map(weaponParser::parseEquipment)
                 .collect(Collectors.toList()), session);
     }
 

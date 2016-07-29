@@ -19,4 +19,9 @@ public class MiscExtension extends Extension {
         super(modifier);
         this.description = description;
     }
+
+    @Override
+    public String toCsv() {
+        return modifier + "-" + description + "-false";
+    }
 }
