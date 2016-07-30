@@ -7,11 +7,13 @@ import pl.khuzzuk.wfrpchar.entities.LangElement;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @DiscriminatorValue("2")
 @Entity
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public abstract class FightingEquipment extends Item {
     @NonNull
     @Getter
@@ -32,7 +34,7 @@ public abstract class FightingEquipment extends Item {
     @JoinTable(name = "DET_EQ_MAP",
             joinColumns = {@JoinColumn(name = "EQ_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
-    List<Determinant> determinants;
+    Set<Determinant> determinants;
     @NonNull
     @Setter
     @Getter
@@ -49,10 +51,10 @@ public abstract class FightingEquipment extends Item {
                 "|" +
                 (names.get(LangElement.ADJECTIVE_NEUTR_SING) != null ? names.get(LangElement.ADJECTIVE_NEUTR_SING) : "") +
                 "|" +
-                (names.get(LangElement.ADIECTIVUM) != null ? names.get(LangElement.ADIECTIVUM) : "");
+                (names.get(LangElement.ABLATIVE) != null ? names.get(LangElement.ABLATIVE) : "");
     }
 
-    String determinantsToCsv(List<Determinant> determinants) {
+    String determinantsToCsv(Set<Determinant> determinants) {
         return determinants.stream().map(Determinant::toCSV).collect(Collectors.joining("|"));
     }
 }

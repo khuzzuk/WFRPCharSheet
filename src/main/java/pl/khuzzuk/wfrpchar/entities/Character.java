@@ -12,11 +12,12 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Immutable
 @ToString(doNotUseGetters = true, exclude = "id")
+@EqualsAndHashCode
 public class Character {
     @Id
-            @GeneratedValue
-            @Getter
-            @Setter
+    @GeneratedValue
+    @Getter
+    @Setter
     private int id;
     @NonNull
     @Getter

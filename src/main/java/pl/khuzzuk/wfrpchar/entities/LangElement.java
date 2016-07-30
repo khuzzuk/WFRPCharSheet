@@ -7,7 +7,7 @@ public enum LangElement {
     ADJECTIVE_MASC_SING,
     ADJECTIVE_FEM_SING,
     ADJECTIVE_NEUTR_SING,
-    ADIECTIVUM;
+    ABLATIVE;
 
     public static Map<LangElement, String> parseLang(String data) {
         String[] columns = data.split("\\|");
@@ -22,7 +22,7 @@ public enum LangElement {
             lang.put(ADJECTIVE_NEUTR_SING, columns[2]);
         }
         if (columns.length > 3 && !columns[3].equals("")) {
-            lang.put(ADIECTIVUM, columns[3]);
+            lang.put(ABLATIVE, columns[3]);
         }
         return lang;
     }

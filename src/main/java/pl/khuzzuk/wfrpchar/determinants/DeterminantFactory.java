@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Component
 public class DeterminantFactory {
     @NotNull
-    public List<Determinant> createDeterminants(@NotNull @Valid String data) {
-        List<Determinant> determinants = new ArrayList<>();
+    public Set<Determinant> createDeterminants(@NotNull @Valid String data) {
+        Set<Determinant> determinants = new HashSet<>();
         String[] columns = data.split("\\|");
         if (columns.length==1 && columns[0].equals("")) return determinants;
         for (String s : columns) {

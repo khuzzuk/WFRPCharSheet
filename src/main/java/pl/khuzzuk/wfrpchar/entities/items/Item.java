@@ -11,6 +11,7 @@ import javax.persistence.*;
 @DiscriminatorValue(value = "0")
 @ToString(exclude = "id")
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "id")
 public abstract class Item {
     @Id
     @GeneratedValue

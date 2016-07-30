@@ -5,7 +5,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
-import pl.khuzzuk.wfrpchar.db.annot.Transaction;
+import pl.khuzzuk.wfrpchar.db.annot.CommitTransaction;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Price;
@@ -30,7 +30,7 @@ public class DBInitializer {
     private static final String DISCLAIMER = "spec:";
     @Inject
     WeaponParser weaponParser;
-    @Transaction(close = true)
+    @CommitTransaction(close = true)
     void resetDatabase(Session session) {
         loadCurrencies(session);
         loadCharacters(session);

@@ -16,7 +16,6 @@ public class AppInitializer {
         manager.resetDB();
         DAO dao = context.getBean(DAO.class);
         System.out.println(dao.getAllWeapons());
-        DAOConstants constants = context.getBean(DAOConstants.class);
         System.out.println(dao.getAllCharacters());
     }
 }

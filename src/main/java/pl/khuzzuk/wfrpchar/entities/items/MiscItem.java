@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import pl.khuzzuk.wfrpchar.entities.Price;
 
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("1")
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class MiscItem extends Item {
     public MiscItem(String name, float weight, Price price, Accessibility accessibility) {
         this.name = name;
