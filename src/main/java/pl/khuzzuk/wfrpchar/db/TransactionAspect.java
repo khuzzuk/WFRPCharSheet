@@ -45,4 +45,14 @@ public class TransactionAspect {
             session.getTransaction().commit();
         }
     }
+    @Before("execution(@pl.khuzzuk.wfrpchar.db.annot.QueryTransaction * pl.khuzzuk.wfrpchar.db.DAOEntityResolver.*(..))")
+    public void checkAbstractState() {
+        System.out.println("asd");
+        /*if (entityResolver.requireInitialization()) {
+            Session session = dao.getCurrentSession();
+            session.beginTransaction();
+            entityResolver.init(session);
+            session.getTransaction().commit();
+        }*/
+    }
 }

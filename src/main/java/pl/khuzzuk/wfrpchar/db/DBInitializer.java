@@ -1,14 +1,14 @@
 package pl.khuzzuk.wfrpchar.db;
 
 import lombok.NoArgsConstructor;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.db.annot.CommitTransaction;
+import pl.khuzzuk.wfrpchar.db.annot.Initializer;
+import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Price;
+import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
 import pl.khuzzuk.wfrpchar.entities.items.MiscItem;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
@@ -30,42 +30,50 @@ public class DBInitializer {
     private static final String DISCLAIMER = "spec:";
     @Inject
     WeaponParser weaponParser;
+    @Inject
+    @Manager
+    DAO dao;
+
     @CommitTransaction(close = true)
-    void resetDatabase(Session session) {
-        loadCurrencies(session);
-        loadCharacters(session);
-        loadMiscItems(session);
-        loadWeaponsTypes(session);
+    void resetDatabase() {
+        loadCurrencies();
+        loadCharacters();
+        loadMiscItems();
+        loadWeaponsTypes();
     }
 
-    private void loadCurrencies(Session session) {
-        save(readResource("/currencies.csv").stream().map(values ->
-                new Currency(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])))
-                .collect(Collectors.toList()), session);
+    private void loadCurrencies() {
+        List<Currency> currencies = readResource("/currencies.csv").stream()
+                .map(values -> new Currency(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])))
+                .collect(Collectors.toList());
+        currencies.stream().forEach(dao::save);
     }
 
-    private void loadCharacters(Session session) {
-        save(readResource("/characters.csv")
+    private void loadCharacters() {
+        List<Character> characters = readResource("/characters.csv")
                 .stream()
                 .map(s -> new Character(s[0]))
-                .collect(Collectors.toList()), session);
+                .collect(Collectors.toList());
+        characters.stream().forEach(dao::save);
     }
 
-    private void loadMiscItems(Session session) {
-        save(readResource("/items.csv")
+    private void loadMiscItems() {
+        List<Item> miscItems = readResource("/items.csv")
                 .stream()
                 .filter(s -> !s[0].startsWith(DISCLAIMER))
                 .map(s -> new MiscItem(s[0], Float.parseFloat(s[1]),
                         Price.parsePrice(s[2]), Item.Accessibility.forName(s[3])))
-                .collect(Collectors.toList()), session);
+                .collect(Collectors.toList());
+        miscItems.stream().forEach(dao::save);
     }
 
-    private void loadWeaponsTypes(Session session) {
-        save(readResource("/whiteWeaponTypes.csv")
+    private void loadWeaponsTypes() {
+        List<FightingEquipment> weapons = readResource("/whiteWeaponTypes.csv")
                 .stream()
                 .filter(s -> !s[0].startsWith(DISCLAIMER))
                 .map(weaponParser::parseEquipment)
-                .collect(Collectors.toList()), session);
+                .collect(Collectors.toList());
+        weapons.stream().forEach(dao::save);
     }
 
     private List<String[]> readResource(String location) {
@@ -76,15 +84,5 @@ public class DBInitializer {
             e.printStackTrace();
         }
         return Collections.EMPTY_LIST;
-    }
-
-    private <T> void save(List<T> list, Session session) {
-        try {
-            for (T t : list) {
-                session.save(t);
-            }
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
     }
 }

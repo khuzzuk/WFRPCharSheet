@@ -3,33 +3,33 @@ package pl.khuzzuk.wfrpchar.db;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.CommitTransaction;
+import pl.khuzzuk.wfrpchar.db.annot.FightingEquipments;
 import pl.khuzzuk.wfrpchar.db.annot.QueryTransaction;
-import pl.khuzzuk.wfrpchar.db.annot.Weapons;
-import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
-@Weapons
-public class DAOWeapons implements Stateful, DAOTransactional<WeaponType, String> {
-    private List<WeaponType> weapons;
+@FightingEquipments
+public class DAOFightingEquipment implements Stateful, DAOTransactional<FightingEquipment, String> {
+    private List<FightingEquipment> equipments;
     @Override
     @QueryTransaction
-    public List<WeaponType> getAllItems() {
-        return weapons;
+    public List<FightingEquipment> getAllItems() {
+        return equipments;
     }
 
     @Override
     @QueryTransaction
-    public WeaponType getItem(String criteria) {
-        return weapons.stream().filter(w -> w.getName().equals(criteria)).findAny().orElse(null);
+    public FightingEquipment getItem(String criteria) {
+        return equipments.stream().filter(e -> e.getName().equals(criteria)).findFirst().orElseGet(null);
     }
 
     @Override
     @CommitTransaction
-    public boolean commit(WeaponType toCommit, Session session) {
-        Optional<WeaponType> query = weapons.stream()
+    public boolean commit(FightingEquipment toCommit, Session session) {
+        Optional<FightingEquipment> query = equipments.stream()
                 .filter(i -> i.equals(toCommit))
                 .findAny();
         if (!query.isPresent()) {
@@ -40,14 +40,14 @@ public class DAOWeapons implements Stateful, DAOTransactional<WeaponType, String
 
     @Override
     public boolean requireInitialization() {
-        return weapons==null;
+        return equipments==null;
     }
 
     @Override
     public void init(Session session) {
-        weapons = session.createQuery("from Item i " +
+        equipments = session.createQuery("from Item i " +
                 "where type(i) = OneHandedWeaponType " +
                 "or type(i) = TwoHandedWeaponType " +
-                "or type(i) = BastardWeaponType").list();
+                "or type(i) = BastardWeaponType ").list();
     }
 }

@@ -7,7 +7,6 @@ import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 @Component
 @Manager
@@ -23,6 +22,6 @@ public class DAOManager {
     }
 
     public void resetDB() {
-        initializer.resetDatabase(openNewSession());
+        initializer.resetDatabase();
     }
 }
