@@ -8,11 +8,17 @@ import pl.khuzzuk.wfrpchar.entities.Nameable;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public abstract class DAOEntityResolver<T extends Nameable, U> implements Stateful, DAOTransactional<T, U> {
+public class DAOEntityResolver<T extends Nameable, U> implements Stateful, DAOTransactional<T, U> {
     @NotNull
-    List<T> elements;
+    private List<T> elements;
+    @NotNull
+    private String query;
 
-    boolean hasElement(T t) {
+    public DAOEntityResolver(String query) {
+        this.query = query;
+    }
+
+    private boolean hasElement(T t) {
         return elements.stream().filter(e -> e.equals(t)).findFirst().isPresent();
     }
 
@@ -39,5 +45,10 @@ public abstract class DAOEntityResolver<T extends Nameable, U> implements Statef
     @Override
     public boolean requireInitialization() {
         return elements==null;
+    }
+
+    @Override
+    public void init(Session session) {
+        elements = session.createQuery(query).list();
     }
 }

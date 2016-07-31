@@ -1,8 +1,5 @@
 package pl.khuzzuk.wfrpchar.db;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
@@ -21,54 +18,30 @@ import java.util.List;
 @Component
 @Manager
 public class DAO {
-    @Inject
-    @Items
-    @Getter
-    @Setter
-    @NonNull
     private DAOTransactional<Item, String> daoItems;
-    @Inject
-    @Weapons
-    @Getter
-    @Setter
-    @NonNull
     private DAOTransactional<WeaponType, String> daoWeapons;
-    @Inject
-    @FightingEquipments
-    @Getter
-    @Setter
-    @NonNull
     private DAOTransactional<FightingEquipment, String> daoFightingEquipment;
-    @Inject
-    @Constants
-    @Characters
-    @Getter
-    @Setter
-    @NonNull
     private DAOTransactional<Character, String> daoCharacters;
-    @Inject
-    @Players
-    @Getter
-    @Setter
-    @NonNull
     private DAOTransactional<Player, String> daoPlayer;
-    @Inject
-    @Currencies
-    @Getter
-    @Setter
-    @NonNull
     private DAOTransactional<Currency, String> daoCurrencies;
-    @Inject
-    @Manager
-    @Getter
-    @Setter
-    @NonNull
     private DAOManager manager;
     private Session session;
 
-    @PostConstruct
-    private void setupSession() {
-        session = manager.openNewSession();
+    @Inject
+    public DAO(@Items @NotNull DAOTransactional<Item, String> daoItems,
+               @Weapons @NotNull DAOTransactional<WeaponType, String> daoWeaponType,
+               @FightingEquipments @NotNull DAOTransactional<FightingEquipment, String> daoFightingEquipment,
+               @Constants @Characters @NotNull DAOTransactional<Character, String> daoCharacters,
+               @Players @NotNull DAOTransactional<Player, String> daoPlayer,
+               @Currencies @NotNull DAOTransactional<Currency, String> daoCurrencies,
+               @Manager @NotNull DAOManager manager) {
+        this.daoItems = daoItems;
+        this.daoWeapons = daoWeaponType;
+        this.daoFightingEquipment = daoFightingEquipment;
+        this.daoCharacters = daoCharacters;
+        this.daoPlayer = daoPlayer;
+        this.daoCurrencies = daoCurrencies;
+        this.manager = manager;
     }
 
     @NotNull
@@ -106,6 +79,7 @@ public class DAO {
         else session.close();
     }
 
+    @PostConstruct
     private void assureSessionInit() {
         if (session == null) {
             session = manager.openNewSession();

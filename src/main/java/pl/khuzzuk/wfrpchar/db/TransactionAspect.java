@@ -16,7 +16,7 @@ import javax.inject.Inject;
 public class TransactionAspect {
     @Inject
     @Manager
-    DAO dao;
+    private DAOManager manager;
 
     @Pointcut("execution(@pl.khuzzuk.wfrpchar.db.annot.CommitTransaction * *(..)) && args(session)")
     public void commitTransaction(Session session) {}
@@ -29,7 +29,7 @@ public class TransactionAspect {
     @After("commitTransaction(session) && @annotation(transaction)")
     public void closeTransaction(Session session, CommitTransaction transaction) {
         session.getTransaction().commit();
-        if (transaction.close()) dao.closeSession(session);
+        //if (transaction.close()) dao.closeSession(session);
     }
 
     //@Pointcut("execution(@pl.khuzzuk.wfrpchar.db.annot.QueryTransaction * *(..)) && this(stateful)")
@@ -39,7 +39,7 @@ public class TransactionAspect {
     @Before("execution(@pl.khuzzuk.wfrpchar.db.annot.QueryTransaction * *(..)) && this(stateful)")
     public void checkState(Stateful stateful) {
         if (stateful.requireInitialization()) {
-            Session session = dao.getCurrentSession();
+            Session session = manager.getSession();
             session.beginTransaction();
             stateful.init(session);
             session.getTransaction().commit();

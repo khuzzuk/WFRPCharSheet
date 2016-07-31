@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.FIELD})
+@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Documented
 public @interface Constants {
 }

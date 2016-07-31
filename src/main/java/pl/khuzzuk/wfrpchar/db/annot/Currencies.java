@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 @Inherited
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.FIELD})
+@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 public @interface Currencies {
 }

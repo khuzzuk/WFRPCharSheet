@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.db.DAOManager;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
 
@@ -79,14 +80,15 @@ public class MainWindowController {
     @FXML
     private Slider rollsWW;
 
-    public void onResetAction() {
+    @Inject
+    public void onResetAction(DAO dao) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Resetowanie wszystkich wpisów w bazie");
         alert.setHeaderText("Ta akcja spowoduje usunięcie wszystkich dotychczasowych wpisów.");
         alert.setContentText("Kontynuować?");
         Optional<ButtonType> chosenButton = alert.showAndWait();
         if (chosenButton.orElse(null) == ButtonType.OK) {
-            manager.resetDB();
+            manager.resetDB(dao);
         }
     }
 
