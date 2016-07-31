@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Immutable
 @ToString(doNotUseGetters = true, exclude = "id")
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "id")
 public class Character implements Nameable {
     @Id
     @GeneratedValue

@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" type="GridPane" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.khuzzuk.wfrpchar.gui.MainWindowController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.khuzzuk.wfrpchar.gui.MainWindowControllerWW">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -131,8 +131,8 @@
                                                          <children>
                                                             <Label text="podstawowe" />
                                                             <TextField fx:id="strengthBasicWW" />
-                                                            <Label fx:id="strengthBastardLabelWW" text="bastarda" visible="false" />
-                                                            <TextField fx:id="strengthBastardWW" visible="false" />
+                                                            <Label fx:id="strengthBastardLabelWW" text="bastarda" />
+                                                            <TextField fx:id="strengthBastardWW" editable="false" />
                                                          </children>
                                                       </VBox>
                                                       <Label text="nazwa typu" GridPane.rowIndex="1" />
@@ -184,10 +184,10 @@
                                                             <Insets />
                                                          </GridPane.margin>
                                                       </Button>
-                                                      <TextField fx:id="bastBattleModWW" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                      <TextField fx:id="bastInitModWW" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                                                      <TextField fx:id="bastOpParryModWW" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                                      <TextField fx:id="bastParryModWW" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                                                      <TextField fx:id="bastBattleModWW" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                      <TextField fx:id="bastInitModWW" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                                      <TextField fx:id="bastOpParryModWW" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                                      <TextField fx:id="bastParryModWW" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="6" />
                                                       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                                          <children>
                                                             <Label text="przym. męski" />
@@ -248,4 +248,4 @@
          </tabs>
       </TabPane>
    </children>
-</fx:root>
+</GridPane>

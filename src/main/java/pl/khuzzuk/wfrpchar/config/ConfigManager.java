@@ -6,9 +6,8 @@ import org.springframework.context.annotation.*;
 import javax.inject.Named;
 
 @Configuration
-@EnableAspectJAutoProxy
-@EnableLoadTimeWeaving
-@ComponentScan({"pl.khuzzuk.wfrpchar.db", "pl.khuzzuk.wfrpchar.determinants", "pl.khuzzuk.wfrpchar.entities", "pl.khuzzuk.wfrpchar.gui"})
+//@EnableAspectJAutoProxy(exposeProxy = true)
+@ComponentScan({"pl.khuzzuk.wfrpchar"})
 public class ConfigManager {
     @Bean
     @Named("factory")

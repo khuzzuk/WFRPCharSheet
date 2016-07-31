@@ -1,8 +1,6 @@
 package pl.khuzzuk.wfrpchar.db;
 
 import org.hibernate.Session;
-import pl.khuzzuk.wfrpchar.db.annot.CommitTransaction;
-import pl.khuzzuk.wfrpchar.db.annot.QueryTransaction;
 import pl.khuzzuk.wfrpchar.entities.Nameable;
 
 import javax.validation.constraints.NotNull;
@@ -23,23 +21,27 @@ public class DAOEntityResolver<T extends Nameable, U> implements Stateful, DAOTr
     }
 
     @Override
-    @QueryTransaction
     public T getItem(U criteria) {
         return elements.stream().filter(c -> c.getName().equals(criteria)).findAny().orElse(null);
     }
 
     @Override
-    @QueryTransaction
     public List<T> getAllItems() {
         return elements;
     }
 
     @Override
-    @CommitTransaction
     public boolean commit(T toCommit, Session session) {
+        session.beginTransaction();
         boolean query = hasElement(toCommit);
         if (!query) session.save(toCommit);
+        session.getTransaction().commit();
         return !query;
+    }
+
+    @Override
+    public void assureInitialization(Session session) {
+        if (requireInitialization()) init(session);
     }
 
     @Override
@@ -49,6 +51,8 @@ public class DAOEntityResolver<T extends Nameable, U> implements Stateful, DAOTr
 
     @Override
     public void init(Session session) {
+        session.beginTransaction();
         elements = session.createQuery(query).list();
+        session.getTransaction().commit();
     }
 }

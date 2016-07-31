@@ -10,7 +10,6 @@ import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -44,23 +43,27 @@ public class DAO {
         this.manager = manager;
     }
 
+    private void closeSession() {
+        session.close();
+        session = null;
+    }
+
     @NotNull
     public List<Item> getAllItems() {
+        daoItems.assureInitialization(session);
         return daoItems.getAllItems();
     }
 
     @NotNull
     public List<WeaponType> getAllWeapons() {
+        daoWeapons.assureInitialization(session);
         return daoWeapons.getAllItems();
     }
 
     @NotNull
     public List<Character> getAllCharacters() {
+        daoCharacters.assureInitialization(session);
         return daoCharacters.getAllItems();
-    }
-
-    public boolean savePlayer(Player player) {
-        return daoPlayer.commit(player, session);
     }
 
     @NotNull
@@ -69,50 +72,45 @@ public class DAO {
         return session;
     }
 
-    private void closeSession() {
-        session.close();
-        session = null;
-    }
-
     void closeSession(Session session) {
         if (this.session == session) closeSession();
         else session.close();
     }
 
-    @PostConstruct
-    private void assureSessionInit() {
+    private void assureSessionInit(DAOTransactional transactional) {
         if (session == null) {
             session = manager.openNewSession();
         }
+        transactional.assureInitialization(session);
     }
 
     void save(Item item) {
-        assureSessionInit();
+        assureSessionInit(daoItems);
         daoItems.commit(item, session);
     }
 
     void save(WeaponType weaponType) {
-        assureSessionInit();
+        assureSessionInit(daoWeapons);
         daoWeapons.commit(weaponType, session);
     }
 
     void save(FightingEquipment equipment) {
-        assureSessionInit();
+        assureSessionInit(daoFightingEquipment);
         daoFightingEquipment.commit(equipment, session);
     }
 
     void save(Character character) {
-        assureSessionInit();
+        assureSessionInit(daoCharacters);
         daoCharacters.commit(character, session);
     }
 
     void save(Player player) {
-        assureSessionInit();
+        assureSessionInit(daoPlayer);
         daoPlayer.commit(player, session);
     }
 
     void save(Currency currency) {
-        assureSessionInit();
+        assureSessionInit(daoCurrencies);
         daoCurrencies.commit(currency, session);
     }
 }

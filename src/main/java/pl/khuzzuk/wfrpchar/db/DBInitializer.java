@@ -1,7 +1,6 @@
 package pl.khuzzuk.wfrpchar.db;
 
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.db.annot.CommitTransaction;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
@@ -32,7 +31,6 @@ public class DBInitializer {
         this.weaponParser = weaponParser;
     }
 
-    @CommitTransaction(close = true)
     void resetDatabase(DAO dao) {
         loadCurrencies(dao);
         loadCharacters(dao);

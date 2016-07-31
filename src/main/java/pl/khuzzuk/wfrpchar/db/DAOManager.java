@@ -1,15 +1,16 @@
 package pl.khuzzuk.wfrpchar.db;
 
-import lombok.Getter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
+import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
+import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
 
 import javax.inject.Inject;
 
@@ -17,19 +18,16 @@ import javax.inject.Inject;
 @Manager
 public class DAOManager {
     private SessionFactory factory;
-    @Initializer
     private DBInitializer initializer;
-    @Getter
-    private Session session;
 
     @Inject
     public DAOManager(SessionFactory factory, @Initializer DBInitializer initializer) {
         this.factory = factory;
+        this.initializer = initializer;
     }
 
     public Session openNewSession() {
-        session = factory.openSession();
-        return session;
+        return factory.openSession();
     }
 
     public void resetDB(DAO dao) {
@@ -43,7 +41,7 @@ public class DAOManager {
     }
     @Bean
     @Weapons
-    public DAOEntityResolver<Item, String> daoWeaponType() {
+    public DAOEntityResolver<WeaponType, String> daoWeaponType() {
         return new DAOEntityResolver<>("from Item i " +
                 "where type(i) = OneHandedWeaponType " +
                 "or type(i) = TwoHandedWeaponType " +
@@ -64,7 +62,7 @@ public class DAOManager {
     }
     @Bean
     @Currencies
-    public DAOEntityResolver<Player, String> daoCurrencies() {
+    public DAOEntityResolver<Currency, String> daoCurrencies() {
         return new DAOEntityResolver<>("from Currency");
     }
 

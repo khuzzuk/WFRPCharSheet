@@ -12,7 +12,6 @@ import java.util.Set;
 
 @Entity
 @DiscriminatorValue("7")
-@EqualsAndHashCode(callSuper = true)
 public class BastardWeaponType extends WhiteWeaponType {
     @NonNull
     @Getter
