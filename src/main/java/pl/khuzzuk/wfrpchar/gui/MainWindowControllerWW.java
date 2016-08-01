@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.db.DAOManager;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+@Component
 public class MainWindowControllerWW implements Initializable {
     @Inject
     @Manager

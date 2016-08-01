@@ -14,7 +14,6 @@ import pl.khuzzuk.wfrpchar.db.DAO;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.net.URL;
 
 public class MainWindow extends Stage {
     @Autowired
@@ -22,17 +21,17 @@ public class MainWindow extends Stage {
 
     protected final MainWindowControllerWW controller;
 
-    public MainWindow(URL fxml, Window parent) {
+    public MainWindow(final MainWindowControllerWW controller, Window parent) {
         super(StageStyle.DECORATED);
         initOwner(parent);
         initModality(Modality.WINDOW_MODAL);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainWindow.fxml"));
+        loader.setControllerFactory(c -> controller);
         try {
             Parent root = loader.load();
             setScene(new Scene(root));
-            controller = loader.getController();
+            this.controller = loader.getController();
             controller.setMainWindow(this);
-            show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

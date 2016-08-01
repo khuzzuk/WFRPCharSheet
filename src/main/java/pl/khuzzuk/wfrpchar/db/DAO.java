@@ -50,19 +50,19 @@ public class DAO {
 
     @NotNull
     public List<Item> getAllItems() {
-        daoItems.assureInitialization(session);
+        assureSessionInit(daoItems);
         return daoItems.getAllItems();
     }
 
     @NotNull
     public List<WeaponType> getAllWeapons() {
-        daoWeapons.assureInitialization(session);
+        assureSessionInit(daoWeapons);
         return daoWeapons.getAllItems();
     }
 
     @NotNull
     public List<Character> getAllCharacters() {
-        daoCharacters.assureInitialization(session);
+        assureSessionInit(daoCharacters);
         return daoCharacters.getAllItems();
     }
 
