@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import lombok.Setter;
 import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.db.DAOManager;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
@@ -24,7 +25,10 @@ public class MainWindowControllerWW implements Initializable {
     private DAOManager manager;
     @Inject
     @Manager
+    @Setter
     private DAO dao;
+    @Setter
+    private MainWindow mainWindow;
 
     //GENERAL MENU
     @FXML

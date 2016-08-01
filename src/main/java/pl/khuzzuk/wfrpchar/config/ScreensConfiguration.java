@@ -6,18 +6,21 @@ import javafx.stage.Stage;
 import lombok.Setter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.khuzzuk.wfrpchar.gui.MainWindowConfiguration;
+import org.springframework.context.annotation.Lazy;
+import pl.khuzzuk.wfrpchar.gui.MainWindow;
 
 @Configuration
+@Lazy
 public class ScreensConfiguration {
     @Setter
     private Stage stage;
     public void show(Parent screen) {
         stage.setScene(new Scene(screen, 1200, 860));
+        stage.show();
     }
 
     @Bean
-    MainWindowConfiguration mainWindowConfiguration() {
-        return new MainWindowConfiguration(getClass().getResource("/mainWindow.fxml"), stage);
+    public MainWindow mainWindowConfiguration() {
+        return new MainWindow(getClass().getResource("/mainWindow.fxml"), stage);
     }
 }

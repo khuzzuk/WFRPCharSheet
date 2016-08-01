@@ -15,6 +15,7 @@ public class GuiManager extends Application {
         ApplicationContext context = new AnnotationConfigApplicationContext("pl.khuzzuk.wfrpchar.config");
         ScreensConfiguration screens = context.getBean(ScreensConfiguration.class);
         screens.setStage(primaryStage);
+        screens.mainWindowConfiguration();
         //Parent root = null;
         //root = FXMLLoader.load(getClass().getResource("/mainWindow.fxml"));
         //primaryStage.setScene(new Scene(root));
