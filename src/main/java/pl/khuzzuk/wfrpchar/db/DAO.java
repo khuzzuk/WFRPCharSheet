@@ -9,6 +9,7 @@ import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
+import pl.khuzzuk.wfrpchar.messaging.ContentPublisher;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -24,7 +25,11 @@ public class DAO {
     private DAOTransactional<Player, String> daoPlayer;
     private DAOTransactional<Currency, String> daoCurrencies;
     private DAOManager manager;
+    private DAOPublisher daoPublisher;
     private Session session;
+    @Inject
+    @Weapons
+    private ContentPublisher<List<WeaponType>> publisher;
 
     @Inject
     public DAO(@Items @NotNull DAOTransactional<Item, String> daoItems,
@@ -33,6 +38,7 @@ public class DAO {
                @Constants @Characters @NotNull DAOTransactional<Character, String> daoCharacters,
                @Players @NotNull DAOTransactional<Player, String> daoPlayer,
                @Currencies @NotNull DAOTransactional<Currency, String> daoCurrencies,
+               @NotNull DAOPublisher daoPublisher,
                @Manager @NotNull DAOManager manager) {
         this.daoItems = daoItems;
         this.daoWeapons = daoWeaponType;
@@ -41,6 +47,7 @@ public class DAO {
         this.daoPlayer = daoPlayer;
         this.daoCurrencies = daoCurrencies;
         this.manager = manager;
+        this.daoPublisher = daoPublisher;
     }
 
     private void closeSession() {

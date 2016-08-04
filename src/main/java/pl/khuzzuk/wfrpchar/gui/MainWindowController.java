@@ -1,16 +1,14 @@
 package pl.khuzzuk.wfrpchar.gui;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.db.DAO;
-import pl.khuzzuk.wfrpchar.db.DAOManager;
+import pl.khuzzuk.wfrpchar.db.*;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
+import pl.khuzzuk.wfrpchar.messaging.*;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
@@ -21,7 +19,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
-public class MainWindowControllerWW implements Initializable {
+public class MainWindowController implements Initializable {
     @Inject
     @Manager
     private DAOManager manager;
@@ -29,6 +27,14 @@ public class MainWindowControllerWW implements Initializable {
     @Manager
     @Setter
     private DAO dao;
+    @Inject
+    @Publishers
+    @MainWindowBean
+    private Publisher<Message> publisher;
+    @Inject
+    @MainWindowBean
+    @Subscribers
+    private ContentSubscriber<List<WeaponType>> weaponTypeSubscriber;
     @Setter
     private MainWindow mainWindow;
 
@@ -112,12 +118,13 @@ public class MainWindowControllerWW implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        loadWeapon();
+        Message message = new CommunicateMessage();
+        message.setType(DAOConfig.WEAPONS_QUERRY);
+        publisher.publish(message);
     }
 
-    public void loadWeapon() {
-        List<String> weaponsNames = dao.getAllWeapons().stream().map(WeaponType::getName).collect(Collectors.toList());
-        ObservableList<String> weaponsObservable = FXCollections.observableArrayList(weaponsNames);
+    void loadWeapon(List<WeaponType> weapons) {
+        List<String> weaponsNames = weapons.stream().map(WeaponType::getName).collect(Collectors.toList());
         weaponList.getItems().clear();
         weaponList.getItems().addAll(weaponsNames);
     }

@@ -19,9 +19,9 @@ public class MainWindow extends Stage {
     @Autowired
     private ApplicationContext context;
 
-    protected final MainWindowControllerWW controller;
+    protected final MainWindowController controller;
 
-    public MainWindow(final MainWindowControllerWW controller, Window parent) {
+    public MainWindow(final MainWindowController controller, Window parent) {
         super(StageStyle.DECORATED);
         initOwner(parent);
         initModality(Modality.WINDOW_MODAL);

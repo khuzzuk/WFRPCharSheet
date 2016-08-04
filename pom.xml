@@ -29,6 +29,7 @@
         <spring.version>4.3.1.RELEASE</spring.version>
         <lombok.version>1.16.10</lombok.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
+        <commons-collections4.version>4.1</commons-collections4.version>
     </properties>
 
     <build>
@@ -189,6 +190,11 @@
         </dependency>
 
         <!--UTILITY-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons-collections4.version}</version>
+        </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
