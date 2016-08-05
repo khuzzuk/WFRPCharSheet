@@ -7,9 +7,10 @@ public abstract class AbstractBagPublisher<T> implements BagPublisher<T> {
     @BusBean
     private Bus bus;
     @Override
-    public void publish(T content) {
-        BagMessage<T> message = new ContentMessage<T>();
+    public void publish(T content, String msgType) {
+        BagMessage<T> message = new ContentMessage<>();
         message.setMessage(content);
+        message.setType(msgType);
         publish(message);
     }
 

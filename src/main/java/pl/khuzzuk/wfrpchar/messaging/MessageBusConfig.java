@@ -2,12 +2,12 @@ package pl.khuzzuk.wfrpchar.messaging;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.khuzzuk.wfrpchar.db.DAOConfig;
+import org.springframework.context.annotation.PropertySource;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
 import pl.khuzzuk.wfrpchar.gui.MainWindowBean;
-import pl.khuzzuk.wfrpchar.gui.MainWindowController;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Configuration
+@PropertySource("classpath:messages.properties")
 public class MessageBusConfig {
     @Bean
     @Channel
@@ -48,10 +49,10 @@ public class MessageBusConfig {
     @Subscribers
     @MainWindowBean
     @Inject
-    public ContentSubscriber<List<WeaponType>> weaponTypeSubscriber(@MainWindowBean MainWindowController controller) {
+    public ContentSubscriber<List<WeaponType>> weaponTypeSubscriber(
+            @Value("${weapons.result}") String resultsMessageType) {
         ContentSubscriber<List<WeaponType>> subscriber = new BagSubscriber<>();
-        subscriber.setMessageType(DAOConfig.WEAPONS_RESULT);
-        subscriber.setConsumer(controller::loadWeapon);
+        subscriber.setMessageType(resultsMessageType);
         return subscriber;
     }
 }

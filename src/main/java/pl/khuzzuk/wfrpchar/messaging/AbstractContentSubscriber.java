@@ -22,11 +22,12 @@ public abstract class AbstractContentSubscriber<T> implements ContentSubscriber<
 
     @Override
     public void receive(BagMessage<T> message) {
-        reactor.resolve();
+        receive(message.getMessage());
     }
 
     @Override
     public void subscribe() {
+        if (messageType == null) throw new IllegalStateException("No message type set for " + this);
         bus.subscribe(this, messageType);
     }
 

@@ -2,24 +2,19 @@ package pl.khuzzuk.wfrpchar.db;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import pl.khuzzuk.wfrpchar.db.annot.Manager;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import pl.khuzzuk.wfrpchar.db.annot.Weapons;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
 import pl.khuzzuk.wfrpchar.messaging.*;
 
-import javax.inject.Inject;
 import java.util.List;
 
 @Configuration
-@Lazy
+@PropertySource("classpath:/messages.properties")
 public class DAOConfig {
-    public static final String WEAPONS_QUERRY = "weaponsQuerry";
-    public static final String WEAPONS_RESULT = "weaponsQuerry";
-    @Inject
-    @Subscribers
-    @Manager
-    private DAOReactor daoReactor;
+    public static final String WEAPONS_QUERRY = "wq";
+    public static final String WEAPONS_RESULT = "wr";
 
     //Publishers
     @Bean
@@ -34,10 +29,9 @@ public class DAOConfig {
     @Bean
     @Subscribers
     @Weapons
-    public Subscriber<Message> weaponsQuerySubscriber() {
+    public Subscriber<Message> weaponsQuerySubscriber(Environment environment) {
         Subscriber<Message> subscriber = new CommunicateSubscriber();
-        subscriber.setMessageType(WEAPONS_QUERRY);
-        subscriber.setReactor(daoReactor::getAllWeapons);
+        subscriber.setMessageType(environment.getProperty("weapons.query"));
         return subscriber;
     }
 }

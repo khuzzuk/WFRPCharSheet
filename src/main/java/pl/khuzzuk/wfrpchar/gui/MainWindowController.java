@@ -10,6 +10,7 @@ import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
 import pl.khuzzuk.wfrpchar.messaging.*;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
+@MainWindowBean
 public class MainWindowController implements Initializable {
     @Inject
     @Manager
@@ -110,6 +112,10 @@ public class MainWindowController implements Initializable {
     @FXML
     private Slider rollsWW;
 
+    @PostConstruct
+    private void setReactors() {
+        weaponTypeSubscriber.setConsumer(this::loadWeapon);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
