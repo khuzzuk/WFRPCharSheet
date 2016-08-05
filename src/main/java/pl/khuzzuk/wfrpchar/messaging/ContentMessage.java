@@ -1,6 +1,14 @@
 package pl.khuzzuk.wfrpchar.messaging;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+
 public class ContentMessage<T> implements BagMessage<T> {
+    @Getter
+    @Setter
+    @NonNull
+    private String type;
     private T content;
     @Override
     public void setMessage(T content) {

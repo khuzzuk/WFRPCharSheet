@@ -24,10 +24,6 @@ public class MainWindowController implements Initializable {
     @Manager
     private DAOManager manager;
     @Inject
-    @Manager
-    @Setter
-    private DAO dao;
-    @Inject
     @Publishers
     @MainWindowBean
     private Publisher<Message> publisher;
@@ -123,7 +119,7 @@ public class MainWindowController implements Initializable {
         publisher.publish(message);
     }
 
-    void loadWeapon(List<WeaponType> weapons) {
+    public void loadWeapon(List<WeaponType> weapons) {
         List<String> weaponsNames = weapons.stream().map(WeaponType::getName).collect(Collectors.toList());
         weaponList.getItems().clear();
         weaponList.getItems().addAll(weaponsNames);
@@ -163,8 +159,8 @@ public class MainWindowController implements Initializable {
         alert.setHeaderText("Ta akcja spowoduje usunięcie wszystkich dotychczasowych wpisów.");
         alert.setContentText("Kontynuować?");
         Optional<ButtonType> chosenButton = alert.showAndWait();
-        if (chosenButton.orElse(null) == ButtonType.OK) {
+        /*if (chosenButton.orElse(null) == ButtonType.OK) {
             manager.resetDB(dao);
-        }
+        }*/
     }
 }

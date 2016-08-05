@@ -10,7 +10,6 @@ import javafx.stage.Window;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
-import pl.khuzzuk.wfrpchar.db.DAO;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -41,6 +40,5 @@ public class MainWindow extends Stage {
     private void autowire() {
         context.getAutowireCapableBeanFactory()
                 .autowireBeanProperties(controller, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
-        controller.setDao(context.getBean(DAO.class));
     }
 }
