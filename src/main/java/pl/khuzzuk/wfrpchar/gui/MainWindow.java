@@ -30,7 +30,6 @@ public class MainWindow extends Stage {
             Parent root = loader.load();
             setScene(new Scene(root));
             this.controller = loader.getController();
-            controller.setMainWindow(this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -8,7 +8,7 @@ import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
-import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -18,7 +18,7 @@ import java.util.List;
 @Manager
 public class DAO {
     private DAOTransactional<Item, String> daoItems;
-    private DAOTransactional<WeaponType, String> daoWeapons;
+    private DAOTransactional<WhiteWeaponType, String> daoWhiteWeapons;
     private DAOTransactional<FightingEquipment, String> daoFightingEquipment;
     private DAOTransactional<Character, String> daoCharacters;
     private DAOTransactional<Player, String> daoPlayer;
@@ -28,14 +28,14 @@ public class DAO {
 
     @Inject
     public DAO(@Items @NotNull DAOTransactional<Item, String> daoItems,
-               @Weapons @NotNull DAOTransactional<WeaponType, String> daoWeaponType,
+               @WhiteWeapons @NotNull DAOTransactional<WhiteWeaponType, String> daoWhiteWeaponType,
                @FightingEquipments @NotNull DAOTransactional<FightingEquipment, String> daoFightingEquipment,
                @Constants @Characters @NotNull DAOTransactional<Character, String> daoCharacters,
                @Players @NotNull DAOTransactional<Player, String> daoPlayer,
                @Currencies @NotNull DAOTransactional<Currency, String> daoCurrencies,
                @Manager @NotNull DAOManager manager) {
         this.daoItems = daoItems;
-        this.daoWeapons = daoWeaponType;
+        this.daoWhiteWeapons = daoWhiteWeaponType;
         this.daoFightingEquipment = daoFightingEquipment;
         this.daoCharacters = daoCharacters;
         this.daoPlayer = daoPlayer;
@@ -55,9 +55,14 @@ public class DAO {
     }
 
     @NotNull
-    public List<WeaponType> getAllWeapons() {
-        assureSessionInit(daoWeapons);
-        return daoWeapons.getAllItems();
+    public List<WhiteWeaponType> getAllWeapons() {
+        assureSessionInit(daoWhiteWeapons);
+        return daoWhiteWeapons.getAllItems();
+    }
+
+    public WhiteWeaponType getWhiteWeapon(String name) {
+        assureSessionInit(daoWhiteWeapons);
+        return daoWhiteWeapons.getItem(name);
     }
 
     @NotNull
@@ -89,9 +94,9 @@ public class DAO {
         daoItems.commit(item, session);
     }
 
-    void save(WeaponType weaponType) {
-        assureSessionInit(daoWeapons);
-        daoWeapons.commit(weaponType, session);
+    void save(WhiteWeaponType weaponType) {
+        assureSessionInit(daoWhiteWeapons);
+        daoWhiteWeapons.commit(weaponType, session);
     }
 
     void save(FightingEquipment equipment) {

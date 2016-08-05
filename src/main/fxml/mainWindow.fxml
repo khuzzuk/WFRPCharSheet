@@ -35,7 +35,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Plik">
             <items>
-              <MenuItem id="menuItemClose" fx:id="menuItemClose" mnemonicParsing="false" text="Zamknij" />
+              <MenuItem id="menuItemClose" mnemonicParsing="false" text="Zamknij" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edytuj">
@@ -45,7 +45,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Pomoc">
               <items>
-                <MenuItem fx:id="menuItemReset" mnemonicParsing="false" onAction="#onResetAction" text="Resetuj bazę" />
+                <MenuItem mnemonicParsing="false" onAction="#onResetAction" text="Resetuj bazę" />
               </items>
             </Menu>
         </menus>
@@ -179,7 +179,7 @@
                                                             </Slider>
                                                          </children>
                                                       </VBox>
-                                                      <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Zapisz" GridPane.columnIndex="4" GridPane.rowIndex="9">
+                                                      <Button fx:id="saveWhiteWeaponButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Zapisz" GridPane.columnIndex="4" GridPane.rowIndex="9">
                                                          <GridPane.margin>
                                                             <Insets />
                                                          </GridPane.margin>
@@ -213,6 +213,7 @@
                                                          </children>
                                                       </VBox>
                                                       <TextArea fx:id="specialFeaturesWW" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+                                                      <Button fx:id="newWhiteWeaponButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Nowy" GridPane.columnIndex="3" GridPane.rowIndex="9" />
                                                    </children>
                                                    <padding>
                                                       <Insets right="10.0" />

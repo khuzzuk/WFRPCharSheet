@@ -40,7 +40,7 @@ public class DAOManager {
         return new DAOEntityResolver<>("from Item");
     }
     @Bean
-    @Weapons
+    @WhiteWeapons
     public DAOEntityResolver<WeaponType, String> daoWeaponType() {
         return new DAOEntityResolver<>("from Item i " +
                 "where type(i) = OneHandedWeaponType " +

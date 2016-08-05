@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
 import pl.khuzzuk.wfrpchar.gui.MainWindowBean;
 
@@ -46,11 +47,19 @@ public class MessageBusConfig {
     }
 
     @Bean
+    @Publishers
+    @SelectiveQuery
+    @MainWindowBean
+    public BagPublisher<String> queryRequestsPublisher() {
+        return new ContentPublisher<>();
+    }
+
+    @Bean
     @Subscribers
     @MainWindowBean
     @Inject
     public ContentSubscriber<List<WeaponType>> weaponTypeSubscriber(
-            @Value("${weapons.result}") String resultsMessageType) {
+            @Value("${whiteWeapons.result}") String resultsMessageType) {
         ContentSubscriber<List<WeaponType>> subscriber = new BagSubscriber<>();
         subscriber.setMessageType(resultsMessageType);
         return subscriber;
