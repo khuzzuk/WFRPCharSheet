@@ -2,11 +2,13 @@ package pl.khuzzuk.wfrpchar.messaging;
 
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 
 @Component
+@ToString(exclude = {"bus", "reactor"})
 public abstract class AbstractSubscriber implements Subscriber<Message> {
     @Inject
     @BusBean

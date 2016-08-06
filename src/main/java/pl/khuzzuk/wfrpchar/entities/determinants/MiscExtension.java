@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.determinants;
+package pl.khuzzuk.wfrpchar.entities.determinants;
 
 import lombok.*;
 

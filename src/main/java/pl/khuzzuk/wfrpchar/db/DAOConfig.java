@@ -20,6 +20,7 @@ public class DAOConfig {
     @Bean
     @WhiteWeapons
     @Publishers
+    @DaoBean
     public ContentPublisher<List<WhiteWeaponType>> weaponsTypesPublisher() {
         return new ContentPublisher<>();
     }
@@ -28,6 +29,7 @@ public class DAOConfig {
     @DaoBean
     @Publishers
     @WhiteWeapons
+    @SelectiveQuery
     public BagPublisher<WhiteWeaponType> whiteQWeaponResultPublisher() {
         return new ContentPublisher<>();
     }

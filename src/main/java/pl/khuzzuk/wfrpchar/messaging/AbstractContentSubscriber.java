@@ -2,10 +2,12 @@ package pl.khuzzuk.wfrpchar.messaging;
 
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.inject.Inject;
 import java.util.function.Consumer;
 
+@ToString(exclude = {"bus", "reactor", "consumer"})
 public abstract class AbstractContentSubscriber<T> implements ContentSubscriber<T> {
     @Inject
     @BusBean
@@ -22,7 +24,11 @@ public abstract class AbstractContentSubscriber<T> implements ContentSubscriber<
 
     @Override
     public void receive(BagMessage<T> message) {
-        receive(message.getMessage());
+        if (reactor == null) {
+            receive(message.getMessage());
+        } else {
+            reactor.resolve();
+        }
     }
 
     @Override

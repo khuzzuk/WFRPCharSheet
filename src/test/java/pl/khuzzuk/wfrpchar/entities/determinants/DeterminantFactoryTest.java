@@ -1,8 +1,7 @@
-package pl.khuzzuk.wfrpchar.determinants;
+package pl.khuzzuk.wfrpchar.entities.determinants;
 
 import org.testng.annotations.Test;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 

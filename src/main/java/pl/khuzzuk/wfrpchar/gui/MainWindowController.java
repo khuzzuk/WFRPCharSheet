@@ -3,19 +3,24 @@ package pl.khuzzuk.wfrpchar.gui;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.DAOManager;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
-import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
+import pl.khuzzuk.wfrpchar.entities.*;
+import pl.khuzzuk.wfrpchar.entities.items.BastardWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.Item;
+import pl.khuzzuk.wfrpchar.entities.items.Placement;
+import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.Publishers;
+import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -28,6 +33,7 @@ public class MainWindowController implements Initializable {
     @Inject
     @Publishers
     private GuiPublisher guiPublisher;
+    private WhiteWeaponType whiteWeaponType;
 
     //WHITE WEAPON MENU
     @FXML
@@ -102,17 +108,80 @@ public class MainWindowController implements Initializable {
     private Button newWhiteWeaponButton;
     @FXML
     private Button saveWhiteWeaponButton;
+    private Map<DeterminantsType, TextField> whiteWeaponModifiers;
+    private Map<DeterminantsType, TextField> bastardWhiteWeaponModifiers;
+    private Map<LangElement, TextField> whiteWeaponLangFields;
 
     @Override
+
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
+        initFieldsMap();
+        fillComboBoxesWithEnums();
         guiPublisher.requestWhiteWeapons();
     }
 
-    public void loadWeapon(List<WeaponType> weapons) {
-        List<String> weaponsNames = weapons.stream().map(WeaponType::getName).collect(Collectors.toList());
+    void loadWhiteWeapon(List<WhiteWeaponType> weapons) {
+        List<String> weaponsNames = weapons.stream().map(WhiteWeaponType::getName).collect(Collectors.toList());
         weaponList.getItems().clear();
         weaponList.getItems().addAll(weaponsNames);
+    }
+
+    void loadWhiteWeaponToEditor(WhiteWeaponType weaponType) {
+        this.whiteWeaponType = weaponType;
+        nameWW.setText(weaponType.getName());
+        typeNameWW.setText(weaponType.getTypeName());
+        accessibilityBoxWW.getSelectionModel().select(weaponType.getAccessibility().getName());
+        placementBoxWW.getSelectionModel().select(weaponType.getPlacement().getName());
+        diceWW.getSelectionModel().select(weaponType.getDices().name());
+        rollsWW.adjustValue(weaponType.getRolls());
+        weightWW.setText("" + weaponType.getWeight());
+        goldWW.setText("" + weaponType.getPrice().getGold());
+        silverWW.setText("" + weaponType.getPrice().getSilver());
+        leadWW.setText("" + weaponType.getPrice().getLead());
+        strengthBasicWW.setText("" + weaponType.getStrength());
+        weaponType.getDeterminants().stream().forEach(d -> mapTypeToField(whiteWeaponModifiers, d));
+        weaponType.getNames().forEach((lang, val) -> whiteWeaponLangFields.get(lang).setText(val));
+        specialFeaturesWW.setText(weaponType.getSpecialFeature());
+        if (weaponType instanceof BastardWeaponType) {
+            BastardWeaponType bastard = (BastardWeaponType) weaponType;
+            strengthBastardWW.setText("" + bastard.getOneHandedStrength());
+            bastard.getOneHandedDeterminants().stream().forEach(d -> mapTypeToField(bastardWhiteWeaponModifiers, d));
+        }
+    }
+
+    private <T> void mapTypeToField(Map<T, TextField> fields, Labelled content) {
+        TextField field = fields.get(content.getLabel());
+        if (field != null) field.setText(content.getRepresentation());
+    }
+
+    private void initFieldsMap() {
+        whiteWeaponModifiers = new HashMap<>();
+        whiteWeaponModifiers.put(DeterminantsType.BATTLE, battleModWW);
+        whiteWeaponModifiers.put(DeterminantsType.INITIATIVE, initModWW);
+        whiteWeaponModifiers.put(DeterminantsType.PARRY, parryModWW);
+        whiteWeaponModifiers.put(DeterminantsType.OPPONENT_PARRY, opponentParryModWW);
+        bastardWhiteWeaponModifiers = new HashMap<>();
+        bastardWhiteWeaponModifiers.put(DeterminantsType.BATTLE, bastBattleModWW);
+        bastardWhiteWeaponModifiers.put(DeterminantsType.INITIATIVE, bastInitModWW);
+        bastardWhiteWeaponModifiers.put(DeterminantsType.PARRY, bastParryModWW);
+        bastardWhiteWeaponModifiers.put(DeterminantsType.OPPONENT_PARRY, bastOpParryModWW);
+        whiteWeaponLangFields = new HashMap<>();
+        whiteWeaponLangFields.put(LangElement.ADJECTIVE_MASC_SING, langMascWW);
+        whiteWeaponLangFields.put(LangElement.ADJECTIVE_FEM_SING, langFemWW);
+        whiteWeaponLangFields.put(LangElement.ADJECTIVE_NEUTR_SING, langNeutrWW);
+        whiteWeaponLangFields.put(LangElement.ABLATIVE, langAblativeWW);
+    }
+
+    private void fillComboBoxesWithEnums() {
+        accessibilityBoxWW.getItems().clear();
+        accessibilityBoxWW.getItems().addAll(EnumSet.allOf(Item.Accessibility.class)
+                .stream().map(Item.Accessibility::getName).collect(Collectors.toList()));
+        placementBoxWW.getItems().clear();
+        placementBoxWW.getItems().addAll(EnumSet.of(Placement.ONE_HAND, Placement.TWO_HANDS, Placement.BASTARD)
+                .stream().map(Placement::getName).collect(Collectors.toList()));
+        diceWW.getItems().clear();
+        diceWW.getItems().addAll(EnumSet.allOf(Dices.class).stream().map(Dices::name).collect(Collectors.toList()));
     }
 
     private void initializeValidation() {
@@ -137,12 +206,13 @@ public class MainWindowController implements Initializable {
     }
 
     private void setIntegerListenerToTextField(TextField field) {
-                field.textProperty().addListener((obs, oldV, newV) -> field.setText(newV.replaceAll("[^\\d\\-]", "")));
+        field.textProperty().addListener((obs, oldV, newV) -> field.setText(newV.replaceAll("[^\\d\\-]", "")));
     }
 
     private void setFloatListenerToTextField(TextField field) {
-                field.textProperty().addListener((obs, oldV, newV) -> field.setText(newV.replaceAll("[^\\d\\-.,]", "")));
+        field.textProperty().addListener((obs, oldV, newV) -> field.setText(newV.replaceAll("[^\\d\\-.,]", "")));
     }
+
     @FXML
     public void onResetAction() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

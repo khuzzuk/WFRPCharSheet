@@ -1,7 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
 import org.testng.annotations.Test;
-import pl.khuzzuk.wfrpchar.determinants.DeterminantFactory;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

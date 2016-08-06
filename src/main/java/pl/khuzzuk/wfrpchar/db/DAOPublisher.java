@@ -21,6 +21,7 @@ public class DAOPublisher {
     @Inject
     @WhiteWeapons
     @Publishers
+    @DaoBean
     private BagPublisher<List<WhiteWeaponType>> weaponsPublisher;
     @Inject
     @WhiteWeapons
@@ -28,15 +29,12 @@ public class DAOPublisher {
     @SelectiveQuery
     @DaoBean
     private BagPublisher<WhiteWeaponType> whiteQWeaponResultPublisher;
+    @Value("${whiteWeapons.result}")
+    @NotNull
     private String weaponResultMsgType;
-    @Value("whiteWeapons.result.specific")
+    @Value("${whiteWeapons.result.specific}")
     @NotNull
     private String whiteWeaponNamedResultMsgType;
-
-    @Inject
-    public DAOPublisher(@Value("${whiteWeapons.result}") String weaponResultMsgType) {
-        this.weaponResultMsgType = weaponResultMsgType;
-    }
 
     void publish(List<WhiteWeaponType> results) {
         weaponsPublisher.publish(results, weaponResultMsgType);

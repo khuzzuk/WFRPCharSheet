@@ -31,7 +31,7 @@ public class GuiPublisher {
     @NotNull
     @Setter
     private String databaseReset;
-    @Value("whiteWeapons.query.specific")
+    @Value("${whiteWeapons.query.specific}")
     @NotNull
     @Setter
     private String whiteWeaponGet;

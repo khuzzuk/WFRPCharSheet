@@ -72,7 +72,7 @@
                                                       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                                    </rowConstraints>
                                                    <children>
-                                                      <ListView fx:id="weaponList" />
+                                                      <ListView fx:id="weaponList" onMouseClicked="#selectWhiteWeapon" />
                                                    </children>
                                                 </GridPane>
                                                 <GridPane hgap="10.0">

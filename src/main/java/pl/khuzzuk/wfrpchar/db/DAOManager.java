@@ -10,7 +10,7 @@ import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
-import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 
 import javax.inject.Inject;
 
@@ -41,7 +41,7 @@ public class DAOManager {
     }
     @Bean
     @WhiteWeapons
-    public DAOEntityResolver<WeaponType, String> daoWeaponType() {
+    public DAOEntityResolver<WhiteWeaponType, String> daoWeaponType() {
         return new DAOEntityResolver<>("from Item i " +
                 "where type(i) = OneHandedWeaponType " +
                 "or type(i) = TwoHandedWeaponType " +

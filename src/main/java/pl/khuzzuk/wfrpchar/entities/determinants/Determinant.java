@@ -1,6 +1,7 @@
-package pl.khuzzuk.wfrpchar.determinants;
+package pl.khuzzuk.wfrpchar.entities.determinants;
 
 import lombok.*;
+import pl.khuzzuk.wfrpchar.entities.Labelled;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @DiscriminatorValue("0")
 @ToString(exclude = "id")
-public abstract class Determinant {
+public abstract class Determinant implements Labelled<DeterminantsType> {
     @Id
     @GeneratedValue
     @Getter
@@ -59,5 +60,15 @@ public abstract class Determinant {
     void addExtension(Extension extension) {
         if (extensions==null) extensions = new ArrayList<>();
         extensions.add(extension);
+    }
+
+    @Override
+    public DeterminantsType getLabel() {
+        return type;
+    }
+
+    @Override
+    public String getRepresentation() {
+        return "" + getActualValue();
     }
 }

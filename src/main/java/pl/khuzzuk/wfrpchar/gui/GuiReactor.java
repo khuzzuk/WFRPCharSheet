@@ -1,7 +1,9 @@
 package pl.khuzzuk.wfrpchar.gui;
 
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.entities.items.WeaponType;
+import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
+import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
+import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.ContentSubscriber;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
 import pl.khuzzuk.wfrpchar.messaging.Subscribers;
@@ -19,10 +21,18 @@ public class GuiReactor {
     @Inject
     @MainWindowBean
     @Subscribers
-    private ContentSubscriber<List<WeaponType>> weaponTypeSubscriber;
+    @WhiteWeapons
+    private ContentSubscriber<List<WhiteWeaponType>> whiteWeaponTypeSubscriber;
+    @Inject
+    @MainWindowBean
+    @Subscribers
+    @WhiteWeapons
+    @SelectiveQuery
+    private ContentSubscriber<WhiteWeaponType> whiteWeaponNamedSubscriber;
 
     @PostConstruct
     private void setConsumers() {
-        weaponTypeSubscriber.setConsumer(controller::loadWeapon);
+        whiteWeaponTypeSubscriber.setConsumer(controller::loadWhiteWeapon);
+        whiteWeaponNamedSubscriber.setConsumer(controller::loadWhiteWeaponToEditor);
     }
 }

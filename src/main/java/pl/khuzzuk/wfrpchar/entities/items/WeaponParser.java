@@ -1,7 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.determinants.DeterminantFactory;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.rules.Dices;

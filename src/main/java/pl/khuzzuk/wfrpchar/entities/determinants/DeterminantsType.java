@@ -1,11 +1,11 @@
-package pl.khuzzuk.wfrpchar.determinants;
+package pl.khuzzuk.wfrpchar.entities.determinants;
 
 import lombok.Getter;
 
-import static pl.khuzzuk.wfrpchar.determinants.DeterminantsType.DetObjectType.ABSOLUTE;
-import static pl.khuzzuk.wfrpchar.determinants.DeterminantsType.DetObjectType.PERCENTAGE;
+import static pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType.DetObjectType.ABSOLUTE;
+import static pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType.DetObjectType.PERCENTAGE;
 
-enum DeterminantsType {
+public enum DeterminantsType {
     SPEED("Sz", ABSOLUTE),
     BATTLE("WW", PERCENTAGE),
     SHOOTING("US", PERCENTAGE),

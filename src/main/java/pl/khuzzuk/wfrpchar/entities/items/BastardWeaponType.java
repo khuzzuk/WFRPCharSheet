@@ -1,13 +1,11 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import pl.khuzzuk.wfrpchar.determinants.Determinant;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity

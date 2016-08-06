@@ -1,6 +1,9 @@
 package pl.khuzzuk.wfrpchar.messaging;
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +15,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 
 @Component
+@Log4j2(topic = "MessageLogger")
 public class MessageWorker {
     private MultiValuedMap<String, Subscriber<? extends Message>> subscribers;
     private BlockingQueue<Message> channel;
@@ -28,7 +32,9 @@ public class MessageWorker {
 
     @PostConstruct
     private void startWorker() {
-        new Thread(new Scheduler()).start();
+        Thread schedulerThread = new Thread(new Scheduler());
+        schedulerThread.setName("Scheduler thread");
+        schedulerThread.start();
     }
 
     private class Scheduler implements Runnable {
@@ -40,7 +46,9 @@ public class MessageWorker {
                 Collection<Subscriber<? extends Message>> subscriberCollection =
                         subscribers.get(message.getType());
                 for (Subscriber s : subscriberCollection) {
-                    pool.submit(() -> s.receive(message));
+                    log.info("forwarded: " + message + " to: " + s);
+                    pool.submit(() -> {log.info("received message: " + message);
+                        s.receive(message);});
                 }
             }
         }

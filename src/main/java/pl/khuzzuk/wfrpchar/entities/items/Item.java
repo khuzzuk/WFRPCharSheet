@@ -43,22 +43,29 @@ public abstract class Item implements Nameable {
     public abstract String toCsv();
 
     public enum Accessibility {
-        COMMON, UNCOMMON, SCARCE, RARE, EXCEPTIONAL;
+        COMMON("Powszechny"), UNCOMMON("Trudno dostępny"), SCARCE("Niespotykany"), RARE("Rzadki"), EXCEPTIONAL("Niedostępny");
+
+        @Getter
+        private String name;
+
+        Accessibility(String name) {
+            this.name = name;
+        }
 
         public static Accessibility forName(String name) {
             switch (name) {
-                case "COMMON":
+                case "Powszechny":
                     return COMMON;
-                case "UNCOMMON":
+                case "Trudno dostępny":
                     return UNCOMMON;
-                case "SCARCE":
+                case "Niespotykany":
                     return SCARCE;
-                case "RARE":
+                case "Rzadki":
                     return RARE;
-                case "EXCEPTIONAL":
+                case "Niedostępny":
                     return EXCEPTIONAL;
                 default:
-                    throw new IllegalArgumentException("cannot resolve Accessibility level anum with " + name);
+                    throw new IllegalArgumentException("cannot resolve Accessibility level enum with " + name);
             }
         }
     }

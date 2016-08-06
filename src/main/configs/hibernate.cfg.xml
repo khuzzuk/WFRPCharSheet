@@ -38,12 +38,12 @@
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.BastardWeaponType"/>
 
         <!--DETERMINANTS-->
-        <mapping class="pl.khuzzuk.wfrpchar.determinants.Determinant"/>
-        <mapping class="pl.khuzzuk.wfrpchar.determinants.AbsoluteDeterminant"/>
-        <mapping class="pl.khuzzuk.wfrpchar.determinants.PercentageDeterminant"/>
-        <mapping class="pl.khuzzuk.wfrpchar.determinants.Extension"/>
-        <mapping class="pl.khuzzuk.wfrpchar.determinants.MiscExtension"/>
-        <mapping class="pl.khuzzuk.wfrpchar.determinants.ProfessionExtension"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.Determinant"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.AbsoluteDeterminant"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.Extension"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.MiscExtension"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.ProfessionExtension"/>
 
 
     </session-factory>

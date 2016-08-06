@@ -1,11 +1,10 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
 import lombok.*;
-import pl.khuzzuk.wfrpchar.determinants.Determinant;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
