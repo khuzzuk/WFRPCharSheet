@@ -2,11 +2,12 @@ package pl.khuzzuk.wfrpchar.db;
 
 import org.hibernate.Session;
 import pl.khuzzuk.wfrpchar.entities.Nameable;
+import pl.khuzzuk.wfrpchar.entities.Persistable;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class DAOEntityResolver<T extends Nameable, U> implements Stateful, DAOTransactional<T, U> {
+public class DAOEntityResolver<T extends Nameable & Persistable, U> implements Stateful, DAOTransactional<T, U> {
     @NotNull
     private List<T> elements;
     @NotNull
@@ -16,8 +17,8 @@ public class DAOEntityResolver<T extends Nameable, U> implements Stateful, DAOTr
         this.query = query;
     }
 
-    private boolean hasElement(T t) {
-        return elements.stream().filter(e -> e.equals(t)).findFirst().isPresent();
+    private T hasElement(T t) {
+        return elements.stream().filter(e -> e.equals(t)).findFirst().orElse(null);
     }
 
     @Override
@@ -33,10 +34,18 @@ public class DAOEntityResolver<T extends Nameable, U> implements Stateful, DAOTr
     @Override
     public boolean commit(T toCommit, Session session) {
         session.beginTransaction();
-        boolean query = hasElement(toCommit);
-        if (!query) session.save(toCommit);
+        T other = hasElement(toCommit);
+        if (other == null) {
+            session.save(toCommit);
+        } else {
+            toCommit.setId(other.getId());
+            session.detach(other);
+            elements.remove(other);
+            elements.add(toCommit);
+            session.saveOrUpdate(toCommit);
+        }
         session.getTransaction().commit();
-        return !query;
+        return other == null;
     }
 
     @Override

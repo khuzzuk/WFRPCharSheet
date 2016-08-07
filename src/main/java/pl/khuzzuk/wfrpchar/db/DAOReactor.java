@@ -1,15 +1,17 @@
 package pl.khuzzuk.wfrpchar.db;
 
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
-import pl.khuzzuk.wfrpchar.db.annot.Manager;
-import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
-import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
+import pl.khuzzuk.wfrpchar.db.annot.*;
+import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
+import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.*;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @Subscribers
@@ -17,6 +19,8 @@ import javax.inject.Inject;
 @Component
 public class DAOReactor {
     private DAO dao;
+    @Inject
+    private WeaponParser weaponParser;
     @Inject
     @Publishers
     private DAOPublisher daoPublisher;
@@ -26,17 +30,40 @@ public class DAOReactor {
     @DaoBean
     private Subscriber<Message> whiteWeaponsQuerySubscriber;
     @Inject
+    @Named("dbResetSubscriber")
+    @DaoBean
+    @Subscribers
+    private Subscriber<Message> dbResetSubscriber;
+    @Inject
     @Subscribers
     @WhiteWeapons
     @SelectiveQuery
     private ContentSubscriber<String> whiteWeaponSelectionSubscriber;
+    @Inject
+    @Subscribers
+    @WhiteWeapons
+    @Persist
+    private ContentSubscriber<String> whiteWeaponSaveSubscriber;
+    @Value("${whiteWeapons.query}")
+    @NotNull
+    private String whiteWeaponQuery;
 
     private void getAllWeapons() {
         daoPublisher.publish(dao.getAllWeapons());
     }
 
-    void getWhiteWeaponByName(String name) {
+    private void getWhiteWeaponByName(String name) {
         daoPublisher.publish(dao.getWhiteWeapon(name));
+    }
+
+    private void saveWhiteWeapon(String line) {
+        WhiteWeaponType weaponType = (WhiteWeaponType) weaponParser.parseEquipment(line.split("\\|"));
+        dao.save(weaponType);
+        daoPublisher.publish(whiteWeaponQuery);
+    }
+    private void resetDB() {
+        dao.getManager().resetDB(dao);
+        daoPublisher.publish(whiteWeaponQuery);
     }
 
     @Inject
@@ -48,5 +75,7 @@ public class DAOReactor {
     private void setReactors() {
         whiteWeaponsQuerySubscriber.setReactor(this::getAllWeapons);
         whiteWeaponSelectionSubscriber.setConsumer(this::getWhiteWeaponByName);
+        whiteWeaponSaveSubscriber.setConsumer(this::saveWhiteWeapon);
+        dbResetSubscriber.setReactor(this::resetDB);
     }
 }

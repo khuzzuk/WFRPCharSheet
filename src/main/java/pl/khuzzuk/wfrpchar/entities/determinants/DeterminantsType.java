@@ -2,6 +2,8 @@ package pl.khuzzuk.wfrpchar.entities.determinants;
 
 import lombok.Getter;
 
+import java.util.EnumSet;
+
 import static pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType.DetObjectType.ABSOLUTE;
 import static pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType.DetObjectType.PERCENTAGE;
 
@@ -30,6 +32,12 @@ public enum DeterminantsType {
     DeterminantsType(String name, DetObjectType objectType) {
         this.name = name;
         this.objectType = objectType;
+    }
+
+    public DeterminantsType forName(String name) {
+        return EnumSet.allOf(DeterminantsType.class)
+                .stream().filter(d -> d.getName().equals(name))
+                .findFirst().orElseThrow(IllegalArgumentException::new);
     }
 
     enum DetObjectType {

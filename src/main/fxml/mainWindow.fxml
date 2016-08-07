@@ -126,12 +126,12 @@
                                                       <Label text="modyfikatory" GridPane.rowIndex="5" />
                                                       <Label text="pozostałe nazwy" GridPane.rowIndex="7" />
                                                       <Label text="ręczność" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                                      <Label text="modyfikatory bastarda" GridPane.rowIndex="6" />
+                                                      <Label text="modyfikatory jednoręcznie" GridPane.rowIndex="6" />
                                                       <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                          <children>
                                                             <Label text="podstawowe" />
                                                             <TextField fx:id="strengthBasicWW" />
-                                                            <Label fx:id="strengthBastardLabelWW" text="bastarda" />
+                                                            <Label fx:id="strengthBastardLabelWW" text="jednoręcznie" />
                                                             <TextField fx:id="strengthBastardWW" editable="false" />
                                                          </children>
                                                       </VBox>
@@ -179,7 +179,7 @@
                                                             </Slider>
                                                          </children>
                                                       </VBox>
-                                                      <Button fx:id="saveWhiteWeaponButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Zapisz" GridPane.columnIndex="4" GridPane.rowIndex="9">
+                                                      <Button fx:id="saveWhiteWeaponButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveWhiteWeapon" text="Zapisz" GridPane.columnIndex="4" GridPane.rowIndex="9">
                                                          <GridPane.margin>
                                                             <Insets />
                                                          </GridPane.margin>

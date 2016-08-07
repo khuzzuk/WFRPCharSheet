@@ -1,5 +1,7 @@
 package pl.khuzzuk.wfrpchar.db;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
@@ -23,6 +25,7 @@ public class DAO {
     private DAOTransactional<Character, String> daoCharacters;
     private DAOTransactional<Player, String> daoPlayer;
     private DAOTransactional<Currency, String> daoCurrencies;
+    @Getter(AccessLevel.PACKAGE)
     private DAOManager manager;
     private Session session;
 

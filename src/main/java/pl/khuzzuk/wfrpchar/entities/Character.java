@@ -13,12 +13,12 @@ import javax.persistence.Id;
 @Immutable
 @ToString(doNotUseGetters = true, exclude = "id")
 @EqualsAndHashCode(exclude = "id")
-public class Character implements Nameable {
+public class Character implements Nameable, Persistable {
     @Id
     @GeneratedValue
     @Getter
     @Setter
-    private int id;
+    private long id;
     @NonNull
     @Getter
     @Setter

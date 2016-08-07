@@ -2,6 +2,8 @@ package pl.khuzzuk.wfrpchar.entities.items;
 
 import lombok.Getter;
 
+import java.util.EnumSet;
+
 public enum Placement {
     ONE_HAND("Jedna ręka"), TWO_HANDS("Dwie ręce"), BASTARD("Półtoraręczny"),
     HEAD("Głowa"), CORPUS("Tors"), HANDS("Ręce"), LEGS("Nogi"), BELT("Pas"), FEET("Stopy");
@@ -11,5 +13,11 @@ public enum Placement {
 
     Placement(String name) {
         this.name = name;
+    }
+
+    public static Placement forName(String name) {
+        return EnumSet.allOf(Placement.class)
+                .stream().filter(p -> name.equals(p.name)).findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

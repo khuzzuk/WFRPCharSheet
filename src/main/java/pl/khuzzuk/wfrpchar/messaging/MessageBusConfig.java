@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import pl.khuzzuk.wfrpchar.db.annot.Persist;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
@@ -56,15 +57,22 @@ public class MessageBusConfig {
     }
 
     @Bean
+    @Publishers
+    @WhiteWeapons
+    @Persist
+    @MainWindowBean
+    public BagPublisher<WhiteWeaponType> whiteWeaponSavePublisher() {
+        return new ContentPublisher<>();
+    }
+
+    @Bean
     @Subscribers
     @MainWindowBean
     @WhiteWeapons
     @Inject
     public ContentSubscriber<List<WhiteWeaponType>> weaponTypeSubscriber(
-            @Value("${whiteWeapons.result}") String resultsMessageType) {
-        ContentSubscriber<List<WhiteWeaponType>> subscriber = new BagSubscriber<>();
-        subscriber.setMessageType(resultsMessageType);
-        return subscriber;
+            @Value("${whiteWeapons.result}") String msgType) {
+        return new GuiContentSubscriber<>(msgType);
     }
 
     @Bean
@@ -74,8 +82,6 @@ public class MessageBusConfig {
     @WhiteWeapons
     public ContentSubscriber<WhiteWeaponType> whiteWeaponTypeContentSubscriber(
             @Value("${whiteWeapons.result.specific}") String msgType) {
-        ContentSubscriber<WhiteWeaponType> subscriber = new BagSubscriber<>();
-        subscriber.setMessageType(msgType);
-        return subscriber;
+        return new GuiContentSubscriber<>(msgType);
     }
 }

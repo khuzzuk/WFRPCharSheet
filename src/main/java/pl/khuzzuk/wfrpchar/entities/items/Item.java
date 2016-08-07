@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.entities.items;
 
 import lombok.*;
 import pl.khuzzuk.wfrpchar.entities.Nameable;
+import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Price;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @ToString(exclude = "id")
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "id")
-public abstract class Item implements Nameable {
+public abstract class Item implements Nameable, Persistable {
     @Id
     @GeneratedValue
     @Getter

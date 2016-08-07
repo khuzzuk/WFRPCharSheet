@@ -8,6 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.DAOManager;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.entities.items.BastardWeaponType;
@@ -109,7 +110,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button saveWhiteWeaponButton;
     private Map<DeterminantsType, TextField> whiteWeaponModifiers;
-    private Map<DeterminantsType, TextField> bastardWhiteWeaponModifiers;
+    private Map<DeterminantsType, TextField> bastWhiteWeaponMods;
     private Map<LangElement, TextField> whiteWeaponLangFields;
 
     @Override
@@ -146,8 +147,39 @@ public class MainWindowController implements Initializable {
         if (weaponType instanceof BastardWeaponType) {
             BastardWeaponType bastard = (BastardWeaponType) weaponType;
             strengthBastardWW.setText("" + bastard.getOneHandedStrength());
-            bastard.getOneHandedDeterminants().stream().forEach(d -> mapTypeToField(bastardWhiteWeaponModifiers, d));
+            bastard.getOneHandedDeterminants().stream().forEach(d -> mapTypeToField(bastWhiteWeaponMods, d));
         }
+    }
+
+    @FXML
+    void saveWhiteWeapon() {
+        List<String> fields = new LinkedList<>();
+        fields.add(nameWW.getText());
+        fields.add(weightWW.getText());
+        fields.add(goldWW.getText() + "|" + silverWW.getText() + "|" + leadWW.getText());
+        fields.add(Item.Accessibility.forName(accessibilityBoxWW.getSelectionModel().getSelectedItem()).name());
+        fields.add(specialFeaturesWW.getText());
+        fields.add(strengthBasicWW.getText());
+        fields.add("WEAPON");
+        fields.add(Placement.forName(placementBoxWW.getSelectionModel().getSelectedItem()).name());
+        fields.add(langMascWW.getText() + "|" + langFemWW.getText() + "|" +
+                langNeutrWW.getText() + "|" + langAblativeWW.getText());
+        String line = EnumSet.allOf(DeterminantsType.class).stream()
+                .filter(d -> whiteWeaponModifiers.get(d) != null && whiteWeaponModifiers.get(d).getText().length() > 0)
+                .map(d -> "" + whiteWeaponModifiers.get(d).getText() + "," + d.name()).collect(Collectors.joining("|"));
+        fields.add(line);
+        fields.add(typeNameWW.getText());
+        fields.add(diceWW.getSelectionModel().getSelectedItem());
+        fields.add(Integer.toString((int) rollsWW.getValue()));
+        if (placementBoxWW.getSelectionModel().getSelectedIndex()==2) {
+            fields.add(strengthBastardWW.getText());
+            line = EnumSet.allOf(DeterminantsType.class).stream()
+                    .filter(d -> bastWhiteWeaponMods.get(d) != null && bastWhiteWeaponMods.get(d).getText().length() > 0)
+                    .map(d -> "" + bastWhiteWeaponMods.get(d).getText() + "," + d.name())
+                    .collect(Collectors.joining("|"));
+            fields.add(line);
+        }
+        guiPublisher.saveToDB(fields.stream().collect(Collectors.joining("")));
     }
 
     private <T> void mapTypeToField(Map<T, TextField> fields, Labelled content) {
@@ -161,11 +193,11 @@ public class MainWindowController implements Initializable {
         whiteWeaponModifiers.put(DeterminantsType.INITIATIVE, initModWW);
         whiteWeaponModifiers.put(DeterminantsType.PARRY, parryModWW);
         whiteWeaponModifiers.put(DeterminantsType.OPPONENT_PARRY, opponentParryModWW);
-        bastardWhiteWeaponModifiers = new HashMap<>();
-        bastardWhiteWeaponModifiers.put(DeterminantsType.BATTLE, bastBattleModWW);
-        bastardWhiteWeaponModifiers.put(DeterminantsType.INITIATIVE, bastInitModWW);
-        bastardWhiteWeaponModifiers.put(DeterminantsType.PARRY, bastParryModWW);
-        bastardWhiteWeaponModifiers.put(DeterminantsType.OPPONENT_PARRY, bastOpParryModWW);
+        bastWhiteWeaponMods = new HashMap<>();
+        bastWhiteWeaponMods.put(DeterminantsType.BATTLE, bastBattleModWW);
+        bastWhiteWeaponMods.put(DeterminantsType.INITIATIVE, bastInitModWW);
+        bastWhiteWeaponMods.put(DeterminantsType.PARRY, bastParryModWW);
+        bastWhiteWeaponMods.put(DeterminantsType.OPPONENT_PARRY, bastOpParryModWW);
         whiteWeaponLangFields = new HashMap<>();
         whiteWeaponLangFields.put(LangElement.ADJECTIVE_MASC_SING, langMascWW);
         whiteWeaponLangFields.put(LangElement.ADJECTIVE_FEM_SING, langFemWW);

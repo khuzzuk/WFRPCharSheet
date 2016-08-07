@@ -7,8 +7,7 @@ import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
-import pl.khuzzuk.wfrpchar.messaging.BagPublisher;
-import pl.khuzzuk.wfrpchar.messaging.Publishers;
+import pl.khuzzuk.wfrpchar.messaging.*;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -29,6 +28,10 @@ public class DAOPublisher {
     @SelectiveQuery
     @DaoBean
     private BagPublisher<WhiteWeaponType> whiteQWeaponResultPublisher;
+    @Inject
+    @DaoBean
+    @Publishers
+    private Publisher<Message> communicatePublisher;
     @Value("${whiteWeapons.result}")
     @NotNull
     private String weaponResultMsgType;
@@ -39,7 +42,14 @@ public class DAOPublisher {
     void publish(List<WhiteWeaponType> results) {
         weaponsPublisher.publish(results, weaponResultMsgType);
     }
+
     void publish(WhiteWeaponType result) {
         whiteQWeaponResultPublisher.publish(result, whiteWeaponNamedResultMsgType);
+    }
+
+    void publish(String communicate) {
+        Message message = new CommunicateMessage();
+        message.setType(communicate);
+        communicatePublisher.publish(new CommunicateMessage().setType(communicate));
     }
 }

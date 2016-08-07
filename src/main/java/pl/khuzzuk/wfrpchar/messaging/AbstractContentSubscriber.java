@@ -14,7 +14,7 @@ public abstract class AbstractContentSubscriber<T> implements ContentSubscriber<
     private Bus bus;
     @Setter
     @NonNull
-    private Consumer<T> consumer;
+    Consumer<T> consumer;
     @Setter
     @NonNull
     private String messageType;

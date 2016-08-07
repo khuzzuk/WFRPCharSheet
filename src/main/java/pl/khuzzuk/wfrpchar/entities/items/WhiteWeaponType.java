@@ -58,4 +58,16 @@ public abstract class WhiteWeaponType extends WeaponType {
         result = 31 * result + rolls;
         return result;
     }
+
+    public static WhiteWeaponType getFromPlacement(Placement placement) {
+        switch (placement) {
+            case ONE_HAND:
+                return new OneHandedWeaponType();
+            case TWO_HANDS:
+                return new TwoHandedWeaponType();
+            case BASTARD:
+                return new BastardWeaponType();
+        }
+        throw new IllegalArgumentException("Wrong placement for a weapon: " + placement.getName());
+    }
 }

@@ -1,10 +1,11 @@
 package pl.khuzzuk.wfrpchar.gui;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.db.annot.Persist;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
+import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.messaging.*;
 
 import javax.inject.Inject;
@@ -22,19 +23,19 @@ public class GuiPublisher {
     @Publishers
     @SelectiveQuery
     @MainWindowBean
-    private BagPublisher<String> queryRequestPublisher;
+    private BagPublisher<String> textRequestPublisher;
     @Value("${whiteWeapons.query}")
     @NotNull
-    @Setter
     private String whiteWeaponQuery;
     @Value("${database.reset}")
     @NotNull
-    @Setter
     private String databaseReset;
     @Value("${whiteWeapons.query.specific}")
     @NotNull
-    @Setter
     private String whiteWeaponGet;
+    @Value("${whiteWeapons.save}")
+    @NotNull
+    private String whiteWeaponSave;
 
     void requestWhiteWeapons() {
         Message message = new CommunicateMessage();
@@ -49,6 +50,10 @@ public class GuiPublisher {
     }
 
     void requestWhiteWeaponLoad(String name) {
-        queryRequestPublisher.publish(name, whiteWeaponGet);
+        textRequestPublisher.publish(name, whiteWeaponGet);
+    }
+
+    void saveToDB(String line) {
+        textRequestPublisher.publish(line, whiteWeaponSave);
     }
 }
