@@ -11,6 +11,8 @@ import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.*;
+import pl.khuzzuk.wfrpchar.messaging.publishers.*;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.*;
 
 import java.util.List;
 

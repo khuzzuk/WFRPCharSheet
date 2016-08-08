@@ -11,6 +11,11 @@ import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.gui.MainWindowBean;
+import pl.khuzzuk.wfrpchar.messaging.publishers.*;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.ContentSubscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.GuiContentSubscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
 import javax.inject.Inject;
 import javax.inject.Named;

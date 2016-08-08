@@ -58,6 +58,7 @@ public class DAOEntityResolver<T extends Nameable & Persistable, U> implements S
         return elements==null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void init(Session session) {
         session.beginTransaction();

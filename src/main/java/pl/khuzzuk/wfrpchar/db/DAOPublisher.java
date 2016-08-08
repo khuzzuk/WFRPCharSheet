@@ -8,6 +8,9 @@ import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.*;
+import pl.khuzzuk.wfrpchar.messaging.publishers.BagPublisher;
+import pl.khuzzuk.wfrpchar.messaging.publishers.Publisher;
+import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

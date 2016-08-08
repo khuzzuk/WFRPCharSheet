@@ -3,6 +3,8 @@ package pl.khuzzuk.wfrpchar.messaging;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -36,6 +38,7 @@ public class MessageWorker {
 
     private class Scheduler implements Runnable {
 
+        @SuppressWarnings("unchecked")
         @Override
         public void run() {
             while (true) {

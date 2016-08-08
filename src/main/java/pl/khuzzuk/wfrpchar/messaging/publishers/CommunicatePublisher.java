@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.messaging;
+package pl.khuzzuk.wfrpchar.messaging.publishers;
 
 public class CommunicatePublisher extends AbstractPublisher {
 }

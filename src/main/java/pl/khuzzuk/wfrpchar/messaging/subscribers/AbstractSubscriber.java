@@ -1,9 +1,12 @@
-package pl.khuzzuk.wfrpchar.messaging;
+package pl.khuzzuk.wfrpchar.messaging.subscribers;
 
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.messaging.Bus;
+import pl.khuzzuk.wfrpchar.messaging.BusBean;
+import pl.khuzzuk.wfrpchar.messaging.Message;
 
 import javax.inject.Inject;
 

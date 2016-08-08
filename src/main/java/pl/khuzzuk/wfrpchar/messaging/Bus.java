@@ -2,9 +2,10 @@ package pl.khuzzuk.wfrpchar.messaging;
 
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.messaging.publishers.Publisher;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
 import javax.inject.Inject;
 import java.util.concurrent.BlockingQueue;

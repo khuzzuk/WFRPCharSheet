@@ -1,8 +1,11 @@
-package pl.khuzzuk.wfrpchar.messaging;
+package pl.khuzzuk.wfrpchar.messaging.subscribers;
 
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
+import pl.khuzzuk.wfrpchar.messaging.BagMessage;
+import pl.khuzzuk.wfrpchar.messaging.Bus;
+import pl.khuzzuk.wfrpchar.messaging.BusBean;
 
 import javax.inject.Inject;
 import java.util.function.Consumer;

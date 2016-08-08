@@ -14,7 +14,7 @@ import pl.khuzzuk.wfrpchar.entities.items.BastardWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
-import pl.khuzzuk.wfrpchar.messaging.Publishers;
+import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import javax.inject.Inject;

@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.messaging;
+package pl.khuzzuk.wfrpchar.messaging.publishers;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.*;

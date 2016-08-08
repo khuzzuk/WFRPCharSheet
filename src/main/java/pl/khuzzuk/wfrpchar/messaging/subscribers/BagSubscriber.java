@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.messaging;
+package pl.khuzzuk.wfrpchar.messaging.subscribers;
 
 import javax.annotation.PostConstruct;
 

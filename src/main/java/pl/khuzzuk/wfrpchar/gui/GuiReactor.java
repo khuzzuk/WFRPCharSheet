@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
-import pl.khuzzuk.wfrpchar.messaging.ContentSubscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.ContentSubscriber;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
-import pl.khuzzuk.wfrpchar.messaging.Subscribers;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;

@@ -72,6 +72,7 @@ public class DBInitializer {
         weapons.forEach(dao::save);
     }
 
+    @SuppressWarnings("unchecked")
     private List<String[]> readResource(String location) {
         try {
             Path resource = Paths.get(getClass().getResource(location).toURI());

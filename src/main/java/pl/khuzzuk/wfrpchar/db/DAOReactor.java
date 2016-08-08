@@ -7,6 +7,10 @@ import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.*;
+import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.ContentSubscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;

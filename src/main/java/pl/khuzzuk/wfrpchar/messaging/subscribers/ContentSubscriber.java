@@ -1,4 +1,6 @@
-package pl.khuzzuk.wfrpchar.messaging;
+package pl.khuzzuk.wfrpchar.messaging.subscribers;
+
+import pl.khuzzuk.wfrpchar.messaging.BagMessage;
 
 import java.util.function.Consumer;
 

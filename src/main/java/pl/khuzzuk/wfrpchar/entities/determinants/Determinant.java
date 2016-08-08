@@ -31,7 +31,7 @@ public abstract class Determinant implements Labelled<DeterminantsType> {
     @Getter
     @Setter
     @OneToMany(fetch = FetchType.EAGER)
-    private List<Extension> extensions;
+    private List<Extension> extensions = new ArrayList<>();
 
     public int getActualValue() {
         int value = baseValue;
@@ -58,7 +58,6 @@ public abstract class Determinant implements Labelled<DeterminantsType> {
     }
 
     void addExtension(Extension extension) {
-        if (extensions==null) extensions = new ArrayList<>();
         extensions.add(extension);
     }
 

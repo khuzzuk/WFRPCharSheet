@@ -3,10 +3,11 @@ package pl.khuzzuk.wfrpchar.gui;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.db.annot.Persist;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
-import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.messaging.*;
+import pl.khuzzuk.wfrpchar.messaging.publishers.BagPublisher;
+import pl.khuzzuk.wfrpchar.messaging.publishers.Publisher;
+import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
