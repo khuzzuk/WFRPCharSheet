@@ -57,7 +57,7 @@ public class DAOReactor {
     }
 
     private void saveWhiteWeapon(String line) {
-        WhiteWeaponType weaponType = (WhiteWeaponType) weaponParser.parseEquipment(line.split("\\|"));
+        WhiteWeaponType weaponType = (WhiteWeaponType) weaponParser.parseEquipment(line.split(";"));
         dao.save(weaponType);
         daoPublisher.publish(whiteWeaponQuery);
     }

@@ -3,14 +3,13 @@ package pl.khuzzuk.wfrpchar.gui;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.DAOManager;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
-import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
+import pl.khuzzuk.wfrpchar.entities.Labelled;
+import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
-import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.entities.items.BastardWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
@@ -179,7 +178,7 @@ public class MainWindowController implements Initializable {
                     .collect(Collectors.joining("|"));
             fields.add(line);
         }
-        guiPublisher.saveToDB(fields.stream().collect(Collectors.joining("")));
+        guiPublisher.saveToDB(fields.stream().collect(Collectors.joining(";")));
     }
 
     private <T> void mapTypeToField(Map<T, TextField> fields, Labelled content) {
