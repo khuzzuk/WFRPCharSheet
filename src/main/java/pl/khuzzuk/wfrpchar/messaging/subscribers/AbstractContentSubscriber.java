@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.messaging.subscribers;
 
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,6 +20,7 @@ public abstract class AbstractContentSubscriber<T> implements ContentSubscriber<
     @NonNull
     Consumer<T> consumer;
     @Setter
+    @Getter
     @NonNull
     private String messageType;
     @Setter
@@ -43,5 +45,10 @@ public abstract class AbstractContentSubscriber<T> implements ContentSubscriber<
     @Override
     public void receive(T content) {
         consumer.accept(content);
+    }
+
+    @Override
+    public void unSubscribe() {
+        bus.unSubscribe(this, getMessageType());
     }
 }

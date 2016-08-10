@@ -9,6 +9,7 @@ import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.*;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.ContentSubscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.MultiSubscriber;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscriber;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
@@ -48,9 +49,15 @@ public class DAOReactor {
     @WhiteWeapons
     @Persist
     private ContentSubscriber<String> whiteWeaponSaveSubscriber;
+    @Inject
+    @Subscribers
+    @DaoBean
+    private MultiSubscriber<Message> multiSubscriber;
     @Value("${whiteWeapons.query}")
     @NotNull
     private String whiteWeaponQuery;
+    @Value("${database.reset}")
+    private String resetDbMessage;
 
     private void getAllWeapons() {
         daoPublisher.publish(dao.getAllWeapons());
@@ -77,9 +84,11 @@ public class DAOReactor {
 
     @PostConstruct
     private void setReactors() {
-        whiteWeaponsQuerySubscriber.setReactor(this::getAllWeapons);
+        multiSubscriber.subscribe(whiteWeaponQuery, this::getAllWeapons);
+        multiSubscriber.subscribe(resetDbMessage, this::resetDB);
+        //whiteWeaponsQuerySubscriber.setReactor(this::getAllWeapons);
         whiteWeaponSelectionSubscriber.setConsumer(this::getWhiteWeaponByName);
         whiteWeaponSaveSubscriber.setConsumer(this::saveWhiteWeapon);
-        dbResetSubscriber.setReactor(this::resetDB);
+        //dbResetSubscriber.setReactor(this::resetDB);
     }
 }

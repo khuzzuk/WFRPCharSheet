@@ -68,6 +68,13 @@ public class DAOConfig {
 
     @Bean
     @Subscribers
+    @DaoBean
+    public MultiSubscriber<Message> simpleSubscriber() {
+        return new MultiCommunicateSubscriber();
+    }
+
+    @Bean
+    @Subscribers
     @WhiteWeapons
     @SelectiveQuery
     public ContentSubscriber<String> whiteWeaponNameSubscriber(

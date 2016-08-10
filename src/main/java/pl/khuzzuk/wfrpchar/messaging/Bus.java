@@ -28,6 +28,10 @@ public class Bus implements Publisher {
         subscribers.put(messageType, subscriber);
     }
 
+    public void unSubscribe(Subscriber<? extends Message> subscriber, String msgType) {
+        subscribers.removeMapping(msgType, subscriber);
+    }
+
     @Override
     public void publish(Message message) {
         try {

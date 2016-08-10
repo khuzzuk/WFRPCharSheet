@@ -52,36 +52,32 @@ public class DAO {
     }
 
     @NotNull
-    public List<Item> getAllItems() {
+    List<Item> getAllItems() {
         assureSessionInit(daoItems);
         return daoItems.getAllItems();
     }
 
     @NotNull
-    public List<WhiteWeaponType> getAllWeapons() {
+    List<WhiteWeaponType> getAllWeapons() {
         assureSessionInit(daoWhiteWeapons);
         return daoWhiteWeapons.getAllItems();
     }
 
-    public WhiteWeaponType getWhiteWeapon(String name) {
+    WhiteWeaponType getWhiteWeapon(String name) {
         assureSessionInit(daoWhiteWeapons);
         return daoWhiteWeapons.getItem(name);
     }
 
     @NotNull
-    public List<Character> getAllCharacters() {
+    List<Character> getAllCharacters() {
         assureSessionInit(daoCharacters);
         return daoCharacters.getAllItems();
     }
 
-    @NotNull
-    Session getCurrentSession() {
-        if (session == null) session = manager.openNewSession();
-        return session;
-    }
-
     void closeSession(Session session) {
-        if (this.session == session) closeSession();
+        if (this.session == session) {
+            closeSession();
+        }
         else session.close();
     }
 
