@@ -36,6 +36,7 @@ public class DAOEntityResolver<T extends Nameable & Persistable, U> implements S
         session.beginTransaction();
         T other = hasElement(toCommit);
         if (other == null) {
+            elements.add(toCommit);
             session.save(toCommit);
         } else {
             toCommit.setId(other.getId());

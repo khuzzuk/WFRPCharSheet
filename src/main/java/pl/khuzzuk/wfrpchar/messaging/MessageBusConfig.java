@@ -2,7 +2,6 @@ package pl.khuzzuk.wfrpchar.messaging;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -12,14 +11,12 @@ import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.gui.MainWindowBean;
 import pl.khuzzuk.wfrpchar.messaging.publishers.*;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.ContentSubscriber;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.GuiContentSubscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.GuiMultiBagSubscriber;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.MultiContentSubscriber;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscriber;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
-import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -73,20 +70,7 @@ public class MessageBusConfig {
     @Bean
     @Subscribers
     @MainWindowBean
-    @WhiteWeapons
-    @Inject
-    public ContentSubscriber<List<WhiteWeaponType>> weaponTypeSubscriber(
-            @Value("${whiteWeapons.result}") String msgType) {
-        return new GuiContentSubscriber<>(msgType);
-    }
-
-    @Bean
-    @Subscribers
-    @MainWindowBean
-    @SelectiveQuery
-    @WhiteWeapons
-    public ContentSubscriber<WhiteWeaponType> whiteWeaponTypeContentSubscriber(
-            @Value("${whiteWeapons.result.specific}") String msgType) {
-        return new GuiContentSubscriber<>(msgType);
+    public MultiContentSubscriber guiContentSubscriber() {
+        return new GuiMultiBagSubscriber();
     }
 }

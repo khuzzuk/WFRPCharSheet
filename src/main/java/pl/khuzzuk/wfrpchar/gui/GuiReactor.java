@@ -1,38 +1,37 @@
 package pl.khuzzuk.wfrpchar.gui;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
-import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
-import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.ContentSubscriber;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.MultiContentSubscriber;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Component
 @ReactorBean
+@PropertySource("classpath:messages.properties")
 public class GuiReactor {
     @Inject
     @MainWindowBean
     private MainWindowController controller;
     @Inject
-    @MainWindowBean
     @Subscribers
-    @WhiteWeapons
-    private ContentSubscriber<List<WhiteWeaponType>> whiteWeaponTypeSubscriber;
-    @Inject
     @MainWindowBean
-    @Subscribers
-    @WhiteWeapons
-    @SelectiveQuery
-    private ContentSubscriber<WhiteWeaponType> whiteWeaponNamedSubscriber;
+    private MultiContentSubscriber guiContentSubscriber;
+    @Value("${whiteWeapons.result}")
+    @NotNull
+    private String whiteWeaponsMsg;
+    @Value("${whiteWeapons.result.specific}")
+    @NotNull
+    private String namedWhiteWeaponsMsg;
 
     @PostConstruct
     private void setConsumers() {
-        whiteWeaponTypeSubscriber.setConsumer(controller::loadWhiteWeapon);
-        whiteWeaponNamedSubscriber.setConsumer(controller::loadWhiteWeaponToEditor);
+        guiContentSubscriber.subscribe(whiteWeaponsMsg, controller::loadWhiteWeapon);
+        guiContentSubscriber.subscribe(namedWhiteWeaponsMsg, controller::loadWhiteWeaponToEditor);
     }
 }

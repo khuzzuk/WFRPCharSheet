@@ -80,7 +80,6 @@ public abstract class AbstractMultiContentSubscriber implements MultiContentSubs
         }
     }
 
-    @Override
     public void setConsumer(Consumer consumer) {
         assureProperState();
         assureInit();
@@ -94,7 +93,6 @@ public abstract class AbstractMultiContentSubscriber implements MultiContentSubs
         reactors.put(messageType, reactor);
     }
 
-    @Override
     public void receive(Object content) {
         consumers.get(messageType).stream().forEach(c -> c.accept(content));
         reactors.get(messageType).stream().forEach(Reactor::resolve);
