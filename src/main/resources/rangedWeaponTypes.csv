@@ -1,0 +1,2 @@
+spec:name;weight;price;accessibility;specialFeatures;strength;type;placement;langElements;determinants;typeName;shortRange;effectiveRange;MaxRange;reloadTime
+Krótki łuk;0.75;7|0|0;COMMON;;0;RANGED_WEAPON;TWO_HANDS;|||Krótkim łukiem;;łuk;14;32;150;WITH_SHOOTING

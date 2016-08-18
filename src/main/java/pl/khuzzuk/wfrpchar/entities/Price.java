@@ -9,7 +9,6 @@ import javax.persistence.Embeddable;
 @Immutable
 @Embeddable
 @NoArgsConstructor
-@ToString
 public class Price {
     @NonNull
     @Setter
@@ -37,5 +36,10 @@ public class Price {
             }
         }
         return price;
+    }
+
+    @Override
+    public String toString() {
+        return gold + "|" + silver + "|" + lead;
     }
 }
