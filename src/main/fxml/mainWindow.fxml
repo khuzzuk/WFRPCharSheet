@@ -223,7 +223,46 @@
                                           </SplitPane>
                                        </content>
                                   </TitledPane>
-                                  <TitledPane animated="false" text="Broń dystansowa" />
+                                  <TitledPane animated="false" text="Broń dystansowa">
+                                      <content>
+                                          <SplitPane dividerPositions="0.3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                              <items>
+                                                  <GridPane>
+                                                      <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                      </columnConstraints>
+                                                      <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                      </rowConstraints>
+                                                      <children>
+                                                          <ListView fx:id="rangedWeaponList" onMouseClicked="#selectWhiteWeapon" />
+                                                      </children>
+                                                  </GridPane>
+                                                  <GridPane hgap="10.0">
+                                                      <columnConstraints>
+                                                          <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="20.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="20.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" percentWidth="20.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" percentWidth="20.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
+                                                      </columnConstraints>
+                                                      <rowConstraints>
+                                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="90.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      </rowConstraints>
+                                                  </GridPane>
+                                              </items>
+                                          </SplitPane>
+                                      </content>
+                                  </TitledPane>
                                   <TitledPane animated="false" text="Zbroja" />
                                     <TitledPane animated="false" text="Ekwipunek" />
                                 </panes>
