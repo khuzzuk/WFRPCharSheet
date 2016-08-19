@@ -42,17 +42,11 @@ public class WeaponParser {
     }
 
     private WeaponType parseWeapon(String[] columns) {
-        Placement placement = Placement.valueOf(columns[7]);
-        if (placement == Placement.ONE_HAND) {
-            return fillWhiteWeaponsVariables(new OneHandedWeaponType(), columns);
-        } else if (placement == Placement.TWO_HANDS) {
-            return fillWhiteWeaponsVariables(new TwoHandedWeaponType(), columns);
-        } else if (placement == Placement.BASTARD){
-            BastardWeaponType bastardWeaponType =
-                    (BastardWeaponType) fillWhiteWeaponsVariables(new BastardWeaponType(), columns);
-            return addBastardFields(bastardWeaponType, columns);
+        WhiteWeaponType weapon = WhiteWeaponType.getFromPlacement(Placement.valueOf(columns[7]));
+        if (weapon instanceof BastardWeaponType) {
+            addBastardFields((BastardWeaponType) weapon, columns);
         }
-        throw new IllegalArgumentException(Arrays.toString(columns));
+        return fillWhiteWeaponsVariables(weapon, columns);
     }
 
     private WhiteWeaponType fillWhiteWeaponsVariables(WhiteWeaponType weaponType, String[] columns) {

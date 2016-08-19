@@ -36,6 +36,7 @@ public class DBInitializer {
         loadCharacters(dao);
         loadMiscItems(dao);
         loadWeaponsTypes(dao);
+        loadRangedWeaponsTypes(dao);
     }
 
     private void loadCurrencies(DAO dao) {
@@ -67,6 +68,15 @@ public class DBInitializer {
         List<FightingEquipment> weapons = readResource("/whiteWeaponTypes.csv")
                 .stream()
                 .filter(s -> !s[0].startsWith(DISCLAIMER))
+                .map(weaponParser::parseEquipment)
+                .collect(Collectors.toList());
+        weapons.forEach(dao::save);
+    }
+
+    private void loadRangedWeaponsTypes(DAO dao) {
+        List<FightingEquipment> weapons = readResource("/rangedWeaponTypes.csv")
+                .stream()
+                .filter(s -> s[0].startsWith(DISCLAIMER))
                 .map(weaponParser::parseEquipment)
                 .collect(Collectors.toList());
         weapons.forEach(dao::save);
