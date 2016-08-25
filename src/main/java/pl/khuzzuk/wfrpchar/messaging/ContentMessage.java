@@ -11,8 +11,9 @@ public class ContentMessage<T> implements BagMessage<T> {
     private String type;
     private T content;
     @Override
-    public void setMessage(T content) {
+    public ContentMessage<T> setMessage(T content) {
         this.content = content;
+        return this;
     }
 
     @Override

@@ -3,7 +3,7 @@ package pl.khuzzuk.wfrpchar.messaging;
 import lombok.Getter;
 import lombok.ToString;
 
-@ToString
+@ToString(includeFieldNames = true)
 public abstract class AbstractMessage implements Message {
     @Getter
     private String type;

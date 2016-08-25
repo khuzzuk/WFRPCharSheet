@@ -235,7 +235,7 @@
                                                           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                                       </rowConstraints>
                                                       <children>
-                                                          <ListView fx:id="rangedWeaponList" onMouseClicked="#selectWhiteWeapon" />
+                                                          <ListView fx:id="rangedWeaponList" onMouseClicked="#selectRangedWeapon" />
                                                       </children>
                                                   </GridPane>
                                                   <GridPane hgap="10.0">
@@ -258,6 +258,31 @@
                                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                           <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                       </rowConstraints>
+                                                      <children>
+                                                          <Label text="Nazwa"/>
+                                                          <TextField fx:id="rwName" GridPane.columnIndex="1"/>
+                                                          <Label text="Waga" GridPane.rowIndex="1"/>
+                                                          <TextField fx:id="rwWeight" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                                          <Label text="Cena" GridPane.rowIndex="2"/>
+                                                          <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                              <children>
+                                                                  <Label text="Złoto"/>
+                                                                  <TextField fx:id="rwGold"/>
+                                                              </children>
+                                                          </VBox>
+                                                          <VBox GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                              <children>
+                                                                  <Label text="Złoto"/>
+                                                                  <TextField fx:id="rwSilver"/>
+                                                              </children>
+                                                          </VBox>
+                                                          <VBox GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                              <children>
+                                                                  <Label text="Złoto"/>
+                                                                  <TextField fx:id="rwLead"/>
+                                                              </children>
+                                                          </VBox>
+                                                      </children>
                                                   </GridPane>
                                               </items>
                                           </SplitPane>

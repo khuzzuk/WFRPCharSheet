@@ -28,10 +28,18 @@ public class GuiReactor {
     @Value("${whiteWeapons.result.specific}")
     @NotNull
     private String namedWhiteWeaponsMsg;
+    @Value("${rangedWeapons.result}")
+    @NotNull
+    private String rangedWeaponMsg;
+    @Value("${rangedWeapons.result.specific}")
+    @NotNull
+    private String namedRangedWeaponMsg;
 
     @PostConstruct
     private void setConsumers() {
         guiContentSubscriber.subscribe(whiteWeaponsMsg, controller::loadWhiteWeapon);
         guiContentSubscriber.subscribe(namedWhiteWeaponsMsg, controller::loadWhiteWeaponToEditor);
+        guiContentSubscriber.subscribe(rangedWeaponMsg, controller::loadRangedWeapon);
+        guiContentSubscriber.subscribe(namedRangedWeaponMsg, controller::loadRangedWeaponToEditor);
     }
 }

@@ -6,9 +6,11 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
+import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.*;
 import pl.khuzzuk.wfrpchar.messaging.publishers.BagPublisher;
+import pl.khuzzuk.wfrpchar.messaging.publishers.MultiContentPublisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
@@ -35,19 +37,36 @@ public class DAOPublisher {
     @DaoBean
     @Publishers
     private Publisher<Message> communicatePublisher;
+    @Inject
+    @Publishers
+    private MultiContentPublisher entitiesPublisher;
     @Value("${whiteWeapons.result}")
     @NotNull
     private String weaponResultMsgType;
     @Value("${whiteWeapons.result.specific}")
     @NotNull
     private String whiteWeaponNamedResultMsgType;
+    @Value("${rangedWeapons.result}")
+    @NotNull
+    private String rangedWeaponsResult;
+    @Value("${rangedWeapons.result.specific}")
+    @NotNull
+    private String rangeWeaponNamedResult;
 
-    void publish(List<WhiteWeaponType> results) {
+    void publishWhiteWeapons(List<WhiteWeaponType> results) {
         weaponsPublisher.publish(results, weaponResultMsgType);
     }
 
     void publish(WhiteWeaponType result) {
         whiteQWeaponResultPublisher.publish(result, whiteWeaponNamedResultMsgType);
+    }
+
+    void publishRangedWeapons(List<RangedWeaponType> results) {
+        entitiesPublisher.publish(results, rangedWeaponsResult);
+    }
+
+    void publish(RangedWeaponType weapon) {
+        entitiesPublisher.publish(weapon, rangeWeaponNamedResult);
     }
 
     void publish(String communicate) {

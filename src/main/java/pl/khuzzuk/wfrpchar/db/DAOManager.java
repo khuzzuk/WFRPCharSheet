@@ -10,6 +10,7 @@ import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
+import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 
 import javax.inject.Inject;
@@ -37,7 +38,7 @@ public class DAOManager {
     @Bean
     @Items
     public DAOEntityResolver<Item, String> daoItems() {
-        return new DAOEntityResolver<>("from Item");
+        return new DAOEntityResolver<>("from Item", openNewSession());
     }
     @Bean
     @WhiteWeapons
@@ -45,7 +46,7 @@ public class DAOManager {
         return new DAOEntityResolver<>("from Item i " +
                 "where type(i) = OneHandedWeaponType " +
                 "or type(i) = TwoHandedWeaponType " +
-                "or type(i) = BastardWeaponType");
+                "or type(i) = BastardWeaponType", openNewSession());
     }
     @Bean
     @FightingEquipments
@@ -53,23 +54,29 @@ public class DAOManager {
         return new DAOEntityResolver<>("from Item i " +
                 "where type(i) = OneHandedWeaponType " +
                 "or type(i) = TwoHandedWeaponType " +
-                "or type(i) = BastardWeaponType");
+                "or type(i) = BastardWeaponType", openNewSession());
     }
     @Bean
     @Players
     public DAOEntityResolver<Player, String> daoPlayer() {
-        return new DAOEntityResolver<>("from Player");
+        return new DAOEntityResolver<>("from Player", openNewSession());
     }
     @Bean
     @Currencies
     public DAOEntityResolver<Currency, String> daoCurrencies() {
-        return new DAOEntityResolver<>("from Currency");
+        return new DAOEntityResolver<>("from Currency", openNewSession());
     }
 
     @Bean
     @Constants
     @Characters
     public DAOEntityResolver<Character, String> daoCharacters() {
-        return new DAOEntityResolver<>("FROM Character");
+        return new DAOEntityResolver<>("FROM Character", openNewSession());
+    }
+
+    @Bean
+    @RangedWeapons
+    public DAOEntityResolver<RangedWeaponType, String> daoRangedWeapons() {
+        return new DAOEntityResolver<>("FROM Item i where type(i) = RangedWeaponType", openNewSession());
     }
 }

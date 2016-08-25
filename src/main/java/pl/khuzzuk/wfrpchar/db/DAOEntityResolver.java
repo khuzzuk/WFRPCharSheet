@@ -12,9 +12,11 @@ public class DAOEntityResolver<T extends Nameable & Persistable, U> implements S
     private List<T> elements;
     @NotNull
     private String query;
+    private Session session;
 
-    public DAOEntityResolver(String query) {
+    public DAOEntityResolver(String query, Session session) {
         this.query = query;
+        this.session = session;
     }
 
     private T hasElement(T t) {
@@ -32,7 +34,10 @@ public class DAOEntityResolver<T extends Nameable & Persistable, U> implements S
     }
 
     @Override
-    public boolean commit(T toCommit, Session session) {
+    public boolean commit(T toCommit) {
+        if (session == null || !session.isOpen()) {
+            throw new IllegalStateException("No session started for committing " + toCommit);
+        }
         session.beginTransaction();
         T other = hasElement(toCommit);
         if (other == null) {
@@ -51,12 +56,16 @@ public class DAOEntityResolver<T extends Nameable & Persistable, U> implements S
 
     @Override
     public void assureInitialization(Session session) {
-        if (requireInitialization()) init(session);
+        if (this.session != null) {
+            this.session.close();
+        }
+        this.session = session;
+        init(session);
     }
 
     @Override
     public boolean requireInitialization() {
-        return elements==null;
+        return elements==null || session == null;
     }
 
     @SuppressWarnings("unchecked")
@@ -65,5 +74,11 @@ public class DAOEntityResolver<T extends Nameable & Persistable, U> implements S
         session.beginTransaction();
         elements = session.createQuery(query).list();
         session.getTransaction().commit();
+    }
+
+    @Override
+    public void closeSession() {
+        session.close();
+        session = null;
     }
 }

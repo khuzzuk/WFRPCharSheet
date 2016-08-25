@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.Persist;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
-import pl.khuzzuk.wfrpchar.messaging.*;
+import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.publishers.*;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.*;
 
@@ -44,6 +43,12 @@ public class DAOConfig {
         return new CommunicatePublisher();
     }
 
+    @Bean
+    @Publishers
+    public MultiContentPublisher entitiesPublisher() {
+        return new MultiBagPublisher();
+    }
+
     //Subscribers
 
     @Bean(name = "dbResetSubscriber")
@@ -53,16 +58,6 @@ public class DAOConfig {
             @Value("${database.reset}") String dbReset) {
         Subscriber<Message> subscriber = new CommunicateSubscriber();
         subscriber.setMessageType(dbReset);
-        return subscriber;
-    }
-
-    @Bean
-    @Subscribers
-    @WhiteWeapons
-    @DaoBean
-    public Subscriber<Message> whiteWeaponsQuerySubscriber(Environment environment) {
-        Subscriber<Message> subscriber = new CommunicateSubscriber();
-        subscriber.setMessageType(environment.getProperty("whiteWeapons.query"));
         return subscriber;
     }
 
@@ -89,5 +84,12 @@ public class DAOConfig {
     public ContentSubscriber<String> whiteWeaponSaveSubscriber(
             @Value("${whiteWeapons.save}") String msgType) {
         return new BagSubscriber<>(msgType);
+    }
+
+    @Bean
+    @Subscribers
+    @DaoBean
+    public MultiContentSubscriber daoItemsSubscriber() {
+        return new MultiBagSubscriber();
     }
 }

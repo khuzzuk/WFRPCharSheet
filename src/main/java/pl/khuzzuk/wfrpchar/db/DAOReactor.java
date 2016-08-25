@@ -6,12 +6,10 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
-import pl.khuzzuk.wfrpchar.messaging.*;
+import pl.khuzzuk.wfrpchar.messaging.Message;
+import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.ContentSubscriber;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.MultiSubscriber;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscriber;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.*;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -30,11 +28,6 @@ public class DAOReactor {
     @Publishers
     private DAOPublisher daoPublisher;
     @Inject
-    @Subscribers
-    @WhiteWeapons
-    @DaoBean
-    private Subscriber<Message> whiteWeaponsQuerySubscriber;
-    @Inject
     @Named("dbResetSubscriber")
     @DaoBean
     @Subscribers
@@ -52,15 +45,23 @@ public class DAOReactor {
     @Inject
     @Subscribers
     @DaoBean
+    private MultiContentSubscriber daoContentSubscriber;
+    @Inject
+    @Subscribers
+    @DaoBean
     private MultiSubscriber<Message> multiSubscriber;
     @Value("${whiteWeapons.query}")
     @NotNull
     private String whiteWeaponQuery;
+    @Value("${rangedWeapons.query}")
+    private String rangedWeaponsQuery;
+    @Value("${rangedWeapons.query.specific}")
+    private String rangeWeaponNamedQuery;
     @Value("${database.reset}")
     private String resetDbMessage;
 
     private void getAllWeapons() {
-        daoPublisher.publish(dao.getAllWeapons());
+        daoPublisher.publishWhiteWeapons(dao.getAllWeapons());
     }
 
     private void getWhiteWeaponByName(String name) {
@@ -72,6 +73,15 @@ public class DAOReactor {
         dao.save(weaponType);
         daoPublisher.publish(whiteWeaponQuery);
     }
+
+    private void getAllRangedWeapons() {
+        daoPublisher.publishRangedWeapons(dao.getAllRangedWeapons());
+    }
+
+    private void getRangedWeaponByName(String name) {
+        daoPublisher.publish(dao.getRangedWeapon(name));
+    }
+
     private void resetDB() {
         dao.getManager().resetDB(dao);
         daoPublisher.publish(whiteWeaponQuery);
@@ -86,9 +96,9 @@ public class DAOReactor {
     private void setReactors() {
         multiSubscriber.subscribe(whiteWeaponQuery, this::getAllWeapons);
         multiSubscriber.subscribe(resetDbMessage, this::resetDB);
-        //whiteWeaponsQuerySubscriber.setReactor(this::getAllWeapons);
+        multiSubscriber.subscribe(rangedWeaponsQuery, this::getAllRangedWeapons);
         whiteWeaponSelectionSubscriber.setConsumer(this::getWhiteWeaponByName);
         whiteWeaponSaveSubscriber.setConsumer(this::saveWhiteWeapon);
-        //dbResetSubscriber.setReactor(this::resetDB);
+        daoContentSubscriber.subscribe(rangeWeaponNamedQuery, this::getRangedWeaponByName);
     }
 }

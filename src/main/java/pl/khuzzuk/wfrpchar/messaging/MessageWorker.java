@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.messaging;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.springframework.stereotype.Component;
@@ -47,8 +48,7 @@ public class MessageWorker {
                         subscribers.get(message.getType());
                 for (Subscriber s : subscriberCollection) {
                     log.info("forwarded: " + message + " to: " + s);
-                    pool.submit(() -> {log.info("received message: " + message);
-                        s.receive(message);});
+                    pool.submit(new MessageTask(message, s));
                 }
             }
         }
@@ -60,6 +60,22 @@ public class MessageWorker {
                 e.printStackTrace();
             }
             return null;
+        }
+    }
+
+    @AllArgsConstructor
+    private class MessageTask implements Runnable {
+        private Message message;
+        private Subscriber subscriber;
+
+        @Override
+        public void run() {
+            try {
+                log.info("received message: " + message);
+                subscriber.receive(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

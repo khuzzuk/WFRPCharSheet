@@ -13,4 +13,9 @@ public class GuiMultiBagSubscriber extends AbstractMultiContentSubscriber {
     public void receive(Object content) {
         Platform.runLater(() -> super.receive(content));
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName();
+    }
 }

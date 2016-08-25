@@ -10,10 +10,7 @@ import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.Labelled;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
-import pl.khuzzuk.wfrpchar.entities.items.BastardWeaponType;
-import pl.khuzzuk.wfrpchar.entities.items.Item;
-import pl.khuzzuk.wfrpchar.entities.items.Placement;
-import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.*;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
@@ -21,6 +18,7 @@ import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Component
@@ -34,12 +32,12 @@ public class MainWindowController implements Initializable {
     @Publishers
     private GuiPublisher guiPublisher;
     private WhiteWeaponType whiteWeaponType;
-
     //WHITE WEAPON MENU
     @FXML
     private ListView<String> weaponList;
     @FXML
     private TextField nameWW;
+
     @FXML
     private TextField typeNameWW;
     @FXML
@@ -108,6 +106,21 @@ public class MainWindowController implements Initializable {
     private Button newWhiteWeaponButton;
     @FXML
     private Button saveWhiteWeaponButton;
+    //RANGED WEAPONS
+    @FXML
+    public ListView<String> rangedWeaponList;
+    @FXML
+    private TextField rwGold;
+    @FXML
+    private TextField rwSilver;
+    @FXML
+    private TextField rwLead;
+
+    @FXML
+    private TextField rwName;
+    @FXML
+    private TextField rwWeight;
+
     private Map<DeterminantsType, TextField> whiteWeaponModifiers;
     private Map<DeterminantsType, TextField> bastWhiteWeaponMods;
     private Map<LangElement, TextField> whiteWeaponLangFields;
@@ -119,12 +132,19 @@ public class MainWindowController implements Initializable {
         initFieldsMap();
         fillComboBoxesWithEnums();
         guiPublisher.requestWhiteWeapons();
+        guiPublisher.requestRangedWeapons();
     }
 
     void loadWhiteWeapon(List<WhiteWeaponType> weapons) {
-        List<String> weaponsNames = weapons.stream().map(WhiteWeaponType::getName).collect(Collectors.toList());
         weaponList.getItems().clear();
-        weaponList.getItems().addAll(weaponsNames);
+        weaponList.getItems()
+                .addAll(weapons.stream().map(Item::getName).collect(Collectors.toList()));
+    }
+
+    void loadRangedWeapon(List<RangedWeaponType> weapons) {
+        rangedWeaponList.getItems().clear();
+        rangedWeaponList.getItems()
+                .addAll(weapons.stream().map(Item::getName).collect(Collectors.toList()));
     }
 
     void loadWhiteWeaponToEditor(WhiteWeaponType weaponType) {
@@ -148,6 +168,14 @@ public class MainWindowController implements Initializable {
             strengthBastardWW.setText("" + bastard.getOneHandedStrength());
             bastard.getOneHandedDeterminants().stream().forEach(d -> mapTypeToField(bastWhiteWeaponMods, d));
         }
+    }
+
+    void loadRangedWeaponToEditor(RangedWeaponType rangedWeapon) {
+        rwName.setText(rangedWeapon.getName());
+        rwWeight.setText("" + rangedWeapon.getWeight());
+        rwGold.setText(rangedWeapon.getPrice().getGold() + "");
+        rwSilver.setText(rangedWeapon.getPrice().getSilver() + "");
+        rwLead.setText(rangedWeapon.getPrice().getLead() + "");
     }
 
     @FXML
@@ -245,7 +273,7 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    public void onResetAction() {
+    private void onResetAction() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Resetowanie wszystkich wpisów w bazie");
         alert.setHeaderText("Ta akcja spowoduje usunięcie wszystkich dotychczasowych wpisów.");
@@ -257,8 +285,22 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    public void selectWhiteWeapon() {
+    private void selectWhiteWeapon() {
         String selected = weaponList.getSelectionModel().getSelectedItem();
-        if (!selected.equals("")) guiPublisher.requestWhiteWeaponLoad(selected);
+        if (selected != null) guiPublisher.requestWhiteWeaponLoad(selected);
+    }
+
+    @FXML
+    private void selectRangedWeapon() {
+        EntitiesAdapter.sendQuery(rangedWeaponList, guiPublisher::requestRangedWeaponLoad);
+    }
+
+    private static class EntitiesAdapter {
+        private static void sendQuery(ListView<String> list, Consumer<String> action) {
+            String selected = list.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                action.accept(selected);
+            }
+        }
     }
 }

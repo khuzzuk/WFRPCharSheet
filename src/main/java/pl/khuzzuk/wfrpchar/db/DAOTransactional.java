@@ -9,7 +9,11 @@ public interface DAOTransactional<T, U> {
 
     T getItem(U criteria);
 
-    boolean commit(T toCommit, Session session);
+    boolean commit(T toCommit);
+
+    boolean requireInitialization();
 
     void assureInitialization(Session session);
+
+    void closeSession();
 }

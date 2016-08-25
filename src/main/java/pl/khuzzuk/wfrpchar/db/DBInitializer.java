@@ -76,7 +76,7 @@ public class DBInitializer {
     private void loadRangedWeaponsTypes(DAO dao) {
         List<FightingEquipment> weapons = readResource("/rangedWeaponTypes.csv")
                 .stream()
-                .filter(s -> s[0].startsWith(DISCLAIMER))
+                .filter(s -> !s[0].startsWith(DISCLAIMER))
                 .map(weaponParser::parseEquipment)
                 .collect(Collectors.toList());
         weapons.forEach(dao::save);

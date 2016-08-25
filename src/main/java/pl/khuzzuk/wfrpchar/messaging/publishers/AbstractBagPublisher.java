@@ -1,5 +1,7 @@
 package pl.khuzzuk.wfrpchar.messaging.publishers;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import pl.khuzzuk.wfrpchar.messaging.BagMessage;
 import pl.khuzzuk.wfrpchar.messaging.Bus;
 import pl.khuzzuk.wfrpchar.messaging.BusBean;
@@ -10,6 +12,7 @@ import javax.inject.Inject;
 public abstract class AbstractBagPublisher<T> implements BagPublisher<T> {
     @Inject
     @BusBean
+    @Getter(value = AccessLevel.PACKAGE)
     private Bus bus;
     @Override
     public void publish(T content, String msgType) {

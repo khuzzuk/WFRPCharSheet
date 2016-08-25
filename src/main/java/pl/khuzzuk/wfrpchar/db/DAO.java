@@ -2,7 +2,6 @@ package pl.khuzzuk.wfrpchar.db;
 
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
@@ -10,6 +9,7 @@ import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Item;
+import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 
 import javax.inject.Inject;
@@ -25,9 +25,11 @@ public class DAO {
     private DAOTransactional<Character, String> daoCharacters;
     private DAOTransactional<Player, String> daoPlayer;
     private DAOTransactional<Currency, String> daoCurrencies;
+    @Inject
+    @RangedWeapons
+    private DAOTransactional<RangedWeaponType, String> daoRangedWeapons;
     @Getter(AccessLevel.PACKAGE)
     private DAOManager manager;
-    private Session session;
 
     @Inject
     public DAO(@Items @NotNull DAOTransactional<Item, String> daoItems,
@@ -46,11 +48,6 @@ public class DAO {
         this.manager = manager;
     }
 
-    private void closeSession() {
-        session.close();
-        session = null;
-    }
-
     @NotNull
     List<Item> getAllItems() {
         assureSessionInit(daoItems);
@@ -63,9 +60,19 @@ public class DAO {
         return daoWhiteWeapons.getAllItems();
     }
 
+    List<RangedWeaponType> getAllRangedWeapons() {
+        assureSessionInit(daoRangedWeapons);
+        return daoRangedWeapons.getAllItems();
+    }
+
     WhiteWeaponType getWhiteWeapon(String name) {
         assureSessionInit(daoWhiteWeapons);
         return daoWhiteWeapons.getItem(name);
+    }
+
+    RangedWeaponType getRangedWeapon(String name) {
+        assureSessionInit(daoRangedWeapons);
+        return daoRangedWeapons.getItem(name);
     }
 
     @NotNull
@@ -74,47 +81,39 @@ public class DAO {
         return daoCharacters.getAllItems();
     }
 
-    void closeSession(Session session) {
-        if (this.session == session) {
-            closeSession();
-        }
-        else session.close();
-    }
-
     private void assureSessionInit(DAOTransactional transactional) {
-        if (session == null) {
-            session = manager.openNewSession();
+        if (transactional.requireInitialization()) {
+            transactional.assureInitialization(manager.openNewSession());
         }
-        transactional.assureInitialization(session);
     }
 
     void save(Item item) {
         assureSessionInit(daoItems);
-        daoItems.commit(item, session);
+        daoItems.commit(item);
     }
 
     void save(WhiteWeaponType weaponType) {
         assureSessionInit(daoWhiteWeapons);
-        daoWhiteWeapons.commit(weaponType, session);
+        daoWhiteWeapons.commit(weaponType);
     }
 
     void save(FightingEquipment equipment) {
         assureSessionInit(daoFightingEquipment);
-        daoFightingEquipment.commit(equipment, session);
+        daoFightingEquipment.commit(equipment);
     }
 
     void save(Character character) {
         assureSessionInit(daoCharacters);
-        daoCharacters.commit(character, session);
+        daoCharacters.commit(character);
     }
 
     void save(Player player) {
         assureSessionInit(daoPlayer);
-        daoPlayer.commit(player, session);
+        daoPlayer.commit(player);
     }
 
     void save(Currency currency) {
         assureSessionInit(daoCurrencies);
-        daoCurrencies.commit(currency, session);
+        daoCurrencies.commit(currency);
     }
 }
