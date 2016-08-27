@@ -22,6 +22,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.text.Text?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.khuzzuk.wfrpchar.gui.MainWindowController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -261,27 +262,48 @@
                                                       <children>
                                                           <Label text="Nazwa"/>
                                                           <TextField fx:id="rwName" GridPane.columnIndex="1"/>
+                                                          <Label text="typ" GridPane.columnIndex="2"/>
+                                                          <TextField fx:id="rwTypeName" GridPane.columnIndex="3"/>
                                                           <Label text="Waga" GridPane.rowIndex="1"/>
                                                           <TextField fx:id="rwWeight" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                                                           <Label text="Cena" GridPane.rowIndex="2"/>
                                                           <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                                              <children>
-                                                                  <Label text="Złoto"/>
-                                                                  <TextField fx:id="rwGold"/>
-                                                              </children>
+                                                              <Label text="Złoto"/>
+                                                              <TextField fx:id="rwGold"/>
                                                           </VBox>
                                                           <VBox GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                                              <children>
-                                                                  <Label text="Złoto"/>
-                                                                  <TextField fx:id="rwSilver"/>
-                                                              </children>
+                                                              <Label text="Złoto"/>
+                                                              <TextField fx:id="rwSilver"/>
                                                           </VBox>
                                                           <VBox GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                                              <children>
-                                                                  <Label text="Złoto"/>
-                                                                  <TextField fx:id="rwLead"/>
-                                                              </children>
+                                                              <Label text="Złoto"/>
+                                                              <TextField fx:id="rwLead"/>
                                                           </VBox>
+                                                          <Label text="dostępność" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                                                          <ComboBox fx:id="rwAccessibility" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                                                          <Label text="siła" GridPane.rowIndex="3"/>
+                                                          <TextField fx:id="rwStrength" GridPane.rowIndex="3"
+                                                          GridPane.columnIndex="2"/>
+                                                          <Label text="zasięg" GridPane.rowIndex="4"/>
+                                                          <VBox GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                              <Label text="min."/>
+                                                              <TextField fx:id="rwMinRange"/>
+                                                          </VBox>
+                                                          <VBox GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                                              <Label text="efektywny"/>
+                                                              <TextField fx:id="rwMedRange"/>
+                                                          </VBox>
+                                                          <VBox GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                                              <Label text="max."/>
+                                                              <TextField fx:id="rwMaxRange"/>
+                                                          </VBox>
+                                                          <VBox GridPane.columnIndex="5" GridPane.rowIndex="4">
+                                                              <Label text="ład."/>
+                                                              <ComboBox fx:id="rwLoadTime"/>
+                                                          </VBox>
+                                                          <Label text="cechy specjalne" GridPane.rowIndex="8"/>
+                                                          <TextArea fx:id="rwSpecialFeatures" GridPane.columnIndex="1"
+                                                                    GridPane.columnSpan="2" GridPane.rowIndex="8"/>
                                                       </children>
                                                   </GridPane>
                                               </items>

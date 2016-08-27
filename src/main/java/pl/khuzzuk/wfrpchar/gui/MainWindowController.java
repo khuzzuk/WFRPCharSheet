@@ -9,6 +9,7 @@ import pl.khuzzuk.wfrpchar.db.DAOManager;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.Labelled;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
+import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.*;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
@@ -37,7 +38,6 @@ public class MainWindowController implements Initializable {
     private ListView<String> weaponList;
     @FXML
     private TextField nameWW;
-
     @FXML
     private TextField typeNameWW;
     @FXML
@@ -52,6 +52,7 @@ public class MainWindowController implements Initializable {
     @FXML
     @Numeric
     private TextField leadWW;
+
     @FXML
     @Numeric
     private TextField strengthBasicWW;
@@ -108,25 +109,40 @@ public class MainWindowController implements Initializable {
     private Button saveWhiteWeaponButton;
     //RANGED WEAPONS
     @FXML
-    public ListView<String> rangedWeaponList;
+    private ListView<String> rangedWeaponList;
+    @FXML
+    private TextField rwName;
+
+    @FXML
+    private TextField rwTypeName;
     @FXML
     private TextField rwGold;
     @FXML
     private TextField rwSilver;
     @FXML
     private TextField rwLead;
-
     @FXML
-    private TextField rwName;
+    private ComboBox<String> rwAccessibility;
+    @FXML
+    private TextArea rwSpecialFeatures;
     @FXML
     private TextField rwWeight;
+    @FXML
+    private TextField rwStrength;
+    @FXML
+    private TextField rwMinRange;
+    @FXML
+    private TextField rwMedRange;
+    @FXML
+    private TextField rwMaxRange;
+    @FXML
+    private ComboBox<String> rwLoadTime;
 
     private Map<DeterminantsType, TextField> whiteWeaponModifiers;
     private Map<DeterminantsType, TextField> bastWhiteWeaponMods;
     private Map<LangElement, TextField> whiteWeaponLangFields;
 
     @Override
-
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
         initFieldsMap();
@@ -160,22 +176,30 @@ public class MainWindowController implements Initializable {
         silverWW.setText("" + weaponType.getPrice().getSilver());
         leadWW.setText("" + weaponType.getPrice().getLead());
         strengthBasicWW.setText("" + weaponType.getStrength());
-        weaponType.getDeterminants().stream().forEach(d -> mapTypeToField(whiteWeaponModifiers, d));
+        weaponType.getDeterminants().forEach(d -> mapTypeToField(whiteWeaponModifiers, d));
         weaponType.getNames().forEach((lang, val) -> whiteWeaponLangFields.get(lang).setText(val));
         specialFeaturesWW.setText(weaponType.getSpecialFeature());
         if (weaponType instanceof BastardWeaponType) {
             BastardWeaponType bastard = (BastardWeaponType) weaponType;
             strengthBastardWW.setText("" + bastard.getOneHandedStrength());
-            bastard.getOneHandedDeterminants().stream().forEach(d -> mapTypeToField(bastWhiteWeaponMods, d));
+            bastard.getOneHandedDeterminants().forEach(d -> mapTypeToField(bastWhiteWeaponMods, d));
         }
     }
 
     void loadRangedWeaponToEditor(RangedWeaponType rangedWeapon) {
         rwName.setText(rangedWeapon.getName());
+        rwTypeName.setText(rangedWeapon.getTypeName());
         rwWeight.setText("" + rangedWeapon.getWeight());
         rwGold.setText(rangedWeapon.getPrice().getGold() + "");
         rwSilver.setText(rangedWeapon.getPrice().getSilver() + "");
         rwLead.setText(rangedWeapon.getPrice().getLead() + "");
+        rwAccessibility.getSelectionModel().select(rangedWeapon.getAccessibility().getName());
+        rwSpecialFeatures.setText(rangedWeapon.getSpecialFeature());
+        rwStrength.setText(rangedWeapon.getStrength() + "");
+        rwMinRange.setText(rangedWeapon.getShortRange() + "");
+        rwMedRange.setText(rangedWeapon.getEffectiveRange() + "");
+        rwMaxRange.setText(rangedWeapon.getMaximumRange() + "");
+        rwLoadTime.getSelectionModel().select(rangedWeapon.getReloadTime().getName());
     }
 
     @FXML
@@ -236,11 +260,17 @@ public class MainWindowController implements Initializable {
         accessibilityBoxWW.getItems().clear();
         accessibilityBoxWW.getItems().addAll(EnumSet.allOf(Item.Accessibility.class)
                 .stream().map(Item.Accessibility::getName).collect(Collectors.toList()));
+        rwAccessibility.getItems().clear();
+        rwAccessibility.getItems().addAll(EnumSet.allOf(Item.Accessibility.class)
+                .stream().map(Item.Accessibility::getName).collect(Collectors.toList()));
         placementBoxWW.getItems().clear();
         placementBoxWW.getItems().addAll(EnumSet.of(Placement.ONE_HAND, Placement.TWO_HANDS, Placement.BASTARD)
                 .stream().map(Placement::getName).collect(Collectors.toList()));
         diceWW.getItems().clear();
         diceWW.getItems().addAll(EnumSet.allOf(Dices.class).stream().map(Dices::name).collect(Collectors.toList()));
+        rwLoadTime.getItems().clear();
+        rwLoadTime.getItems().addAll(EnumSet.allOf(LoadingTimes.class)
+        .stream().map(LoadingTimes::getName).collect(Collectors.toList()));
     }
 
     private void initializeValidation() {
