@@ -52,10 +52,10 @@ public class MainWindowController implements Initializable {
     @FXML
     @Numeric
     private TextField leadWW;
-
     @FXML
     @Numeric
     private TextField strengthBasicWW;
+
     @FXML
     @Numeric
     private TextField strengthBastardWW;
@@ -112,7 +112,6 @@ public class MainWindowController implements Initializable {
     private ListView<String> rangedWeaponList;
     @FXML
     private TextField rwName;
-
     @FXML
     private TextField rwTypeName;
     @FXML
@@ -137,6 +136,14 @@ public class MainWindowController implements Initializable {
     private TextField rwMaxRange;
     @FXML
     private ComboBox<String> rwLoadTime;
+    @FXML
+    private TextField rwLangMasc;
+    @FXML
+    private TextField rwLangFem;
+    @FXML
+    private TextField rwLangNeutr;
+    @FXML
+    private TextField rwLangAblative;
 
     private Map<DeterminantsType, TextField> whiteWeaponModifiers;
     private Map<DeterminantsType, TextField> bastWhiteWeaponMods;
@@ -200,6 +207,10 @@ public class MainWindowController implements Initializable {
         rwMedRange.setText(rangedWeapon.getEffectiveRange() + "");
         rwMaxRange.setText(rangedWeapon.getMaximumRange() + "");
         rwLoadTime.getSelectionModel().select(rangedWeapon.getReloadTime().getName());
+        rwLangMasc.setText(rangedWeapon.getNames().get(LangElement.ADJECTIVE_MASC_SING));
+        rwLangFem.setText(rangedWeapon.getNames().get(LangElement.ADJECTIVE_FEM_SING));
+        rwLangNeutr.setText(rangedWeapon.getNames().get(LangElement.ADJECTIVE_NEUTR_SING));
+        rwLangAblative.setText(rangedWeapon.getNames().get(LangElement.ABLATIVE));
     }
 
     @FXML
