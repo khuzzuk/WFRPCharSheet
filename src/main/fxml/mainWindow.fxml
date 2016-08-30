@@ -46,17 +46,17 @@
     </MenuBar>
     <TabPane GridPane.rowIndex="1">
         <Tab text="Baza">
-            <Accordion maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <Accordion maxHeight="Infinity" maxWidth="Infinity">
                 <panes>
                     <TitledPane animated="false" maxHeight="1.7976931348623157E308"
-                                maxWidth="1.7976931348623157E308" text="Przedmioty">
-                        <Accordion maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                maxWidth="Infinity" text="Przedmioty">
+                        <Accordion maxHeight="Infinity" maxWidth="Infinity">
                             <panes>
-                                <TitledPane animated="false" maxHeight="1.7976931348623157E308"
-                                            maxWidth="1.7976931348623157E308" text="Broń biała">
+                                <TitledPane animated="false" maxHeight="Infinity"
+                                            maxWidth="Infinity" text="Broń biała">
                                     <SplitPane dividerPositions="0.3"
-                                               maxHeight="1.7976931348623157E308"
-                                               maxWidth="1.7976931348623157E308">
+                                               maxHeight="Infinity"
+                                               maxWidth="Infinity">
                                         <GridPane>
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES"
@@ -73,18 +73,18 @@
                                             <columnConstraints>
                                                 <ColumnConstraints halignment="RIGHT"
                                                                    hgrow="ALWAYS"
-                                                                   maxWidth="1.7976931348623157E308"
+                                                                   maxWidth="Infinity"
                                                                    percentWidth="20.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES"
-                                                                   maxWidth="1.7976931348623157E308"
+                                                                   maxWidth="Infinity"
                                                                    percentWidth="20.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES"
                                                                    percentWidth="20.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES"
-                                                                   maxWidth="1.7976931348623157E308"
+                                                                   maxWidth="Infinity"
                                                                    percentWidth="20.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES"
-                                                                   maxWidth="1.7976931348623157E308"/>
+                                                                   maxWidth="Infinity"/>
                                             </columnConstraints>
                                             <rowConstraints>
                                                 <RowConstraints maxHeight="-Infinity"
@@ -122,7 +122,7 @@
                                                                 prefHeight="30.0"
                                                                 vgrow="SOMETIMES"/>
                                                 <RowConstraints
-                                                        maxHeight="1.7976931348623157E308"
+                                                        maxHeight="Infinity"
                                                         minHeight="10.0" prefHeight="30.0"
                                                         vgrow="SOMETIMES"/>
                                             </rowConstraints>
@@ -140,26 +140,20 @@
                                             <VBox alignment="CENTER"
                                                   GridPane.columnIndex="1"
                                                   GridPane.rowIndex="3">
-                                                <children>
-                                                    <Label text="złoto"/>
-                                                    <TextField fx:id="goldWW"/>
-                                                </children>
+                                                <Label text="złoto"/>
+                                                <TextField fx:id="goldWW"/>
                                             </VBox>
                                             <VBox alignment="CENTER"
                                                   GridPane.columnIndex="2"
                                                   GridPane.rowIndex="3">
-                                                <children>
-                                                    <Label text="srebro"/>
-                                                    <TextField fx:id="silverWW"/>
-                                                </children>
+                                                <Label text="srebro"/>
+                                                <TextField fx:id="silverWW"/>
                                             </VBox>
                                             <VBox alignment="CENTER"
                                                   GridPane.columnIndex="3"
                                                   GridPane.rowIndex="3">
-                                                <children>
-                                                    <Label text="miedź"/>
-                                                    <TextField fx:id="leadWW"/>
-                                                </children>
+                                                <Label text="miedź"/>
+                                                <TextField fx:id="leadWW"/>
                                             </VBox>
                                             <Label text="dostępność"
                                                    GridPane.columnIndex="2"
@@ -183,14 +177,12 @@
                                                   GridPane.columnIndex="1"
                                                   GridPane.halignment="CENTER"
                                                   GridPane.rowIndex="4">
-                                                <children>
-                                                    <Label text="podstawowe"/>
-                                                    <TextField fx:id="strengthBasicWW"/>
-                                                    <Label fx:id="strengthBastardLabelWW"
-                                                           text="jednoręcznie"/>
-                                                    <TextField fx:id="strengthBastardWW"
-                                                               editable="false"/>
-                                                </children>
+                                                <Label text="podstawowe"/>
+                                                <TextField fx:id="strengthBasicWW"/>
+                                                <Label fx:id="strengthBastardLabelWW"
+                                                       text="jednoręcznie"/>
+                                                <TextField fx:id="strengthBastardWW"
+                                                           editable="false"/>
                                             </VBox>
                                             <Label text="nazwa typu" GridPane.rowIndex="1"/>
                                             <TextField fx:id="typeNameWW"
@@ -207,43 +199,33 @@
                                             <VBox alignment="CENTER" prefHeight="200.0"
                                                   prefWidth="100.0" GridPane.columnIndex="1"
                                                   GridPane.rowIndex="5">
-                                                <children>
-                                                    <Label text="WW"/>
-                                                    <TextField fx:id="battleModWW"/>
-                                                </children>
+                                                <Label text="WW"/>
+                                                <TextField fx:id="battleModWW"/>
                                             </VBox>
                                             <VBox alignment="CENTER" prefHeight="200.0"
                                                   prefWidth="100.0" GridPane.columnIndex="3"
                                                   GridPane.rowIndex="5">
-                                                <children>
-                                                    <Label text="PP"/>
-                                                    <TextField fx:id="opponentParryModWW"/>
-                                                </children>
+                                                <Label text="PP"/>
+                                                <TextField fx:id="opponentParryModWW"/>
                                             </VBox>
                                             <VBox alignment="CENTER" prefHeight="200.0"
                                                   prefWidth="100.0" GridPane.columnIndex="4"
                                                   GridPane.rowIndex="5">
-                                                <children>
-                                                    <Label text="P"/>
-                                                    <TextField fx:id="parryModWW"/>
-                                                </children>
+                                                <Label text="P"/>
+                                                <TextField fx:id="parryModWW"/>
                                             </VBox>
                                             <VBox alignment="CENTER"
                                                   GridPane.columnIndex="2"
                                                   GridPane.rowIndex="5">
-                                                <children>
-                                                    <Label text="I"/>
-                                                    <TextField fx:id="initModWW"/>
-                                                </children>
+                                                <Label text="I"/>
+                                                <TextField fx:id="initModWW"/>
                                             </VBox>
                                             <VBox alignment="CENTER" prefHeight="200.0"
                                                   prefWidth="100.0" GridPane.columnIndex="3"
                                                   GridPane.rowIndex="4">
-                                                <children>
-                                                    <Label text="kość"/>
-                                                    <ComboBox fx:id="diceWW"
-                                                              prefWidth="150.0"/>
-                                                </children>
+                                                <Label text="kość"/>
+                                                <ComboBox fx:id="diceWW"
+                                                          prefWidth="150.0"/>
                                             </VBox>
                                             <VBox alignment="CENTER" prefHeight="200.0"
                                                   prefWidth="100.0" GridPane.columnIndex="4"
@@ -263,7 +245,7 @@
                                             </VBox>
                                             <Button fx:id="saveWhiteWeaponButton"
                                                     alignment="CENTER"
-                                                    maxWidth="1.7976931348623157E308"
+                                                    maxWidth="Infinity"
                                                     mnemonicParsing="false"
                                                     onAction="#saveWhiteWeapon"
                                                     text="Zapisz" GridPane.columnIndex="4"
@@ -318,7 +300,7 @@
                                                       GridPane.columnSpan="2"
                                                       GridPane.rowIndex="8"/>
                                             <Button fx:id="newWhiteWeaponButton"
-                                                    maxWidth="1.7976931348623157E308"
+                                                    maxWidth="Infinity"
                                                     mnemonicParsing="false" text="Nowy"
                                                     GridPane.columnIndex="3"
                                                     GridPane.rowIndex="9"/>
@@ -327,8 +309,8 @@
                                 </TitledPane>
                                 <TitledPane animated="false" text="Broń dystansowa">
                                     <SplitPane dividerPositions="0.3"
-                                               maxHeight="1.7976931348623157E308"
-                                               maxWidth="1.7976931348623157E308">
+                                               maxHeight="Infinity"
+                                               maxWidth="Infinity">
                                         <GridPane hgap="10">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES"
@@ -345,18 +327,18 @@
                                             <columnConstraints>
                                                 <ColumnConstraints halignment="RIGHT"
                                                                    hgrow="ALWAYS"
-                                                                   maxWidth="1.7976931348623157E308"
+                                                                   maxWidth="Infinity"
                                                                    percentWidth="20.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES"
-                                                                   maxWidth="1.7976931348623157E308"
+                                                                   maxWidth="Infinity"
                                                                    percentWidth="20.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES"
                                                                    percentWidth="20.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES"
-                                                                   maxWidth="1.7976931348623157E308"
+                                                                   maxWidth="Infinity"
                                                                    percentWidth="20.0"/>
                                                 <ColumnConstraints hgrow="SOMETIMES"
-                                                                   maxWidth="1.7976931348623157E308"/>
+                                                                   maxWidth="Infinity"/>
                                             </columnConstraints>
                                             <rowConstraints>
                                                 <RowConstraints maxHeight="-Infinity"
@@ -364,8 +346,8 @@
                                                                 prefHeight="30.0"
                                                                 vgrow="SOMETIMES"/>
                                                 <RowConstraints maxHeight="-Infinity"
-                                                                minHeight="15.0"
-                                                                prefHeight="30.0"
+                                                                minHeight="25.0"
+                                                                prefHeight="40.0"
                                                                 vgrow="SOMETIMES"/>
                                                 <RowConstraints maxHeight="-Infinity"
                                                                 minHeight="10.0"
@@ -473,9 +455,12 @@
                                                       GridPane.columnSpan="2"
                                                       GridPane.rowIndex="6"/>
                                             <Button text="Nowy" GridPane.columnIndex="3"
-                                                    GridPane.rowIndex="7"/>
+                                                    GridPane.rowIndex="7"
+                                                    maxWidth="Infinity"/>
                                             <Button text="Zapisz" GridPane.columnIndex="4"
-                                                    GridPane.rowIndex="7"/>
+                                                    GridPane.rowIndex="7"
+                                                    maxWidth="Infinity"
+                                                    onAction="#saveRangedWeapon"/>
                                         </GridPane>
                                     </SplitPane>
                                 </TitledPane>

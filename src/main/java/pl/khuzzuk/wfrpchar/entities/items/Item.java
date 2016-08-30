@@ -43,6 +43,22 @@ public abstract class Item implements Nameable, Persistable {
 
     public abstract String toCsv();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item that = (Item) o;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (int) weight;
+        return result;
+    }
+
     public enum Accessibility {
         COMMON("Powszechny"), UNCOMMON("Trudno dostępny"), SCARCE("Niespotykany"), RARE("Rzadki"), EXCEPTIONAL("Niedostępny");
 
@@ -52,7 +68,6 @@ public abstract class Item implements Nameable, Persistable {
         Accessibility(String name) {
             this.name = name;
         }
-
         public static Accessibility forName(String name) {
             switch (name) {
                 case "Powszechny":

@@ -4,6 +4,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
+import pl.khuzzuk.wfrpchar.entities.items.Item;
+import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.Message;
@@ -39,11 +41,6 @@ public class DAOReactor {
     private ContentSubscriber<String> whiteWeaponSelectionSubscriber;
     @Inject
     @Subscribers
-    @WhiteWeapons
-    @Persist
-    private ContentSubscriber<String> whiteWeaponSaveSubscriber;
-    @Inject
-    @Subscribers
     @DaoBean
     private MultiContentSubscriber daoContentSubscriber;
     @Inject
@@ -57,6 +54,8 @@ public class DAOReactor {
     private String rangedWeaponsQuery;
     @Value("${rangedWeapons.query.specific}")
     private String rangeWeaponNamedQuery;
+    @Value("${database.saveEquipment}")
+    private String dbSaveEquipment;
     @Value("${database.reset}")
     private String resetDbMessage;
 
@@ -68,10 +67,15 @@ public class DAOReactor {
         daoPublisher.publish(dao.getWhiteWeapon(name));
     }
 
-    private void saveWhiteWeapon(String line) {
-        WhiteWeaponType weaponType = (WhiteWeaponType) weaponParser.parseEquipment(line.split(";"));
-        dao.save(weaponType);
-        daoPublisher.publish(whiteWeaponQuery);
+    private void saveItem(String line) {
+        Item i = weaponParser.parseEquipment(line.split(";"));
+        if (i instanceof WhiteWeaponType) {
+            dao.save((WhiteWeaponType) i);
+            daoPublisher.publish(whiteWeaponQuery);
+        } else if (i instanceof RangedWeaponType) {
+            dao.save((RangedWeaponType) i);
+            daoPublisher.publish(rangedWeaponsQuery);
+        }
     }
 
     private void getAllRangedWeapons() {
@@ -98,7 +102,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(resetDbMessage, this::resetDB);
         multiSubscriber.subscribe(rangedWeaponsQuery, this::getAllRangedWeapons);
         whiteWeaponSelectionSubscriber.setConsumer(this::getWhiteWeaponByName);
-        whiteWeaponSaveSubscriber.setConsumer(this::saveWhiteWeapon);
         daoContentSubscriber.subscribe(rangeWeaponNamedQuery, this::getRangedWeaponByName);
+        daoContentSubscriber.subscribe(dbSaveEquipment, this::saveItem);
     }
 }

@@ -79,15 +79,6 @@ public class DAOConfig {
 
     @Bean
     @Subscribers
-    @WhiteWeapons
-    @Persist
-    public ContentSubscriber<String> whiteWeaponSaveSubscriber(
-            @Value("${whiteWeapons.save}") String msgType) {
-        return new BagSubscriber<>(msgType);
-    }
-
-    @Bean
-    @Subscribers
     @DaoBean
     public MultiContentSubscriber daoItemsSubscriber() {
         return new MultiBagSubscriber();

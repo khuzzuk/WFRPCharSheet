@@ -43,23 +43,7 @@ public abstract class WhiteWeaponType extends WeaponType {
                 ;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WhiteWeaponType that = (WhiteWeaponType) o;
-        return name.equals(that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (dices != null ? dices.hashCode() : 0);
-        result = 31 * result + rolls;
-        return result;
-    }
-
-    public static WhiteWeaponType getFromPlacement(Placement placement) {
+    static WhiteWeaponType getFromPlacement(Placement placement) {
         switch (placement) {
             case ONE_HAND:
                 return new OneHandedWeaponType();

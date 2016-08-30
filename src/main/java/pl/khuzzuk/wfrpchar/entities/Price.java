@@ -9,6 +9,7 @@ import javax.persistence.Embeddable;
 @Immutable
 @Embeddable
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Price {
     @NonNull
     @Setter

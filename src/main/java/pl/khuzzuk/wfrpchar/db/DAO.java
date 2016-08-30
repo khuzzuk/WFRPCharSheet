@@ -97,6 +97,11 @@ public class DAO {
         daoWhiteWeapons.commit(weaponType);
     }
 
+    void save(RangedWeaponType weaponType) {
+        assureSessionInit(daoRangedWeapons);
+        daoRangedWeapons.commit(weaponType);
+    }
+
     void save(FightingEquipment equipment) {
         assureSessionInit(daoFightingEquipment);
         daoFightingEquipment.commit(equipment);

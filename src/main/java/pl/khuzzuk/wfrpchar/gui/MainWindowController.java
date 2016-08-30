@@ -107,6 +107,7 @@ public class MainWindowController implements Initializable {
     private Button newWhiteWeaponButton;
     @FXML
     private Button saveWhiteWeaponButton;
+
     //RANGED WEAPONS
     @FXML
     private ListView<String> rangedWeaponList;
@@ -115,24 +116,32 @@ public class MainWindowController implements Initializable {
     @FXML
     private TextField rwTypeName;
     @FXML
+    @Numeric
     private TextField rwGold;
     @FXML
+    @Numeric
     private TextField rwSilver;
     @FXML
+    @Numeric
     private TextField rwLead;
     @FXML
     private ComboBox<String> rwAccessibility;
     @FXML
     private TextArea rwSpecialFeatures;
     @FXML
+    @FloatNumeric
     private TextField rwWeight;
     @FXML
+    @Numeric
     private TextField rwStrength;
     @FXML
+    @Numeric
     private TextField rwMinRange;
     @FXML
+    @Numeric
     private TextField rwMedRange;
     @FXML
+    @Numeric
     private TextField rwMaxRange;
     @FXML
     private ComboBox<String> rwLoadTime;
@@ -216,6 +225,7 @@ public class MainWindowController implements Initializable {
     @FXML
     void saveWhiteWeapon() {
         List<String> fields = new LinkedList<>();
+        if (nameWW.getText().length() == 0) return;
         fields.add(nameWW.getText());
         fields.add(weightWW.getText());
         fields.add(goldWW.getText() + "|" + silverWW.getText() + "|" + leadWW.getText());
@@ -233,7 +243,7 @@ public class MainWindowController implements Initializable {
         fields.add(typeNameWW.getText());
         fields.add(diceWW.getSelectionModel().getSelectedItem());
         fields.add(Integer.toString((int) rollsWW.getValue()));
-        if (placementBoxWW.getSelectionModel().getSelectedIndex()==2) {
+        if (placementBoxWW.getSelectionModel().getSelectedIndex() == 2) {
             fields.add(strengthBastardWW.getText());
             line = EnumSet.allOf(DeterminantsType.class).stream()
                     .filter(d -> bastWhiteWeaponMods.get(d) != null && bastWhiteWeaponMods.get(d).getText().length() > 0)
@@ -241,7 +251,34 @@ public class MainWindowController implements Initializable {
                     .collect(Collectors.joining("|"));
             fields.add(line);
         }
-        guiPublisher.saveToDB(fields.stream().collect(Collectors.joining(";")));
+        guiPublisher.saveItem(fields.stream().collect(Collectors.joining(";")));
+    }
+
+    @FXML
+    private void saveRangedWeapon() {
+        if (rwName.getText().length() == 0) return;
+        StringBuilder sb = new StringBuilder();
+        List<String> fields = new LinkedList<>();
+        fields.add(rwName.getText());
+        fields.add(rwWeight.getText());
+        fields.add(rwGold.getText() + "|" + rwSilver.getText() + "|" + rwLead.getText());
+        fields.add(Item.Accessibility.forName(
+                rwAccessibility.getSelectionModel().getSelectedItem()).name());
+        fields.add(rwSpecialFeatures.getText());
+        fields.add(rwStrength.getText());
+        fields.add("RANGED_WEAPON");
+        fields.add("TWO_HANDS");
+        fields.add(Optional.ofNullable(rwLangMasc.getText()).orElse("") + "|" +
+                Optional.ofNullable(rwLangFem.getText()).orElse("") + "|" +
+                Optional.ofNullable(rwLangNeutr.getText()).orElse("") + "|" +
+                Optional.ofNullable(rwLangAblative.getText()).orElse(""));
+        fields.add(""); //determinants
+        fields.add(rwTypeName.getText());
+        fields.add(rwMinRange.getText());
+        fields.add(rwMedRange.getText());
+        fields.add(rwMaxRange.getText());
+        fields.add(LoadingTimes.forName(rwLoadTime.getSelectionModel().getSelectedItem()).name());
+        guiPublisher.saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     private <T> void mapTypeToField(Map<T, TextField> fields, Labelled content) {
@@ -281,7 +318,7 @@ public class MainWindowController implements Initializable {
         diceWW.getItems().addAll(EnumSet.allOf(Dices.class).stream().map(Dices::name).collect(Collectors.toList()));
         rwLoadTime.getItems().clear();
         rwLoadTime.getItems().addAll(EnumSet.allOf(LoadingTimes.class)
-        .stream().map(LoadingTimes::getName).collect(Collectors.toList()));
+                .stream().map(LoadingTimes::getName).collect(Collectors.toList()));
     }
 
     private void initializeValidation() {

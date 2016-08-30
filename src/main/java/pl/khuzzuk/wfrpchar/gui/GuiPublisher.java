@@ -43,6 +43,12 @@ public class GuiPublisher {
     @Value("${rangedWeapons.query.specific}")
     @NotNull
     private String rangedWeaponGet;
+    @Value("${rangedWeapons.save}")
+    @NotNull
+    private String rangedWeaponSave;
+    @Value("${database.saveEquipment}")
+    @NotNull
+    private String dbSaveEquipment;
 
     void requestWhiteWeapons() {
         publisher.publish(new CommunicateMessage().setType(whiteWeaponQuery));
@@ -65,7 +71,7 @@ public class GuiPublisher {
         textRequestPublisher.publish(name, rangedWeaponGet);
     }
 
-    void saveToDB(String line) {
-        textRequestPublisher.publish(line, whiteWeaponSave);
+    void saveItem(String line) {
+        textRequestPublisher.publish(line, dbSaveEquipment);
     }
 }
