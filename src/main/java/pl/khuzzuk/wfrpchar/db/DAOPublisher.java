@@ -8,7 +8,8 @@ import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
-import pl.khuzzuk.wfrpchar.messaging.*;
+import pl.khuzzuk.wfrpchar.messaging.CommunicateMessage;
+import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.publishers.BagPublisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.MultiContentPublisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publisher;
@@ -16,7 +17,7 @@ import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Collection;
 
 @Component
 @Publishers
@@ -26,7 +27,7 @@ public class DAOPublisher {
     @WhiteWeapons
     @Publishers
     @DaoBean
-    private BagPublisher<List<WhiteWeaponType>> weaponsPublisher;
+    private BagPublisher<Collection<WhiteWeaponType>> weaponsPublisher;
     @Inject
     @WhiteWeapons
     @Publishers
@@ -53,7 +54,7 @@ public class DAOPublisher {
     @NotNull
     private String rangeWeaponNamedResult;
 
-    void publishWhiteWeapons(List<WhiteWeaponType> results) {
+    void publishWhiteWeapons(Collection<WhiteWeaponType> results) {
         weaponsPublisher.publish(results, weaponResultMsgType);
     }
 
@@ -61,7 +62,7 @@ public class DAOPublisher {
         whiteQWeaponResultPublisher.publish(result, whiteWeaponNamedResultMsgType);
     }
 
-    void publishRangedWeapons(List<RangedWeaponType> results) {
+    void publishRangedWeapons(Collection<RangedWeaponType> results) {
         entitiesPublisher.publish(results, rangedWeaponsResult);
     }
 

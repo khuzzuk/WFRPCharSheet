@@ -454,6 +454,10 @@
                                                       GridPane.columnIndex="1"
                                                       GridPane.columnSpan="2"
                                                       GridPane.rowIndex="6"/>
+                                            <Button text="Usuń" GridPane.columnIndex="2"
+                                                    GridPane.rowIndex="7"
+                                                    maxWidth="Infinity"
+                                                    onAction="#removeRangedWeapon"/>
                                             <Button text="Nowy" GridPane.columnIndex="3"
                                                     GridPane.rowIndex="7"
                                                     maxWidth="Infinity"/>

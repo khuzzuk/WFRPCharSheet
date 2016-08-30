@@ -14,7 +14,7 @@ import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Collection;
 
 @Component
 @Manager
@@ -49,18 +49,18 @@ public class DAO {
     }
 
     @NotNull
-    List<Item> getAllItems() {
+    Collection<Item> getAllItems() {
         assureSessionInit(daoItems);
         return daoItems.getAllItems();
     }
 
     @NotNull
-    List<WhiteWeaponType> getAllWeapons() {
+    Collection<WhiteWeaponType> getAllWeapons() {
         assureSessionInit(daoWhiteWeapons);
         return daoWhiteWeapons.getAllItems();
     }
 
-    List<RangedWeaponType> getAllRangedWeapons() {
+    Collection<RangedWeaponType> getAllRangedWeapons() {
         assureSessionInit(daoRangedWeapons);
         return daoRangedWeapons.getAllItems();
     }
@@ -76,7 +76,7 @@ public class DAO {
     }
 
     @NotNull
-    List<Character> getAllCharacters() {
+    Collection<Character> getAllCharacters() {
         assureSessionInit(daoCharacters);
         return daoCharacters.getAllItems();
     }
@@ -120,5 +120,9 @@ public class DAO {
     void save(Currency currency) {
         assureSessionInit(daoCurrencies);
         daoCurrencies.commit(currency);
+    }
+
+    void removeRangedWeaponType(String name) {
+        daoRangedWeapons.remove(name);
     }
 }

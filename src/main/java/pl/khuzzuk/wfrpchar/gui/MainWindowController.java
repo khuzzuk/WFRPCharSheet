@@ -167,13 +167,13 @@ public class MainWindowController implements Initializable {
         guiPublisher.requestRangedWeapons();
     }
 
-    void loadWhiteWeapon(List<WhiteWeaponType> weapons) {
+    void loadWhiteWeapon(Collection<WhiteWeaponType> weapons) {
         weaponList.getItems().clear();
         weaponList.getItems()
                 .addAll(weapons.stream().map(Item::getName).collect(Collectors.toList()));
     }
 
-    void loadRangedWeapon(List<RangedWeaponType> weapons) {
+    void loadRangedWeapon(Collection<RangedWeaponType> weapons) {
         rangedWeaponList.getItems().clear();
         rangedWeaponList.getItems()
                 .addAll(weapons.stream().map(Item::getName).collect(Collectors.toList()));
@@ -279,6 +279,12 @@ public class MainWindowController implements Initializable {
         fields.add(rwMaxRange.getText());
         fields.add(LoadingTimes.forName(rwLoadTime.getSelectionModel().getSelectedItem()).name());
         guiPublisher.saveItem(fields.stream().collect(Collectors.joining(";")));
+    }
+
+    @FXML
+    private void removeRangedWeapon() {
+        if (rwName.getText().length() == 0) return;
+        guiPublisher.removeRangedWeapon(rwName.getText());
     }
 
     private <T> void mapTypeToField(Map<T, TextField> fields, Labelled content) {

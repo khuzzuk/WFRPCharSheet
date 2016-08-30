@@ -14,7 +14,7 @@ import javax.persistence.*;
 @ToString(exclude = "id")
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "id")
-public abstract class Item implements Nameable, Persistable {
+public abstract class Item implements Nameable<String>, Persistable {
     @Id
     @GeneratedValue
     @Getter

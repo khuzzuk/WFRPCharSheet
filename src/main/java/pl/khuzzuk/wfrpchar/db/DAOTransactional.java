@@ -2,14 +2,16 @@ package pl.khuzzuk.wfrpchar.db;
 
 import org.hibernate.Session;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface DAOTransactional<T, U> {
-    List<T> getAllItems();
+    Collection<T> getAllItems();
 
     T getItem(U criteria);
 
     boolean commit(T toCommit);
+
+    boolean remove(U toRemove);
 
     boolean requireInitialization();
 

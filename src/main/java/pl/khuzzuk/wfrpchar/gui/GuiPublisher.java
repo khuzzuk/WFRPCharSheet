@@ -46,6 +46,9 @@ public class GuiPublisher {
     @Value("${rangedWeapons.save}")
     @NotNull
     private String rangedWeaponSave;
+    @Value("${rangedWeapons.remove}")
+    @NotNull
+    private String rangedWeaponRemove;
     @Value("${database.saveEquipment}")
     @NotNull
     private String dbSaveEquipment;
@@ -73,5 +76,9 @@ public class GuiPublisher {
 
     void saveItem(String line) {
         textRequestPublisher.publish(line, dbSaveEquipment);
+    }
+
+    void removeRangedWeapon(String name) {
+        textRequestPublisher.publish(name, rangedWeaponRemove);
     }
 }

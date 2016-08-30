@@ -54,6 +54,8 @@ public class DAOReactor {
     private String rangedWeaponsQuery;
     @Value("${rangedWeapons.query.specific}")
     private String rangeWeaponNamedQuery;
+    @Value("${rangedWeapons.remove}")
+    private String rangedWeaponRemove;
     @Value("${database.saveEquipment}")
     private String dbSaveEquipment;
     @Value("${database.reset}")
@@ -76,6 +78,11 @@ public class DAOReactor {
             dao.save((RangedWeaponType) i);
             daoPublisher.publish(rangedWeaponsQuery);
         }
+    }
+
+    private void removeRangedWeapon(String name) {
+        dao.removeRangedWeaponType(name);
+        daoPublisher.publish(rangedWeaponsQuery);
     }
 
     private void getAllRangedWeapons() {
@@ -104,5 +111,6 @@ public class DAOReactor {
         whiteWeaponSelectionSubscriber.setConsumer(this::getWhiteWeaponByName);
         daoContentSubscriber.subscribe(rangeWeaponNamedQuery, this::getRangedWeaponByName);
         daoContentSubscriber.subscribe(dbSaveEquipment, this::saveItem);
+        daoContentSubscriber.subscribe(rangedWeaponRemove, this::removeRangedWeapon);
     }
 }

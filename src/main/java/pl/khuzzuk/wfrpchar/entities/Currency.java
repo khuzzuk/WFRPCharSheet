@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Immutable
-public class Currency implements Nameable, Persistable {
+public class Currency implements Nameable<String>, Persistable {
     @Id
     @GeneratedValue
     @Getter

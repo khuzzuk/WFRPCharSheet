@@ -5,32 +5,29 @@ import pl.khuzzuk.wfrpchar.entities.Nameable;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.*;
 
-public class DAOEntityResolver<T extends Nameable & Persistable, U> implements Stateful, DAOTransactional<T, U> {
+public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Comparable<U>>
+        implements Stateful, DAOTransactional<T, U> {
     @NotNull
-    private List<T> elements;
+    private Map<U, T> elements;
     @NotNull
     private String query;
     private Session session;
 
-    public DAOEntityResolver(String query, Session session) {
+    DAOEntityResolver(String query, Session session) {
         this.query = query;
         this.session = session;
     }
 
-    private T hasElement(T t) {
-        return elements.stream().filter(e -> e.equals(t)).findFirst().orElse(null);
-    }
-
     @Override
     public T getItem(U criteria) {
-        return elements.stream().filter(c -> c.getName().equals(criteria)).findAny().orElse(null);
+        return elements.get(criteria);
     }
 
     @Override
-    public List<T> getAllItems() {
-        return elements;
+    public Collection<T> getAllItems() {
+        return elements.values();
     }
 
     @Override
@@ -39,19 +36,35 @@ public class DAOEntityResolver<T extends Nameable & Persistable, U> implements S
             throw new IllegalStateException("No session started for committing " + toCommit);
         }
         session.beginTransaction();
-        T other = hasElement(toCommit);
+        T other = elements.get(toCommit.getName());
         if (other == null) {
-            elements.add(toCommit);
+            elements.put(toCommit.getName(), toCommit);
             session.save(toCommit);
         } else {
             toCommit.setId(other.getId());
             session.detach(other);
-            elements.remove(other);
-            elements.add(toCommit);
+            elements.remove(other.getName());
+            elements.put(toCommit.getName(), toCommit);
             session.saveOrUpdate(toCommit);
         }
-        session.getTransaction().commit();
+        closeTransaction();
         return other == null;
+    }
+
+    @Override
+    public boolean remove(U toRemove) {
+        if (session == null || !session.isOpen()) {
+            throw new IllegalStateException("No session started for removing " + toRemove);
+        }
+        Optional<T> element = Optional.of(elements.get(toRemove));
+        if (!element.isPresent()) {
+            return false;
+        }
+        elements.remove(toRemove);
+        session.beginTransaction();
+        session.remove(element.get());
+        closeTransaction();
+        return true;
     }
 
     @Override
@@ -72,13 +85,19 @@ public class DAOEntityResolver<T extends Nameable & Persistable, U> implements S
     @Override
     public void init(Session session) {
         session.beginTransaction();
-        elements = session.createQuery(query).list();
-        session.getTransaction().commit();
+        elements = new TreeMap<>();
+        Collection<T> result = session.createQuery(query).list();
+        result.forEach(e -> elements.put(e.getName(), e));
+        closeTransaction();
     }
 
     @Override
     public void closeSession() {
         session.close();
         session = null;
+    }
+
+    private void closeTransaction() {
+        session.getTransaction().commit();
     }
 }
