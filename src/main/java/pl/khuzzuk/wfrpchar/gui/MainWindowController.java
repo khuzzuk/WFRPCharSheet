@@ -282,6 +282,12 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
+    private void removeWhiteWeaponType() {
+        if (nameWW.getText().length() == 0) return;
+        guiPublisher.removeWhiteWeapon(nameWW.getText());
+    }
+
+    @FXML
     private void removeRangedWeapon() {
         if (rwName.getText().length() == 0) return;
         guiPublisher.removeRangedWeapon(rwName.getText());

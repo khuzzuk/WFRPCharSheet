@@ -37,6 +37,9 @@ public class GuiPublisher {
     @Value("${whiteWeapons.save}")
     @NotNull
     private String whiteWeaponSave;
+    @Value("${whiteWeapons.remove}")
+    @NotNull
+    private String whiteWeaponTypeRemove;
     @Value("${rangedWeapons.query}")
     @NotNull
     private String rangeWeaponsQuery;
@@ -80,5 +83,9 @@ public class GuiPublisher {
 
     void removeRangedWeapon(String name) {
         textRequestPublisher.publish(name, rangedWeaponRemove);
+    }
+
+    void removeWhiteWeapon(String name) {
+        textRequestPublisher.publish(name, whiteWeaponTypeRemove);
     }
 }

@@ -122,7 +122,13 @@ public class DAO {
         daoCurrencies.commit(currency);
     }
 
+    void removeWhiteWeaponType(String name) {
+        assureSessionInit(daoWhiteWeapons);
+        daoWhiteWeapons.remove(name);
+    }
+
     void removeRangedWeaponType(String name) {
+        assureSessionInit(daoRangedWeapons);
         daoRangedWeapons.remove(name);
     }
 }

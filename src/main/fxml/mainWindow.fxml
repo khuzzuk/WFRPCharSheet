@@ -130,9 +130,9 @@
                                                 <Insets right="10.0"/>
                                             </padding>
                                             <Label text="nazwa"/>
-                                            <Label text="waga" GridPane.rowIndex="2"/>
                                             <TextField fx:id="nameWW"
                                                        GridPane.columnIndex="1"/>
+                                            <Label text="waga" GridPane.rowIndex="2"/>
                                             <TextField fx:id="weightWW"
                                                        GridPane.columnIndex="1"
                                                        GridPane.rowIndex="2"/>
@@ -243,17 +243,6 @@
                                                     </VBox.margin>
                                                 </Slider>
                                             </VBox>
-                                            <Button fx:id="saveWhiteWeaponButton"
-                                                    alignment="CENTER"
-                                                    maxWidth="Infinity"
-                                                    mnemonicParsing="false"
-                                                    onAction="#saveWhiteWeapon"
-                                                    text="Zapisz" GridPane.columnIndex="4"
-                                                    GridPane.rowIndex="9">
-                                                <GridPane.margin>
-                                                    <Insets/>
-                                                </GridPane.margin>
-                                            </Button>
                                             <TextField fx:id="bastBattleModWW"
                                                        editable="false"
                                                        GridPane.columnIndex="1"
@@ -299,11 +288,27 @@
                                                       GridPane.columnIndex="1"
                                                       GridPane.columnSpan="2"
                                                       GridPane.rowIndex="8"/>
+                                            <Button maxWidth="Infinity"
+                                                    GridPane.columnIndex="2"
+                                                    GridPane.rowIndex="9"
+                                                    text="Usuń"
+                                                    onAction="#removeWhiteWeaponType"/>
                                             <Button fx:id="newWhiteWeaponButton"
                                                     maxWidth="Infinity"
                                                     mnemonicParsing="false" text="Nowy"
                                                     GridPane.columnIndex="3"
                                                     GridPane.rowIndex="9"/>
+                                            <Button fx:id="saveWhiteWeaponButton"
+                                                    alignment="CENTER"
+                                                    maxWidth="Infinity"
+                                                    mnemonicParsing="false"
+                                                    onAction="#saveWhiteWeapon"
+                                                    text="Zapisz" GridPane.columnIndex="4"
+                                                    GridPane.rowIndex="9">
+                                                <GridPane.margin>
+                                                    <Insets/>
+                                                </GridPane.margin>
+                                            </Button>
                                         </GridPane>
                                     </SplitPane>
                                 </TitledPane>
