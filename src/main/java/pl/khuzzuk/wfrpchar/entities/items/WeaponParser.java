@@ -8,7 +8,6 @@ import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import javax.inject.Inject;
-import java.util.Arrays;
 
 @Component
 public class WeaponParser {
@@ -67,7 +66,7 @@ public class WeaponParser {
         item.name = columns[0];
         item.weight = Float.parseFloat(columns[1]);
         item.price = Price.parsePrice(columns[2]);
-        item.accessibility = Item.Accessibility.valueOf(columns[3]);
+        item.accessibility = Accessibility.valueOf(columns[3]);
         item.specialFeature = columns[4];
     }
 

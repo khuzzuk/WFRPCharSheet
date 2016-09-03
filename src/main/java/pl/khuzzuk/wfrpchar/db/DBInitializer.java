@@ -5,10 +5,7 @@ import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Price;
-import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
-import pl.khuzzuk.wfrpchar.entities.items.Item;
-import pl.khuzzuk.wfrpchar.entities.items.MiscItem;
-import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
+import pl.khuzzuk.wfrpchar.entities.items.*;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -59,7 +56,7 @@ public class DBInitializer {
                 .stream()
                 .filter(s -> !s[0].startsWith(DISCLAIMER))
                 .map(s -> new MiscItem(s[0], Float.parseFloat(s[1]),
-                        Price.parsePrice(s[2]), Item.Accessibility.valueOf(s[3])))
+                        Price.parsePrice(s[2]), Accessibility.valueOf(s[3])))
                 .collect(Collectors.toList());
         miscItems.forEach(dao::save);
     }

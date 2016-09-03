@@ -229,7 +229,7 @@ public class MainWindowController implements Initializable {
         fields.add(nameWW.getText());
         fields.add(weightWW.getText());
         fields.add(goldWW.getText() + "|" + silverWW.getText() + "|" + leadWW.getText());
-        fields.add(Item.Accessibility.forName(accessibilityBoxWW.getSelectionModel().getSelectedItem()).name());
+        fields.add(Accessibility.forName(accessibilityBoxWW.getSelectionModel().getSelectedItem()).name());
         fields.add(specialFeaturesWW.getText());
         fields.add(strengthBasicWW.getText());
         fields.add("WEAPON");
@@ -262,7 +262,7 @@ public class MainWindowController implements Initializable {
         fields.add(rwName.getText());
         fields.add(rwWeight.getText());
         fields.add(rwGold.getText() + "|" + rwSilver.getText() + "|" + rwLead.getText());
-        fields.add(Item.Accessibility.forName(
+        fields.add(Accessibility.forName(
                 rwAccessibility.getSelectionModel().getSelectedItem()).name());
         fields.add(rwSpecialFeatures.getText());
         fields.add(rwStrength.getText());
@@ -317,20 +317,12 @@ public class MainWindowController implements Initializable {
     }
 
     private void fillComboBoxesWithEnums() {
-        accessibilityBoxWW.getItems().clear();
-        accessibilityBoxWW.getItems().addAll(EnumSet.allOf(Item.Accessibility.class)
-                .stream().map(Item.Accessibility::getName).collect(Collectors.toList()));
-        rwAccessibility.getItems().clear();
-        rwAccessibility.getItems().addAll(EnumSet.allOf(Item.Accessibility.class)
-                .stream().map(Item.Accessibility::getName).collect(Collectors.toList()));
-        placementBoxWW.getItems().clear();
-        placementBoxWW.getItems().addAll(EnumSet.of(Placement.ONE_HAND, Placement.TWO_HANDS, Placement.BASTARD)
-                .stream().map(Placement::getName).collect(Collectors.toList()));
-        diceWW.getItems().clear();
-        diceWW.getItems().addAll(EnumSet.allOf(Dices.class).stream().map(Dices::name).collect(Collectors.toList()));
-        rwLoadTime.getItems().clear();
-        rwLoadTime.getItems().addAll(EnumSet.allOf(LoadingTimes.class)
-                .stream().map(LoadingTimes::getName).collect(Collectors.toList()));
+        ComboBoxHandler.fill(Accessibility.class, accessibilityBoxWW);
+        ComboBoxHandler.fill(Accessibility.class, rwAccessibility);
+        ComboBoxHandler.fill(Dices.class, diceWW);
+        ComboBoxHandler.fill(LoadingTimes.class, rwLoadTime);
+        ComboBoxHandler.fill(EnumSet.of(Placement.ONE_HAND, Placement.TWO_HANDS, Placement.BASTARD),
+                placementBoxWW);
     }
 
     private void initializeValidation() {

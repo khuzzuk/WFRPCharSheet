@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.util.EnumSet;
 
-public enum LoadingTimes implements Nameable {
+public enum LoadingTimes implements Nameable<String> {
     WITH_SHOOTING("do końca rundy"),
     ROUND("runda"),
     TURN("tura");
