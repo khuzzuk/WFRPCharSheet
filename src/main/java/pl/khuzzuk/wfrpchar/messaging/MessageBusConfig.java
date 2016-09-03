@@ -11,10 +11,7 @@ import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.gui.MainWindowBean;
 import pl.khuzzuk.wfrpchar.messaging.publishers.*;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.GuiMultiBagSubscriber;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.MultiContentSubscriber;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscriber;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
+import pl.khuzzuk.wfrpchar.messaging.subscribers.*;
 
 import javax.inject.Named;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -72,5 +69,11 @@ public class MessageBusConfig {
     @MainWindowBean
     public MultiContentSubscriber guiContentSubscriber() {
         return new GuiMultiBagSubscriber();
+    }
+    @Bean
+    @MainWindowBean
+    @Subscribers
+    public MultiSubscriber<Message> guiCommunicateSubscriber() {
+        return new MultiCommunicateSubscriber();
     }
 }

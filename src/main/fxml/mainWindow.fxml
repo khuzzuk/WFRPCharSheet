@@ -293,13 +293,11 @@
                                                     GridPane.rowIndex="9"
                                                     text="Usuń"
                                                     onAction="#removeWhiteWeaponType"/>
-                                            <Button fx:id="newWhiteWeaponButton"
-                                                    maxWidth="Infinity"
+                                            <Button maxWidth="Infinity"
                                                     mnemonicParsing="false" text="Nowy"
                                                     GridPane.columnIndex="3"
                                                     GridPane.rowIndex="9"/>
-                                            <Button fx:id="saveWhiteWeaponButton"
-                                                    alignment="CENTER"
+                                            <Button alignment="CENTER"
                                                     maxWidth="Infinity"
                                                     mnemonicParsing="false"
                                                     onAction="#saveWhiteWeapon"

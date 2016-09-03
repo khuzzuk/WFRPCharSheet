@@ -25,6 +25,9 @@ public class GuiPublisher {
     @SelectiveQuery
     @MainWindowBean
     private BagPublisher<String> textRequestPublisher;
+    @Value("${guiController.initMap}")
+    @NotNull
+    private String initLoader;
     @Value("${whiteWeapons.query}")
     @NotNull
     private String whiteWeaponQuery;
@@ -65,9 +68,7 @@ public class GuiPublisher {
     }
 
     void requestResetDB() {
-        Message message = new CommunicateMessage();
-        message.setType(databaseReset);
-        publisher.publish(message);
+        publisher.publish(new CommunicateMessage().setType(databaseReset));
     }
 
     void requestWhiteWeaponLoad(String name) {
@@ -87,5 +88,9 @@ public class GuiPublisher {
 
     void removeWhiteWeapon(String name) {
         textRequestPublisher.publish(name, whiteWeaponTypeRemove);
+    }
+
+    void initLoader() {
+        publisher.publish(new CommunicateMessage().setType(initLoader));
     }
 }
