@@ -44,6 +44,9 @@ public class MessageWorker {
         public void run() {
             while (true) {
                 Message message = getMessage();
+                if (message == null) {
+                    continue;
+                }
                 Collection<Subscriber<? extends Message>> subscriberCollection =
                         subscribers.get(message.getType());
                 for (Subscriber s : subscriberCollection) {
@@ -58,8 +61,8 @@ public class MessageWorker {
                 return channel.take();
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                return null;
             }
-            return null;
         }
     }
 
@@ -68,6 +71,7 @@ public class MessageWorker {
         private Message message;
         private Subscriber subscriber;
 
+        @SuppressWarnings("unchecked")
         @Override
         public void run() {
             try {

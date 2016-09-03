@@ -22,6 +22,7 @@ public abstract class AbstractMultiContentSubscriber implements MultiContentSubs
     private String messageType;
     private MultiValuedMap<String, Consumer> consumers;
     private MultiValuedMap<String, Reactor> reactors;
+    @SuppressWarnings("unchecked")
     @Override
     public void receive(BagMessage message) {
         try {
@@ -93,6 +94,7 @@ public abstract class AbstractMultiContentSubscriber implements MultiContentSubs
         reactors.put(messageType, reactor);
     }
 
+    @SuppressWarnings("unchecked")
     public void receive(Object content) {
         consumers.get(messageType).stream().forEach(c -> c.accept(content));
         reactors.get(messageType).stream().forEach(Reactor::resolve);

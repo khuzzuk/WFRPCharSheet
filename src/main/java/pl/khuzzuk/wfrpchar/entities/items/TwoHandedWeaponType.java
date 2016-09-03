@@ -1,7 +1,5 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
-import lombok.EqualsAndHashCode;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 

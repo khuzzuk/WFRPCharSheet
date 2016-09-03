@@ -22,8 +22,6 @@ public class ProfessionExtension extends Extension {
 
     @Override
     public String toCsv() {
-        StringBuilder csvEntry = new StringBuilder();
-        csvEntry.append(modifier);
         return modifier + "-" + expSequence + "-true";
     }
 }

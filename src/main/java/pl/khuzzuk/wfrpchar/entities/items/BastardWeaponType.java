@@ -30,9 +30,7 @@ public class BastardWeaponType extends WhiteWeaponType {
 
     @Override
     public String toCsv() {
-        StringBuilder builder = new StringBuilder(super.toCsv());
-        builder.append(";").append(oneHandedStrength);
-        builder.append(";").append(determinantsToCsv(oneHandedDeterminants));
-        return builder.toString();
+        return super.toCsv() + ";" + oneHandedStrength +
+                ";" + determinantsToCsv(oneHandedDeterminants);
     }
 }

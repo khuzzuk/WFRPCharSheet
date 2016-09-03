@@ -165,11 +165,9 @@ public class MainWindowController implements Initializable {
                 .addAll(weapons.stream().map(Item::getName).collect(Collectors.toList()));
     }
 
-
-
     @FXML
     void saveWhiteWeapon() {
-        loader.saveWhiteWeapon(this);
+        loader.saveWhiteWeaponType();
     }
 
     @FXML

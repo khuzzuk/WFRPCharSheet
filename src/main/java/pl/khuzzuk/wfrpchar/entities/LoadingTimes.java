@@ -11,7 +11,6 @@ public enum LoadingTimes implements Nameable<String> {
     TURN("tura");
 
     @Getter
-    @Setter
     private final String name;
 
     LoadingTimes(String name) {

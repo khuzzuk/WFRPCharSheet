@@ -56,10 +56,9 @@ public class WeaponParser {
         return weaponType;
     }
 
-    private BastardWeaponType addBastardFields(BastardWeaponType weaponType, String[] columns) {
+    private void addBastardFields(BastardWeaponType weaponType, String[] columns) {
         weaponType.oneHandedStrength = Integer.parseInt(columns[13]);
         weaponType.oneHandedDeterminants = determinantFactory.createDeterminants(columns[14]);
-        return weaponType;
     }
 
     private void fillItemFields(String[] columns, Item item) {

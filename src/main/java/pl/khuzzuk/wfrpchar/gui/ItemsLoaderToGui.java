@@ -49,7 +49,36 @@ public class ItemsLoaderToGui {
     }
 
     void saveWhiteWeaponType() {
-
+        List<String> fields = new LinkedList<>();
+        if (controller.nameWW.getText().length() == 0) return;
+        fields.add(controller.nameWW.getText());
+        fields.add(controller.weightWW.getText());
+        fields.add(controller.goldWW.getText() + "|" +
+                controller.silverWW.getText() + "|" +
+                controller.leadWW.getText());
+        fields.add(Accessibility.forName(controller.accessibilityBoxWW.getSelectionModel().getSelectedItem()).name());
+        fields.add(controller.specialFeaturesWW.getText());
+        fields.add(controller.strengthBasicWW.getText());
+        fields.add("WEAPON");
+        fields.add(Placement.forName(controller.placementBoxWW.getSelectionModel().getSelectedItem()).name());
+        fields.add(controller.langMascWW.getText() + "|" + controller.langFemWW.getText() + "|" +
+                controller.langNeutrWW.getText() + "|" + controller.langAblativeWW.getText());
+        String line = EnumSet.allOf(DeterminantsType.class).stream()
+                .filter(d -> whiteWeaponModifiers.get(d) != null && whiteWeaponModifiers.get(d).getText().length() > 0)
+                .map(d -> "" + whiteWeaponModifiers.get(d).getText() + "," + d.name()).collect(Collectors.joining("|"));
+        fields.add(line);
+        fields.add(controller.typeNameWW.getText());
+        fields.add(controller.diceWW.getSelectionModel().getSelectedItem());
+        fields.add(Integer.toString((int) controller.rollsWW.getValue()));
+        if (controller.placementBoxWW.getSelectionModel().getSelectedIndex() == 2) {
+            fields.add(controller.strengthBastardWW.getText());
+            line = EnumSet.allOf(DeterminantsType.class).stream()
+                    .filter(d -> bastWhiteWeaponMods.get(d) != null && bastWhiteWeaponMods.get(d).getText().length() > 0)
+                    .map(d -> "" + bastWhiteWeaponMods.get(d).getText() + "," + d.name())
+                    .collect(Collectors.joining("|"));
+            fields.add(line);
+        }
+        guiPublisher.saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     void loadRangedWeaponToEditor(RangedWeaponType rangedWeapon) {
@@ -120,38 +149,5 @@ public class ItemsLoaderToGui {
     private <T> void mapTypeToField(Map<T, TextField> fields, Labelled<T> content) {
         TextField field = fields.get(content.getLabel());
         if (field != null) field.setText(content.getRepresentation());
-    }
-
-    void saveWhiteWeapon(MainWindowController controller) {
-        List<String> fields = new LinkedList<>();
-        if (controller.nameWW.getText().length() == 0) return;
-        fields.add(controller.nameWW.getText());
-        fields.add(controller.weightWW.getText());
-        fields.add(controller.goldWW.getText() + "|" +
-                controller.silverWW.getText() + "|" +
-                controller.leadWW.getText());
-        fields.add(Accessibility.forName(controller.accessibilityBoxWW.getSelectionModel().getSelectedItem()).name());
-        fields.add(controller.specialFeaturesWW.getText());
-        fields.add(controller.strengthBasicWW.getText());
-        fields.add("WEAPON");
-        fields.add(Placement.forName(controller.placementBoxWW.getSelectionModel().getSelectedItem()).name());
-        fields.add(controller.langMascWW.getText() + "|" + controller.langFemWW.getText() + "|" +
-                controller.langNeutrWW.getText() + "|" + controller.langAblativeWW.getText());
-        String line = EnumSet.allOf(DeterminantsType.class).stream()
-                .filter(d -> whiteWeaponModifiers.get(d) != null && whiteWeaponModifiers.get(d).getText().length() > 0)
-                .map(d -> "" + whiteWeaponModifiers.get(d).getText() + "," + d.name()).collect(Collectors.joining("|"));
-        fields.add(line);
-        fields.add(controller.typeNameWW.getText());
-        fields.add(controller.diceWW.getSelectionModel().getSelectedItem());
-        fields.add(Integer.toString((int) controller.rollsWW.getValue()));
-        if (controller.placementBoxWW.getSelectionModel().getSelectedIndex() == 2) {
-            fields.add(controller.strengthBastardWW.getText());
-            line = EnumSet.allOf(DeterminantsType.class).stream()
-                    .filter(d -> bastWhiteWeaponMods.get(d) != null && bastWhiteWeaponMods.get(d).getText().length() > 0)
-                    .map(d -> "" + bastWhiteWeaponMods.get(d).getText() + "," + d.name())
-                    .collect(Collectors.joining("|"));
-            fields.add(line);
-        }
-        guiPublisher.saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 }
