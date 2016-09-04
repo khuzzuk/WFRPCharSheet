@@ -33,4 +33,12 @@ public class WeaponParserTest {
         FightingEquipment equipment = parser.parseEquipment(line.split(";"));
         assertThat(equipment.toCsv()).isEqualTo(line);
     }
+
+    @Test
+    public void twoWaysParsingHelm() throws Exception {
+        String line = "Skórzany kaptur;0.1;0|2|5;COMMON;;1;ARMOR;HEAD;|||Skórzanym kapturem;;LEATHER";
+        WeaponParser parser = new WeaponParser(new DeterminantFactory());
+        FightingEquipment equipment = parser.parseEquipment(line.split(";"));
+        assertThat(equipment.toCsv()).isEqualTo(line);
+    }
 }

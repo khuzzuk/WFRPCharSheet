@@ -25,13 +25,22 @@ public class WeaponParser {
         } else if (type == EquipmentType.RANGED_WEAPON) {
             return parseRangedWeapon(columns);
         } else {
-            return parseArmor(columns);
+            return parseArmorType(columns);
         }
+    }
+
+    private ArmorType parseArmorType(String[] columns) {
+        ArmorType armor = new ArmorType();
+        fillItemFields(columns, armor);
+        fillFightingEquipmentFields(columns, armor);
+        armor.setPattern(ArmorPattern.valueOf(columns[10]));
+        return armor;
     }
 
     private RangedWeaponType parseRangedWeapon(String[] columns) {
         RangedWeaponType rangedWeapon = new RangedWeaponType();
         fillItemFields(columns, rangedWeapon);
+        fillFightingEquipmentFields(columns, rangedWeapon);
         fillWeaponFields(columns, rangedWeapon);
         rangedWeapon.shortRange = Integer.parseInt(columns[11]);
         rangedWeapon.effectiveRange = Integer.parseInt(columns[12]);
@@ -45,15 +54,11 @@ public class WeaponParser {
         if (weapon instanceof BastardWeaponType) {
             addBastardFields((BastardWeaponType) weapon, columns);
         }
-        return fillWhiteWeaponsVariables(weapon, columns);
-    }
-
-    private WhiteWeaponType fillWhiteWeaponsVariables(WhiteWeaponType weaponType, String[] columns) {
-        fillItemFields(columns, weaponType);
-        fillWeaponFields(columns, weaponType);
-        weaponType.dices = Dices.valueOf(columns[11]);
-        weaponType.rolls = Integer.parseInt(columns[12]);
-        return weaponType;
+        fillItemFields(columns, weapon);
+        fillWeaponFields(columns, weapon);
+        weapon.dices = Dices.valueOf(columns[11]);
+        weapon.rolls = Integer.parseInt(columns[12]);
+        return weapon;
     }
 
     private void addBastardFields(BastardWeaponType weaponType, String[] columns) {
@@ -69,15 +74,15 @@ public class WeaponParser {
         item.specialFeature = columns[4];
     }
 
-    private void fillWeaponFields(String[] columns, WeaponType weaponType) {
-        weaponType.strength = Integer.parseInt(columns[5]);
-        weaponType.placement = Placement.valueOf(columns[7]);
-        weaponType.names = LangElement.parseLang(columns[8]);
-        weaponType.determinants = determinantFactory.createDeterminants(columns[9]);
-        weaponType.typeName = columns[10];
+    private void fillFightingEquipmentFields(String[] columns, FightingEquipment equipment) {
+        equipment.strength = Integer.parseInt(columns[5]);
+        equipment.placement = Placement.valueOf(columns[7]);
+        equipment.names = LangElement.parseLang(columns[8]);
+        equipment.determinants = determinantFactory.createDeterminants(columns[9]);
     }
 
-    private FightingEquipment parseArmor(String[] columns) {
-        return null;
+
+    private void fillWeaponFields(String[] columns, WeaponType weaponType) {
+        weaponType.typeName = columns[10];
     }
 }
