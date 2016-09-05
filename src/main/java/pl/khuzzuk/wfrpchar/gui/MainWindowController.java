@@ -1,7 +1,6 @@
 package pl.khuzzuk.wfrpchar.gui;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,7 +21,8 @@ import java.util.stream.Collectors;
 @Component
 @MainWindowBean
 @PropertySource("classpath:messages.properties")
-public class MainWindowController implements Initializable {
+public class MainWindowController implements Controller {
+    public TitledPane armorTypesPane;
     @Inject
     @Getter(AccessLevel.PACKAGE)
     @FXML

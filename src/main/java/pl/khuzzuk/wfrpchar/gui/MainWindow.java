@@ -7,6 +7,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -20,12 +21,12 @@ public class MainWindow extends Stage {
 
     private final MainWindowController controller;
 
-    public MainWindow(MainWindowController controller, Window parent) {
+    public MainWindow(Callback<Class<?>, Object> factoryDecorator, Window parent) {
         super(StageStyle.DECORATED);
         initOwner(parent);
         initModality(Modality.WINDOW_MODAL);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainWindow.fxml"));
-        loader.setControllerFactory(c -> controller);
+        loader.setControllerFactory(factoryDecorator);
         try {
             Parent root = loader.load();
             setScene(new Scene(root));

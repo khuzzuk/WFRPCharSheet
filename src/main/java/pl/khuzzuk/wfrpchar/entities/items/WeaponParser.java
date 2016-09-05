@@ -56,6 +56,7 @@ public class WeaponParser {
         }
         fillItemFields(columns, weapon);
         fillWeaponFields(columns, weapon);
+        fillFightingEquipmentFields(columns, weapon);
         weapon.dices = Dices.valueOf(columns[11]);
         weapon.rolls = Integer.parseInt(columns[12]);
         return weapon;

@@ -3,7 +3,7 @@
 <TitledPane animated="false" text="Zbroja"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
-fx:controller="pl.khuzzuk.wfrpchar.gui.ArmorTypesPaneController">
+            fx:controller="pl.khuzzuk.wfrpchar.gui.ArmorTypesPaneController">
     <SplitPane dividerPositions="0.3"
                maxHeight="Infinity"
                maxWidth="Infinity">
@@ -37,7 +37,7 @@ fx:controller="pl.khuzzuk.wfrpchar.gui.ArmorTypesPaneController">
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints maxHeight="Infinity"
-                                minHeight="Infinity"
+                                minHeight="-Infinity"
                                 prefHeight="30.0"
                                 vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="Infinity"
@@ -49,11 +49,11 @@ fx:controller="pl.khuzzuk.wfrpchar.gui.ArmorTypesPaneController">
                                 prefHeight="30.0"
                                 vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="Infinity"
-                                minHeight="Infinity"
+                                minHeight="-Infinity"
                                 prefHeight="40.0"
                                 vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="Infinity"
-                                minHeight="Infinity"
+                                minHeight="-Infinity"
                                 prefHeight="90.0"
                                 vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="Infinity"

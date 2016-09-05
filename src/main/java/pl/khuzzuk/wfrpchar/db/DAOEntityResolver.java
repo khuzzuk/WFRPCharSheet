@@ -6,6 +6,8 @@ import pl.khuzzuk.wfrpchar.entities.Persistable;
 
 import javax.validation.constraints.NotNull;
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Comparable<U>>
         implements Stateful, DAOTransactional<T, U> {
@@ -14,6 +16,7 @@ public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Co
     @NotNull
     private String query;
     private Session session;
+    private Lock lock = new ReentrantLock();
 
     DAOEntityResolver(String query, Session session) {
         this.query = query;
@@ -31,7 +34,8 @@ public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Co
     }
 
     @Override
-    public synchronized boolean commit(T toCommit) {
+    public boolean commit(T toCommit) {
+        lock.lock();
         if (session == null || !session.isOpen()) {
             throw new IllegalStateException("No session started for committing " + toCommit);
         }
@@ -48,11 +52,13 @@ public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Co
             session.saveOrUpdate(toCommit);
         }
         closeTransaction();
+        lock.unlock();
         return other == null;
     }
 
     @Override
-    public synchronized boolean remove(U toRemove) {
+    public boolean remove(U toRemove) {
+        lock.lock();
         if (session == null || !session.isOpen()) {
             throw new IllegalStateException("No session started for removing " + toRemove);
         }
@@ -64,11 +70,13 @@ public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Co
         session.beginTransaction();
         session.remove(element.get());
         closeTransaction();
+        lock.unlock();
         return true;
     }
 
     @Override
     public void assureInitialization(Session session) {
+        lock.lock();
         if (this.session == session) {
             throw new IllegalStateException("Cannot init with same session");
         }
@@ -77,6 +85,7 @@ public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Co
         }
         this.session = session;
         init(session);
+        lock.unlock();
     }
 
     @Override
@@ -86,7 +95,7 @@ public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Co
 
     @SuppressWarnings("unchecked")
     @Override
-    public synchronized void init(Session session) {
+    public void init(Session session) {
         session.beginTransaction();
         elements = new TreeMap<>();
         Collection<T> result = session.createQuery(query).list();

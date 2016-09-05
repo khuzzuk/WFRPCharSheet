@@ -21,8 +21,9 @@ public class ScreensConfig {
 
     @Bean
     @MainWindowBean
-    public MainWindow mainWindowConfiguration() {
-        return new MainWindow(controller, stage);
+    @Inject
+    public MainWindow mainWindowConfiguration(ControllersFactoryDecorator decorator) {
+        return new MainWindow(decorator, stage);
     }
 
     @Bean

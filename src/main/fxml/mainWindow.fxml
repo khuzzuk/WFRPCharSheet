@@ -471,10 +471,10 @@
                                         </GridPane>
                                     </SplitPane>
                                 </TitledPane>
+                                <fx:include fx:id="armorTypesPane" source="armorTypePane.fxml"/>
                                 <TitledPane animated="false" text="Ekwipunek"/>
                             </panes>
                         </Accordion>
-                        <fx:include source="armorTypePane.fxml"/>
                     </TitledPane>
                     <TitledPane animated="false" text="Umiejętności"/>
                     <TitledPane animated="false" text="Profesje"/>
