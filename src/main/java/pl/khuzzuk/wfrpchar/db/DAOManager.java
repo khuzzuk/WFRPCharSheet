@@ -27,7 +27,7 @@ public class DAOManager {
         this.initializer = initializer;
     }
 
-    public Session openNewSession() {
+    public synchronized Session openNewSession() {
         return factory.openSession();
     }
 

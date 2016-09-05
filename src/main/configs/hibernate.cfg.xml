@@ -16,9 +16,9 @@
         <property name="hibernate.connection.useUnicode">true</property>
         <property name="connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
         <property name="hibernate.c3p0.min_size">1</property>
-        <property name="hibernate.c3p0.max_size">10</property>
-        <property name="hibernate.c3p0.timeout">300</property>
-        <property name="hibernate.c3p0.max_statements">50</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.timeout">600</property>
+        <property name="hibernate.c3p0.max_statements">100</property>
         <property name="hibernate.c3p0.idle_test_period">3000</property>
 
 
@@ -37,6 +37,7 @@
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.TwoHandedWeaponType"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.BastardWeaponType"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.ArmorType"/>
 
         <!--DETERMINANTS-->
         <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.Determinant"/>

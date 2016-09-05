@@ -326,7 +326,7 @@
                                             <ListView fx:id="rangedWeaponList"
                                                       onMouseClicked="#selectRangedWeapon"/>
                                         </GridPane>
-                                        <GridPane hgap="10.0">
+                                        <GridPane hgap="10">
                                             <columnConstraints>
                                                 <ColumnConstraints halignment="RIGHT"
                                                                    hgrow="ALWAYS"
@@ -471,10 +471,10 @@
                                         </GridPane>
                                     </SplitPane>
                                 </TitledPane>
-                                <TitledPane animated="false" text="Zbroja"/>
                                 <TitledPane animated="false" text="Ekwipunek"/>
                             </panes>
                         </Accordion>
+                        <fx:include source="armorTypePane.fxml"/>
                     </TitledPane>
                     <TitledPane animated="false" text="Umiejętności"/>
                     <TitledPane animated="false" text="Profesje"/>

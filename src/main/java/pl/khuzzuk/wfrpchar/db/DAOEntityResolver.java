@@ -31,7 +31,7 @@ public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Co
     }
 
     @Override
-    public boolean commit(T toCommit) {
+    public synchronized boolean commit(T toCommit) {
         if (session == null || !session.isOpen()) {
             throw new IllegalStateException("No session started for committing " + toCommit);
         }
@@ -52,7 +52,7 @@ public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Co
     }
 
     @Override
-    public boolean remove(U toRemove) {
+    public synchronized boolean remove(U toRemove) {
         if (session == null || !session.isOpen()) {
             throw new IllegalStateException("No session started for removing " + toRemove);
         }
@@ -69,6 +69,9 @@ public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Co
 
     @Override
     public void assureInitialization(Session session) {
+        if (this.session == session) {
+            throw new IllegalStateException("Cannot init with same session");
+        }
         if (this.session != null) {
             this.session.close();
         }
@@ -83,7 +86,7 @@ public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Co
 
     @SuppressWarnings("unchecked")
     @Override
-    public void init(Session session) {
+    public synchronized void init(Session session) {
         session.beginTransaction();
         elements = new TreeMap<>();
         Collection<T> result = session.createQuery(query).list();

@@ -3,6 +3,8 @@ package pl.khuzzuk.wfrpchar.gui;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
@@ -21,6 +23,10 @@ import java.util.stream.Collectors;
 @MainWindowBean
 @PropertySource("classpath:messages.properties")
 public class MainWindowController implements Initializable {
+    @Inject
+    @Getter(AccessLevel.PACKAGE)
+    @FXML
+    private ArmorTypesPaneController armorTypesPaneController;
     @Inject
     @Publishers
     private GuiPublisher guiPublisher;

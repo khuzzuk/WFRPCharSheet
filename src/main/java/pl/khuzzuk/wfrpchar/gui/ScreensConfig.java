@@ -16,6 +16,8 @@ public class ScreensConfig {
     @Inject
     @MainWindowBean
     private MainWindowController controller;
+    @Inject
+    private ArmorTypesPaneController armorTypesController;
 
     @Bean
     @MainWindowBean
@@ -23,4 +25,9 @@ public class ScreensConfig {
         return new MainWindow(controller, stage);
     }
 
+    @Bean
+    @Inject
+    public ArmorTypesPane armorTypesPane(MainWindow window) {
+        return new ArmorTypesPane(armorTypesController, window);
+    }
 }
