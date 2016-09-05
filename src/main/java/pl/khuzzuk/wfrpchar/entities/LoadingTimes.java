@@ -1,9 +1,10 @@
 package pl.khuzzuk.wfrpchar.entities;
 
 import lombok.Getter;
-import lombok.Setter;
+import org.apache.commons.collections4.SetUtils;
 
 import java.util.EnumSet;
+import java.util.Set;
 
 public enum LoadingTimes implements Nameable<String> {
     WITH_SHOOTING("do końca rundy"),
@@ -12,6 +13,7 @@ public enum LoadingTimes implements Nameable<String> {
 
     @Getter
     private final String name;
+    public static final Set<LoadingTimes> SET = SetUtils.unmodifiableSet(EnumSet.allOf(LoadingTimes.class));
 
     LoadingTimes(String name) {
         this.name = name;

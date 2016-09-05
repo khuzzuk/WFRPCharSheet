@@ -23,6 +23,8 @@ public class GuiReactor {
     @Inject
     private ArmorTypesPaneController armorTypesPaneController;
     @Inject
+    private RangedWeaponTypePaneController rangedWeaponTypePaneController;
+    @Inject
     @MainWindowBean
     private ItemsLoaderToGui loader;
     @Inject
@@ -58,8 +60,8 @@ public class GuiReactor {
     private void setConsumers() {
         guiContentSubscriber.subscribe(whiteWeaponsMsg, controller::loadWhiteWeapon);
         guiContentSubscriber.subscribe(namedWhiteWeaponsMsg, loader::loadWhiteWeaponToEditor);
-        guiContentSubscriber.subscribe(rangedWeaponMsg, controller::loadRangedWeapon);
-        guiContentSubscriber.subscribe(namedRangedWeaponMsg, loader::loadRangedWeaponToEditor);
+        guiContentSubscriber.subscribe(rangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeapon);
+        guiContentSubscriber.subscribe(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
         guiContentSubscriber.subscribe(listOfArmorTypesResult, armorTypesPaneController::loadArmorTypes);
         guiContentSubscriber.subscribe(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
         communicateSubscriber.subscribe(initLoader, loader::initFieldsMap);
