@@ -1,15 +1,18 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
 import lombok.Getter;
+import org.apache.commons.collections4.SetUtils;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.Nameable;
 
+import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
 
 public enum ArmorPattern implements Nameable<String> {
     TEXTILE("Wyszywany", 10, 10, 15, "wyszywany|wyszywaną|wyszywane|wyszywanym"),
     LEATHER("Skórzany", 50, 50, 50, "skórzany|skórzana|skórzane|skórzanym"),
-    MAIL("kolczóga", 100, 100, 200, "kolczy|kolcza|kolcze|kolczym"),
+    MAIL("Kolczóga", 100, 100, 200, "kolczy|kolcza|kolcze|kolczym"),
     LAMELLAR("Lamelkowy", 125, 125, 150, "lamelkowy|lamelkowa|lamelkowe|lamelkowym"),
     SPLINT("Brygantyna", 130, 150, 145, "paskowy|paskowa|paskowe|brygantyną"),
     SCALE("Łuskowy", 120, 120, 130, "łuskowy|łuskowa|łuskowe|łuskowym"),
@@ -21,6 +24,7 @@ public enum ArmorPattern implements Nameable<String> {
     public final int weightMod;
     public final int priceMod;
     public final Map<LangElement, String> langElements;
+    public static final Set<ArmorPattern> SET = SetUtils.unmodifiableSet(EnumSet.allOf(ArmorPattern.class));
 
     ArmorPattern(String name, int strengthMod, int weightMod, int priceMod, String langElements) {
         this.name = name;
@@ -28,5 +32,9 @@ public enum ArmorPattern implements Nameable<String> {
         this.weightMod = weightMod;
         this.priceMod = priceMod;
         this.langElements = LangElement.parseLang(langElements);
+    }
+
+    public static ArmorPattern forName(String selectedItem) {
+        return SET.stream().filter(a -> a.getName().equals(selectedItem)).findAny().orElse(null);
     }
 }

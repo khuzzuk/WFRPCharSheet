@@ -4,10 +4,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
-import pl.khuzzuk.wfrpchar.entities.items.Item;
-import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
-import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
-import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.*;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
@@ -29,11 +26,6 @@ public class DAOReactor {
     @Inject
     @Publishers
     private DAOPublisher daoPublisher;
-    @Inject
-    @Named("dbResetSubscriber")
-    @DaoBean
-    @Subscribers
-    private Subscriber<Message> dbResetSubscriber;
     @Inject
     @Subscribers
     @WhiteWeapons
@@ -59,6 +51,12 @@ public class DAOReactor {
     private String rangeWeaponNamedQuery;
     @Value("${rangedWeapons.remove}")
     private String rangedWeaponRemove;
+    @Value("${armorTypes.query}")
+    private String armorTypesQuery;
+    @Value("${armorTypes.query.specific}")
+    private String armorTypeNamedQuery;
+    @Value("${armorTypes.remove}")
+    private String armorTypeRemove;
     @Value("${database.saveEquipment}")
     private String dbSaveEquipment;
     @Value("${database.reset}")
@@ -80,6 +78,9 @@ public class DAOReactor {
         } else if (i instanceof RangedWeaponType) {
             dao.save((RangedWeaponType) i);
             daoPublisher.publish(rangedWeaponsQuery);
+        } else if (i instanceof ArmorType) {
+            dao.save((ArmorType) i);
+            daoPublisher.publish(armorTypesQuery);
         }
     }
 
@@ -88,17 +89,30 @@ public class DAOReactor {
         daoPublisher.publish(whiteWeaponQuery);
     }
 
-    private void removeRangedWeapon(String name) {
+    private void removeRangedWeaponType(String name) {
         dao.removeRangedWeaponType(name);
         daoPublisher.publish(rangedWeaponsQuery);
     }
 
-    private void getAllRangedWeapons() {
+    private void removeArmorType(String name) {
+        dao.removeArmorType(name);
+        daoPublisher.publish(armorTypesQuery);
+    }
+
+    private void getAllRangedWeaponTypes() {
         daoPublisher.publishRangedWeapons(dao.getAllRangedWeapons());
     }
 
-    private void getRangedWeaponByName(String name) {
+    private void getRangedWeaponTypeByName(String name) {
         daoPublisher.publish(dao.getRangedWeapon(name));
+    }
+
+    private void getAllArmorTypes() {
+        daoPublisher.publishArmorTypes(dao.getAllArmorTypes());
+    }
+
+    private void getArmorTypeByName(String name) {
+        daoPublisher.publish(dao.getArmorType(name));
     }
 
     private void resetDB() {
@@ -115,11 +129,14 @@ public class DAOReactor {
     private void setReactors() {
         multiSubscriber.subscribe(whiteWeaponQuery, this::getAllWeapons);
         multiSubscriber.subscribe(resetDbMessage, this::resetDB);
-        multiSubscriber.subscribe(rangedWeaponsQuery, this::getAllRangedWeapons);
+        multiSubscriber.subscribe(rangedWeaponsQuery, this::getAllRangedWeaponTypes);
+        multiSubscriber.subscribe(armorTypesQuery, this::getAllArmorTypes);
         whiteWeaponSelectionSubscriber.setConsumer(this::getWhiteWeaponByName);
         daoContentSubscriber.subscribe(dbSaveEquipment, this::saveItem);
         daoContentSubscriber.subscribe(whiteWeaponRemove, this::removeWhiteWeaponType);
-        daoContentSubscriber.subscribe(rangeWeaponNamedQuery, this::getRangedWeaponByName);
-        daoContentSubscriber.subscribe(rangedWeaponRemove, this::removeRangedWeapon);
+        daoContentSubscriber.subscribe(rangeWeaponNamedQuery, this::getRangedWeaponTypeByName);
+        daoContentSubscriber.subscribe(rangedWeaponRemove, this::removeRangedWeaponType);
+        daoContentSubscriber.subscribe(armorTypeNamedQuery, this::getArmorTypeByName);
+        daoContentSubscriber.subscribe(armorTypeRemove, this::removeArmorType);
     }
 }

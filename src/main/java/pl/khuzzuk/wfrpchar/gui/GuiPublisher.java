@@ -55,6 +55,12 @@ public class GuiPublisher {
     @Value("${rangedWeapons.remove}")
     @NotNull
     private String rangedWeaponRemove;
+    @Value("${armorTypes.query}")
+    private String armorTypesQuery;
+    @Value("${armorTypes.query.specific}")
+    private String armorTypesGet;
+    @Value("${armorTypes.remove}")
+    private String armorTypeRemove;
     @Value("${database.saveEquipment}")
     @NotNull
     private String dbSaveEquipment;
@@ -88,6 +94,18 @@ public class GuiPublisher {
 
     void removeWhiteWeapon(String name) {
         textRequestPublisher.publish(name, whiteWeaponTypeRemove);
+    }
+
+    void requestArmorTypes() {
+        publisher.publish(new CommunicateMessage().setType(armorTypesQuery));
+    }
+
+    void requestArmorTypeLoad(String name) {
+        textRequestPublisher.publish(name, armorTypesGet);
+    }
+
+    void removeArmorType(String name) {
+        textRequestPublisher.publish(name, armorTypeRemove);
     }
 
     void initLoader() {

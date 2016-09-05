@@ -7,10 +7,7 @@ import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
-import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
-import pl.khuzzuk.wfrpchar.entities.items.Item;
-import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
-import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.*;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -28,6 +25,10 @@ public class DAO {
     @Inject
     @RangedWeapons
     private DAOTransactional<RangedWeaponType, String> daoRangedWeapons;
+    @Inject
+    @Armor
+    @Types
+    private DAOTransactional<ArmorType, String> daoArmorTypes;
     @Getter(AccessLevel.PACKAGE)
     private DAOManager manager;
 
@@ -65,6 +66,11 @@ public class DAO {
         return daoRangedWeapons.getAllItems();
     }
 
+    Collection<ArmorType> getAllArmorTypes() {
+        assureSessionInit(daoArmorTypes);
+        return daoArmorTypes.getAllItems();
+    }
+
     WhiteWeaponType getWhiteWeapon(String name) {
         assureSessionInit(daoWhiteWeapons);
         return daoWhiteWeapons.getItem(name);
@@ -73,6 +79,11 @@ public class DAO {
     RangedWeaponType getRangedWeapon(String name) {
         assureSessionInit(daoRangedWeapons);
         return daoRangedWeapons.getItem(name);
+    }
+
+    ArmorType getArmorType(String name) {
+        assureSessionInit(daoArmorTypes);
+        return daoArmorTypes.getItem(name);
     }
 
     @NotNull
@@ -100,6 +111,11 @@ public class DAO {
     void save(RangedWeaponType weaponType) {
         assureSessionInit(daoRangedWeapons);
         daoRangedWeapons.commit(weaponType);
+    }
+
+    void save(ArmorType armorType) {
+        assureSessionInit(daoArmorTypes);
+        daoArmorTypes.commit(armorType);
     }
 
     void save(FightingEquipment equipment) {
@@ -130,5 +146,10 @@ public class DAO {
     void removeRangedWeaponType(String name) {
         assureSessionInit(daoRangedWeapons);
         daoRangedWeapons.remove(name);
+    }
+
+    void removeArmorType(String name) {
+        assureSessionInit(daoArmorTypes);
+        daoArmorTypes.remove(name);
     }
 }

@@ -16,7 +16,7 @@
                 <RowConstraints minHeight="10.0"
                                 vgrow="SOMETIMES"/>
             </rowConstraints>
-            <ListView fx:id="armorTypesList"/>
+            <ListView fx:id="armorTypesList" onMouseClicked="#getArmorType"/>
         </GridPane>
         <GridPane hgap="10">
             <columnConstraints>
@@ -66,6 +66,74 @@
             </rowConstraints>
             <Label text="nazwa"/>
             <TextField fx:id="armName" GridPane.columnIndex="1"/>
+            <Label text="umiejscowienie" GridPane.columnIndex="2"/>
+            <ComboBox fx:id="armPlacement" GridPane.columnIndex="3"/>
+            <Label text="waga" GridPane.rowIndex="1"/>
+            <TextField fx:id="armWeight" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="dostępność" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+            <ComboBox fx:id="armAccessibility" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+            <Label text="cena" GridPane.rowIndex="2"/>
+            <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                <Label text="złoto"/>
+                <TextField fx:id="armGold"/>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="2">
+                <Label text="srebro"/>
+                <TextField fx:id="armSilver"/>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="3">
+                <Label text="miedź"/>
+                <TextField fx:id="armLead"/>
+            </VBox>
+            <Label text="punkty pancerza" GridPane.rowIndex="3"/>
+            <TextField fx:id="armStrength" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <Label text="wzór" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+            <ComboBox fx:id="armPattern" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+            <Label text="modyfikatory" GridPane.rowIndex="4"/>
+            <VBox alignment="CENTER" GridPane.rowIndex="4" GridPane.columnIndex="1">
+                <Label text="WW"/>
+                <TextField fx:id="armBattleMod"/>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.rowIndex="4" GridPane.columnIndex="2">
+                <Label text="US"/>
+                <TextField fx:id="armShootingMod"/>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.rowIndex="4" GridPane.columnIndex="3">
+                <Label text="PP"/>
+                <TextField fx:id="armOpponentParryMod"/>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.rowIndex="4" GridPane.columnIndex="4">
+                <Label text="P"/>
+                <TextField fx:id="armParryMod"/>
+            </VBox>
+            <Label text="pozostałe nazwy" GridPane.rowIndex="5"/>
+            <VBox alignment="CENTER" GridPane.rowIndex="5" GridPane.columnIndex="1">
+                <Label text="przym. męski"/>
+                <TextField fx:id="armMasc"/>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.rowIndex="5" GridPane.columnIndex="2">
+                <Label text="przym. żeński"/>
+                <TextField fx:id="armFem"/>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.rowIndex="5" GridPane.columnIndex="3">
+                <Label text="przym. nijaki"/>
+                <TextField fx:id="armNeutr"/>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.rowIndex="5" GridPane.columnIndex="4">
+                <Label text="narzędnik"/>
+                <TextField fx:id="armAbl"/>
+            </VBox>
+            <Label text="cechy specjalne" GridPane.rowIndex="6"/>
+            <TextField fx:id="armSpecialFeatures" GridPane.rowIndex="6" GridPane.columnIndex="1" GridPane.columnSpan="4"/>
+            <Button text="Usuń"
+                    GridPane.rowIndex="7" GridPane.columnIndex="2"
+                    maxWidth="Infinity" onAction="#removeArmorType"/>
+            <Button text="Nowy"
+                    GridPane.rowIndex="7" GridPane.columnIndex="3"
+                    maxWidth="Infinity"/>
+            <Button text="Zapisz"
+                    GridPane.rowIndex="7" GridPane.columnIndex="4"
+                    maxWidth="Infinity" onAction="#saveArmorType"/>
         </GridPane>
     </SplitPane>
 </TitledPane>

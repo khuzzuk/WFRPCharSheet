@@ -25,6 +25,8 @@ public class ItemsLoaderToGui {
     @Inject
     @MainWindowBean
     private MainWindowController controller;
+    @Inject
+    private ArmorTypesPaneController armorTypesController;
 
     void loadWhiteWeaponToEditor(WhiteWeaponType weaponType) {
         controller.nameWW.setText(weaponType.getName());
@@ -146,7 +148,7 @@ public class ItemsLoaderToGui {
         whiteWeaponLangFields.put(LangElement.ABLATIVE, controller.langAblativeWW);
     }
 
-    private <T> void mapTypeToField(Map<T, TextField> fields, Labelled<T> content) {
+    private <T> void mapTypeToField(Map<T, TextField> fields, Labelled<T, String> content) {
         TextField field = fields.get(content.getLabel());
         if (field != null) field.setText(content.getRepresentation());
     }

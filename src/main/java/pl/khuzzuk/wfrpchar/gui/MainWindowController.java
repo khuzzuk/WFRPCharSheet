@@ -12,7 +12,6 @@ import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import javax.inject.Inject;
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.*;
 import java.util.function.Consumer;
@@ -201,35 +200,6 @@ public class MainWindowController implements Controller {
         ComboBoxHandler.fill(EnumSet.allOf(LoadingTimes.class), rwLoadTime);
         ComboBoxHandler.fill((Set) EnumSet.of(Placement.ONE_HAND, Placement.TWO_HANDS, Placement.BASTARD),
                 placementBoxWW);
-    }
-
-    private void initializeValidation() {
-        Field[] fields = this.getClass().getDeclaredFields();
-        for (Field f : fields) {
-            determineNumericAction(f);
-        }
-    }
-
-    private void determineNumericAction(Field f) {
-        try {
-            if ((f.get(this) instanceof TextField)) {
-                if (f.isAnnotationPresent(Numeric.class)) {
-                    setIntegerListenerToTextField((TextField) f.get(this));
-                } else if (f.isAnnotationPresent(FloatNumeric.class)) {
-                    setFloatListenerToTextField((TextField) f.get(this));
-                }
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setIntegerListenerToTextField(TextField field) {
-        field.textProperty().addListener((obs, oldV, newV) -> field.setText(newV.replaceAll("[^\\d\\-]", "")));
-    }
-
-    private void setFloatListenerToTextField(TextField field) {
-        field.textProperty().addListener((obs, oldV, newV) -> field.setText(newV.replaceAll("[^\\d\\-.,]", "")));
     }
 
     @FXML

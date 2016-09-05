@@ -1,6 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities;
 
-public interface Labelled<T> {
+public interface Labelled<T, U> {
     T getLabel();
-    String getRepresentation();
+    U getRepresentation();
 }

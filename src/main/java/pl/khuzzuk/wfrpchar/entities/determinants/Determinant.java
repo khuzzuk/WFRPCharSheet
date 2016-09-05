@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @DiscriminatorValue("0")
 @ToString(exclude = "id")
-public abstract class Determinant implements Labelled<DeterminantsType> {
+public abstract class Determinant implements Labelled<DeterminantsType, String> {
     @Id
     @GeneratedValue
     @Getter

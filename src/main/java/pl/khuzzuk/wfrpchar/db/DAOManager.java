@@ -8,10 +8,7 @@ import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
-import pl.khuzzuk.wfrpchar.entities.items.FightingEquipment;
-import pl.khuzzuk.wfrpchar.entities.items.Item;
-import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
-import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.*;
 
 import javax.inject.Inject;
 
@@ -78,5 +75,12 @@ public class DAOManager {
     @RangedWeapons
     public DAOEntityResolver<RangedWeaponType, String> daoRangedWeapons() {
         return new DAOEntityResolver<>("FROM Item i where type(i) = RangedWeaponType", openNewSession());
+    }
+
+    @Bean
+    @Armor
+    @Types
+    public DAOEntityResolver<ArmorType, String> daoArmorTypes() {
+        return new DAOEntityResolver<>("FROM Item i where type(i) = ArmorType", openNewSession());
     }
 }

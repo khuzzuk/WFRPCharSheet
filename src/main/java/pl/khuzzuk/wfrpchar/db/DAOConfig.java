@@ -49,17 +49,6 @@ public class DAOConfig {
     }
 
     //Subscribers
-
-    @Bean(name = "dbResetSubscriber")
-    @DaoBean
-    @Subscribers
-    public Subscriber<Message> dbResetSubscriber(
-            @Value("${database.reset}") String dbReset) {
-        Subscriber<Message> subscriber = new CommunicateSubscriber();
-        subscriber.setMessageType(dbReset);
-        return subscriber;
-    }
-
     @Bean
     @Subscribers
     @DaoBean

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
+import pl.khuzzuk.wfrpchar.entities.items.ArmorType;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.CommunicateMessage;
@@ -53,6 +54,10 @@ public class DAOPublisher {
     @Value("${rangedWeapons.result.specific}")
     @NotNull
     private String rangeWeaponNamedResult;
+    @Value("${armorTypes.result}")
+    private String armorTypesResult;
+    @Value("${armorTypes.result.specific}")
+    private String armorTypesNamedResult;
 
     void publishWhiteWeapons(Collection<WhiteWeaponType> results) {
         weaponsPublisher.publish(results, weaponResultMsgType);
@@ -74,5 +79,13 @@ public class DAOPublisher {
         Message message = new CommunicateMessage();
         message.setType(communicate);
         communicatePublisher.publish(new CommunicateMessage().setType(communicate));
+    }
+
+    void publishArmorTypes(Collection<ArmorType> allArmorTypes) {
+        entitiesPublisher.publish(allArmorTypes, armorTypesResult);
+    }
+
+    void publish(ArmorType armorType) {
+        entitiesPublisher.publish(armorType, armorTypesNamedResult);
     }
 }
