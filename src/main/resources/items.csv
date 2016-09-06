@@ -1,75 +1,76 @@
-Prowiant dzienny;0;0|0|5;COMMON
-Koc;0;0|5|0;COMMON
-Płótno;0;0|1|0;COMMON
-Pas;0;1|0|0;COMMON
-Przybory krawieckie;0;0|5|0;UNCOMMON
-Plecak;0;2;COMMON
-Beczka;0;2;UNCOMMON
-Koszyk;0;4;COMMON
-Butelka;0;2;COMMON
-Wiadro;0;0|5;COMMON
-Skrzynia;0;2;UNCOMMON
-Dzban;0;0|0|3;COMMON
-Kubek;0;0|0|2;COMMON
-Garnek;0;0|5;COMMON
-Półmisek;0;0|0|2;COMMON
-Bukłak;0;1;COMMON
-Łom;0;2;COMMON
-Łańcuch 3m;0;30;UNCOMMON
-Młotek;0;0|5;COMMON
-Drabina 3m;0;0|0|5;COMMON
-Kilof;0;3;COMMON
-Tłuczek;0;0|1;COMMON
-Słup 3m;0;0|2;UNCOMMON
-Taran;0;10;SCARCE
-Lina 10m;0;1;COMMON
-Lina jedwabna 10m;0;10;SCARCE
-Lina jedwabna pajęcza 10m;0;25;EXCEPTIONAL
-Łopata;0;2;COMMON
-Osełka;0;0|0|2;COMMON
-Lupa;0;100;UNCOMMON
-Trucizna;0;10;SCARCE
-Antidotum;0;20;UNCOMMON
-Pusty flakonik;0;0|0|3;COMMON
-Mydło;0;0|5;COMMON
-Mapa;0;1;UNCOMMON
-Zwój;0;1;UNCOMMON
-Tusz;0;8;UNCOMMON
-Pióro do pisania;0;0|1;UNCOMMON
-Karta papierowa;0;0|4;COMMON
-Pergamin;0;2;SCARCE
-Wosk pieczętny;0;1;UNCOMMON
-Dzwonek;0;1;UNCOMMON
-Kolczatka;0;1;UNCOMMON
-Świeczka;0;0|0|1;COMMON
-Drewno opałowe (1 ognisko);0;0|0|1;COMMON
-Hubka i krzesiwo;0;0|0|1;COMMON
-Haczyk wędkarski;0;0|1;COMMON
-Sieć wędkarska;0;4;COMMON
-Hak na line;0;1;COMMON
-Lampa;0;0|1;COMMON
-Latarnia;0;12;UNCOMMON
-Zamek prosty;0;20;COMMON
-Zamek zwykly;0;40;UNCOMMON
-Zamek dobry;0;80;SCARCE
-Zamek specjalistyczny;0;150;RARE
-Kajdany;0;15;UNCOMMON
-Kajdany doskonałe;0;50;SCARCE
-Lustro;0;10;SCARCE
-Siodło;0;4;COMMON
-Gwizdek;0;0|8;COMMON
-Pierścień;0;5;UNCOMMON
-Sanie;0;1;UNCOMMON
-Luneta;0;1000;SCARCE
-Namiot;0;50;COMMON
-Szałas;0;10;COMMON
-Pochodnia;0;0|0|1;COMMON
-Klepsydra;0;25;SCARCE
-Nafta 1l;0;0|5;COMMON
-Substancje łatwopalne;0;20;UNCOMMON
-Zestaw alchemiczny;0;500;SCARCE
-Narzędzia rzeźbiarskie;0;5;UNCOMMON
-Narzędzia rzeźbiarskie mistrzowskie;0;55;RARE
-Zestaw alpinistyczny;0;80;UNCOMMON
-Zestaw do kamuflazu;0;50;SCARCE
-Apteczka;0;50;UNCOMMON
+spec:name;weight;price;accessibility;specialFeatures;BLANK(strength);type
+Prowiant dzienny;0;0|0|5;COMMON;;;MISC_ITEM
+Koc;0;0|5|0;COMMON;;;MISC_ITEM
+Płótno;0;0|1|0;COMMON;;;MISC_ITEM
+Pas;0;1|0|0;COMMON;;;MISC_ITEM
+Przybory krawieckie;0;0|5|0;UNCOMMON;;;MISC_ITEM
+Plecak;0;2;COMMON;;;MISC_ITEM
+Beczka;0;2;UNCOMMON;;;MISC_ITEM
+Koszyk;0;4;COMMON;;;MISC_ITEM
+Butelka;0;2;COMMON;;;MISC_ITEM
+Wiadro;0;0|5;COMMON;;;MISC_ITEM
+Skrzynia;0;2;UNCOMMON;;;MISC_ITEM
+Dzban;0;0|0|3;COMMON;;;MISC_ITEM
+Kubek;0;0|0|2;COMMON;;;MISC_ITEM
+Garnek;0;0|5;COMMON;;;MISC_ITEM
+Półmisek;0;0|0|2;COMMON;;;MISC_ITEM
+Bukłak;0;1;COMMON;;;MISC_ITEM
+Łom;0;2;COMMON;;;MISC_ITEM
+Łańcuch 3m;0;30;UNCOMMON;;;MISC_ITEM
+Młotek;0;0|5;COMMON;;;MISC_ITEM
+Drabina 3m;0;0|0|5;COMMON;;;MISC_ITEM
+Kilof;0;3;COMMON;;;MISC_ITEM
+Tłuczek;0;0|1;COMMON;;;MISC_ITEM
+Słup 3m;0;0|2;UNCOMMON;;;MISC_ITEM
+Taran;0;10;SCARCE;;;MISC_ITEM
+Lina 10m;0;1;COMMON;;;MISC_ITEM
+Lina jedwabna 10m;0;10;SCARCE;;;MISC_ITEM
+Lina jedwabna pajęcza 10m;0;25;EXCEPTIONAL;;;MISC_ITEM
+Łopata;0;2;COMMON;;;MISC_ITEM
+Osełka;0;0|0|2;COMMON;;;MISC_ITEM
+Lupa;0;100;UNCOMMON;;;MISC_ITEM
+Trucizna;0;10;SCARCE;;;MISC_ITEM
+Antidotum;0;20;UNCOMMON;;;MISC_ITEM
+Pusty flakonik;0;0|0|3;COMMON;;;MISC_ITEM
+Mydło;0;0|5;COMMON;;;MISC_ITEM
+Mapa;0;1;UNCOMMON;;;MISC_ITEM
+Zwój;0;1;UNCOMMON;;;MISC_ITEM
+Tusz;0;8;UNCOMMON;;;MISC_ITEM
+Pióro do pisania;0;0|1;UNCOMMON;;;MISC_ITEM
+Karta papierowa;0;0|4;COMMON;;;MISC_ITEM
+Pergamin;0;2;SCARCE;;;MISC_ITEM
+Wosk pieczętny;0;1;UNCOMMON;;;MISC_ITEM
+Dzwonek;0;1;UNCOMMON;;;MISC_ITEM
+Kolczatka;0;1;UNCOMMON;;;MISC_ITEM
+Świeczka;0;0|0|1;COMMON;;;MISC_ITEM
+Drewno opałowe (1 ognisko);0;0|0|1;COMMON;;;MISC_ITEM
+Hubka i krzesiwo;0;0|0|1;COMMON;;;MISC_ITEM
+Haczyk wędkarski;0;0|1;COMMON;;;MISC_ITEM
+Sieć wędkarska;0;4;COMMON;;;MISC_ITEM
+Hak na line;0;1;COMMON;;;MISC_ITEM
+Lampa;0;0|1;COMMON;;;MISC_ITEM
+Latarnia;0;12;UNCOMMON;;;MISC_ITEM
+Zamek prosty;0;20;COMMON;;;MISC_ITEM
+Zamek zwykly;0;40;UNCOMMON;;;MISC_ITEM
+Zamek dobry;0;80;SCARCE;;;MISC_ITEM
+Zamek specjalistyczny;0;150;RARE;;;MISC_ITEM
+Kajdany;0;15;UNCOMMON;;;MISC_ITEM
+Kajdany doskonałe;0;50;SCARCE;;;MISC_ITEM
+Lustro;0;10;SCARCE;;;MISC_ITEM
+Siodło;0;4;COMMON;;;MISC_ITEM
+Gwizdek;0;0|8;COMMON;;;MISC_ITEM
+Pierścień;0;5;UNCOMMON;;;MISC_ITEM
+Sanie;0;1;UNCOMMON;;;MISC_ITEM
+Luneta;0;1000;SCARCE;;;MISC_ITEM
+Namiot;0;50;COMMON;;;MISC_ITEM
+Szałas;0;10;COMMON;;;MISC_ITEM
+Pochodnia;0;0|0|1;COMMON;;;MISC_ITEM
+Klepsydra;0;25;SCARCE;;;MISC_ITEM
+Nafta 1l;0;0|5;COMMON;;;MISC_ITEM
+Substancje łatwopalne;0;20;UNCOMMON;;;MISC_ITEM
+Zestaw alchemiczny;0;500;SCARCE;;;MISC_ITEM
+Narzędzia rzeźbiarskie;0;5;UNCOMMON;;;MISC_ITEM
+Narzędzia rzeźbiarskie mistrzowskie;0;55;RARE;;;MISC_ITEM
+Zestaw alpinistyczny;0;80;UNCOMMON;;;MISC_ITEM
+Zestaw do kamuflazu;0;50;SCARCE;;;MISC_ITEM
+Apteczka;0;50;UNCOMMON;;;MISC_ITEM

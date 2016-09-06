@@ -37,6 +37,14 @@ public class DAOManager {
     public DAOEntityResolver<Item, String> daoItems() {
         return new DAOEntityResolver<>("from Item", openNewSession());
     }
+
+    @Bean
+    @Items
+    @Types
+    public DAOEntityResolver<MiscItem, String> daoMiscItems() {
+        return new DAOEntityResolver<>("from Item i where type(i) = MiscItem", openNewSession());
+    }
+
     @Bean
     @WhiteWeapons
     public DAOEntityResolver<WhiteWeaponType, String> daoWeaponType() {

@@ -16,6 +16,8 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
     private RangedWeaponTypePaneController rangedWeaponTypePaneController;
     @Inject
     private WhiteWeaponTypePaneController whiteWeaponTypePaneController;
+    @Inject
+    private ItemTypesPaneController itemTypesPaneController;
 
     @Override
     public Object call(Class<?> param) {
@@ -25,8 +27,10 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
             return armorTypesPaneController;
         } else if (param.equals(rangedWeaponTypePaneController.getClass())) {
             return rangedWeaponTypePaneController;
-        } else {
+        } else if (param.equals(whiteWeaponTypePaneController.getClass())) {
             return whiteWeaponTypePaneController;
+        } else {
+            return itemTypesPaneController;
         }
     }
 }

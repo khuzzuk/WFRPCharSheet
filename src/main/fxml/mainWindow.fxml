@@ -48,19 +48,33 @@
         <Tab text="Baza">
             <Accordion maxHeight="Infinity" maxWidth="Infinity">
                 <panes>
-                    <TitledPane animated="false" maxHeight="1.7976931348623157E308"
+                    <TitledPane maxHeight="Infinity"
                                 maxWidth="Infinity" text="Przedmioty">
                         <Accordion maxHeight="Infinity" maxWidth="Infinity">
                             <panes>
-                                <fx:include fx:id="whiteWeaponTypePane" source="whiteWeaponTypePane.fxml"/>
-                                <fx:include fx:id="rangedWeaponTypePane" source="rangedWeaponTypePane.fxml"/>
-                                <fx:include fx:id="armorTypesPane" source="armorTypePane.fxml"/>
-                                <TitledPane animated="false" text="Ekwipunek"/>
+                                <TitledPane maxHeight="Infinity"
+                                            maxWidth="Infinity" text="Typy">
+                                    <Accordion maxHeight="Infinity" maxWidth="Infinity">
+                                        <panes>
+                                            <fx:include fx:id="whiteWeaponTypePane" source="whiteWeaponTypePane.fxml"/>
+                                            <fx:include fx:id="rangedWeaponTypePane" source="rangedWeaponTypePane.fxml"/>
+                                            <fx:include fx:id="armorTypesPane" source="armorTypePane.fxml"/>
+                                        </panes>
+                                    </Accordion>
+                                </TitledPane>
+                                <TitledPane maxWidth="Infinity" maxHeight="Infinity" text="Egzemplarze">
+                                    <Accordion maxHeight="Infinity" maxWidth="Infinity">
+                                        <panes>
+                                            <TitledPane text="Bronie"/>
+                                            <fx:include fx:id="itemTypesPane" source="itemTypesPane.fxml"/>
+                                        </panes>
+                                    </Accordion>
+                                </TitledPane>
                             </panes>
                         </Accordion>
                     </TitledPane>
-                    <TitledPane animated="false" text="Umiejętności"/>
-                    <TitledPane animated="false" text="Profesje"/>
+                    <TitledPane text="Umiejętności"/>
+                    <TitledPane text="Profesje"/>
                 </panes>
             </Accordion>
         </Tab>

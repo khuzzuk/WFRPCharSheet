@@ -21,6 +21,8 @@ public class GuiReactor {
     @MainWindowBean
     private MainWindowController controller;
     @Inject
+    private ItemTypesPaneController itemTypesPaneController;
+    @Inject
     private ArmorTypesPaneController armorTypesPaneController;
     @Inject
     private RangedWeaponTypePaneController rangedWeaponTypePaneController;
@@ -37,6 +39,12 @@ public class GuiReactor {
     @Subscribers
     @MainWindowBean
     private MultiContentSubscriber guiContentSubscriber;
+    @Value("${miscItemTypes.result}")
+    @NotNull
+    private String miscItemResult;
+    @Value("${miscItemTypes.result.specific}")
+    @NotNull
+    private String namedMiscItemResult;
     @Value("${whiteWeapons.result}")
     @NotNull
     private String whiteWeaponsMsg;
@@ -57,6 +65,8 @@ public class GuiReactor {
 
     @PostConstruct
     private void setConsumers() {
+        guiContentSubscriber.subscribe(miscItemResult, itemTypesPaneController::loadMiscItemTypes);
+        guiContentSubscriber.subscribe(namedMiscItemResult, itemTypesPaneController::loadMiscItemToEditor);
         guiContentSubscriber.subscribe(whiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeapon);
         guiContentSubscriber.subscribe(namedWhiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeaponToEditor);
         guiContentSubscriber.subscribe(rangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeapon);

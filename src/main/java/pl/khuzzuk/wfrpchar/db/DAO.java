@@ -29,6 +29,10 @@ public class DAO {
     @Armor
     @Types
     private DAOTransactional<ArmorType, String> daoArmorTypes;
+    @Inject
+    @Types
+    @Items
+    private DAOTransactional<MiscItem, String> daoMiscItems;
     @Getter(AccessLevel.PACKAGE)
     private DAOManager manager;
 
@@ -49,13 +53,16 @@ public class DAO {
         this.manager = manager;
     }
 
-    @NotNull
     Collection<Item> getAllItems() {
         assureSessionInit(daoItems);
         return daoItems.getAllItems();
     }
 
-    @NotNull
+    Collection<MiscItem> getAllMiscItems() {
+        assureSessionInit(daoMiscItems);
+        return daoMiscItems.getAllItems();
+    }
+
     Collection<WhiteWeaponType> getAllWeapons() {
         assureSessionInit(daoWhiteWeapons);
         return daoWhiteWeapons.getAllItems();
@@ -69,6 +76,11 @@ public class DAO {
     Collection<ArmorType> getAllArmorTypes() {
         assureSessionInit(daoArmorTypes);
         return daoArmorTypes.getAllItems();
+    }
+
+    MiscItem getMiscItem(String name) {
+        assureSessionInit(daoMiscItems);
+        return daoMiscItems.getItem(name);
     }
 
     WhiteWeaponType getWhiteWeapon(String name) {
@@ -86,7 +98,6 @@ public class DAO {
         return daoArmorTypes.getItem(name);
     }
 
-    @NotNull
     Collection<Character> getAllCharacters() {
         assureSessionInit(daoCharacters);
         return daoCharacters.getAllItems();
@@ -101,6 +112,11 @@ public class DAO {
     void save(Item item) {
         assureSessionInit(daoItems);
         daoItems.commit(item);
+    }
+
+    void save(MiscItem item) {
+        assureSessionInit(daoMiscItems);
+        daoMiscItems.commit(item);
     }
 
     void save(WhiteWeaponType weaponType) {
@@ -136,6 +152,11 @@ public class DAO {
     void save(Currency currency) {
         assureSessionInit(daoCurrencies);
         daoCurrencies.commit(currency);
+    }
+
+    void removeMiscItem(String name) {
+        assureSessionInit(daoMiscItems);
+        daoMiscItems.remove(name);
     }
 
     void removeWhiteWeaponType(String name) {

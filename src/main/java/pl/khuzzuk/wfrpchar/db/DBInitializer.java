@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
-import pl.khuzzuk.wfrpchar.entities.Price;
-import pl.khuzzuk.wfrpchar.entities.items.*;
+import pl.khuzzuk.wfrpchar.entities.items.Item;
+import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -31,10 +31,10 @@ public class DBInitializer {
     void resetDatabase(DAO dao) {
         loadCurrencies(dao);
         loadCharacters(dao);
-        loadMiscItems(dao);
-        loadWeaponsTypes(dao);
-        loadRangedWeaponsTypes(dao);
-        loadFightingEquipment(dao, "/armorType.csv");
+        loadItems(dao, "/items.csv");
+        loadItems(dao, "/whiteWeaponTypes.csv");
+        loadItems(dao, "/rangedWeaponTypes.csv");
+        loadItems(dao, "/armorType.csv");
     }
 
     private void loadCurrencies(DAO dao) {
@@ -52,42 +52,13 @@ public class DBInitializer {
         characters.forEach(dao::save);
     }
 
-    private void loadMiscItems(DAO dao) {
-        List<Item> miscItems = readResource("/items.csv")
-                .stream()
-                .filter(s -> !s[0].startsWith(DISCLAIMER))
-                .map(s -> new MiscItem(s[0], Float.parseFloat(s[1]),
-                        Price.parsePrice(s[2]), Accessibility.valueOf(s[3])))
-                .collect(Collectors.toList());
-        miscItems.forEach(dao::save);
-    }
-
-    private void loadWeaponsTypes(DAO dao) {
-        List<FightingEquipment> weapons = readResource("/whiteWeaponTypes.csv")
-                .stream()
-                .filter(s -> !s[0].startsWith(DISCLAIMER))
-                .map(weaponParser::parseEquipment)
-                .collect(Collectors.toList());
-        weapons.forEach(dao::save);
-    }
-
-    private void loadRangedWeaponsTypes(DAO dao) {
-        List<FightingEquipment> weapons = readResource("/rangedWeaponTypes.csv")
-                .stream()
-                .filter(s -> !s[0].startsWith(DISCLAIMER))
-                .map(weaponParser::parseEquipment)
-                .collect(Collectors.toList());
-        weapons.forEach(dao::save);
-    }
-
-    private void loadFightingEquipment(DAO dao, String path) {
-        List<FightingEquipment> equipments = readResource(path)
+    private void loadItems(DAO dao, String path) {
+        List<Item> equipments = readResource(path)
                 .stream().filter(s -> !s[0].startsWith(DISCLAIMER))
                 .map(weaponParser::parseEquipment).collect(Collectors.toList());
         equipments.forEach(dao::save);
     }
 
-    @SuppressWarnings("unchecked")
     private List<String[]> readResource(String location) {
         try {
             Path resource = Paths.get(getClass().getResource(location).toURI());
@@ -95,6 +66,6 @@ public class DBInitializer {
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 }

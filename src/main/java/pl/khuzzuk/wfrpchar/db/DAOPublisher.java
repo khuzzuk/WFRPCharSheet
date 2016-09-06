@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
-import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
-import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
 import pl.khuzzuk.wfrpchar.entities.items.ArmorType;
+import pl.khuzzuk.wfrpchar.entities.items.MiscItem;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.CommunicateMessage;
 import pl.khuzzuk.wfrpchar.messaging.Message;
-import pl.khuzzuk.wfrpchar.messaging.publishers.BagPublisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.MultiContentPublisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
@@ -25,23 +23,16 @@ import java.util.Collection;
 @PropertySource("classpath:messages.properties")
 public class DAOPublisher {
     @Inject
-    @WhiteWeapons
-    @Publishers
-    @DaoBean
-    private BagPublisher<Collection<WhiteWeaponType>> weaponsPublisher;
-    @Inject
-    @WhiteWeapons
-    @Publishers
-    @SelectiveQuery
-    @DaoBean
-    private BagPublisher<WhiteWeaponType> whiteQWeaponResultPublisher;
-    @Inject
     @DaoBean
     @Publishers
     private Publisher<Message> communicatePublisher;
     @Inject
     @Publishers
     private MultiContentPublisher entitiesPublisher;
+    @Value("${miscItemTypes.result}")
+    private String mistItemTypeResult;
+    @Value("${miscItemTypes.result.specific}")
+    private String mistItemTypeNamedResult;
     @Value("${whiteWeapons.result}")
     @NotNull
     private String weaponResultMsgType;
@@ -59,33 +50,41 @@ public class DAOPublisher {
     @Value("${armorTypes.result.specific}")
     private String armorTypesNamedResult;
 
-    void publishWhiteWeapons(Collection<WhiteWeaponType> results) {
-        weaponsPublisher.publish(results, weaponResultMsgType);
+    void publishMiscItems(Collection<MiscItem> results) {
+        entitiesPublisher.publish(results, mistItemTypeResult);
     }
 
-    void publish(WhiteWeaponType result) {
-        whiteQWeaponResultPublisher.publish(result, whiteWeaponNamedResultMsgType);
+    void publishWhiteWeapons(Collection<WhiteWeaponType> results) {
+        entitiesPublisher.publish(results, weaponResultMsgType);
     }
 
     void publishRangedWeapons(Collection<RangedWeaponType> results) {
         entitiesPublisher.publish(results, rangedWeaponsResult);
     }
 
+    void publishArmorTypes(Collection<ArmorType> allArmorTypes) {
+        entitiesPublisher.publish(allArmorTypes, armorTypesResult);
+    }
+
+    void publish(MiscItem item) {
+        entitiesPublisher.publish(item, mistItemTypeNamedResult);
+    }
+
+    void publish(WhiteWeaponType result) {
+        entitiesPublisher.publish(result, whiteWeaponNamedResultMsgType);
+    }
+
     void publish(RangedWeaponType weapon) {
         entitiesPublisher.publish(weapon, rangeWeaponNamedResult);
+    }
+
+    void publish(ArmorType armorType) {
+        entitiesPublisher.publish(armorType, armorTypesNamedResult);
     }
 
     void publish(String communicate) {
         Message message = new CommunicateMessage();
         message.setType(communicate);
         communicatePublisher.publish(new CommunicateMessage().setType(communicate));
-    }
-
-    void publishArmorTypes(Collection<ArmorType> allArmorTypes) {
-        entitiesPublisher.publish(allArmorTypes, armorTypesResult);
-    }
-
-    void publish(ArmorType armorType) {
-        entitiesPublisher.publish(armorType, armorTypesNamedResult);
     }
 }

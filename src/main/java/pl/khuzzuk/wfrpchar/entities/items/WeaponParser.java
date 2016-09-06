@@ -18,15 +18,23 @@ public class WeaponParser {
         this.determinantFactory = determinantFactory;
     }
 
-    public FightingEquipment parseEquipment(String[] columns) {
+    public Item parseEquipment(String[] columns) {
         EquipmentType type = EquipmentType.valueOf(columns[6]);
         if (type == EquipmentType.WEAPON) {
             return parseWeapon(columns);
         } else if (type == EquipmentType.RANGED_WEAPON) {
             return parseRangedWeapon(columns);
-        } else {
+        } else if (type == EquipmentType.ARMOR) {
             return parseArmorType(columns);
+        } else {
+            return parseMiscItem(columns);
         }
+    }
+
+    private MiscItem parseMiscItem(String[] columns) {
+        MiscItem item = new MiscItem();
+        fillItemFields(columns, item);
+        return item;
     }
 
     private ArmorType parseArmorType(String[] columns) {

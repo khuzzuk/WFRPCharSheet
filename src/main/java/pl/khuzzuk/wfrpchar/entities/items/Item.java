@@ -23,6 +23,10 @@ public abstract class Item implements Nameable<String>, Persistable {
     @Setter
     @NonNull
     String name;
+    @NonNull
+    @Getter
+    @Setter
+    EquipmentType type;
     @Getter
     @Setter
     @NonNull

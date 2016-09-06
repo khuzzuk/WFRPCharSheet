@@ -31,6 +31,12 @@ public class GuiPublisher {
     @Value("${database.reset}")
     @NotNull
     private String databaseReset;
+    @Value("${miscItemTypes.query}")
+    private String miscItemQuery;
+    @Value("${miscItemTypes.query.specific}")
+    private String miscItemGet;
+    @Value("${miscItemTypes.remove}")
+    private String miscItemRemove;
     @Value("${whiteWeapons.query.specific}")
     @NotNull
     private String whiteWeaponGet;
@@ -62,6 +68,14 @@ public class GuiPublisher {
     @NotNull
     private String dbSaveEquipment;
 
+    void saveItem(String line) {
+        textRequestPublisher.publish(line, dbSaveEquipment);
+    }
+
+    void requestMiscItemType() {
+        publisher.publish(new CommunicateMessage().setType(miscItemQuery));
+    }
+
     void requestWhiteWeapons() {
         publisher.publish(new CommunicateMessage().setType(whiteWeaponQuery));
     }
@@ -70,19 +84,32 @@ public class GuiPublisher {
         publisher.publish(new CommunicateMessage().setType(rangeWeaponsQuery));
     }
 
+    void requestArmorTypes() {
+        publisher.publish(new CommunicateMessage().setType(armorTypesQuery));
+    }
+
     void requestResetDB() {
         publisher.publish(new CommunicateMessage().setType(databaseReset));
+    }
+
+    void requestMiscItemTypeLoad(String name) {
+        textRequestPublisher.publish(name, miscItemGet);
     }
 
     void requestWhiteWeaponLoad(String name) {
         textRequestPublisher.publish(name, whiteWeaponGet);
     }
+
     void requestRangedWeaponLoad(String name) {
         textRequestPublisher.publish(name, rangedWeaponGet);
     }
 
-    void saveItem(String line) {
-        textRequestPublisher.publish(line, dbSaveEquipment);
+    void requestArmorTypeLoad(String name) {
+        textRequestPublisher.publish(name, armorTypesGet);
+    }
+
+    void removeMiscItemType(String name) {
+        textRequestPublisher.publish(name, miscItemRemove);
     }
 
     void removeRangedWeapon(String name) {
@@ -91,14 +118,6 @@ public class GuiPublisher {
 
     void removeWhiteWeapon(String name) {
         textRequestPublisher.publish(name, whiteWeaponTypeRemove);
-    }
-
-    void requestArmorTypes() {
-        publisher.publish(new CommunicateMessage().setType(armorTypesQuery));
-    }
-
-    void requestArmorTypeLoad(String name) {
-        textRequestPublisher.publish(name, armorTypesGet);
     }
 
     void removeArmorType(String name) {

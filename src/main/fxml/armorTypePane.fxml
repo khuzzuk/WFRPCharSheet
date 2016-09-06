@@ -1,7 +1,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<TitledPane animated="false" text="Zbroja"
+<TitledPane text="Zbroja"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pl.khuzzuk.wfrpchar.gui.ArmorTypesPaneController">
@@ -128,7 +128,8 @@
                 <TextField fx:id="armAbl"/>
             </VBox>
             <Label text="cechy specjalne" GridPane.rowIndex="6"/>
-            <TextField fx:id="armSpecialFeatures" GridPane.rowIndex="6" GridPane.columnIndex="1" GridPane.columnSpan="4"/>
+            <TextField fx:id="armSpecialFeatures" GridPane.rowIndex="6" GridPane.columnIndex="1" GridPane.columnSpan="4"
+                       maxWidth="Infinity" maxHeight="Infinity"/>
             <Button text="Usuń"
                     GridPane.rowIndex="7" GridPane.columnIndex="2"
                     maxWidth="Infinity" onAction="#removeArmorType"/>

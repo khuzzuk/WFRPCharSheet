@@ -21,10 +21,6 @@ public abstract class FightingEquipment extends Item {
     @NonNull
     @Getter
     @Setter
-    EquipmentType type;
-    @NonNull
-    @Getter
-    @Setter
     Placement placement;
     @NonNull
     @Setter
