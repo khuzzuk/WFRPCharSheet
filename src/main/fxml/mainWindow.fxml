@@ -52,6 +52,7 @@
                                 maxWidth="Infinity" text="Przedmioty">
                         <Accordion maxHeight="Infinity" maxWidth="Infinity">
                             <panes>
+                                <fx:include fx:id="whiteWeaponTypePane" source="whiteWeaponTypePane.fxml"/>
                                 <fx:include fx:id="rangedWeaponTypePane" source="rangedWeaponTypePane.fxml"/>
                                 <fx:include fx:id="armorTypesPane" source="armorTypePane.fxml"/>
                                 <TitledPane animated="false" text="Ekwipunek"/>

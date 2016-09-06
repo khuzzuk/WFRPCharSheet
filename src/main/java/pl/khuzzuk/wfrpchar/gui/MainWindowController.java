@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
 @PropertySource("classpath:messages.properties")
 public class MainWindowController implements Controller {
     @FXML
+    private TitledPane whiteWeaponTypePane;
+    @FXML
     private TitledPane armorTypesPane;
     @FXML
     private TitledPane rangedWeaponTypePane;
@@ -36,7 +38,6 @@ public class MainWindowController implements Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        guiPublisher.initLoader();
         guiPublisher.requestWhiteWeapons();
         guiPublisher.requestRangedWeapons();
     }

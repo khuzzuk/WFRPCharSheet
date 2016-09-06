@@ -97,6 +97,7 @@ public class WhiteWeaponTypePaneController implements Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
+        initFieldsMap();
         fillComboBoxesWithEnums();
     }
 
@@ -137,17 +138,18 @@ public class WhiteWeaponTypePaneController implements Controller {
         silverWW.setText("" + weaponType.getPrice().getSilver());
         leadWW.setText("" + weaponType.getPrice().getLead());
         strengthBasicWW.setText("" + weaponType.getStrength());
-        weaponType.getDeterminants().forEach(d -> mapTypeToField(whiteWeaponModifiers, d));
+        weaponType.getDeterminants().forEach(d -> MappingUtil.mapDeterminant(d, whiteWeaponModifiers));
         weaponType.getNames().forEach((lang, val) -> whiteWeaponLangFields.get(lang).setText(val));
         specialFeaturesWW.setText(weaponType.getSpecialFeature());
         if (weaponType instanceof BastardWeaponType) {
             BastardWeaponType bastard = (BastardWeaponType) weaponType;
             strengthBastardWW.setText("" + bastard.getOneHandedStrength());
-            bastard.getOneHandedDeterminants().forEach(d -> mapTypeToField(bastWhiteWeaponMods, d));
+            bastard.getOneHandedDeterminants().forEach(d -> MappingUtil.mapDeterminant(d, bastWhiteWeaponMods));
         }
     }
 
-    void saveWhiteWeaponType() {
+    @FXML
+    private void saveWhiteWeaponType() {
         List<String> fields = new LinkedList<>();
         if (nameWW.getText().length() == 0) return;
         fields.add(nameWW.getText());

@@ -25,6 +25,8 @@ public class GuiReactor {
     @Inject
     private RangedWeaponTypePaneController rangedWeaponTypePaneController;
     @Inject
+    private WhiteWeaponTypePaneController whiteWeaponTypePaneController;
+    @Inject
     @MainWindowBean
     private ItemsLoaderToGui loader;
     @Inject
@@ -35,9 +37,6 @@ public class GuiReactor {
     @Subscribers
     @MainWindowBean
     private MultiContentSubscriber guiContentSubscriber;
-    @Value("${guiController.initMap}")
-    @NotNull
-    private String initLoader;
     @Value("${whiteWeapons.result}")
     @NotNull
     private String whiteWeaponsMsg;
@@ -58,12 +57,11 @@ public class GuiReactor {
 
     @PostConstruct
     private void setConsumers() {
-        guiContentSubscriber.subscribe(whiteWeaponsMsg, controller::loadWhiteWeapon);
-        guiContentSubscriber.subscribe(namedWhiteWeaponsMsg, loader::loadWhiteWeaponToEditor);
+        guiContentSubscriber.subscribe(whiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeapon);
+        guiContentSubscriber.subscribe(namedWhiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeaponToEditor);
         guiContentSubscriber.subscribe(rangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeapon);
         guiContentSubscriber.subscribe(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
         guiContentSubscriber.subscribe(listOfArmorTypesResult, armorTypesPaneController::loadArmorTypes);
         guiContentSubscriber.subscribe(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
-        communicateSubscriber.subscribe(initLoader, loader::initFieldsMap);
     }
 }

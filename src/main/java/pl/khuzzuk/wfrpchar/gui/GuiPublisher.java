@@ -25,9 +25,6 @@ public class GuiPublisher {
     @SelectiveQuery
     @MainWindowBean
     private BagPublisher<String> textRequestPublisher;
-    @Value("${guiController.initMap}")
-    @NotNull
-    private String initLoader;
     @Value("${whiteWeapons.query}")
     @NotNull
     private String whiteWeaponQuery;
@@ -106,9 +103,5 @@ public class GuiPublisher {
 
     void removeArmorType(String name) {
         textRequestPublisher.publish(name, armorTypeRemove);
-    }
-
-    void initLoader() {
-        publisher.publish(new CommunicateMessage().setType(initLoader));
     }
 }

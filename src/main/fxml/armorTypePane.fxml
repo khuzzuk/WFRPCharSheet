@@ -1,3 +1,4 @@
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <TitledPane animated="false" text="Zbroja"
@@ -64,6 +65,9 @@
                         minHeight="10.0" prefHeight="30.0"
                         vgrow="SOMETIMES"/>
             </rowConstraints>
+            <padding>
+                <Insets right="10.0"/>
+            </padding>
             <Label text="nazwa"/>
             <TextField fx:id="armName" GridPane.columnIndex="1"/>
             <Label text="umiejscowienie" GridPane.columnIndex="2"/>

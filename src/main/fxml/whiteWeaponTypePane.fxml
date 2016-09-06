@@ -252,7 +252,7 @@
             <Button alignment="CENTER"
                     maxWidth="Infinity"
                     mnemonicParsing="false"
-                    onAction="#saveWhiteWeapon"
+                    onAction="#saveWhiteWeaponType"
                     text="Zapisz" GridPane.columnIndex="4"
                     GridPane.rowIndex="9">
                 <GridPane.margin>
