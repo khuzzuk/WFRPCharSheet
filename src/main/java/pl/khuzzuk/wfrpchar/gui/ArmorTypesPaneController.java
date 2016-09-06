@@ -6,7 +6,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Context;
-import pl.khuzzuk.wfrpchar.entities.Labelled;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.*;
@@ -113,19 +112,11 @@ public class ArmorTypesPaneController implements Controller {
         armStrength.setText(armor.getStrength() + "");
         armPattern.getSelectionModel().select(armor.getPattern().getName());
         armPlacement.getSelectionModel().select(armor.getPlacement().getName());
-        armor.getDeterminants().stream().forEach(a -> mapDeterminant(a, determinantsMap));
-        armor.getNames().forEach((k, v) -> mapDeterminant(new Context<>(k, v), langElementsMap));
+        armor.getDeterminants()
+                .forEach(a -> MappingUtil.mapDeterminant(a, determinantsMap));
+        armor.getNames()
+                .forEach((k, v) -> MappingUtil.mapDeterminant(new Context<>(k, v), langElementsMap));
         armSpecialFeatures.setText(armor.getSpecialFeature());
-    }
-
-    private static <T extends Labelled<U, String>, U> void mapDeterminant(T type, Map<U, TextField> map) {
-        map.get(type.getLabel()).setText(type.getRepresentation());
-    }
-
-    private static String getDeterminants(Map<DeterminantsType, TextField> map) {
-        return DeterminantsType.SET.stream()
-                .filter(d -> map.get(d) != null && map.get(d).getText().length() > 0)
-                .map(d -> "" + map.get(d).getText() + "," + d.name()).collect(Collectors.joining("|"));
     }
 
     @FXML
@@ -146,7 +137,7 @@ public class ArmorTypesPaneController implements Controller {
                 armFem.getText() + "|" +
                 armNeutr.getText() + "|" +
                 armAbl.getText());
-        fields.add(getDeterminants(determinantsMap));
+        fields.add(MappingUtil.getDeterminants(determinantsMap));
         fields.add(ArmorPattern.forName(armPattern.getSelectionModel().getSelectedItem()).name());
         publisher.saveItem(fields.stream().collect(Collectors.joining(";")));
     }
