@@ -30,9 +30,6 @@ public class GuiReactor {
     private WhiteWeaponTypePaneController whiteWeaponTypePaneController;
     @Inject
     @MainWindowBean
-    private ItemsLoaderToGui loader;
-    @Inject
-    @MainWindowBean
     @Subscribers
     private MultiSubscriber<Message> communicateSubscriber;
     @Inject

@@ -86,6 +86,9 @@ public class DAOReactor {
         } else if (i instanceof ArmorType) {
             dao.save((ArmorType) i);
             daoPublisher.publish(armorTypesQuery);
+        } else if (i instanceof MiscItem) {
+            dao.save((MiscItem) i);
+            daoPublisher.publish(miscItemTypeQuery);
         }
     }
 

@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
 <TitledPane maxHeight="Infinity" maxWidth="Infinity"
             text="Ekwipunek"
             xmlns="http://javafx.com/javafx/8.0.60"
@@ -52,6 +53,15 @@
             </VBox>
             <Label text="cechy specjalne" GridPane.rowIndex="3"/>
             <TextArea fx:id="iSpecialFeatures" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
+            <Button text="Usuń" onAction="#removeItem"
+                    GridPane.columnIndex="2" GridPane.rowIndex="4"
+                    maxWidth="Infinity"/>
+            <Button text="Nowy"
+                    GridPane.columnIndex="3" GridPane.rowIndex="4"
+                    maxWidth="Infinity"/>
+            <Button text="Zapisz" onAction="#saveItem"
+                    GridPane.columnIndex="4" GridPane.rowIndex="4"
+                    maxWidth="Infinity"/>
         </GridPane>
     </SplitPane>
 </TitledPane>

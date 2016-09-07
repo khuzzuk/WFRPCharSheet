@@ -33,9 +33,6 @@ public class MainWindowController implements Controller {
     @Inject
     @Publishers
     private GuiPublisher guiPublisher;
-    @Inject
-    @MainWindowBean
-    private ItemsLoaderToGui loader;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

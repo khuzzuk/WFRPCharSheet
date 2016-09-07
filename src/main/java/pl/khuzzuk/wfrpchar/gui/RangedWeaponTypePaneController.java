@@ -23,9 +23,6 @@ public class RangedWeaponTypePaneController implements Controller {
     @Inject
     @Publishers
     private GuiPublisher guiPublisher;
-    @Inject
-    @MainWindowBean
-    private ItemsLoaderToGui loader;
 
     @FXML
     ListView<String> rangedWeaponList;
