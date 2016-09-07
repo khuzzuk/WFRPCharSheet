@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor
 @ToString
-public class Player implements Nameable<String>, Persistable {
+public class Player implements Named<String>, Persistable {
     @Id
     @Getter
     @Setter

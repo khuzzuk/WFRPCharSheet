@@ -1,7 +1,7 @@
 package pl.khuzzuk.wfrpchar.db;
 
 import org.hibernate.Session;
-import pl.khuzzuk.wfrpchar.entities.Nameable;
+import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 
 import javax.validation.constraints.NotNull;
@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class DAOEntityResolver<T extends Nameable<U> & Persistable, U extends Comparable<U>>
+public class DAOEntityResolver<T extends Named<U> & Persistable, U extends Comparable<U>>
         implements Stateful, DAOTransactional<T, U> {
     @NotNull
     private Map<U, T> elements;

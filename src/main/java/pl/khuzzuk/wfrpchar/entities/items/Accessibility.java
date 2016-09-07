@@ -2,12 +2,12 @@ package pl.khuzzuk.wfrpchar.entities.items;
 
 import lombok.Getter;
 import org.apache.commons.collections4.SetUtils;
-import pl.khuzzuk.wfrpchar.entities.Nameable;
+import pl.khuzzuk.wfrpchar.entities.Named;
 
 import java.util.EnumSet;
 import java.util.Set;
 
-public enum Accessibility implements Nameable<String> {
+public enum Accessibility implements Named<String> {
     COMMON("Powszechny"), UNCOMMON("Trudno dostępny"), SCARCE("Niespotykany"), RARE("Rzadki"), EXCEPTIONAL("Niedostępny");
 
     public static Set<Accessibility> SET = SetUtils.unmodifiableSet(EnumSet.allOf(Accessibility.class));

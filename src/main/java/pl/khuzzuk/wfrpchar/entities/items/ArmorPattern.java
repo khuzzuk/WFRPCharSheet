@@ -3,13 +3,13 @@ package pl.khuzzuk.wfrpchar.entities.items;
 import lombok.Getter;
 import org.apache.commons.collections4.SetUtils;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
-import pl.khuzzuk.wfrpchar.entities.Nameable;
+import pl.khuzzuk.wfrpchar.entities.Named;
 
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
 
-public enum ArmorPattern implements Nameable<String> {
+public enum ArmorPattern implements Named<String> {
     TEXTILE("Wyszywany", 10, 10, 15, "wyszywany|wyszywaną|wyszywane|wyszywanym"),
     LEATHER("Skórzany", 50, 50, 50, "skórzany|skórzana|skórzane|skórzanym"),
     MAIL("Kolczóga", 100, 100, 200, "kolczy|kolcza|kolcze|kolczym"),

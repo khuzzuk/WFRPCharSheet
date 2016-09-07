@@ -1,7 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
 import lombok.*;
-import pl.khuzzuk.wfrpchar.entities.Nameable;
+import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Price;
 
@@ -13,7 +13,7 @@ import javax.persistence.*;
 @DiscriminatorValue(value = "0")
 @ToString(exclude = "id")
 @NoArgsConstructor
-public abstract class Item implements Nameable<String>, Persistable {
+public abstract class Item implements Named<String>, Persistable {
     @Id
     @GeneratedValue
     @Getter

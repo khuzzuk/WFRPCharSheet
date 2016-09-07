@@ -6,7 +6,7 @@ import org.apache.commons.collections4.SetUtils;
 import java.util.EnumSet;
 import java.util.Set;
 
-public enum LoadingTimes implements Nameable<String> {
+public enum LoadingTimes implements Named<String> {
     WITH_SHOOTING("do końca rundy"),
     ROUND("runda"),
     TURN("tura");
