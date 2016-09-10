@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.items.*;
+import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;

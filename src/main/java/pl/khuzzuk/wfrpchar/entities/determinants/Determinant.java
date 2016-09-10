@@ -5,6 +5,7 @@ import pl.khuzzuk.wfrpchar.entities.Labelled;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,5 +70,12 @@ public abstract class Determinant implements Labelled<DeterminantsType, String> 
     @Override
     public String getRepresentation() {
         return "" + getActualValue();
+    }
+
+    public static int getSumForType(Collection<Determinant> determinants, DeterminantsType type) {
+        return (int) determinants.stream()
+                .filter(d -> d.getLabel() == type)
+                .collect(Collectors.summarizingInt(Determinant::getActualValue))
+                .getSum();
     }
 }

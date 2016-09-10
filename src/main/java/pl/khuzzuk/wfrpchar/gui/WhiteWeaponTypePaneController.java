@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.*;
+import pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.types.Item;
+import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 

@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.entities.items;
+package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

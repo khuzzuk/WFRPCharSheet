@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import pl.khuzzuk.wfrpchar.db.annot.Persist;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.db.annot.WhiteWeapons;
-import pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.gui.MainWindowBean;
 import pl.khuzzuk.wfrpchar.messaging.publishers.*;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.*;

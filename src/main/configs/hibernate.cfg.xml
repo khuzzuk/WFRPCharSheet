@@ -28,16 +28,16 @@
         <mapping class="pl.khuzzuk.wfrpchar.entities.Currency"/>
 
         <!-- MAPPED ITEMS -->
-        <mapping class="pl.khuzzuk.wfrpchar.entities.items.Item"/>
-        <mapping class="pl.khuzzuk.wfrpchar.entities.items.MiscItem"/>
-        <mapping class="pl.khuzzuk.wfrpchar.entities.items.FightingEquipment"/>
-        <mapping class="pl.khuzzuk.wfrpchar.entities.items.WeaponType"/>
-        <mapping class="pl.khuzzuk.wfrpchar.entities.items.WhiteWeaponType"/>
-        <mapping class="pl.khuzzuk.wfrpchar.entities.items.OneHandedWeaponType"/>
-        <mapping class="pl.khuzzuk.wfrpchar.entities.items.TwoHandedWeaponType"/>
-        <mapping class="pl.khuzzuk.wfrpchar.entities.items.BastardWeaponType"/>
-        <mapping class="pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType"/>
-        <mapping class="pl.khuzzuk.wfrpchar.entities.items.ArmorType"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.Item"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.MiscItem"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.FightingEquipment"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.WeaponType"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.TwoHandedWeaponType"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.ArmorType"/>
 
         <!--DETERMINANTS-->
         <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.Determinant"/>

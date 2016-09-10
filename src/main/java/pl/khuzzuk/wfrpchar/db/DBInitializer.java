@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
-import pl.khuzzuk.wfrpchar.entities.items.Item;
+import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 
 import javax.inject.Inject;

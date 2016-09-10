@@ -9,6 +9,8 @@ import pl.khuzzuk.wfrpchar.entities.Context;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.*;
+import pl.khuzzuk.wfrpchar.entities.items.types.ArmorType;
+import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 
 import javax.inject.Inject;
 import java.net.URL;

@@ -5,6 +5,7 @@ import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.Price;
+import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import javax.inject.Inject;
@@ -50,10 +51,10 @@ public class WeaponParser {
         fillItemFields(columns, rangedWeapon);
         fillFightingEquipmentFields(columns, rangedWeapon);
         fillWeaponFields(columns, rangedWeapon);
-        rangedWeapon.shortRange = Integer.parseInt(columns[11]);
-        rangedWeapon.effectiveRange = Integer.parseInt(columns[12]);
-        rangedWeapon.maximumRange = Integer.parseInt(columns[13]);
-        rangedWeapon.reloadTime = LoadingTimes.valueOf(columns[14]);
+        rangedWeapon.setShortRange(Integer.parseInt(columns[11]));
+        rangedWeapon.setEffectiveRange(Integer.parseInt(columns[12]));
+        rangedWeapon.setMaximumRange(Integer.parseInt(columns[13]));
+        rangedWeapon.setReloadTime(LoadingTimes.valueOf(columns[14]));
         return rangedWeapon;
     }
 
@@ -65,33 +66,33 @@ public class WeaponParser {
         fillItemFields(columns, weapon);
         fillWeaponFields(columns, weapon);
         fillFightingEquipmentFields(columns, weapon);
-        weapon.dices = Dices.valueOf(columns[11]);
-        weapon.rolls = Integer.parseInt(columns[12]);
+        weapon.setDices(Dices.valueOf(columns[11]));
+        weapon.setRolls(Integer.parseInt(columns[12]));
         return weapon;
     }
 
     private void addBastardFields(BastardWeaponType weaponType, String[] columns) {
-        weaponType.oneHandedStrength = Integer.parseInt(columns[13]);
-        weaponType.oneHandedDeterminants = determinantFactory.createDeterminants(columns[14]);
+        weaponType.setOneHandedStrength(Integer.parseInt(columns[13]));
+        weaponType.setOneHandedDeterminants(determinantFactory.createDeterminants(columns[14]));
     }
 
     private void fillItemFields(String[] columns, Item item) {
-        item.name = columns[0];
-        item.weight = Float.parseFloat(columns[1]);
-        item.price = Price.parsePrice(columns[2]);
-        item.accessibility = Accessibility.valueOf(columns[3]);
-        item.specialFeature = columns[4];
+        item.setName(columns[0]);
+        item.setWeight(Float.parseFloat(columns[1]));
+        item.setPrice(Price.parsePrice(columns[2]));
+        item.setAccessibility(Accessibility.valueOf(columns[3]));
+        item.setSpecialFeature(columns[4]);
     }
 
     private void fillFightingEquipmentFields(String[] columns, FightingEquipment equipment) {
-        equipment.strength = Integer.parseInt(columns[5]);
-        equipment.placement = Placement.valueOf(columns[7]);
-        equipment.names = LangElement.parseLang(columns[8]);
-        equipment.determinants = determinantFactory.createDeterminants(columns[9]);
+        equipment.setStrength(Integer.parseInt(columns[5]));
+        equipment.setPlacement(Placement.valueOf(columns[7]));
+        equipment.setNames(LangElement.parseLang(columns[8]));
+        equipment.setDeterminants(determinantFactory.createDeterminants(columns[9]));
     }
 
 
     private void fillWeaponFields(String[] columns, WeaponType weaponType) {
-        weaponType.typeName = columns[10];
+        weaponType.setTypeName(columns[10]);
     }
 }

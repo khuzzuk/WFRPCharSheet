@@ -1,9 +1,10 @@
-package pl.khuzzuk.wfrpchar.entities.items;
+package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.*;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Price;
+import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 
 import javax.persistence.*;
 

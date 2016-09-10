@@ -1,4 +1,6 @@
-package pl.khuzzuk.wfrpchar.entities.items;
+package pl.khuzzuk.wfrpchar.entities.items.types;
+
+import pl.khuzzuk.wfrpchar.entities.items.Placement;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

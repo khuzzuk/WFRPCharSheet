@@ -2,10 +2,12 @@ package pl.khuzzuk.wfrpchar.entities.items;
 
 import org.testng.annotations.Test;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
+import pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WeaponParserTest {
+public class AbstractWeaponParserTest {
     @Test(groups = "fast")
     public void parseBastardWeapon() throws Exception {
         WeaponParser parser = new WeaponParser(new DeterminantFactory());

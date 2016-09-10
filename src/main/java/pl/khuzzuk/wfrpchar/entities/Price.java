@@ -24,6 +24,13 @@ public class Price {
     @Getter
     private int lead;
 
+    private Price(int sum) {
+        lead = sum%10;
+        sum/=10;
+        silver = sum%10;
+        gold = sum/10;
+    }
+
     public static Price parsePrice(String s) {
         String[] values = s.split("\\|");
         Price price = new Price();
@@ -42,5 +49,25 @@ public class Price {
     @Override
     public String toString() {
         return gold + "|" + silver + "|" + lead;
+    }
+
+    public Price add(Price price) {
+        return new Price(sum() + price.sum());
+    }
+
+    public Price multiply(float times) {
+        return new Price((int) (sum() * times));
+    }
+
+    private int sum() {
+        return lead + silver * 10 + gold * 100;
+    }
+
+    private Price copy() {
+        Price newPrice = new Price();
+        newPrice.gold = gold;
+        newPrice.silver = silver;
+        newPrice.lead = lead;
+        return newPrice;
     }
 }

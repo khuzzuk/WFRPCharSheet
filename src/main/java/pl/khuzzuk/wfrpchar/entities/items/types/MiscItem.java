@@ -1,7 +1,8 @@
-package pl.khuzzuk.wfrpchar.entities.items;
+package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.EqualsAndHashCode;
 import pl.khuzzuk.wfrpchar.entities.Price;
+import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

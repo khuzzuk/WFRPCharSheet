@@ -1,8 +1,10 @@
-package pl.khuzzuk.wfrpchar.entities.items;
+package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.*;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
+import pl.khuzzuk.wfrpchar.entities.items.Placement;
+import pl.khuzzuk.wfrpchar.entities.items.Wearable;
 
 import javax.persistence.*;
 import java.util.Map;
@@ -13,7 +15,7 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public abstract class FightingEquipment extends Item {
+public abstract class FightingEquipment extends Item implements Wearable {
     @NonNull
     @Getter
     @Setter

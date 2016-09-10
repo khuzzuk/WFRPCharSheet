@@ -1,7 +1,8 @@
-package pl.khuzzuk.wfrpchar.entities.items;
+package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.khuzzuk.wfrpchar.entities.items.ArmorPattern;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

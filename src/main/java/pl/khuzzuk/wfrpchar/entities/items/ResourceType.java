@@ -4,15 +4,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 @NoArgsConstructor
 @ToString(exclude = "id")
-public class ResourceType implements Named<String> {
+@Embeddable
+public class ResourceType implements Named<String>, Documented {
     @Id
     @Getter
     @Setter
@@ -26,6 +29,9 @@ public class ResourceType implements Named<String> {
     @Getter
     @Setter
     private int priceMod;
+    @Getter
+    @Setter
+    private SubstanceType substanceType;
 
     public static ResourceType getFromCsv(String line) {
         String[] fields = line.split(";");
@@ -33,6 +39,11 @@ public class ResourceType implements Named<String> {
         resource.name = fields[0];
         resource.strengthMod = Integer.parseInt(fields[1]);
         resource.priceMod = Integer.parseInt(fields[2]);
+        resource.substanceType = SubstanceType.valueOf(fields[3]);
         return resource;
+    }
+
+    public String toCsv() {
+        return  name + ";" + strengthMod + ";" + priceMod + ";" + substanceType.name();
     }
 }

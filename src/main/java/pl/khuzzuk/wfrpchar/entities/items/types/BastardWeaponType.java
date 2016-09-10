@@ -1,9 +1,10 @@
-package pl.khuzzuk.wfrpchar.entities.items;
+package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
+import pl.khuzzuk.wfrpchar.entities.items.Placement;
 
 import javax.persistence.*;
 import java.util.Set;

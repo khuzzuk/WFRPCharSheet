@@ -7,8 +7,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
-import pl.khuzzuk.wfrpchar.entities.items.EquipmentType;
-import pl.khuzzuk.wfrpchar.entities.items.MiscItem;
+import pl.khuzzuk.wfrpchar.entities.items.types.EquipmentType;
+import pl.khuzzuk.wfrpchar.entities.items.types.MiscItem;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;

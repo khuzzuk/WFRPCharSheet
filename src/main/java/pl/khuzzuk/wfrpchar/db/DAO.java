@@ -7,7 +7,7 @@ import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
-import pl.khuzzuk.wfrpchar.entities.items.*;
+import pl.khuzzuk.wfrpchar.entities.items.types.*;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;

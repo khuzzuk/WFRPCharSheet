@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
-import pl.khuzzuk.wfrpchar.entities.items.Item;
-import pl.khuzzuk.wfrpchar.entities.items.RangedWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.types.Item;
+import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;

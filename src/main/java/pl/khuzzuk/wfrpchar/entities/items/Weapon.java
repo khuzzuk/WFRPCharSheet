@@ -1,25 +1,20 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import pl.khuzzuk.wfrpchar.entities.Named;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 
-import javax.persistence.*;
+import java.util.Collection;
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "class", discriminatorType = DiscriminatorType.INTEGER)
-@DiscriminatorValue("1")
-@ToString(exclude = "id")
-@NoArgsConstructor
-public abstract class Weapon implements Named<String>, Commodity {
-    @Id
-    @Getter
-    @Setter
-    private long id;
-    @Getter
-    @Setter
-    private String name;
+public interface Weapon {
+    int getStrength();
+
+    String getTypeName();
+
+    Collection<Determinant> getDeterminants();
+
+    void addDeterminant(Determinant determinant);
+
+    Collection<Determinant> getAllDeterminants();
+
+    Collection<Determinant> getDeterminantForType(DeterminantsType type);
 }
