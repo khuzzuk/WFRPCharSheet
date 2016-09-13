@@ -2,7 +2,6 @@ package pl.khuzzuk.wfrpchar.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
@@ -15,7 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class ResourceTypesPaneController implements Controller {
+public class ResourceTypesPaneController extends ItemsListedController implements Controller {
     @FXML
     @Numeric
     TextField resStrength;
@@ -24,10 +23,6 @@ public class ResourceTypesPaneController implements Controller {
     TextField resPrice;
     @FXML
     private ComboBox<String> resType;
-    @FXML
-    private TextField resName;
-    @FXML
-    private ListView<String> resList;
 
     @Inject
     @Publishers
@@ -36,43 +31,29 @@ public class ResourceTypesPaneController implements Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
+        saveAction = () -> {
+            List<String> fields = new LinkedList<>();
+            fields.add(name.getText());
+            fields.add(resStrength.getText());
+            fields.add(resPrice.getText());
+            fields.add(SubstanceType.forName(resType.getSelectionModel().getSelectedItem()).name());
+            guiPublisher.saveResourceType(fields.stream().collect(Collectors.joining(";")));
+        };
+        removeAction = guiPublisher::removeResourceType;
+        getAction = guiPublisher::requestResourceType;
         ComboBoxHandler.fill(EnumSet.allOf(SubstanceType.class), resType);
         guiPublisher.requestResourceTypes();
     }
 
     void loadAllResources(Collection<ResourceType> resources) {
-        EntitiesAdapter.sendToListView(resList, resources);
-    }
-
-    @FXML
-    private void selectResource() {
-        EntitiesAdapter.sendQuery(resList, guiPublisher::requestResourceType);
+        EntitiesAdapter.sendToListView(items, resources);
     }
 
     void loadToEditor(ResourceType resource) {
-        resName.setText(resource.getName());
+        name.setText(resource.getName());
         resStrength.setText(Integer.toString(resource.getStrengthMod()));
         resPrice.setText(Integer.toString(resource.getPriceMod()));
         resType.getSelectionModel().select(resource.getSubstanceType().getName());
     }
 
-    @FXML
-    private void save() {
-        if (resName.getText().length() < 3) {
-            return;
-        }
-        List<String> fields = new LinkedList<>();
-        fields.add(resName.getText());
-        fields.add(resStrength.getText());
-        fields.add(resPrice.getText());
-        fields.add(SubstanceType.forName(resType.getSelectionModel().getSelectedItem()).name());
-        guiPublisher.saveResourceType(fields.stream().collect(Collectors.joining(";")));
-    }
-
-    @FXML
-    private void remove() {
-        if (resName.getText().length() >= 3) {
-            guiPublisher.removeResourceType(resName.getText());
-        }
-    }
 }

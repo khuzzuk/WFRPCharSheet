@@ -14,23 +14,26 @@
             fx:controller="pl.khuzzuk.wfrpchar.gui.ResourceTypesPaneController">
     <SplitPane dividerPositions="0.3" maxHeight="Infinity" maxWidth="Infinity">
         <GridPane maxWidth="Infinity" maxHeight="Infinity">
-            <ListView fx:id="resList" onMouseClicked="#selectResource"/>
+            <ListView fx:id="items" onMouseClicked="#getEntity" maxWidth="Infinity" maxHeight="Infinity"/>
         </GridPane>
-        <GridPane>
+        <GridPane maxHeight="Infinity" maxWidth="Infinity">
             <padding>
                 <Insets right="10"/>
             </padding>
             <Label text="nazwa"/>
-            <TextField fx:id="resName" GridPane.columnIndex="1"/>
+            <TextField fx:id="name" GridPane.columnIndex="1"/>
             <Label text="modyfikator siły" GridPane.rowIndex="1"/>
             <TextField fx:id="resStrength" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
             <Label text="modyfikator ceny" GridPane.rowIndex="2"/>
             <TextField fx:id="resPrice" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
             <Label text="typ" GridPane.rowIndex="3"/>
             <ComboBox fx:id="resType" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-            <Button text="Usuń" GridPane.rowIndex="4" GridPane.columnIndex="0" onAction="#remove"/>
-            <Button text="Nowy" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-            <Button text="Zapisz" GridPane.rowIndex="4" GridPane.columnIndex="2" onAction="#save"/>
+            <Button text="Usuń" GridPane.rowIndex="4" GridPane.columnIndex="0"
+                    maxWidth="Infinity" onAction="#remove"/>
+            <Button text="Nowy" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                    maxWidth="Infinity"/>
+            <Button text="Zapisz" GridPane.rowIndex="4" GridPane.columnIndex="2"
+                    maxWidth="Infinity" onAction="#save"/>
         </GridPane>
     </SplitPane>
 </TitledPane>

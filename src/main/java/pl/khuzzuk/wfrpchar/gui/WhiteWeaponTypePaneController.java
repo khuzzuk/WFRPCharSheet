@@ -5,31 +5,22 @@ import javafx.scene.control.*;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
-import pl.khuzzuk.wfrpchar.entities.items.*;
+import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
+import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType;
-import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
-import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
-import javax.inject.Inject;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class WhiteWeaponTypePaneController implements Controller {
-    @Inject
-    @Publishers
-    private GuiPublisher guiPublisher;
+public class WhiteWeaponTypePaneController extends ItemsListedController {
     private Map<DeterminantsType, TextField> whiteWeaponModifiers;
     private Map<DeterminantsType, TextField> bastWhiteWeaponMods;
     private Map<LangElement, TextField> whiteWeaponLangFields;
 
-    @FXML
-    ListView<String> weaponList;
-    @FXML
-    TextField nameWW;
     @FXML
     TextField typeNameWW;
     @FXML
@@ -100,6 +91,9 @@ public class WhiteWeaponTypePaneController implements Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
+        removeAction = guiPublisher::removeWhiteWeapon;
+        saveAction = this::saveWhiteWeaponType;
+        getAction = guiPublisher::requestWhiteWeaponLoad;
         initFieldsMap();
         fillComboBoxesWithEnums();
     }
@@ -111,7 +105,7 @@ public class WhiteWeaponTypePaneController implements Controller {
                 placementBoxWW);
     }
 
-    void initFieldsMap() {
+    private void initFieldsMap() {
         whiteWeaponModifiers = new HashMap<>();
         whiteWeaponModifiers.put(DeterminantsType.BATTLE, battleModWW);
         whiteWeaponModifiers.put(DeterminantsType.INITIATIVE, initModWW);
@@ -130,7 +124,7 @@ public class WhiteWeaponTypePaneController implements Controller {
     }
 
     void loadWhiteWeaponToEditor(WhiteWeaponType weaponType) {
-        nameWW.setText(weaponType.getName());
+        name.setText(weaponType.getName());
         typeNameWW.setText(weaponType.getTypeName());
         accessibilityBoxWW.getSelectionModel().select(weaponType.getAccessibility().getName());
         placementBoxWW.getSelectionModel().select(weaponType.getPlacement().getName());
@@ -154,8 +148,8 @@ public class WhiteWeaponTypePaneController implements Controller {
     @FXML
     private void saveWhiteWeaponType() {
         List<String> fields = new LinkedList<>();
-        if (nameWW.getText().length() == 0) return;
-        fields.add(nameWW.getText());
+        if (name.getText().length() == 0) return;
+        fields.add(name.getText());
         fields.add(weightWW.getText());
         fields.add(goldWW.getText() + "|" +
                 silverWW.getText() + "|" +
@@ -183,23 +177,5 @@ public class WhiteWeaponTypePaneController implements Controller {
             fields.add(line);
         }
         guiPublisher.saveItem(fields.stream().collect(Collectors.joining(";")));
-    }
-
-    void loadWhiteWeapon(Collection<WhiteWeaponType> weapons) {
-        weaponList.getItems().clear();
-        weaponList.getItems()
-                .addAll(weapons.stream().map(Item::getName).collect(Collectors.toList()));
-    }
-
-    @FXML
-    private void removeWhiteWeaponType() {
-        if (nameWW.getText().length() == 0) return;
-        guiPublisher.removeWhiteWeapon(nameWW.getText());
-    }
-
-    @FXML
-    private void selectWhiteWeapon() {
-        String selected = weaponList.getSelectionModel().getSelectedItem();
-        if (selected != null) guiPublisher.requestWhiteWeaponLoad(selected);
     }
 }

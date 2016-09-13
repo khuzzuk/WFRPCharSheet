@@ -51,10 +51,16 @@
                     <TitledPane maxHeight="Infinity"
                                 maxWidth="Infinity" text="Przedmioty">
                         <Accordion maxHeight="Infinity" maxWidth="Infinity">
+                            <padding>
+                                <Insets left="10"/>
+                            </padding>
                             <panes>
                                 <TitledPane maxHeight="Infinity"
                                             maxWidth="Infinity" text="Typy">
                                     <Accordion maxHeight="Infinity" maxWidth="Infinity">
+                                        <padding>
+                                            <Insets left="10"/>
+                                        </padding>
                                         <panes>
                                             <fx:include fx:id="whiteWeaponTypePane" source="whiteWeaponTypePane.fxml"/>
                                             <fx:include fx:id="rangedWeaponTypePane" source="rangedWeaponTypePane.fxml"/>
@@ -65,8 +71,12 @@
                                 </TitledPane>
                                 <TitledPane maxWidth="Infinity" maxHeight="Infinity" text="Egzemplarze">
                                     <Accordion maxHeight="Infinity" maxWidth="Infinity">
+                                        <padding>
+                                            <Insets left="10"/>
+                                        </padding>
                                         <panes>
                                             <TitledPane text="Bronie"/>
+                                            <fx:include fx:id="weaponEntityPane" source="weaponEntityPane.fxml"/>
                                             <fx:include fx:id="itemTypesPane" source="itemTypesPane.fxml"/>
                                         </panes>
                                     </Accordion>

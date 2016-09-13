@@ -2,15 +2,15 @@ package pl.khuzzuk.wfrpchar.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Context;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
-import pl.khuzzuk.wfrpchar.entities.items.*;
+import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
+import pl.khuzzuk.wfrpchar.entities.items.ArmorPattern;
+import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.ArmorType;
-import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 
 import javax.inject.Inject;
 import java.net.URL;
@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class ArmorTypesPaneController implements Controller {
+public class ArmorTypesPaneController extends ItemsListedController {
     private static final String TYPE = "ARMOR";
     @Inject
     private GuiPublisher publisher;
@@ -68,14 +68,13 @@ public class ArmorTypesPaneController implements Controller {
     @FXML
     @FloatNumeric
     TextField armWeight;
-    @FXML
-    private TextField armName;
-    @FXML
-    private ListView<String> armorTypesList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
+        removeAction = guiPublisher::removeArmorType;
+        saveAction = this::saveArmorType;
+        getAction = guiPublisher::requestArmorTypeLoad;
         ComboBoxHandler.fill(EnumSet.allOf(Accessibility.class), armAccessibility);
         ComboBoxHandler.fill(EnumSet.allOf(ArmorPattern.class), armPattern);
         ComboBoxHandler.fill(EnumSet.of(Placement.CORPUS, Placement.HEAD,
@@ -99,13 +98,8 @@ public class ArmorTypesPaneController implements Controller {
         langElementsMap.put(LangElement.ABLATIVE, armAbl);
     }
 
-    void loadArmorTypes(Collection<ArmorType> armors) {
-        armorTypesList.getItems().clear();
-        armorTypesList.getItems().addAll(armors.stream().map(Item::getName).collect(Collectors.toList()));
-    }
-
     void loadArmorTypeToEditor(ArmorType armor) {
-        armName.setText(armor.getName());
+        name.setText(armor.getName());
         armWeight.setText(armor.getWeight() + "");
         armAccessibility.getSelectionModel().select(armor.getAccessibility().getName());
         armLead.setText(armor.getPrice().getLead() + "");
@@ -123,11 +117,11 @@ public class ArmorTypesPaneController implements Controller {
 
     @FXML
     void saveArmorType() {
-        if (armName.getText().length() < 3) {
+        if (name.getText().length() < 3) {
             return;
         }
         List<String> fields = new LinkedList<>();
-        fields.add(armName.getText());
+        fields.add(name.getText());
         fields.add(armWeight.getText());
         fields.add(armGold.getText() + "|" + armSilver.getText() + "|" + armLead.getText());
         fields.add(Accessibility.forName(armAccessibility.getSelectionModel().getSelectedItem()).name());
@@ -142,20 +136,5 @@ public class ArmorTypesPaneController implements Controller {
         fields.add(MappingUtil.getDeterminants(determinantsMap));
         fields.add(ArmorPattern.forName(armPattern.getSelectionModel().getSelectedItem()).name());
         publisher.saveItem(fields.stream().collect(Collectors.joining(";")));
-    }
-
-    @FXML
-    void removeArmorType() {
-        if (armName.getText().length() > 2) {
-            publisher.removeArmorType(armName.getText());
-        }
-    }
-
-    @FXML
-    private void getArmorType() {
-        String name = armorTypesList.getSelectionModel().getSelectedItem();
-        if (name != null) {
-            publisher.requestArmorTypeLoad(name);
-        }
     }
 }

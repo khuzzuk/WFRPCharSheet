@@ -2,32 +2,23 @@ package pl.khuzzuk.wfrpchar.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
-import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
-import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
-import javax.inject.Inject;
 import java.net.URL;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
-public class RangedWeaponTypePaneController implements Controller {
-    @Inject
-    @Publishers
-    private GuiPublisher guiPublisher;
-
-    @FXML
-    ListView<String> rangedWeaponList;
-    @FXML
-    TextField rwName;
+public class RangedWeaponTypePaneController extends ItemsListedController {
     @FXML
     TextField rwTypeName;
     @FXML
@@ -72,27 +63,15 @@ public class RangedWeaponTypePaneController implements Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
+        removeAction = guiPublisher::removeRangedWeapon;
+        getAction = guiPublisher::requestRangedWeaponLoad;
+        saveAction = this::saveRangedWeaponType;
         ComboBoxHandler.fill(Accessibility.SET, rwAccessibility);
         ComboBoxHandler.fill(LoadingTimes.SET, rwLoadTime);
     }
 
-    void loadRangedWeapon(Collection<RangedWeaponType> weapons) {
-        EntitiesAdapter.sendToListView(rangedWeaponList, weapons);
-    }
-
-    @FXML
-    private void removeRangedWeapon() {
-        if (rwName.getText().length() == 0) return;
-        guiPublisher.removeRangedWeapon(rwName.getText());
-    }
-
-    @FXML
-    private void selectRangedWeapon() {
-        EntitiesAdapter.sendQuery(rangedWeaponList, guiPublisher::requestRangedWeaponLoad);
-    }
-
     void loadRangedWeaponToEditor(RangedWeaponType rangedWeapon) {
-        rwName.setText(rangedWeapon.getName());
+        name.setText(rangedWeapon.getName());
         rwTypeName.setText(rangedWeapon.getTypeName());
         rwWeight.setText("" + rangedWeapon.getWeight());
         rwGold.setText(rangedWeapon.getPrice().getGold() + "");
@@ -113,9 +92,9 @@ public class RangedWeaponTypePaneController implements Controller {
 
     @FXML
     void saveRangedWeaponType() {
-        if (rwName.getText().length() == 0) return;
+        if (name.getText().length() == 0) return;
         List<String> fields = new LinkedList<>();
-        fields.add(rwName.getText());
+        fields.add(name.getText());
         fields.add(rwWeight.getText());
         fields.add(rwGold.getText() + "|" +
                 rwSilver.getText() + "|" +

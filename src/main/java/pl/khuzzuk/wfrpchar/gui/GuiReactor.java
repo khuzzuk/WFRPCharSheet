@@ -68,15 +68,15 @@ public class GuiReactor {
 
     @PostConstruct
     private void setConsumers() {
-        guiContentSubscriber.subscribe(miscItemResult, itemTypesPaneController::loadMiscItemTypes);
+        guiContentSubscriber.subscribe(miscItemResult, itemTypesPaneController::loadAll);
         guiContentSubscriber.subscribe(namedMiscItemResult, itemTypesPaneController::loadMiscItemToEditor);
-        guiContentSubscriber.subscribe(whiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeapon);
+        guiContentSubscriber.subscribe(whiteWeaponsMsg, whiteWeaponTypePaneController::loadAll);
         guiContentSubscriber.subscribe(namedWhiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeaponToEditor);
-        guiContentSubscriber.subscribe(rangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeapon);
+        guiContentSubscriber.subscribe(rangedWeaponMsg, rangedWeaponTypePaneController::loadAll);
         guiContentSubscriber.subscribe(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
-        guiContentSubscriber.subscribe(listOfArmorTypesResult, armorTypesPaneController::loadArmorTypes);
+        guiContentSubscriber.subscribe(listOfArmorTypesResult, armorTypesPaneController::loadAll);
         guiContentSubscriber.subscribe(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
-        guiContentSubscriber.subscribe(resourceTypeResult, resourceTypesPaneController::loadAllResources);
+        guiContentSubscriber.subscribe(resourceTypeResult, resourceTypesPaneController::loadAll);
         guiContentSubscriber.subscribe(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
     }
 }

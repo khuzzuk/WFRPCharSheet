@@ -17,7 +17,7 @@
                 <RowConstraints minHeight="10.0"
                                 vgrow="SOMETIMES"/>
             </rowConstraints>
-            <ListView fx:id="armorTypesList" onMouseClicked="#getArmorType"/>
+            <ListView fx:id="items" onMouseClicked="#getEntity"/>
         </GridPane>
         <GridPane hgap="10">
             <columnConstraints>
@@ -69,7 +69,7 @@
                 <Insets right="10.0"/>
             </padding>
             <Label text="nazwa"/>
-            <TextField fx:id="armName" GridPane.columnIndex="1"/>
+            <TextField fx:id="name" GridPane.columnIndex="1"/>
             <Label text="umiejscowienie" GridPane.columnIndex="2"/>
             <ComboBox fx:id="armPlacement" GridPane.columnIndex="3"/>
             <Label text="waga" GridPane.rowIndex="1"/>
@@ -132,13 +132,13 @@
                        maxWidth="Infinity" maxHeight="Infinity"/>
             <Button text="Usuń"
                     GridPane.rowIndex="7" GridPane.columnIndex="2"
-                    maxWidth="Infinity" onAction="#removeArmorType"/>
+                    maxWidth="Infinity" onAction="#remove"/>
             <Button text="Nowy"
                     GridPane.rowIndex="7" GridPane.columnIndex="3"
                     maxWidth="Infinity"/>
             <Button text="Zapisz"
                     GridPane.rowIndex="7" GridPane.columnIndex="4"
-                    maxWidth="Infinity" onAction="#saveArmorType"/>
+                    maxWidth="Infinity" onAction="#save"/>
         </GridPane>
     </SplitPane>
 </TitledPane>

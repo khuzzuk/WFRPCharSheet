@@ -1,7 +1,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<TitledPane animated="true" maxHeight="Infinity"
+<TitledPane maxHeight="Infinity"
             maxWidth="Infinity" text="Broń biała"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -18,8 +18,8 @@
                 <RowConstraints minHeight="10.0"
                                 vgrow="SOMETIMES"/>
             </rowConstraints>
-            <ListView fx:id="weaponList"
-                      onMouseClicked="#selectWhiteWeapon"/>
+            <ListView fx:id="items"
+                      onMouseClicked="#getEntity"/>
         </GridPane>
         <GridPane hgap="10.0">
             <columnConstraints>
@@ -82,7 +82,7 @@
                 <Insets right="10.0"/>
             </padding>
             <Label text="nazwa"/>
-            <TextField fx:id="nameWW"
+            <TextField fx:id="name"
                        GridPane.columnIndex="1"/>
             <Label text="waga" GridPane.rowIndex="2"/>
             <TextField fx:id="weightWW"
@@ -244,7 +244,7 @@
                     GridPane.columnIndex="2"
                     GridPane.rowIndex="9"
                     text="Usuń"
-                    onAction="#removeWhiteWeaponType"/>
+                    onAction="#remove"/>
             <Button maxWidth="Infinity"
                     mnemonicParsing="false" text="Nowy"
                     GridPane.columnIndex="3"
@@ -252,7 +252,7 @@
             <Button alignment="CENTER"
                     maxWidth="Infinity"
                     mnemonicParsing="false"
-                    onAction="#saveWhiteWeaponType"
+                    onAction="#save"
                     text="Zapisz" GridPane.columnIndex="4"
                     GridPane.rowIndex="9">
                 <GridPane.margin>

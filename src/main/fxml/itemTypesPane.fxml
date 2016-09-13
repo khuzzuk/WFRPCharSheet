@@ -26,14 +26,14 @@
                 <RowConstraints minHeight="10.0"
                                 vgrow="SOMETIMES"/>
             </rowConstraints>
-            <ListView fx:id="itemTypesList" onMouseClicked="#getItemType"/>
+            <ListView fx:id="items" onMouseClicked="#getEntity"/>
         </GridPane>
         <GridPane>
             <padding>
                 <Insets right="10.0"/>
             </padding>
             <Label text="nazwa"/>
-            <TextField fx:id="iName" GridPane.columnIndex="1"/>
+            <TextField fx:id="name" GridPane.columnIndex="1"/>
             <Label text="dostępność" GridPane.columnIndex="2"/>
             <ComboBox fx:id="iAccessibility" GridPane.columnIndex="3"/>
             <Label text="waga" GridPane.rowIndex="1"/>
@@ -53,13 +53,13 @@
             </VBox>
             <Label text="cechy specjalne" GridPane.rowIndex="3"/>
             <TextArea fx:id="iSpecialFeatures" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
-            <Button text="Usuń" onAction="#removeItem"
+            <Button text="Usuń" onAction="#remove"
                     GridPane.columnIndex="2" GridPane.rowIndex="4"
                     maxWidth="Infinity"/>
             <Button text="Nowy"
                     GridPane.columnIndex="3" GridPane.rowIndex="4"
                     maxWidth="Infinity"/>
-            <Button text="Zapisz" onAction="#saveItem"
+            <Button text="Zapisz" onAction="#save"
                     GridPane.columnIndex="4" GridPane.rowIndex="4"
                     maxWidth="Infinity"/>
         </GridPane>
