@@ -1,0 +1,4 @@
+spec:name;strengthMod;priceMod;type
+Drewno;33;25;WOOD
+Żelazo;100;100;METAL
+Stal;120;125;METAL

@@ -59,6 +59,7 @@
                                             <fx:include fx:id="whiteWeaponTypePane" source="whiteWeaponTypePane.fxml"/>
                                             <fx:include fx:id="rangedWeaponTypePane" source="rangedWeaponTypePane.fxml"/>
                                             <fx:include fx:id="armorTypesPane" source="armorTypePane.fxml"/>
+                                            <fx:include fx:id="resourceTypesPane" source="resourceTypesPane.fxml"/>
                                         </panes>
                                     </Accordion>
                                 </TitledPane>

@@ -3,12 +3,12 @@ package pl.khuzzuk.wfrpchar.entities.items.types;
 import lombok.*;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.Wearable;
 
 import javax.persistence.*;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @DiscriminatorValue("2")
@@ -49,6 +49,22 @@ public abstract class FightingEquipment extends Item implements Wearable {
                 (names.get(LangElement.ADJECTIVE_NEUTR_SING) != null ? names.get(LangElement.ADJECTIVE_NEUTR_SING) : "") +
                 "|" +
                 (names.get(LangElement.ABLATIVE) != null ? names.get(LangElement.ABLATIVE) : "");
+    }
+
+    public Collection<Determinant> getDeterminantForType(DeterminantsType type) {
+        return determinants.stream().filter(d -> d.getLabel() == type)
+                .collect(Collectors.toList());
+    }
+
+    public void addDeterminant(Determinant determinant) {
+        if (determinants == null) {
+            determinants = new HashSet<>();
+        }
+        determinants.add(determinant);
+    }
+
+    public Collection<Determinant> getAllDeterminants() {
+        return determinants != null ? determinants : Collections.emptyList();
     }
 
     String determinantsToCsv(Set<Determinant> determinants) {

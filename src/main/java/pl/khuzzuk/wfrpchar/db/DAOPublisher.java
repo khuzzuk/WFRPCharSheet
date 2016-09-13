@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
+import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.ArmorType;
 import pl.khuzzuk.wfrpchar.entities.items.types.MiscItem;
 import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
@@ -49,6 +50,10 @@ public class DAOPublisher {
     private String armorTypesResult;
     @Value("${armorTypes.result.specific}")
     private String armorTypesNamedResult;
+    @Value("${resource.type.result}")
+    private String resourceTypeResult;
+    @Value("${resource.type.result.specific}")
+    private String resourceTypeResultSpecific;
 
     void publishMiscItems(Collection<MiscItem> results) {
         entitiesPublisher.publish(results, mistItemTypeResult);
@@ -66,6 +71,10 @@ public class DAOPublisher {
         entitiesPublisher.publish(allArmorTypes, armorTypesResult);
     }
 
+    void publishResourceTypes(Collection<ResourceType> resourceTypes) {
+        entitiesPublisher.publish(resourceTypes, resourceTypeResult);
+    }
+
     void publish(MiscItem item) {
         entitiesPublisher.publish(item, mistItemTypeNamedResult);
     }
@@ -80,6 +89,10 @@ public class DAOPublisher {
 
     void publish(ArmorType armorType) {
         entitiesPublisher.publish(armorType, armorTypesNamedResult);
+    }
+
+    void publish(ResourceType resourceType) {
+        entitiesPublisher.publish(resourceType, resourceTypeResultSpecific);
     }
 
     void publish(String communicate) {

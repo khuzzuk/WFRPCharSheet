@@ -63,6 +63,18 @@ public class DAOReactor {
     private String armorTypeNamedQuery;
     @Value("${armorTypes.remove}")
     private String armorTypeRemove;
+    @Value("${resource.type.query}")
+    private String resourceTypeQuery;
+    @Value("${resource.type.query.specific}")
+    private String resourceTypeQuerySpecific;
+    @Value("${resource.type.result}")
+    private String resourceTypeResult;
+    @Value("${resource.type.result.specific}")
+    private String resourceTypeResultSpecific;
+    @Value("${resource.type.save}")
+    private String resourceTypeSave;
+    @Value("${resource.type.remove}")
+    private String resourceTypeRemove;
     @Value("${database.saveEquipment}")
     private String dbSaveEquipment;
     @Value("${database.reset}")
@@ -93,6 +105,11 @@ public class DAOReactor {
         }
     }
 
+    private void saveResourceType(String line) {
+        dao.save(ResourceType.getFromCsv(line.split(";")));
+        daoPublisher.publish(resourceTypeQuery);
+    }
+
     private void removeMiscItem(String name) {
         dao.removeMiscItem(name);
         daoPublisher.publish(miscItemTypeQuery);
@@ -113,6 +130,11 @@ public class DAOReactor {
         daoPublisher.publish(armorTypesQuery);
     }
 
+    private void removeResourceType(String name) {
+        dao.removeResourceType(name);
+        daoPublisher.publish(resourceTypeQuery);
+    }
+
     private void getAllMiscItemsTypes() {
         daoPublisher.publishMiscItems(dao.getAllMiscItems());
     }
@@ -129,12 +151,20 @@ public class DAOReactor {
         daoPublisher.publishArmorTypes(dao.getAllArmorTypes());
     }
 
+    private void getAllResourceTypes() {
+        daoPublisher.publishResourceTypes(dao.getAllResourceTypes());
+    }
+
     private void getMiscItemTypeByName(String name) {
         daoPublisher.publish(dao.getMiscItem(name));
     }
 
     private void getArmorTypeByName(String name) {
         daoPublisher.publish(dao.getArmorType(name));
+    }
+
+    private void getResourceType(String name) {
+        daoPublisher.publish(dao.getResourceType(name));
     }
 
     private void resetDB() {
@@ -154,6 +184,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(resetDbMessage, this::resetDB);
         multiSubscriber.subscribe(rangedWeaponsQuery, this::getAllRangedWeaponTypes);
         multiSubscriber.subscribe(armorTypesQuery, this::getAllArmorTypes);
+        multiSubscriber.subscribe(resourceTypeQuery, this::getAllResourceTypes);
         daoContentSubscriber.subscribe(dbSaveEquipment, this::saveItem);
         daoContentSubscriber.subscribe(miscItemTypeNamedQuery, this::getMiscItemTypeByName);
         daoContentSubscriber.subscribe(miscItemTypeRemove, this::removeMiscItem);
@@ -163,5 +194,8 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(rangedWeaponRemove, this::removeRangedWeaponType);
         daoContentSubscriber.subscribe(armorTypeNamedQuery, this::getArmorTypeByName);
         daoContentSubscriber.subscribe(armorTypeRemove, this::removeArmorType);
+        daoContentSubscriber.subscribe(resourceTypeQuerySpecific, this::getResourceType);
+        daoContentSubscriber.subscribe(resourceTypeRemove, this::removeResourceType);
+        daoContentSubscriber.subscribe(resourceTypeSave, this::saveResourceType);
     }
 }

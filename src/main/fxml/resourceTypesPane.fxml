@@ -1,0 +1,36 @@
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Button?>
+<TitledPane maxHeight="Infinity" maxWidth="Infinity"
+            text="Materiały"
+            xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.khuzzuk.wfrpchar.gui.ResourceTypesPaneController">
+    <SplitPane dividerPositions="0.3" maxHeight="Infinity" maxWidth="Infinity">
+        <GridPane maxWidth="Infinity" maxHeight="Infinity">
+            <ListView fx:id="resList" onMouseClicked="#selectResource"/>
+        </GridPane>
+        <GridPane>
+            <padding>
+                <Insets right="10"/>
+            </padding>
+            <Label text="nazwa"/>
+            <TextField fx:id="resName" GridPane.columnIndex="1"/>
+            <Label text="modyfikator siły" GridPane.rowIndex="1"/>
+            <TextField fx:id="resStrength" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="modyfikator ceny" GridPane.rowIndex="2"/>
+            <TextField fx:id="resPrice" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Label text="typ" GridPane.rowIndex="3"/>
+            <ComboBox fx:id="resType" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <Button text="Usuń" GridPane.rowIndex="4" GridPane.columnIndex="0" onAction="#remove"/>
+            <Button text="Nowy" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            <Button text="Zapisz" GridPane.rowIndex="4" GridPane.columnIndex="2" onAction="#save"/>
+        </GridPane>
+    </SplitPane>
+</TitledPane>

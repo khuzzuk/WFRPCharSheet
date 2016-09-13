@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
-import pl.khuzzuk.wfrpchar.messaging.*;
+import pl.khuzzuk.wfrpchar.messaging.CommunicateMessage;
+import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.publishers.BagPublisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
@@ -67,9 +68,21 @@ public class GuiPublisher {
     @Value("${database.saveEquipment}")
     @NotNull
     private String dbSaveEquipment;
+    @Value("${resource.type.query}")
+    private String resourceTypesQuery;
+    @Value("${resource.type.query.specific}")
+    private String resourceTypesGet;
+    @Value("${resource.type.save}")
+    private String resourceTypesSave;
+    @Value("${resource.type.remove}")
+    private String resourceTypesRemove;
 
     void saveItem(String line) {
         textRequestPublisher.publish(line, dbSaveEquipment);
+    }
+
+    void saveResourceType(String line) {
+        textRequestPublisher.publish(line, resourceTypesSave);
     }
 
     void requestMiscItemType() {
@@ -86,6 +99,10 @@ public class GuiPublisher {
 
     void requestArmorTypes() {
         publisher.publish(new CommunicateMessage().setType(armorTypesQuery));
+    }
+
+    void requestResourceTypes() {
+        publisher.publish(new CommunicateMessage().setType(resourceTypesQuery));
     }
 
     void requestResetDB() {
@@ -108,6 +125,10 @@ public class GuiPublisher {
         textRequestPublisher.publish(name, armorTypesGet);
     }
 
+    void requestResourceType(String name) {
+        textRequestPublisher.publish(name, resourceTypesGet);
+    }
+
     void removeMiscItemType(String name) {
         textRequestPublisher.publish(name, miscItemRemove);
     }
@@ -122,5 +143,9 @@ public class GuiPublisher {
 
     void removeArmorType(String name) {
         textRequestPublisher.publish(name, armorTypeRemove);
+    }
+
+    void removeResourceType(String name) {
+        textRequestPublisher.publish(name, resourceTypesRemove);
     }
 }

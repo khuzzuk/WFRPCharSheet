@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
+import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 
@@ -35,6 +36,7 @@ public class DBInitializer {
         loadItems(dao, "/whiteWeaponTypes.csv");
         loadItems(dao, "/rangedWeaponTypes.csv");
         loadItems(dao, "/armorType.csv");
+        loadResources(dao);
     }
 
     private void loadCurrencies(DAO dao) {
@@ -50,6 +52,13 @@ public class DBInitializer {
                 .map(s -> new Character(s[0]))
                 .collect(Collectors.toList());
         characters.forEach(dao::save);
+    }
+
+    private void loadResources(DAO dao) {
+        List<ResourceType> resources = readResource("/resources.csv")
+                .stream().filter(s -> !s[0].startsWith("spec")).map(ResourceType::getFromCsv)
+                .collect(Collectors.toList());
+        resources.forEach(dao::save);
     }
 
     private void loadItems(DAO dao, String path) {

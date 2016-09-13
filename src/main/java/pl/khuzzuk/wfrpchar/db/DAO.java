@@ -7,6 +7,7 @@ import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
+import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 
 import javax.inject.Inject;
@@ -33,6 +34,10 @@ public class DAO {
     @Types
     @Items
     private DAOTransactional<MiscItem, String> daoMiscItems;
+    @Inject
+    @Resources
+    @Types
+    private DAOTransactional<ResourceType, String> daoResources;
     @Getter(AccessLevel.PACKAGE)
     private DAOManager manager;
 
@@ -78,6 +83,11 @@ public class DAO {
         return daoArmorTypes.getAllItems();
     }
 
+    Collection<ResourceType> getAllResourceTypes() {
+        assureSessionInit(daoResources);
+        return daoResources.getAllItems();
+    }
+
     MiscItem getMiscItem(String name) {
         assureSessionInit(daoMiscItems);
         return daoMiscItems.getItem(name);
@@ -96,6 +106,11 @@ public class DAO {
     ArmorType getArmorType(String name) {
         assureSessionInit(daoArmorTypes);
         return daoArmorTypes.getItem(name);
+    }
+
+    ResourceType getResourceType(String name) {
+        assureSessionInit(daoResources);
+        return daoResources.getItem(name);
     }
 
     Collection<Character> getAllCharacters() {
@@ -154,6 +169,11 @@ public class DAO {
         daoCurrencies.commit(currency);
     }
 
+    void save(ResourceType resource) {
+        assureSessionInit(daoResources);
+        daoResources.commit(resource);
+    }
+
     void removeMiscItem(String name) {
         assureSessionInit(daoMiscItems);
         daoMiscItems.remove(name);
@@ -172,5 +192,10 @@ public class DAO {
     void removeArmorType(String name) {
         assureSessionInit(daoArmorTypes);
         daoArmorTypes.remove(name);
+    }
+
+    void removeResourceType(String name) {
+        assureSessionInit(daoResources);
+        daoResources.remove(name);
     }
 }

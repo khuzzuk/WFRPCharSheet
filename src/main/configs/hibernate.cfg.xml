@@ -26,6 +26,7 @@
         <mapping class="pl.khuzzuk.wfrpchar.entities.Player"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.Character"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.Currency"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.ResourceType"/>
 
         <!-- MAPPED ITEMS -->
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.Item"/>

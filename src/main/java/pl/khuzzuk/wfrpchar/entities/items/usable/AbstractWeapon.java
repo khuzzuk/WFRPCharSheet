@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.collections4.collection.CompositeCollection;
-import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -13,7 +12,10 @@ import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.Weapon;
 import pl.khuzzuk.wfrpchar.entities.items.types.WeaponType;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,21 +26,18 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public abstract class AbstractWeapon
         extends AbstractCommodity
-        implements Named<String>, Weapon {
-    @Getter
-    @Setter
-    private String name;
+        implements Weapon {
     @Getter
     @Setter
     @ManyToOne
     WeaponType baseType;
-    @Embedded
     @Getter
     @Setter
+    @ManyToOne
     private ResourceType primaryResource;
-    @Embedded
     @Getter
     @Setter
+    @ManyToOne
     private ResourceType secondaryResource;
     @Getter
     @Setter

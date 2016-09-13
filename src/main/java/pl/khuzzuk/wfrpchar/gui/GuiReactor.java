@@ -29,6 +29,8 @@ public class GuiReactor {
     @Inject
     private WhiteWeaponTypePaneController whiteWeaponTypePaneController;
     @Inject
+    private ResourceTypesPaneController resourceTypesPaneController;
+    @Inject
     @MainWindowBean
     @Subscribers
     private MultiSubscriber<Message> communicateSubscriber;
@@ -59,6 +61,10 @@ public class GuiReactor {
     private String listOfArmorTypesResult;
     @Value("${armorTypes.result.specific}")
     private String namedArmorTypeMsg;
+    @Value("${resource.type.result}")
+    private String resourceTypeResult;
+    @Value("${resource.type.result.specific}")
+    private String resourceTypeResultSpecific;
 
     @PostConstruct
     private void setConsumers() {
@@ -70,5 +76,7 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
         guiContentSubscriber.subscribe(listOfArmorTypesResult, armorTypesPaneController::loadArmorTypes);
         guiContentSubscriber.subscribe(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
+        guiContentSubscriber.subscribe(resourceTypeResult, resourceTypesPaneController::loadAllResources);
+        guiContentSubscriber.subscribe(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
     }
 }

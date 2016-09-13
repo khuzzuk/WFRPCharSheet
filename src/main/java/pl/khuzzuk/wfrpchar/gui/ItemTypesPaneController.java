@@ -46,8 +46,7 @@ public class ItemTypesPaneController implements Controller {
     }
 
     void loadMiscItemTypes(Collection<MiscItem> miscItems) {
-        itemTypesList.getItems().clear();
-        itemTypesList.getItems().addAll(miscItems.stream().map(MiscItem::getName).collect(Collectors.toList()));
+        EntitiesAdapter.sendToListView(itemTypesList, miscItems);
     }
 
     void loadMiscItemToEditor(MiscItem item) {

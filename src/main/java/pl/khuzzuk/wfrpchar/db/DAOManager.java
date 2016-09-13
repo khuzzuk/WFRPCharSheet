@@ -8,6 +8,7 @@ import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
+import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 
 import javax.inject.Inject;
@@ -90,5 +91,12 @@ public class DAOManager {
     @Types
     public DAOEntityResolver<ArmorType, String> daoArmorTypes() {
         return new DAOEntityResolver<>("FROM Item i where type(i) = ArmorType", openNewSession());
+    }
+
+    @Bean
+    @Resources
+    @Types
+    public DAOEntityResolver<ResourceType, String> daoResourcesTypes() {
+        return new DAOEntityResolver<>("FROM ResourceType", openNewSession());
     }
 }

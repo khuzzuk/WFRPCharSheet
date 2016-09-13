@@ -77,9 +77,7 @@ public class RangedWeaponTypePaneController implements Controller {
     }
 
     void loadRangedWeapon(Collection<RangedWeaponType> weapons) {
-        rangedWeaponList.getItems().clear();
-        rangedWeaponList.getItems()
-                .addAll(weapons.stream().map(Item::getName).collect(Collectors.toList()));
+        EntitiesAdapter.sendToListView(rangedWeaponList, weapons);
     }
 
     @FXML
