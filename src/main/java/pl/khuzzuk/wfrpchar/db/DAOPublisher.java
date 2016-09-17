@@ -16,8 +16,10 @@ import pl.khuzzuk.wfrpchar.messaging.publishers.Publisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.Properties;
 
 @Component
 @Publishers
@@ -30,6 +32,9 @@ public class DAOPublisher {
     @Inject
     @Publishers
     private MultiContentPublisher entitiesPublisher;
+    @Inject
+    @Named("messages")
+    private Properties messages;
     @Value("${miscItemTypes.result}")
     private String mistItemTypeResult;
     @Value("${miscItemTypes.result.specific}")
@@ -73,6 +78,10 @@ public class DAOPublisher {
 
     void publishResourceTypes(Collection<ResourceType> resourceTypes) {
         entitiesPublisher.publish(resourceTypes, resourceTypeResult);
+    }
+
+    void publishWhiteWeaponsBaseTypes(Collection<WhiteWeaponType> results) {
+        entitiesPublisher.publish(results, messages.getProperty("weapons.hand.baseType.allTypesList"));
     }
 
     void publish(MiscItem item) {

@@ -10,9 +10,12 @@ import pl.khuzzuk.wfrpchar.gui.ScreensConfig;
 import pl.khuzzuk.wfrpchar.messaging.MessageBusConfig;
 
 import javax.inject.Named;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Properties;
 
 @Configuration
-//@EnableAspectJAutoProxy(exposeProxy = true)
 @ComponentScan({"pl.khuzzuk.wfrpchar"})
 @Import({ScreensConfig.class, MessageBusConfig.class, DAOConfig.class})
 public class ConfigManager {
@@ -20,5 +23,17 @@ public class ConfigManager {
     @Named("factory")
     SessionFactory sessionFactory() {
         return new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
+    }
+    @Bean
+    @Named("messages")
+    Properties properties() {
+        Properties properties = new Properties();
+        try {
+            properties.load(new BufferedReader(new InputStreamReader(
+                    ConfigManager.class.getResourceAsStream("/messages.properties"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties;
     }
 }

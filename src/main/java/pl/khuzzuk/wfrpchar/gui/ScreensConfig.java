@@ -4,12 +4,10 @@ import javafx.stage.Stage;
 import lombok.Setter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 
 import javax.inject.Inject;
 
 @Configuration
-@Lazy
 public class ScreensConfig {
     @Setter
     private Stage stage;
@@ -28,7 +26,7 @@ public class ScreensConfig {
 
     @Bean
     @Inject
-    public ArmorTypesPane armorTypesPane(MainWindow window) {
-        return new ArmorTypesPane(armorTypesController, window);
+    public HandWeaponTypeChooserStage handWeaponTypeChooserStage(HandWeaponTypeChooserController controller) {
+        return new HandWeaponTypeChooserStage(stage, controller);
     }
 }

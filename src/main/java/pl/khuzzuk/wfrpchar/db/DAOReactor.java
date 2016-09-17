@@ -16,7 +16,9 @@ import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.constraints.NotNull;
+import java.util.Properties;
 
 @NoArgsConstructor
 @Subscribers
@@ -37,6 +39,9 @@ public class DAOReactor {
     @Subscribers
     @DaoBean
     private MultiSubscriber<Message> multiSubscriber;
+    @Inject
+    @Named("messages")
+    private Properties messages;
     @Value("${miscItemTypes.query}")
     private String miscItemTypeQuery;
     @Value("${miscItemTypes.query.specific}")
@@ -80,8 +85,8 @@ public class DAOReactor {
     @Value("${database.reset}")
     private String resetDbMessage;
 
-    private void getAllWeapons() {
-        daoPublisher.publishWhiteWeapons(dao.getAllWeapons());
+    private void getAllWhiteWeaponsTypes() {
+        daoPublisher.publishWhiteWeapons(dao.getAllWhiteWeaponTypes());
     }
 
     private void getWhiteWeaponByName(String name) {
@@ -155,6 +160,10 @@ public class DAOReactor {
         daoPublisher.publishResourceTypes(dao.getAllResourceTypes());
     }
 
+    private void getAllWWBaseType() {
+        daoPublisher.publishWhiteWeaponsBaseTypes(dao.getAllWhiteWeaponTypes());
+    }
+
     private void getMiscItemTypeByName(String name) {
         daoPublisher.publish(dao.getMiscItem(name));
     }
@@ -180,11 +189,12 @@ public class DAOReactor {
     @PostConstruct
     private void setReactors() {
         multiSubscriber.subscribe(miscItemTypeQuery, this::getAllMiscItemsTypes);
-        multiSubscriber.subscribe(whiteWeaponQuery, this::getAllWeapons);
+        multiSubscriber.subscribe(whiteWeaponQuery, this::getAllWhiteWeaponsTypes);
         multiSubscriber.subscribe(resetDbMessage, this::resetDB);
         multiSubscriber.subscribe(rangedWeaponsQuery, this::getAllRangedWeaponTypes);
         multiSubscriber.subscribe(armorTypesQuery, this::getAllArmorTypes);
         multiSubscriber.subscribe(resourceTypeQuery, this::getAllResourceTypes);
+        multiSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.getAllTypes"), this::getAllWWBaseType);
         daoContentSubscriber.subscribe(dbSaveEquipment, this::saveItem);
         daoContentSubscriber.subscribe(miscItemTypeNamedQuery, this::getMiscItemTypeByName);
         daoContentSubscriber.subscribe(miscItemTypeRemove, this::removeMiscItem);

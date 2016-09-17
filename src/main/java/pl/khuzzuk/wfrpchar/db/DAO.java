@@ -68,7 +68,7 @@ public class DAO {
         return daoMiscItems.getAllItems();
     }
 
-    Collection<WhiteWeaponType> getAllWeapons() {
+    Collection<WhiteWeaponType> getAllWhiteWeaponTypes() {
         assureSessionInit(daoWhiteWeapons);
         return daoWhiteWeapons.getAllItems();
     }

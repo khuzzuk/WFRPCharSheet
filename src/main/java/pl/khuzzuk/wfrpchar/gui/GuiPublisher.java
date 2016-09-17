@@ -1,6 +1,5 @@
 package pl.khuzzuk.wfrpchar.gui;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
@@ -11,7 +10,8 @@ import pl.khuzzuk.wfrpchar.messaging.publishers.Publisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;
-import javax.validation.constraints.NotNull;
+import javax.inject.Named;
+import java.util.Properties;
 
 @Component
 @Publishers
@@ -26,126 +26,83 @@ public class GuiPublisher {
     @SelectiveQuery
     @MainWindowBean
     private BagPublisher<String> textRequestPublisher;
-    @Value("${whiteWeapons.query}")
-    @NotNull
-    private String whiteWeaponQuery;
-    @Value("${database.reset}")
-    @NotNull
-    private String databaseReset;
-    @Value("${miscItemTypes.query}")
-    private String miscItemQuery;
-    @Value("${miscItemTypes.query.specific}")
-    private String miscItemGet;
-    @Value("${miscItemTypes.remove}")
-    private String miscItemRemove;
-    @Value("${whiteWeapons.query.specific}")
-    @NotNull
-    private String whiteWeaponGet;
-    @Value("${whiteWeapons.save}")
-    @NotNull
-    private String whiteWeaponSave;
-    @Value("${whiteWeapons.remove}")
-    @NotNull
-    private String whiteWeaponTypeRemove;
-    @Value("${rangedWeapons.query}")
-    @NotNull
-    private String rangeWeaponsQuery;
-    @Value("${rangedWeapons.query.specific}")
-    @NotNull
-    private String rangedWeaponGet;
-    @Value("${rangedWeapons.save}")
-    @NotNull
-    private String rangedWeaponSave;
-    @Value("${rangedWeapons.remove}")
-    @NotNull
-    private String rangedWeaponRemove;
-    @Value("${armorTypes.query}")
-    private String armorTypesQuery;
-    @Value("${armorTypes.query.specific}")
-    private String armorTypesGet;
-    @Value("${armorTypes.remove}")
-    private String armorTypeRemove;
-    @Value("${database.saveEquipment}")
-    @NotNull
-    private String dbSaveEquipment;
-    @Value("${resource.type.query}")
-    private String resourceTypesQuery;
-    @Value("${resource.type.query.specific}")
-    private String resourceTypesGet;
-    @Value("${resource.type.save}")
-    private String resourceTypesSave;
-    @Value("${resource.type.remove}")
-    private String resourceTypesRemove;
+    @Inject
+    @Named("messages")
+    private Properties messages;
 
     void saveItem(String line) {
-        textRequestPublisher.publish(line, dbSaveEquipment);
+        textRequestPublisher.publish(line, messages.getProperty("database.saveEquipment"));
     }
 
     void saveResourceType(String line) {
-        textRequestPublisher.publish(line, resourceTypesSave);
+        textRequestPublisher.publish(line, messages.getProperty("resource.type.save"));
     }
 
     void requestMiscItemType() {
-        publisher.publish(new CommunicateMessage().setType(miscItemQuery));
+        publisher.publish(new CommunicateMessage().setType(messages.getProperty("miscItemTypes.query")));
     }
 
     void requestWhiteWeapons() {
-        publisher.publish(new CommunicateMessage().setType(whiteWeaponQuery));
+        publisher.publish(new CommunicateMessage().setType(messages.getProperty("whiteWeapons.query")));
     }
 
     void requestRangedWeapons() {
-        publisher.publish(new CommunicateMessage().setType(rangeWeaponsQuery));
+        publisher.publish(new CommunicateMessage().setType(messages.getProperty("rangedWeapons.query")));
     }
 
     void requestArmorTypes() {
-        publisher.publish(new CommunicateMessage().setType(armorTypesQuery));
+        publisher.publish(new CommunicateMessage().setType(messages.getProperty("armorTypes.query")));
     }
 
     void requestResourceTypes() {
-        publisher.publish(new CommunicateMessage().setType(resourceTypesQuery));
+        publisher.publish(new CommunicateMessage().setType(messages.getProperty("resource.type.query")));
     }
 
     void requestResetDB() {
-        publisher.publish(new CommunicateMessage().setType(databaseReset));
+        publisher.publish(new CommunicateMessage().setType(messages.getProperty("database.reset")));
     }
 
     void requestMiscItemTypeLoad(String name) {
-        textRequestPublisher.publish(name, miscItemGet);
+        textRequestPublisher.publish(name, messages.getProperty("miscItemTypes.query.specific"));
     }
 
     void requestWhiteWeaponLoad(String name) {
-        textRequestPublisher.publish(name, whiteWeaponGet);
+        textRequestPublisher.publish(name, messages.getProperty("whiteWeapons.query.specific"));
     }
 
     void requestRangedWeaponLoad(String name) {
-        textRequestPublisher.publish(name, rangedWeaponGet);
+        textRequestPublisher.publish(name, messages.getProperty("rangedWeapons.query.specific"));
     }
 
     void requestArmorTypeLoad(String name) {
-        textRequestPublisher.publish(name, armorTypesGet);
+        textRequestPublisher.publish(name, messages.getProperty("armorTypes.query.specific"));
     }
 
     void requestResourceType(String name) {
-        textRequestPublisher.publish(name, resourceTypesGet);
+        textRequestPublisher.publish(name, messages.getProperty("resource.type.query.specific"));
     }
 
     void removeMiscItemType(String name) {
-        textRequestPublisher.publish(name, miscItemRemove);
+        textRequestPublisher.publish(name, messages.getProperty("miscItemTypes.remove"));
     }
 
     void removeRangedWeapon(String name) {
-        textRequestPublisher.publish(name, rangedWeaponRemove);
+        textRequestPublisher.publish(name, messages.getProperty("rangedWeapons.remove"));
     }
 
     void removeWhiteWeapon(String name) {
-        textRequestPublisher.publish(name, whiteWeaponTypeRemove);
+        textRequestPublisher.publish(name, messages.getProperty("whiteWeapons.remove"));
     }
 
     void removeArmorType(String name) {
-        textRequestPublisher.publish(name, armorTypeRemove);
+        textRequestPublisher.publish(name, messages.getProperty("armorTypes.remove"));
     }
 
     void removeResourceType(String name) {
-        textRequestPublisher.publish(name, resourceTypesRemove);
+        textRequestPublisher.publish(name, messages.getProperty("resource.type.remove"));
+    }
+
+    void publish(String text) {
+        publisher.publish(new CommunicateMessage().setType(text));
     }
 }

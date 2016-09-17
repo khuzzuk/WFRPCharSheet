@@ -3,10 +3,14 @@ package pl.khuzzuk.wfrpchar.gui;
 import javafx.util.Callback;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
+    private Map<Class<?>, Controller> controllers;
     @Inject
     @MainWindowBean
     private MainWindowController mainWindowController;
@@ -22,23 +26,27 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
     private ResourceTypesPaneController resourceTypesPaneController;
     @Inject
     private ItemsListedController weaponEntitiesPaneController;
+    @Inject
+    private HandWeaponsPaneController handWeaponsPaneController;
+    @Inject
+    private HandWeaponTypeChooserController handWeaponTypeChooserController;
+
+    @PostConstruct
+    private void organize() {
+        controllers = new ConcurrentHashMap<>();
+        controllers.put(mainWindowController.getClass(), mainWindowController);
+        controllers.put(armorTypesPaneController.getClass(), armorTypesPaneController);
+        controllers.put(rangedWeaponTypePaneController.getClass(), rangedWeaponTypePaneController);
+        controllers.put(whiteWeaponTypePaneController.getClass(), whiteWeaponTypePaneController);
+        controllers.put(itemTypesPaneController.getClass(), itemTypesPaneController);
+        controllers.put(resourceTypesPaneController.getClass(), resourceTypesPaneController);
+        controllers.put(weaponEntitiesPaneController.getClass(), weaponEntitiesPaneController);
+        controllers.put(handWeaponsPaneController.getClass(), handWeaponsPaneController);
+        controllers.put(handWeaponTypeChooserController.getClass(), handWeaponTypeChooserController);
+    }
 
     @Override
     public Object call(Class<?> param) {
-        if (param.equals(mainWindowController.getClass())) {
-            return mainWindowController;
-        } else if (param.equals(armorTypesPaneController.getClass())) {
-            return armorTypesPaneController;
-        } else if (param.equals(rangedWeaponTypePaneController.getClass())) {
-            return rangedWeaponTypePaneController;
-        } else if (param.equals(whiteWeaponTypePaneController.getClass())) {
-            return whiteWeaponTypePaneController;
-        } else if (param.equals(itemTypesPaneController.getClass())) {
-            return itemTypesPaneController;
-        } else if (param.equals(resourceTypesPaneController.getClass())) {
-            return resourceTypesPaneController;
-        } else {
-            return weaponEntitiesPaneController;
-        }
+        return controllers.get(param);
     }
 }

@@ -1,5 +1,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <TitledPane animated="false" text="Broń strzelecka"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -65,6 +66,9 @@
                         minHeight="10.0" prefHeight="30.0"
                         vgrow="SOMETIMES"/>
             </rowConstraints>
+            <padding>
+                <Insets right="10"/>
+            </padding>
             <Label text="Nazwa"/>
             <TextField fx:id="name"
                        GridPane.columnIndex="1"/>

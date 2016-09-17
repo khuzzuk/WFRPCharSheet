@@ -29,10 +29,14 @@ public abstract class AbstractContentSubscriber<T> implements ContentSubscriber<
 
     @Override
     public void receive(BagMessage<T> message) {
-        if (reactor == null) {
+        if (consumer != null) {
             receive(message.getMessage());
-        } else {
+        } else if (reactor != null) {
             reactor.resolve();
+        } else {
+            throw new IllegalStateException("cannot handle " +
+                    message.toString() +
+                    ", neither consumer nor reactor was set.");
         }
     }
 

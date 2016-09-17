@@ -1,0 +1,23 @@
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Button?>
+<GridPane maxWidth="Infinity" maxHeight="Infinity"
+          xmlns="http://javafx.com/javafx/8.0.60"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="pl.khuzzuk.wfrpchar.gui.HandWeaponTypeChooserController">
+    <padding>
+        <Insets right="10"/>
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="80"/>
+    </rowConstraints>
+    <ListView fx:id="items" GridPane.columnSpan="2"/>
+    <Button text="Anuluj" GridPane.rowIndex="1"/>
+    <Button text="Wybierz" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+</GridPane>

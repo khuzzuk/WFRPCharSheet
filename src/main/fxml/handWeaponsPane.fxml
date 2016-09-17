@@ -1,0 +1,43 @@
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<TitledPane animated="false" text="Broń strzelecka"
+            xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.khuzzuk.wfrpchar.gui.HandWeaponsPaneController">
+    <SplitPane dividerPositions="0.3">
+        <GridPane maxHeight="Infinity" maxWidth="Infinity">
+            <columnConstraints>
+                <ColumnConstraints maxWidth="Infinity"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="Infinity"/>
+            </rowConstraints>
+            <ListView fx:id="items" maxHeight="Infinity" maxWidth="Infinity"
+                      onMouseClicked="#getEntity"/>
+        </GridPane>
+        <GridPane maxWidth="Infinity" maxHeight="Infinity">
+            <columnConstraints>
+                <ColumnConstraints maxWidth="Infinity"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="Infinity"/>
+            </rowConstraints>
+            <padding>
+                <Insets right="10"/>
+            </padding>
+            <Label text="nazwa"/>
+            <TextField fx:id="name" GridPane.columnIndex="1"/>
+            <Button fx:id="chooseBaseButton" text="typ"
+                    maxHeight="Infinity" maxWidth="Infinity"
+                    GridPane.columnIndex="2" onAction="#chooseBaseType"/>
+        </GridPane>
+    </SplitPane>
+</TitledPane>
