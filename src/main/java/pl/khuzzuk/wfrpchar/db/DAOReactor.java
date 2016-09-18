@@ -89,10 +89,6 @@ public class DAOReactor {
         daoPublisher.publishWhiteWeapons(dao.getAllWhiteWeaponTypes());
     }
 
-    private void getWhiteWeaponByName(String name) {
-        daoPublisher.publish(dao.getWhiteWeapon(name));
-    }
-
     private void saveItem(String line) {
         Item i = weaponParser.parseEquipment(line.split(";"));
         if (i instanceof WhiteWeaponType) {
@@ -148,6 +144,10 @@ public class DAOReactor {
         daoPublisher.publishRangedWeapons(dao.getAllRangedWeapons());
     }
 
+    private void getWhiteWeaponByName(String name) {
+        daoPublisher.publish(dao.getWhiteWeapon(name), messages.getProperty("whiteWeapons.result.specific"));
+    }
+
     private void getRangedWeaponTypeByName(String name) {
         daoPublisher.publish(dao.getRangedWeapon(name));
     }
@@ -174,6 +174,10 @@ public class DAOReactor {
 
     private void getResourceType(String name) {
         daoPublisher.publish(dao.getResourceType(name));
+    }
+
+    private void getWWBaseTypeByName(String name) {
+        daoPublisher.publish(dao.getWhiteWeapon(name), messages.getProperty("weapons.hand.baseType.choice"));
     }
 
     private void resetDB() {
@@ -207,5 +211,6 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(resourceTypeQuerySpecific, this::getResourceType);
         daoContentSubscriber.subscribe(resourceTypeRemove, this::removeResourceType);
         daoContentSubscriber.subscribe(resourceTypeSave, this::saveResourceType);
+        daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.selected"), this::getWWBaseTypeByName);
     }
 }

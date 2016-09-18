@@ -30,6 +30,7 @@ public abstract class AbstractMultiContentSubscriber implements MultiContentSubs
         } catch (ClassCastException e) {
             log.error("Wrong type of Message for Consumer: " + consumers.get(message.getType()) +
                     " and message type: " + message.getType());
+            e.printStackTrace();
         }
         reactors.get(message.getType()).stream().forEach(Reactor::resolve);
     }

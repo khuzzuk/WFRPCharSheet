@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.gui;
 
 import javafx.scene.control.ListView;
 import pl.khuzzuk.wfrpchar.entities.Named;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 
 import java.util.Collection;
 import java.util.function.Consumer;
@@ -19,5 +20,10 @@ class EntitiesAdapter {
             ListView<U> view, Collection<T> items) {
         view.getItems().clear();
         view.getItems().addAll(items.stream().map(Named::getName).collect(Collectors.toList()));
+    }
+
+    static void listDeterminants(ListView<Determinant> listView, Collection<Determinant> determinants) {
+        listView.getItems().clear();
+        listView.getItems().addAll(determinants);
     }
 }

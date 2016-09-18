@@ -88,8 +88,8 @@ public class DAOPublisher {
         entitiesPublisher.publish(item, mistItemTypeNamedResult);
     }
 
-    void publish(WhiteWeaponType result) {
-        entitiesPublisher.publish(result, whiteWeaponNamedResultMsgType);
+    public void publish(WhiteWeaponType whiteWeapon, String message) {
+        entitiesPublisher.publish(whiteWeapon, message);
     }
 
     void publish(RangedWeaponType weapon) {

@@ -7,9 +7,10 @@
 <GridPane maxWidth="Infinity" maxHeight="Infinity"
           xmlns="http://javafx.com/javafx/8.0.60"
           xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="pl.khuzzuk.wfrpchar.gui.HandWeaponTypeChooserController">
+          fx:controller="pl.khuzzuk.wfrpchar.gui.HandWeaponTypeChooserController"
+          hgap="10">
     <padding>
-        <Insets right="10"/>
+        <Insets right="10" left="10"/>
     </padding>
     <columnConstraints>
         <ColumnConstraints/>
@@ -18,6 +19,6 @@
         <RowConstraints percentHeight="80"/>
     </rowConstraints>
     <ListView fx:id="items" GridPane.columnSpan="2"/>
-    <Button text="Anuluj" GridPane.rowIndex="1"/>
-    <Button text="Wybierz" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <Button text="Anuluj" GridPane.rowIndex="1" maxWidth="Infinity"/>
+    <Button text="Wybierz" GridPane.rowIndex="1" GridPane.columnIndex="1" maxWidth="Infinity" onAction="#sendSelected"/>
 </GridPane>

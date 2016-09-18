@@ -3,9 +3,11 @@ package pl.khuzzuk.wfrpchar.gui;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.messaging.CommunicateMessage;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.publishers.BagPublisher;
+import pl.khuzzuk.wfrpchar.messaging.publishers.MultiContentPublisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
@@ -26,6 +28,10 @@ public class GuiPublisher {
     @SelectiveQuery
     @MainWindowBean
     private BagPublisher<String> textRequestPublisher;
+    @Inject
+    @Publishers
+    @MainWindowBean
+    private MultiContentPublisher contentPublisher;
     @Inject
     @Named("messages")
     private Properties messages;
@@ -104,5 +110,13 @@ public class GuiPublisher {
 
     void publish(String text) {
         publisher.publish(new CommunicateMessage().setType(text));
+    }
+
+    public void requestWWBaseType(String name) {
+        textRequestPublisher.publish(name, messages.getProperty("weapons.hand.baseType.selected"));
+    }
+
+    public void publish(Determinant determinant, String msg) {
+        contentPublisher.publish(determinant, msg);
     }
 }

@@ -20,16 +20,16 @@
         </GridPane>
         <GridPane maxHeight="Infinity" maxWidth="Infinity">
             <columnConstraints>
-                <ColumnConstraints maxWidth="Infinity"/>
-                <ColumnConstraints maxWidth="Infinity"/>
-                <ColumnConstraints maxWidth="Infinity"/>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="Infinity"/>
-                <RowConstraints maxHeight="Infinity"/>
-                <RowConstraints maxHeight="Infinity"/>
-                <RowConstraints maxHeight="Infinity"/>
-                <RowConstraints maxHeight="Infinity"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
             </rowConstraints>
             <padding>
                 <Insets right="10"/>

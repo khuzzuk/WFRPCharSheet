@@ -28,6 +28,7 @@ public class HandWeaponTypeChooserController extends GuiContentSubscriber<Collec
     @Value("${weapons.hand.baseType.choice}")
     private String choiceReady;
 
+    @Inject
     public HandWeaponTypeChooserController(@Value("${weapons.hand.baseType.allTypesList}") String msgType) {
         super(msgType);
     }
@@ -45,5 +46,19 @@ public class HandWeaponTypeChooserController extends GuiContentSubscriber<Collec
             parent.show();
         });
         super.subscribe();
+    }
+
+    @FXML
+    private void sendSelected() {
+        String selected = items.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            publisher.requestWWBaseType(selected);
+            parent.hide();
+        }
+    }
+
+    @FXML
+    private void cancel() {
+        parent.hide();
     }
 }

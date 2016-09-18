@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @DiscriminatorValue("0")
-@ToString(exclude = "id")
 public abstract class Determinant implements Labelled<DeterminantsType, String> {
     @Id
     @GeneratedValue
@@ -77,5 +76,10 @@ public abstract class Determinant implements Labelled<DeterminantsType, String> 
                 .filter(d -> d.getLabel() == type)
                 .collect(Collectors.summarizingInt(Determinant::getActualValue))
                 .getSum();
+    }
+
+    @Override
+    public String toString() {
+        return type.getName() + ": " + getActualValue();
     }
 }

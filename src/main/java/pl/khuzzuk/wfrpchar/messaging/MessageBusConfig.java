@@ -57,6 +57,13 @@ public class MessageBusConfig {
 
     @Bean
     @Publishers
+    @MainWindowBean
+    public MultiContentPublisher guiContentPublisher() {
+        return new MultiBagPublisher();
+    }
+
+    @Bean
+    @Publishers
     @WhiteWeapons
     @Persist
     @MainWindowBean
@@ -74,6 +81,6 @@ public class MessageBusConfig {
     @MainWindowBean
     @Subscribers
     public MultiSubscriber<Message> guiCommunicateSubscriber() {
-        return new MultiCommunicateSubscriber();
+        return new GuiMultiSubscriber();
     }
 }

@@ -8,7 +8,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
-<TitledPane animated="false" text="Broń strzelecka"
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>
+<TitledPane animated="false" text="Broń ręczna"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pl.khuzzuk.wfrpchar.gui.HandWeaponsPaneController">
@@ -25,19 +28,64 @@
         </GridPane>
         <GridPane maxWidth="Infinity" maxHeight="Infinity">
             <columnConstraints>
-                <ColumnConstraints maxWidth="Infinity"/>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="Infinity"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
             </rowConstraints>
             <padding>
                 <Insets right="10"/>
             </padding>
             <Label text="nazwa"/>
             <TextField fx:id="name" GridPane.columnIndex="1"/>
+            <Label text="typ" GridPane.columnIndex="2"/>
             <Button fx:id="chooseBaseButton" text="typ"
-                    maxHeight="Infinity" maxWidth="Infinity"
-                    GridPane.columnIndex="2" onAction="#chooseBaseType"/>
+                    maxHeight="Infinity" minWidth="100"
+                    GridPane.columnIndex="3" onAction="#chooseBaseType"/>
+            <Label text="dostępnosć" GridPane.columnIndex="4"/>
+            <ComboBox fx:id="accessibility" GridPane.columnIndex="5"/>
+            <Label text="ręczność" GridPane.rowIndex="1"/>
+            <ComboBox fx:id="placement" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="kość" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+            <ComboBox fx:id="dices" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+            <Label text="rzuty" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+            <TextField fx:id="rolls" GridPane.rowIndex="1" GridPane.columnIndex="5"/>
+            <Label text="surowiec" GridPane.rowIndex="2"/>
+            <ComboBox fx:id="primaryResource" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Label text="stop" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+            <ComboBox fx:id="secondaryResource" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+            <Label text="cena bazowa" GridPane.rowIndex="3"/>
+            <VBox alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"
+                  GridPane.rowIndex="3" GridPane.columnIndex="1">
+                <Label text="złoto"/>
+                <TextField fx:id="gold"/>
+            </VBox>
+            <VBox alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"
+                  GridPane.rowIndex="3" GridPane.columnIndex="2">
+                <Label text="srebro"/>
+                <TextField fx:id="silver"/>
+            </VBox>
+            <VBox alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"
+                  GridPane.rowIndex="3" GridPane.columnIndex="3">
+                <Label text="miedź"/>
+                <TextField fx:id="lead"/>
+            </VBox>
+            <Label text="modyfikatory" GridPane.rowIndex="4"/>
+            <ListView fx:id="determinantsView" GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.rowSpan="2"/>
+            <Button text="dodaj" GridPane.rowIndex="4" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#chooseDeterminant"/>
+            <Label text="cechy specjalne" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="4" GridPane.columnIndex="4" GridPane.columnSpan="2"
+                      maxHeight="Infinity" maxWidth="Infinity"/>
         </GridPane>
     </SplitPane>
 </TitledPane>

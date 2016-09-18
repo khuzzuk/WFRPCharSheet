@@ -3,6 +3,7 @@ package pl.khuzzuk.wfrpchar.gui;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.MultiContentSubscriber;
@@ -11,7 +12,10 @@ import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
+import java.util.Properties;
 
 @Component
 @ReactorBean
@@ -31,6 +35,11 @@ public class GuiReactor {
     @Inject
     private ResourceTypesPaneController resourceTypesPaneController;
     @Inject
+    private HandWeaponsPaneController handWeaponsPaneController;
+    @Inject
+    @Named("hwDeterminantsCreatorController")
+    private DeterminantCreatorController hwDeterminantCreatorController;
+    @Inject
     @MainWindowBean
     @Subscribers
     private MultiSubscriber<Message> communicateSubscriber;
@@ -38,6 +47,9 @@ public class GuiReactor {
     @Subscribers
     @MainWindowBean
     private MultiContentSubscriber guiContentSubscriber;
+    @Inject
+    @Named("messages")
+    private Properties messages;
     @Value("${miscItemTypes.result}")
     @NotNull
     private String miscItemResult;
@@ -66,6 +78,10 @@ public class GuiReactor {
     @Value("${resource.type.result.specific}")
     private String resourceTypeResultSpecific;
 
+    private void sendResourcesTypes(Collection<ResourceType> resources) {
+        resourceTypesPaneController.loadAllResources(resources);
+        handWeaponsPaneController.fillResourceBoxes(resources);
+    }
     @PostConstruct
     private void setConsumers() {
         guiContentSubscriber.subscribe(miscItemResult, itemTypesPaneController::loadAll);
@@ -76,7 +92,10 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
         guiContentSubscriber.subscribe(listOfArmorTypesResult, armorTypesPaneController::loadAll);
         guiContentSubscriber.subscribe(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
-        guiContentSubscriber.subscribe(resourceTypeResult, resourceTypesPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("resource.type.result"), this::sendResourcesTypes);
         guiContentSubscriber.subscribe(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
+        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
+        guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.hw"), handWeaponsPaneController::addDeterminant);
+        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);
     }
 }
