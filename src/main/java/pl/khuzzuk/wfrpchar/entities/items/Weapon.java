@@ -5,10 +5,12 @@ import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 
 import java.util.Collection;
 
-public interface Weapon {
+public interface Weapon extends Commodity {
     int getStrength();
 
     String getTypeName();
+
+    Weapon getBaseType();
 
     Collection<Determinant> getDeterminants();
 

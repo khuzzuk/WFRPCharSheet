@@ -10,6 +10,7 @@ import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 
 import javax.inject.Inject;
 
@@ -48,6 +49,7 @@ public class DAOManager {
 
     @Bean
     @WhiteWeapons
+    @Types
     public DAOEntityResolver<WhiteWeaponType, String> daoWeaponType() {
         return new DAOEntityResolver<>("from Item i " +
                 "where type(i) = OneHandedWeaponType " +
@@ -60,7 +62,9 @@ public class DAOManager {
         return new DAOEntityResolver<>("from Item i " +
                 "where type(i) = OneHandedWeaponType " +
                 "or type(i) = TwoHandedWeaponType " +
-                "or type(i) = BastardWeaponType", openNewSession());
+                "or type(i) = BastardWeaponType" +
+                "or type(i) = RangedWeaponType" +
+                "or type(i) = ArmorType", openNewSession());
     }
     @Bean
     @Players
@@ -98,5 +102,14 @@ public class DAOManager {
     @Types
     public DAOEntityResolver<ResourceType, String> daoResourcesTypes() {
         return new DAOEntityResolver<>("FROM ResourceType", openNewSession());
+    }
+
+    @Bean
+    @WhiteWeapons
+    public DAOEntityResolver<AbstractHandWeapon, String> daoHandWeapons() {
+        return new DAOEntityResolver<>("FROM items_entities i where type(i) = OneHandedWeapon " +
+                "or type(i) = TwoHandedWeapon " +
+                "or type(i) = BastardWeapon ",
+                openNewSession());
     }
 }

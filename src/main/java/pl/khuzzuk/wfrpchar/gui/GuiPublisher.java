@@ -4,6 +4,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.messaging.CommunicateMessage;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.publishers.BagPublisher;
@@ -112,11 +113,15 @@ public class GuiPublisher {
         publisher.publish(new CommunicateMessage().setType(text));
     }
 
-    public void requestWWBaseType(String name) {
+    void requestWWBaseType(String name) {
         textRequestPublisher.publish(name, messages.getProperty("weapons.hand.baseType.selected"));
     }
 
     public void publish(Determinant determinant, String msg) {
         contentPublisher.publish(determinant, msg);
+    }
+
+    void publish(AbstractHandWeapon handWeapon) {
+        contentPublisher.publish(handWeapon, messages.getProperty("weapons.hand.save"));
     }
 }

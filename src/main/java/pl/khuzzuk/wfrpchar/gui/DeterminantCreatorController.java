@@ -54,6 +54,7 @@ public class DeterminantCreatorController implements Controller {
             determinant.getExtensions().add(extension);
             publisher.publish(determinant, sendMsg);
         }
+        parent.hide();
     }
 
     void show() {

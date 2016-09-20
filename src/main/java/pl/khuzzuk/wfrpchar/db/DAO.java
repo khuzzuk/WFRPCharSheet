@@ -9,6 +9,7 @@ import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -38,23 +39,26 @@ public class DAO {
     @Resources
     @Types
     private DAOTransactional<ResourceType, String> daoResources;
+    private DAOTransactional<AbstractHandWeapon, String> daoHandWeapons;
     @Getter(AccessLevel.PACKAGE)
     private DAOManager manager;
 
     @Inject
     public DAO(@Items @NotNull DAOTransactional<Item, String> daoItems,
-               @WhiteWeapons @NotNull DAOTransactional<WhiteWeaponType, String> daoWhiteWeaponType,
-               @FightingEquipments @NotNull DAOTransactional<FightingEquipment, String> daoFightingEquipment,
-               @Constants @Characters @NotNull DAOTransactional<Character, String> daoCharacters,
-               @Players @NotNull DAOTransactional<Player, String> daoPlayer,
-               @Currencies @NotNull DAOTransactional<Currency, String> daoCurrencies,
-               @Manager @NotNull DAOManager manager) {
+               @WhiteWeapons @Types DAOTransactional<WhiteWeaponType, String> daoWhiteWeaponType,
+               @FightingEquipments DAOTransactional<FightingEquipment, String> daoFightingEquipment,
+               @Constants @Characters DAOTransactional<Character, String> daoCharacters,
+               @Players DAOTransactional<Player, String> daoPlayer,
+               @Currencies DAOTransactional<Currency, String> daoCurrencies,
+               @WhiteWeapons DAOTransactional<AbstractHandWeapon, String> daoHandWeapons,
+               @Manager DAOManager manager) {
         this.daoItems = daoItems;
         this.daoWhiteWeapons = daoWhiteWeaponType;
         this.daoFightingEquipment = daoFightingEquipment;
         this.daoCharacters = daoCharacters;
         this.daoPlayer = daoPlayer;
         this.daoCurrencies = daoCurrencies;
+        this.daoHandWeapons = daoHandWeapons;
         this.manager = manager;
     }
 

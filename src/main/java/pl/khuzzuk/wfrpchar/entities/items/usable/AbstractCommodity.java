@@ -13,6 +13,7 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "class", discriminatorType = DiscriminatorType.INTEGER)
 @Entity
 @DiscriminatorValue("0")
+@Table(name = "items_entities")
 public abstract class AbstractCommodity implements Commodity, Named<String> {
     @Id
     @GeneratedValue

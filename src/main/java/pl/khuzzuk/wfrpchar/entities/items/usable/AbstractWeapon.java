@@ -8,9 +8,9 @@ import org.apache.commons.collections4.collection.CompositeCollection;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
+import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.Weapon;
-import pl.khuzzuk.wfrpchar.entities.items.types.WeaponType;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -22,15 +22,11 @@ import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("1")
-@ToString(exclude = "id")
+@ToString
 @NoArgsConstructor
 public abstract class AbstractWeapon
         extends AbstractCommodity
         implements Weapon {
-    @Getter
-    @Setter
-    @ManyToOne
-    WeaponType baseType;
     @Getter
     @Setter
     @ManyToOne
@@ -46,19 +42,27 @@ public abstract class AbstractWeapon
     @Getter
     @Setter
     private String specialFeatures;
+
+    public static AbstractHandWeapon getFromPlacement(Placement placement) {
+        if (placement == Placement.ONE_HAND) {
+            return new OneHandedWeapon();
+        }
+        throw new IllegalArgumentException("Can't get hand weapon from " + placement.name());
+    }
+
     public int getStrength() {
-        return baseType.getStrength() *
+        return getBaseType().getStrength() *
                 (primaryResource.getStrengthMod() + secondaryResource.getStrengthMod() / 11);
     }
 
     @Override
     public String getTypeName() {
-        return baseType.getTypeName();
+        return getBaseType().getTypeName();
     }
 
     @Override
     public Price getPrice() {
-        return baseType.getPrice().multiply(
+        return getBaseType().getPrice().multiply(
                 (primaryResource.getPriceMod() + secondaryResource.getPriceMod() /100)/100)
                 .add(getBasePrice());
     }
@@ -70,7 +74,7 @@ public abstract class AbstractWeapon
 
     @Override
     public Collection<Determinant> getAllDeterminants() {
-        return new CompositeCollection<>(determinants, baseType.getDeterminants());
+        return new CompositeCollection<>(determinants, getBaseType().getDeterminants());
     }
 
     @Override
