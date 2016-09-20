@@ -10,8 +10,6 @@ public interface Weapon extends Commodity {
 
     String getTypeName();
 
-    Weapon getBaseType();
-
     Collection<Determinant> getDeterminants();
 
     void addDeterminant(Determinant determinant);

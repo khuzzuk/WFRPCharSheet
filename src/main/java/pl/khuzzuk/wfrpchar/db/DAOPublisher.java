@@ -9,6 +9,7 @@ import pl.khuzzuk.wfrpchar.entities.items.types.ArmorType;
 import pl.khuzzuk.wfrpchar.entities.items.types.MiscItem;
 import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.messaging.CommunicateMessage;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.publishers.MultiContentPublisher;
@@ -84,6 +85,10 @@ public class DAOPublisher {
         entitiesPublisher.publish(results, messages.getProperty("weapons.hand.baseType.allTypesList"));
     }
 
+    public void publishHandWeapons(Collection<AbstractHandWeapon> allHandWeapons) {
+        entitiesPublisher.publish(allHandWeapons, messages.getProperty("weapons.hand.result"));
+    }
+
     void publish(MiscItem item) {
         entitiesPublisher.publish(item, mistItemTypeNamedResult);
     }
@@ -102,6 +107,10 @@ public class DAOPublisher {
 
     void publish(ResourceType resourceType) {
         entitiesPublisher.publish(resourceType, resourceTypeResultSpecific);
+    }
+
+    void publish(AbstractHandWeapon handWeapon) {
+        entitiesPublisher.publish(handWeapon, messages.getProperty("weapons.hand.result.specific"));
     }
 
     void publish(String communicate) {

@@ -7,6 +7,7 @@ import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.items.*;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
@@ -111,6 +112,11 @@ public class DAOReactor {
         daoPublisher.publish(resourceTypeQuery);
     }
 
+    private void saveHandWeapon(AbstractHandWeapon weapon) {
+        dao.save(weapon);
+        daoPublisher.publish(messages.getProperty("weapons.hand.query"));
+    }
+
     private void removeMiscItem(String name) {
         dao.removeMiscItem(name);
         daoPublisher.publish(miscItemTypeQuery);
@@ -144,10 +150,6 @@ public class DAOReactor {
         daoPublisher.publishRangedWeapons(dao.getAllRangedWeapons());
     }
 
-    private void getWhiteWeaponByName(String name) {
-        daoPublisher.publish(dao.getWhiteWeapon(name), messages.getProperty("whiteWeapons.result.specific"));
-    }
-
     private void getRangedWeaponTypeByName(String name) {
         daoPublisher.publish(dao.getRangedWeapon(name));
     }
@@ -160,8 +162,16 @@ public class DAOReactor {
         daoPublisher.publishResourceTypes(dao.getAllResourceTypes());
     }
 
+    private void getAllHandWeapons() {
+        daoPublisher.publishHandWeapons(dao.getAllHandWeapons());
+    }
+
     private void getAllWWBaseType() {
         daoPublisher.publishWhiteWeaponsBaseTypes(dao.getAllWhiteWeaponTypes());
+    }
+
+    private void getWhiteWeaponByName(String name) {
+        daoPublisher.publish(dao.getWhiteWeapon(name), messages.getProperty("whiteWeapons.result.specific"));
     }
 
     private void getMiscItemTypeByName(String name) {
@@ -174,6 +184,10 @@ public class DAOReactor {
 
     private void getResourceType(String name) {
         daoPublisher.publish(dao.getResourceType(name));
+    }
+
+    private void getHandWeapon(String name) {
+        daoPublisher.publish(dao.getHandWeapon(name));
     }
 
     private void getWWBaseTypeByName(String name) {
@@ -199,6 +213,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(armorTypesQuery, this::getAllArmorTypes);
         multiSubscriber.subscribe(resourceTypeQuery, this::getAllResourceTypes);
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.getAllTypes"), this::getAllWWBaseType);
+        multiSubscriber.subscribe(messages.getProperty("weapons.hand.query"), this::getAllHandWeapons);
         daoContentSubscriber.subscribe(dbSaveEquipment, this::saveItem);
         daoContentSubscriber.subscribe(miscItemTypeNamedQuery, this::getMiscItemTypeByName);
         daoContentSubscriber.subscribe(miscItemTypeRemove, this::removeMiscItem);
@@ -212,5 +227,7 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(resourceTypeRemove, this::removeResourceType);
         daoContentSubscriber.subscribe(resourceTypeSave, this::saveResourceType);
         daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.selected"), this::getWWBaseTypeByName);
+        daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.query.specific"), this::getHandWeapon);
+        daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.save"), this::saveHandWeapon);
     }
 }

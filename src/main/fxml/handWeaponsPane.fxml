@@ -18,10 +18,10 @@
     <SplitPane dividerPositions="0.3">
         <GridPane maxHeight="Infinity" maxWidth="Infinity">
             <columnConstraints>
-                <ColumnConstraints maxWidth="Infinity"/>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="Infinity"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
             </rowConstraints>
             <ListView fx:id="items" maxHeight="Infinity" maxWidth="Infinity"
                       onMouseClicked="#getEntity"/>
@@ -86,6 +86,9 @@
             <Label text="cechy specjalne" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
             <TextArea fx:id="specialFeatures" GridPane.rowIndex="4" GridPane.columnIndex="4" GridPane.columnSpan="2"
                       maxHeight="Infinity" maxWidth="Infinity"/>
+            <Button text="Usuń" GridPane.rowIndex="5" maxWidth="Infinity"/>
+            <Button text="Nowy" GridPane.rowIndex="5" GridPane.columnIndex="1" maxWidth="Infinity"/>
+            <Button text="Zapisz" GridPane.rowIndex="5" GridPane.columnIndex="2" maxWidth="Infinity" onAction="#save"/>
         </GridPane>
     </SplitPane>
 </TitledPane>

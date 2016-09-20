@@ -68,6 +68,7 @@ public class HandWeaponsPaneController extends ItemsListedController {
                 placement);
         ComboBoxHandler.fill(EnumSet.allOf(Accessibility.class), accessibility);
         ComboBoxHandler.fill(EnumSet.allOf(Dices.class), dices);
+        guiPublisher.requestHandWeapons();
     }
 
     @FXML
@@ -117,6 +118,7 @@ public class HandWeaponsPaneController extends ItemsListedController {
         handWeapon.setDeterminants(determinants);
     }
 
+    @FXML
     private void save() {
         if (handWeapon == null) {
             handWeapon = startWeapon();

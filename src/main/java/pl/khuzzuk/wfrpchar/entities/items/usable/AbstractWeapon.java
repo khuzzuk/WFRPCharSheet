@@ -43,6 +43,8 @@ public abstract class AbstractWeapon
     @Setter
     private String specialFeatures;
 
+    public abstract Weapon getBaseType();
+
     public static AbstractHandWeapon getFromPlacement(Placement placement) {
         if (placement == Placement.ONE_HAND) {
             return new OneHandedWeapon();

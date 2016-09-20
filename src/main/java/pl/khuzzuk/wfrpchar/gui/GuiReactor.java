@@ -96,6 +96,8 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.hw"), handWeaponsPaneController::addDeterminant);
+        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result"), handWeaponsPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result.specific"), handWeaponsPaneController::loadToEditor);
         communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);
     }
 }

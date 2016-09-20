@@ -39,6 +39,12 @@
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.ArmorType"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.AbstractCommodity"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.OneHandedWeapon"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.TwoHandedWeapon"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.BastardWeapon"/>
 
         <!--DETERMINANTS-->
         <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.Determinant"/>

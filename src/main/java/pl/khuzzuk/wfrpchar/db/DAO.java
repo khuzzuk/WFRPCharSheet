@@ -92,6 +92,11 @@ public class DAO {
         return daoResources.getAllItems();
     }
 
+    Collection<AbstractHandWeapon> getAllHandWeapons() {
+        assureSessionInit(daoHandWeapons);
+        return daoHandWeapons.getAllItems();
+    }
+
     MiscItem getMiscItem(String name) {
         assureSessionInit(daoMiscItems);
         return daoMiscItems.getItem(name);
@@ -115,6 +120,11 @@ public class DAO {
     ResourceType getResourceType(String name) {
         assureSessionInit(daoResources);
         return daoResources.getItem(name);
+    }
+
+    AbstractHandWeapon getHandWeapon(String name) {
+        assureSessionInit(daoHandWeapons);
+        return daoHandWeapons.getItem(name);
     }
 
     Collection<Character> getAllCharacters() {
@@ -156,6 +166,11 @@ public class DAO {
     void save(FightingEquipment equipment) {
         assureSessionInit(daoFightingEquipment);
         daoFightingEquipment.commit(equipment);
+    }
+
+    void save(AbstractHandWeapon handWeapon) {
+        assureSessionInit(daoHandWeapons);
+        daoHandWeapons.commit(handWeapon);
     }
 
     void save(Character character) {
@@ -201,5 +216,10 @@ public class DAO {
     void removeResourceType(String name) {
         assureSessionInit(daoResources);
         daoResources.remove(name);
+    }
+
+    void removeHandWeapon(String name) {
+        assureSessionInit(daoHandWeapons);
+        daoHandWeapons.remove(name);
     }
 }

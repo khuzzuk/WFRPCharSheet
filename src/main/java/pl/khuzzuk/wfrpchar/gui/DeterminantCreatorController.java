@@ -5,6 +5,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.util.EnumSet;
 import java.util.ResourceBundle;
 
+@NoArgsConstructor
 public class DeterminantCreatorController implements Controller {
     @FXML
     private TextField description;

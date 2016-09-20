@@ -107,7 +107,7 @@ public class DAOManager {
     @Bean
     @WhiteWeapons
     public DAOEntityResolver<AbstractHandWeapon, String> daoHandWeapons() {
-        return new DAOEntityResolver<>("FROM items_entities i where type(i) = OneHandedWeapon " +
+        return new DAOEntityResolver<>("FROM AbstractCommodity i where type(i) = OneHandedWeapon " +
                 "or type(i) = TwoHandedWeapon " +
                 "or type(i) = BastardWeapon ",
                 openNewSession());

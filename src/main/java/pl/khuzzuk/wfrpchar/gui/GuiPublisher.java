@@ -61,6 +61,10 @@ public class GuiPublisher {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("armorTypes.query")));
     }
 
+    void requestHandWeapons() {
+        publisher.publish(new CommunicateMessage().setType(messages.getProperty("weapons.hand.query")));
+    }
+
     void requestResourceTypes() {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("resource.type.query")));
     }
