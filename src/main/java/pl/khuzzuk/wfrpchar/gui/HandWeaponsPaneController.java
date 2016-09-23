@@ -5,10 +5,8 @@ import javafx.scene.control.*;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Price;
-import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
-import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
-import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
@@ -26,7 +24,7 @@ import java.util.stream.Collectors;
 @PropertySource("classpath:messages.properties")
 public class HandWeaponsPaneController extends ItemsListedController {
     @FXML
-    private ListView<Determinant> determinantsView;
+    private ListView<String> determinantsView;
     @FXML
     private TextArea specialFeatures;
     @FXML
@@ -47,16 +45,12 @@ public class HandWeaponsPaneController extends ItemsListedController {
     @FXML
     private ComboBox<String> dices;
     @FXML
-    private ComboBox<String> placement;
-    @FXML
     private Button chooseBaseButton;
     @Inject
     private GuiPublisher guiPublisher;
     private WhiteWeaponType baseType;
     private AbstractHandWeapon handWeapon;
     private Collection<ResourceType> resources;
-    private Collection<HandWeapon> weapons;
-    private List<Determinant> determinants;
     @Inject
     @Named("messages")
     private Properties messages;
@@ -64,8 +58,7 @@ public class HandWeaponsPaneController extends ItemsListedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        ComboBoxHandler.fill(EnumSet.of(Placement.ONE_HAND, Placement.TWO_HANDS, Placement.BASTARD),
-                placement);
+        getAction = guiPublisher::requestHandWeapon;
         ComboBoxHandler.fill(EnumSet.allOf(Accessibility.class), accessibility);
         ComboBoxHandler.fill(EnumSet.allOf(Dices.class), dices);
         guiPublisher.requestHandWeapons();
@@ -93,12 +86,8 @@ public class HandWeaponsPaneController extends ItemsListedController {
         guiPublisher.publish(messages.getProperty("determinants.creator.show.hw"));
     }
 
-    void addDeterminant(Determinant determinant) {
-        if (determinants == null) {
-            determinants = new ArrayList<>();
-        }
-        determinants.add(determinant);
-        EntitiesAdapter.listDeterminants(determinantsView, determinants);
+    void addDeterminant(String determinant) {
+        determinantsView.getItems().add(determinant);
     }
 
     private AbstractHandWeapon startWeapon() {
@@ -115,14 +104,14 @@ public class HandWeaponsPaneController extends ItemsListedController {
         handWeapon.setPrimaryResource(getResourceFromList(primaryResource));
         handWeapon.setSecondaryResource(getResourceFromList(secondaryResource));
         handWeapon.setBasePrice(Price.parsePrice(gold.getText() + "|" + silver.getText() + "|" + lead.getText()));
-        handWeapon.setDeterminants(determinants);
+        handWeapon.setDeterminants(determinantsView.getItems().stream().map(DeterminantFactory::getDeterminantByName)
+                .collect(Collectors.toList()));
+        handWeapon.setSpecialFeatures(specialFeatures.getText());
     }
 
     @FXML
-    private void save() {
-        if (handWeapon == null) {
-            handWeapon = startWeapon();
-        }
+    private void saveWeapon() {
+        handWeapon = startWeapon();
         setHandWeapon(handWeapon);
         guiPublisher.publish(handWeapon);
     }
@@ -139,13 +128,34 @@ public class HandWeaponsPaneController extends ItemsListedController {
         gold.setText(basePrice.getGold() + "");
         silver.setText(basePrice.getSilver() + "");
         lead.setText(basePrice.getLead() + "");
-        determinants = handWeapon.getDeterminants();
-        EntitiesAdapter.listDeterminants(determinantsView, determinants);
+        EntitiesAdapter.sendToListView(determinantsView, handWeapon.getDeterminants());
     }
 
     private ResourceType getResourceFromList(ComboBox<String> view) {
         return resources.stream()
                 .filter(r -> r.getName().equals(view.getSelectionModel().getSelectedItem()))
                 .findAny().orElse(null);
+    }
+
+    @FXML
+    private void removeWeapon() {
+        if (name.getText().length()>=3) {
+            guiPublisher.removeHandWeapon(name.getText());
+        }
+    }
+
+    private void clearEditor() {
+        handWeapon = null;
+        name.setText("");
+        rolls.setText("");
+        dices.getSelectionModel().clearSelection();
+        accessibility.getSelectionModel().clearSelection();
+        primaryResource.getSelectionModel().clearSelection();
+        secondaryResource.getSelectionModel().clearSelection();
+        specialFeatures.setText("");
+        gold.setText("");
+        silver.setText("");
+        lead.setText("");
+        determinantsView.getItems().clear();
     }
 }

@@ -132,6 +132,11 @@ public class DAOReactor {
         daoPublisher.publish(rangedWeaponsQuery);
     }
 
+    private void removeHandWeapon(String name) {
+        dao.removeHandWeapon(name);
+        daoPublisher.publish(messages.getProperty("weapons.hand.query"));
+    }
+
     private void removeArmorType(String name) {
         dao.removeArmorType(name);
         daoPublisher.publish(armorTypesQuery);
@@ -229,5 +234,6 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.selected"), this::getWWBaseTypeByName);
         daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.query.specific"), this::getHandWeapon);
         daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.save"), this::saveHandWeapon);
+        daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.remove"), this::removeHandWeapon);
     }
 }

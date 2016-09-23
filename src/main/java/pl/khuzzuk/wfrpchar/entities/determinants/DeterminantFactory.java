@@ -45,4 +45,18 @@ public class DeterminantFactory {
         determinant.setBaseValue(Integer.parseInt(data[0]));
         return determinant;
     }
+
+    public static Determinant getDeterminantByName(String name) {
+        String[] elements = name.replaceAll(" ", "").split(":");
+        DeterminantsType determinantsType = DeterminantsType.forName(elements[0]);
+        Determinant determinant = determinantsType.getDeterminant();
+        determinant.setType(determinantsType);
+        MiscExtension extension = new MiscExtension();
+        extension.setModifier(Integer.parseInt(elements[1]));
+        if (elements.length > 2) {
+            extension.setDescription(elements[2]);
+        }
+        determinant.addExtension(extension);
+        return determinant;
+    }
 }

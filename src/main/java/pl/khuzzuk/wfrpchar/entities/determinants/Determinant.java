@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.entities.determinants;
 
 import lombok.*;
 import pl.khuzzuk.wfrpchar.entities.Labelled;
+import pl.khuzzuk.wfrpchar.entities.Named;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @DiscriminatorValue("0")
-public abstract class Determinant implements Labelled<DeterminantsType, String> {
+public abstract class Determinant implements Labelled<DeterminantsType, String>, Named<String> {
     @Id
     @GeneratedValue
     @Getter
@@ -30,7 +31,7 @@ public abstract class Determinant implements Labelled<DeterminantsType, String> 
     @NonNull
     @Getter
     @Setter
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Extension> extensions = new ArrayList<>();
 
     public int getActualValue() {
@@ -81,5 +82,10 @@ public abstract class Determinant implements Labelled<DeterminantsType, String> 
     @Override
     public String toString() {
         return type.getName() + ": " + getActualValue();
+    }
+
+    @Override
+    public String getName() {
+        return toString();
     }
 }

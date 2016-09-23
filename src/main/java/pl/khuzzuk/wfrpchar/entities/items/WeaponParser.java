@@ -91,7 +91,6 @@ public class WeaponParser {
         equipment.setDeterminants(determinantFactory.createDeterminants(columns[9]));
     }
 
-
     private void fillWeaponFields(String[] columns, WeaponType weaponType) {
         weaponType.setTypeName(columns[10]);
     }

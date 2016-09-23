@@ -12,10 +12,7 @@ import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.Weapon;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,7 +34,10 @@ public abstract class AbstractWeapon
     private ResourceType secondaryResource;
     @Getter
     @Setter
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "DET_REQ_MAP",
+            joinColumns = {@JoinColumn(name = "EQ_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
     private List<Determinant> determinants;
     @Getter
     @Setter

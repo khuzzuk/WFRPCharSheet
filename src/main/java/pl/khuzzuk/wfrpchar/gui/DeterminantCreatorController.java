@@ -47,13 +47,7 @@ public class DeterminantCreatorController implements Controller {
     void send() {
         String chosenType = type.getSelectionModel().getSelectedItem();
         if (chosenType != null) {
-            DeterminantsType determinantsType = DeterminantsType.forName(chosenType);
-            Determinant determinant = determinantsType.getDeterminant();
-            determinant.setType(determinantsType);
-            MiscExtension extension = new MiscExtension();
-            extension.setModifier(Integer.parseInt(strength.getText()));
-            extension.setDescription(description.getText());
-            determinant.getExtensions().add(extension);
+            String determinant = chosenType + ": " + strength.getText() + ": " + description.getText();
             publisher.publish(determinant, sendMsg);
         }
         parent.hide();

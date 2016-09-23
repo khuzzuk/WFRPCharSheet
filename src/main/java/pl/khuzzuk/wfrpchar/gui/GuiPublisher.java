@@ -3,7 +3,6 @@ package pl.khuzzuk.wfrpchar.gui;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.SelectiveQuery;
-import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.messaging.CommunicateMessage;
 import pl.khuzzuk.wfrpchar.messaging.Message;
@@ -89,6 +88,10 @@ public class GuiPublisher {
         textRequestPublisher.publish(name, messages.getProperty("armorTypes.query.specific"));
     }
 
+    void requestHandWeapon(String name) {
+        textRequestPublisher.publish(name, messages.getProperty("weapons.hand.query.specific"));
+    }
+
     void requestResourceType(String name) {
         textRequestPublisher.publish(name, messages.getProperty("resource.type.query.specific"));
     }
@@ -113,6 +116,10 @@ public class GuiPublisher {
         textRequestPublisher.publish(name, messages.getProperty("resource.type.remove"));
     }
 
+    void removeHandWeapon(String name) {
+        contentPublisher.publish(name, messages.getProperty("weapons.hand.remove"));
+    }
+
     void publish(String text) {
         publisher.publish(new CommunicateMessage().setType(text));
     }
@@ -121,8 +128,8 @@ public class GuiPublisher {
         textRequestPublisher.publish(name, messages.getProperty("weapons.hand.baseType.selected"));
     }
 
-    public void publish(Determinant determinant, String msg) {
-        contentPublisher.publish(determinant, msg);
+    public void publish(String textContent, String msg) {
+        textRequestPublisher.publish(textContent, msg);
     }
 
     void publish(AbstractHandWeapon handWeapon) {

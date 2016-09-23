@@ -62,7 +62,7 @@ public class DAOEntityResolver<T extends Named<U> & Persistable, U extends Compa
         if (session == null || !session.isOpen()) {
             throw new IllegalStateException("No session started for removing " + toRemove);
         }
-        Optional<T> element = Optional.of(elements.get(toRemove));
+        Optional<T> element = Optional.ofNullable(elements.get(toRemove));
         if (!element.isPresent()) {
             return false;
         }
