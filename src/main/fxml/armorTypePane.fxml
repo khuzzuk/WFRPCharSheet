@@ -4,7 +4,7 @@
 <TitledPane text="Zbroja"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.khuzzuk.wfrpchar.gui.ArmorTypesPaneController">
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.ArmorTypesPaneController">
     <SplitPane dividerPositions="0.3"
                maxHeight="Infinity"
                maxWidth="Infinity">

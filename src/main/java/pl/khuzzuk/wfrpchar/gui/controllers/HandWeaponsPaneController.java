@@ -1,7 +1,9 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Price;
@@ -12,33 +14,19 @@ import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.OneHandedWeapon;
+import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
+import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
+import pl.khuzzuk.wfrpchar.gui.Numeric;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.net.URL;
-import java.util.*;
+import java.util.EnumSet;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
 @PropertySource("classpath:messages.properties")
-public class HandWeaponsPaneController extends ItemsListedController {
-    @FXML
-    private ListView<String> determinantsView;
-    @FXML
-    private TextArea specialFeatures;
-    @FXML
-    private TextField gold;
-    @FXML
-    private TextField silver;
-    @FXML
-    private TextField lead;
-    @FXML
-    private ComboBox<String> secondaryResource;
-    @FXML
-    private ComboBox<String> primaryResource;
-    @FXML
-    private ComboBox<String> accessibility;
+public class HandWeaponsPaneController extends AbstractWeaponController {
     @Numeric
     @FXML
     TextField rolls;
@@ -46,20 +34,13 @@ public class HandWeaponsPaneController extends ItemsListedController {
     private ComboBox<String> dices;
     @FXML
     private Button chooseBaseButton;
-    @Inject
-    private GuiPublisher guiPublisher;
     private WhiteWeaponType baseType;
     private AbstractHandWeapon handWeapon;
-    private Collection<ResourceType> resources;
-    @Inject
-    @Named("messages")
-    private Properties messages;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeValidation();
+        super.initialize(location, resources);
         getAction = guiPublisher::requestHandWeapon;
-        ComboBoxHandler.fill(EnumSet.allOf(Accessibility.class), accessibility);
         ComboBoxHandler.fill(EnumSet.allOf(Dices.class), dices);
         guiPublisher.requestHandWeapons();
     }
@@ -69,16 +50,9 @@ public class HandWeaponsPaneController extends ItemsListedController {
         guiPublisher.publish(messages.getProperty("weapons.hand.baseType.getAllTypes"));
     }
 
-    void setBaseType(WhiteWeaponType baseType) {
+    public void setBaseType(WhiteWeaponType baseType) {
         this.baseType = baseType;
         chooseBaseButton.setText(baseType.getName());
-    }
-
-    void fillResourceBoxes(Collection<ResourceType> resourceTypes) {
-        resources = resourceTypes;
-        Set<ResourceType> toFill = resources.stream().collect(Collectors.toSet());
-        ComboBoxHandler.fill(toFill, primaryResource);
-        ComboBoxHandler.fill(toFill, secondaryResource);
     }
 
     @FXML
@@ -86,7 +60,7 @@ public class HandWeaponsPaneController extends ItemsListedController {
         guiPublisher.publish(messages.getProperty("determinants.creator.show.hw"));
     }
 
-    void addDeterminant(String determinant) {
+    public void addDeterminant(String determinant) {
         determinantsView.getItems().add(determinant);
     }
 
@@ -105,7 +79,7 @@ public class HandWeaponsPaneController extends ItemsListedController {
         handWeapon.setSecondaryResource(getResourceFromList(secondaryResource));
         handWeapon.setBasePrice(Price.parsePrice(gold.getText() + "|" + silver.getText() + "|" + lead.getText()));
         handWeapon.setDeterminants(determinantsView.getItems().stream().map(DeterminantFactory::getDeterminantByName)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
         handWeapon.setSpecialFeatures(specialFeatures.getText());
     }
 
@@ -116,7 +90,7 @@ public class HandWeaponsPaneController extends ItemsListedController {
         guiPublisher.publish(handWeapon);
     }
 
-    void loadToEditor(AbstractHandWeapon weapon) {
+    public void loadToEditor(AbstractHandWeapon weapon) {
         handWeapon = weapon;
         baseType = handWeapon.getBaseType();
         chooseBaseButton.setText(baseType.getName());

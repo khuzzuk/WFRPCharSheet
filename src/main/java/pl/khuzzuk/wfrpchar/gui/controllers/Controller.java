@@ -1,7 +1,9 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import pl.khuzzuk.wfrpchar.gui.FloatNumeric;
+import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import java.lang.reflect.Field;
 

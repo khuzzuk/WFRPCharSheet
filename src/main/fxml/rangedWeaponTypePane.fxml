@@ -4,7 +4,7 @@
 <TitledPane animated="false" text="Broń strzelecka"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.khuzzuk.wfrpchar.gui.RangedWeaponTypePaneController">
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.RangedWeaponTypePaneController">
     <SplitPane dividerPositions="0.3"
                maxWidth="Infinity"
                maxHeight="Infinity">
@@ -98,7 +98,7 @@
             <Label text="dostępność"
                    GridPane.columnIndex="2"
                    GridPane.rowIndex="1"/>
-            <ComboBox fx:id="rwAccessibility"
+            <ComboBox fx:id="accessibility"
                       GridPane.columnIndex="3"
                       GridPane.rowIndex="1"/>
             <Label text="siła" GridPane.rowIndex="3"/>

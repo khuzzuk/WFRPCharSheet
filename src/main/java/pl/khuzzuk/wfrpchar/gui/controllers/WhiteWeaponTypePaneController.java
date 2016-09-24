@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,6 +9,10 @@ import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
+import pl.khuzzuk.wfrpchar.gui.FloatNumeric;
+import pl.khuzzuk.wfrpchar.gui.MappingUtil;
+import pl.khuzzuk.wfrpchar.gui.Numeric;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import java.net.URL;
@@ -123,7 +127,7 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
         whiteWeaponLangFields.put(LangElement.ABLATIVE, langAblativeWW);
     }
 
-    void loadWhiteWeaponToEditor(WhiteWeaponType weaponType) {
+    public void loadWhiteWeaponToEditor(WhiteWeaponType weaponType) {
         name.setText(weaponType.getName());
         typeNameWW.setText(weaponType.getTypeName());
         accessibilityBoxWW.getSelectionModel().select(weaponType.getAccessibility().getName());

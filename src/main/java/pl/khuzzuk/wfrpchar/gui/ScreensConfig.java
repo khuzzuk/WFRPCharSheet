@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 import lombok.Setter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pl.khuzzuk.wfrpchar.gui.controllers.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;

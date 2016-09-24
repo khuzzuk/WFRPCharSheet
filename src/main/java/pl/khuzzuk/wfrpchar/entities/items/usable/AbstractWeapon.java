@@ -14,7 +14,7 @@ import pl.khuzzuk.wfrpchar.entities.items.Weapon;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -38,7 +38,7 @@ public abstract class AbstractWeapon
     @JoinTable(name = "DET_REQ_MAP",
             joinColumns = {@JoinColumn(name = "EQ_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
-    private List<Determinant> determinants;
+    private Set<Determinant> determinants;
     @Getter
     @Setter
     private String specialFeatures;

@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
+import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.GuiContentSubscriber;
 
 import javax.annotation.PostConstruct;

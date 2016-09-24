@@ -1,9 +1,9 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.util.Callback;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.gui.MainWindowBean;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,28 +11,18 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
     private Map<Class<?>, Controller> controllers;
-    @Inject
-    @MainWindowBean
-    private MainWindowController mainWindowController;
-    @Inject
-    private ArmorTypesPaneController armorTypesPaneController;
-    @Inject
-    private RangedWeaponTypePaneController rangedWeaponTypePaneController;
-    @Inject
-    private WhiteWeaponTypePaneController whiteWeaponTypePaneController;
-    @Inject
-    private ItemTypesPaneController itemTypesPaneController;
-    @Inject
-    private ResourceTypesPaneController resourceTypesPaneController;
-    @Inject
-    private ItemsListedController weaponEntitiesPaneController;
-    @Inject
-    private HandWeaponsPaneController handWeaponsPaneController;
-    @Inject
-    private HandWeaponTypeChooserController handWeaponTypeChooserController;
 
-    @PostConstruct
-    private void organize() {
+    @Inject
+    public ControllersFactoryDecorator(@MainWindowBean MainWindowController mainWindowController,
+                                       ArmorTypesPaneController armorTypesPaneController,
+                                       RangedWeaponTypePaneController rangedWeaponTypePaneController,
+                                       WhiteWeaponTypePaneController whiteWeaponTypePaneController,
+                                       ItemTypesPaneController itemTypesPaneController,
+                                       ResourceTypesPaneController resourceTypesPaneController,
+                                       ItemsListedController weaponEntitiesPaneController,
+                                       HandWeaponsPaneController handWeaponsPaneController,
+                                       HandWeaponTypeChooserController handWeaponTypeChooserController,
+                                       RangeWeaponsPaneController rangeWeaponsPaneController) {
         controllers = new ConcurrentHashMap<>();
         controllers.put(mainWindowController.getClass(), mainWindowController);
         controllers.put(armorTypesPaneController.getClass(), armorTypesPaneController);
@@ -43,6 +33,8 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
         controllers.put(weaponEntitiesPaneController.getClass(), weaponEntitiesPaneController);
         controllers.put(handWeaponsPaneController.getClass(), handWeaponsPaneController);
         controllers.put(handWeaponTypeChooserController.getClass(), handWeaponTypeChooserController);
+        controllers.put(rangedWeaponTypePaneController.getClass(), rangedWeaponTypePaneController);
+        controllers.put(rangeWeaponsPaneController.getClass(), rangeWeaponsPaneController);
     }
 
     @Override

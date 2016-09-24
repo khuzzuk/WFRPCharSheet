@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.types.EquipmentType;
 import pl.khuzzuk.wfrpchar.entities.items.types.MiscItem;
+import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
+import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;
@@ -46,7 +48,7 @@ public class ItemTypesPaneController extends ItemsListedController {
         publisher.requestMiscItemType();
     }
 
-    void loadMiscItemToEditor(MiscItem item) {
+    public void loadMiscItemToEditor(MiscItem item) {
         name.setText(item.getName());
         iWeight.setText(item.getWeight() + "");
         iSpecialFeatures.setText(item.getSpecialFeature());

@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.SubstanceType;
+import pl.khuzzuk.wfrpchar.gui.*;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;
@@ -45,11 +46,11 @@ public class ResourceTypesPaneController extends ItemsListedController implement
         guiPublisher.requestResourceTypes();
     }
 
-    void loadAllResources(Collection<ResourceType> resources) {
+    public void loadAllResources(Collection<ResourceType> resources) {
         EntitiesAdapter.sendToListView(items, resources);
     }
 
-    void loadToEditor(ResourceType resource) {
+    public void loadToEditor(ResourceType resource) {
         name.setText(resource.getName());
         resStrength.setText(Integer.toString(resource.getStrengthMod()));
         resPrice.setText(Integer.toString(resource.getPriceMod()));

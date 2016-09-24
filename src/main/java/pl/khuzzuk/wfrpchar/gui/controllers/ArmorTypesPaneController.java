@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -11,6 +11,7 @@ import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.ArmorPattern;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.ArmorType;
+import pl.khuzzuk.wfrpchar.gui.*;
 
 import javax.inject.Inject;
 import java.net.URL;
@@ -98,7 +99,7 @@ public class ArmorTypesPaneController extends ItemsListedController {
         langElementsMap.put(LangElement.ABLATIVE, armAbl);
     }
 
-    void loadArmorTypeToEditor(ArmorType armor) {
+    public void loadArmorTypeToEditor(ArmorType armor) {
         name.setText(armor.getName());
         armWeight.setText(armor.getWeight() + "");
         armAccessibility.getSelectionModel().select(armor.getAccessibility().getName());

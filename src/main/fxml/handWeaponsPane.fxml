@@ -14,7 +14,7 @@
 <TitledPane animated="false" text="Broń ręczna"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.khuzzuk.wfrpchar.gui.HandWeaponsPaneController">
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.HandWeaponsPaneController">
     <SplitPane dividerPositions="0.3">
         <GridPane maxHeight="Infinity" maxWidth="Infinity">
             <columnConstraints>
@@ -48,7 +48,7 @@
             <Label text="nazwa"/>
             <TextField fx:id="name" GridPane.columnIndex="1"/>
             <Label text="typ" GridPane.columnIndex="2"/>
-            <Button fx:id="chooseBaseButton" text="typ"
+            <Button fx:id="chooseBaseButton" text="wybierz typ"
                     maxHeight="Infinity" minWidth="100"
                     GridPane.columnIndex="3" onAction="#chooseBaseType"/>
             <Label text="dostępnosć" GridPane.columnIndex="4"/>

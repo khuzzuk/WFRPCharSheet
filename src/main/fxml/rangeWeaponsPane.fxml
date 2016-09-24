@@ -1,0 +1,77 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<TitledPane animated="false" text="Broń dystansowa"
+            xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.RangeWeaponsPaneController">
+    <SplitPane dividerPositions="0.3">
+        <GridPane hgap="10" maxWidth="Infinity" maxHeight="Infinity">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+            <ListView fx:id="items" maxHeight="Infinity" maxWidth="Infinity"
+                      onMouseClicked="#getEntity"/>
+        </GridPane>
+        <GridPane hgap="10">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+            <padding>
+                <Insets right="10" left="10"/>
+            </padding>
+            <Label text="nazwa"/>
+            <TextField fx:id="name" GridPane.columnIndex="1"/>
+            <Label text="typ" GridPane.columnIndex="2"/>
+            <Button text="wybierz typ" fx:id="type" maxWidth="Infinity" minWidth="100" GridPane.columnIndex="3"/>
+            <Label text="dostępność" GridPane.columnIndex="4"/>
+            <ComboBox fx:id="accessibility" GridPane.columnIndex="5"/>
+            <Label text="surowiec" GridPane.rowIndex="1"/>
+            <ComboBox fx:id="primaryResource" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="stop" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+            <ComboBox fx:id="secondaryResource" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+            <Label text="cena bazowa" GridPane.rowIndex="2"/>
+            <VBox alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"
+                  GridPane.rowIndex="2" GridPane.columnIndex="1">
+                <Label text="złoto"/>
+                <TextField fx:id="gold"/>
+            </VBox>
+            <VBox alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"
+                  GridPane.rowIndex="2" GridPane.columnIndex="2">
+                <Label text="srebro"/>
+                <TextField fx:id="silver"/>
+            </VBox>
+            <VBox alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"
+                  GridPane.rowIndex="2" GridPane.columnIndex="3">
+                <Label text="miedź"/>
+                <TextField fx:id="lead"/>
+            </VBox>
+            <Label text="modyfikatory" GridPane.rowIndex="3"/>
+            <ListView fx:id="determinantsView" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.rowSpan="2"/>
+            <Button text="dodaj" GridPane.rowIndex="3" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#chooseDeterminant"/>
+            <Label text="cechy specjalne" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="3" GridPane.columnIndex="4" GridPane.rowSpan="2"
+                      maxHeight="Infinity" maxWidth="Infinity"/>
+            <Button text="Usuń" GridPane.rowIndex="5" maxWidth="Infinity" onAction="#remove"/>
+            <Button text="Nowy" GridPane.rowIndex="5" GridPane.columnIndex="1" maxWidth="Infinity"/>
+            <Button text="Zapisz" GridPane.rowIndex="5" GridPane.columnIndex="2" maxWidth="Infinity" onAction="#saveWeapon"/>
+        </GridPane>
+    </SplitPane>
+</TitledPane>

@@ -1,19 +1,27 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import pl.khuzzuk.wfrpchar.entities.Named;
+import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
+import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
+import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.Reactor;
 
 import javax.inject.Inject;
+import java.net.URL;
 import java.util.Collection;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public abstract class ItemsListedController implements Controller {
     @FXML
     TextField name;
+    @FXML
+    ComboBox<String> accessibility;
     @Inject
     GuiPublisher guiPublisher;
 
@@ -46,9 +54,15 @@ public abstract class ItemsListedController implements Controller {
         }
     }
 
-    void loadAll(Collection<Named<String>> itemsList) {
+    public void loadAll(Collection<Named<String>> itemsList) {
         items.getItems().clear();
         items.getItems().addAll(itemsList.stream()
                 .map(Named::getName).collect(Collectors.toList()));
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initializeValidation();
+        ComboBoxHandler.fill(Accessibility.SET, accessibility);
     }
 }

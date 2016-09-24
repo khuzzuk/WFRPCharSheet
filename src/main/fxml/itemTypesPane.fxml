@@ -15,7 +15,7 @@
             text="Ekwipunek"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.khuzzuk.wfrpchar.gui.ItemTypesPaneController">
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.ItemTypesPaneController">
     <SplitPane dividerPositions="0.3" maxHeight="Infinity" maxWidth="Infinity">
         <GridPane>
             <columnConstraints>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
+import pl.khuzzuk.wfrpchar.gui.controllers.*;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.MultiContentSubscriber;
@@ -36,6 +37,8 @@ public class GuiReactor {
     private ResourceTypesPaneController resourceTypesPaneController;
     @Inject
     private HandWeaponsPaneController handWeaponsPaneController;
+    @Inject
+    private RangeWeaponsPaneController rangeWeaponsPaneController;
     @Inject
     @Named("hwDeterminantsCreatorController")
     private DeterminantCreatorController hwDeterminantCreatorController;
@@ -81,6 +84,7 @@ public class GuiReactor {
     private void sendResourcesTypes(Collection<ResourceType> resources) {
         resourceTypesPaneController.loadAllResources(resources);
         handWeaponsPaneController.fillResourceBoxes(resources);
+        rangeWeaponsPaneController.fillResourceBoxes(resources);
     }
     @PostConstruct
     private void setConsumers() {

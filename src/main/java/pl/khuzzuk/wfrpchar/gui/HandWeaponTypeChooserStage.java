@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.gui.controllers.HandWeaponTypeChooserController;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;

@@ -45,6 +45,7 @@
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.OneHandedWeapon"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.TwoHandedWeapon"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.BastardWeapon"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.Gun"/>
 
         <!--DETERMINANTS-->
         <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.Determinant"/>

@@ -5,7 +5,7 @@
             maxWidth="Infinity" text="Broń biała"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.khuzzuk.wfrpchar.gui.WhiteWeaponTypePaneController">
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.WhiteWeaponTypePaneController">
     <SplitPane dividerPositions="0.3"
                maxHeight="Infinity"
                maxWidth="Infinity">

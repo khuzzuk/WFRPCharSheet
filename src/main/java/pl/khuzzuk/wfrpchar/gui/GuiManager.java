@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import lombok.extern.java.Log;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import pl.khuzzuk.wfrpchar.gui.controllers.ControllersFactoryDecorator;
 
 @Log
 public class GuiManager extends Application {

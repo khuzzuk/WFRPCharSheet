@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class ComboBoxHandler {
 
-    static <T extends Named<? extends U>, U extends Comparable<? super U>> void fill(
+    public static <T extends Named<? extends U>, U extends Comparable<? super U>> void fill(
             Set<T> elements, ComboBox<U> comboBox) {
         comboBox.getItems().clear();
         comboBox.getItems().addAll(elements.stream()

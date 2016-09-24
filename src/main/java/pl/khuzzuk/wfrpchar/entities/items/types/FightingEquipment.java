@@ -67,7 +67,7 @@ public abstract class FightingEquipment extends Item implements Wearable {
         return determinants != null ? determinants : Collections.emptyList();
     }
 
-    String determinantsToCsv(Set<Determinant> determinants) {
+    String determinantsToCsv(Collection<Determinant> determinants) {
         return determinants.stream().map(Determinant::toCSV).collect(Collectors.joining("|"));
     }
 }

@@ -11,7 +11,7 @@
             text="Broń ręczna"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="pl.khuzzuk.wfrpchar.gui.ItemsListedController">
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.ItemsListedController">
     <SplitPane dividerPositions="0.3" maxWidth="Infinity" maxHeight="Infinity">
         <GridPane maxHeight="Infinity" maxWidth="Infinity">
             <ListView fx:id="items" maxHeight="Infinity" maxWidth="Infinity"/>

@@ -11,6 +11,7 @@ import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import pl.khuzzuk.wfrpchar.gui.controllers.MainWindowController;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;

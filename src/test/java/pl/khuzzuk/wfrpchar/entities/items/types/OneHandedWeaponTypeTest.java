@@ -3,10 +3,7 @@ package pl.khuzzuk.wfrpchar.entities.items.types;
 import org.testng.annotations.Test;
 import pl.khuzzuk.wfrpchar.entities.determinants.*;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.testng.Assert.assertEquals;
 

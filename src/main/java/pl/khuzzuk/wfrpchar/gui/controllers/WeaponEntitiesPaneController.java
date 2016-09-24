@@ -1,9 +1,10 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import java.net.URL;
 import java.util.ResourceBundle;

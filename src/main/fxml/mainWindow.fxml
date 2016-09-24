@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
           prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="pl.khuzzuk.wfrpchar.gui.MainWindowController">
+          fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.MainWindowController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
     </columnConstraints>
@@ -65,6 +65,7 @@
                                         </padding>
                                         <panes>
                                             <fx:include fx:id="handWeaponsPane" source="handWeaponsPane.fxml"/>
+                                            <fx:include fx:id="rangedWeaponsPane" source="rangeWeaponsPane.fxml"/>
                                             <fx:include fx:id="itemTypesPane" source="itemTypesPane.fxml"/>
                                         </panes>
                                     </Accordion>

@@ -1,15 +1,15 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
-import pl.khuzzuk.wfrpchar.entities.determinants.MiscExtension;
+import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
+import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
+import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import javax.inject.Inject;
 import java.net.URL;
@@ -25,7 +25,7 @@ public class DeterminantCreatorController implements Controller {
     TextField strength;
     @FXML
     private ComboBox<String> type;
-    @Setter(AccessLevel.PACKAGE)
+    @Setter
     private Stage parent;
     private String showMsg;
     private String sendMsg;
@@ -53,7 +53,7 @@ public class DeterminantCreatorController implements Controller {
         parent.hide();
     }
 
-    void show() {
+    public void show() {
         clear();
         parent.show();
     }

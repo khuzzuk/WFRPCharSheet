@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.gui;
+package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -9,6 +9,9 @@ import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
+import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
+import pl.khuzzuk.wfrpchar.gui.FloatNumeric;
+import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -30,8 +33,6 @@ public class RangedWeaponTypePaneController extends ItemsListedController {
     @FXML
     @Numeric
     TextField rwLead;
-    @FXML
-    ComboBox<String> rwAccessibility;
     @FXML
     TextArea rwSpecialFeatures;
     @FXML
@@ -62,22 +63,21 @@ public class RangedWeaponTypePaneController extends ItemsListedController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeValidation();
+        super.initialize(location, resources);
         removeAction = guiPublisher::removeRangedWeapon;
         getAction = guiPublisher::requestRangedWeaponLoad;
         saveAction = this::saveRangedWeaponType;
-        ComboBoxHandler.fill(Accessibility.SET, rwAccessibility);
         ComboBoxHandler.fill(LoadingTimes.SET, rwLoadTime);
     }
 
-    void loadRangedWeaponToEditor(RangedWeaponType rangedWeapon) {
+    public void loadRangedWeaponToEditor(RangedWeaponType rangedWeapon) {
         name.setText(rangedWeapon.getName());
         rwTypeName.setText(rangedWeapon.getTypeName());
         rwWeight.setText("" + rangedWeapon.getWeight());
         rwGold.setText(rangedWeapon.getPrice().getGold() + "");
         rwSilver.setText(rangedWeapon.getPrice().getSilver() + "");
         rwLead.setText(rangedWeapon.getPrice().getLead() + "");
-        rwAccessibility.getSelectionModel().select(rangedWeapon.getAccessibility().getName());
+        accessibility.getSelectionModel().select(rangedWeapon.getAccessibility().getName());
         rwSpecialFeatures.setText(rangedWeapon.getSpecialFeature());
         rwStrength.setText(rangedWeapon.getStrength() + "");
         rwMinRange.setText(rangedWeapon.getShortRange() + "");
@@ -91,7 +91,7 @@ public class RangedWeaponTypePaneController extends ItemsListedController {
     }
 
     @FXML
-    void saveRangedWeaponType() {
+    private void saveRangedWeaponType() {
         if (name.getText().length() == 0) return;
         List<String> fields = new LinkedList<>();
         fields.add(name.getText());
@@ -100,7 +100,7 @@ public class RangedWeaponTypePaneController extends ItemsListedController {
                 rwSilver.getText() + "|" +
                 rwLead.getText());
         fields.add(Accessibility.forName(
-                rwAccessibility.getSelectionModel().getSelectedItem()).name());
+                accessibility.getSelectionModel().getSelectedItem()).name());
         fields.add(rwSpecialFeatures.getText());
         fields.add(rwStrength.getText());
         fields.add("RANGED_WEAPON");

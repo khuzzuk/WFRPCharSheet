@@ -8,7 +8,7 @@
 <?import javafx.scene.control.Button?>
 <GridPane xmlns="http://javafx.com/javafx/8.0.60"
           xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="pl.khuzzuk.wfrpchar.gui.DeterminantCreatorController"
+          fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.DeterminantCreatorController"
           hgap="10" vgap="10">
     <padding>
         <Insets left="10" right="10" top="10" bottom="10"/>
