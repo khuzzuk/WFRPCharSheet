@@ -10,6 +10,7 @@ import pl.khuzzuk.wfrpchar.entities.items.types.MiscItem;
 import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 import pl.khuzzuk.wfrpchar.messaging.CommunicateMessage;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.publishers.MultiContentPublisher;
@@ -69,7 +70,7 @@ public class DAOPublisher {
         entitiesPublisher.publish(results, weaponResultMsgType);
     }
 
-    void publishRangedWeapons(Collection<RangedWeaponType> results) {
+    void publishRangedWeaponTypes(Collection<RangedWeaponType> results) {
         entitiesPublisher.publish(results, rangedWeaponsResult);
     }
 
@@ -85,8 +86,12 @@ public class DAOPublisher {
         entitiesPublisher.publish(results, messages.getProperty("weapons.hand.baseType.allTypesList"));
     }
 
-    public void publishHandWeapons(Collection<AbstractHandWeapon> allHandWeapons) {
+    void publishHandWeapons(Collection<AbstractHandWeapon> allHandWeapons) {
         entitiesPublisher.publish(allHandWeapons, messages.getProperty("weapons.hand.result"));
+    }
+
+    void publishRangedWeapons(Collection<Gun> allRangedWeapon) {
+        entitiesPublisher.publish(allRangedWeapon, messages.getProperty("weapons.hand.result"));
     }
 
     void publish(MiscItem item) {

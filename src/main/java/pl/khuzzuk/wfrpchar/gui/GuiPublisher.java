@@ -44,6 +44,10 @@ public class GuiPublisher {
         textRequestPublisher.publish(line, messages.getProperty("resource.type.save"));
     }
 
+    public void saveRangedWeapon(String line) {
+        publish(line, messages.getProperty("weapons.ranged.save"));
+    }
+
     public void requestMiscItemType() {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("miscItemTypes.query")));
     }
@@ -52,7 +56,7 @@ public class GuiPublisher {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("whiteWeapons.query")));
     }
 
-    public void requestRangedWeapons() {
+    public void requestRangedWeaponsTypes() {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("rangedWeapons.query")));
     }
 
@@ -62,6 +66,10 @@ public class GuiPublisher {
 
     public void requestHandWeapons() {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("weapons.hand.query")));
+    }
+
+    public void requestRangedWeapons() {
+        publish(messages.getProperty("weapons.ranged.query"));
     }
 
     public void requestResourceTypes() {
@@ -76,11 +84,11 @@ public class GuiPublisher {
         textRequestPublisher.publish(name, messages.getProperty("miscItemTypes.query.specific"));
     }
 
-    public void requestWhiteWeaponLoad(String name) {
+    public void requestWhiteWeaponType(String name) {
         textRequestPublisher.publish(name, messages.getProperty("whiteWeapons.query.specific"));
     }
 
-    public void requestRangedWeaponLoad(String name) {
+    public void requestRangedWeaponType(String name) {
         textRequestPublisher.publish(name, messages.getProperty("rangedWeapons.query.specific"));
     }
 
@@ -92,6 +100,10 @@ public class GuiPublisher {
         textRequestPublisher.publish(name, messages.getProperty("weapons.hand.query.specific"));
     }
 
+    public void requestRangedWeapon(String name) {
+        publish(name, messages.getProperty("weapons.ranged.query.specific"));
+    }
+
     public void requestResourceType(String name) {
         textRequestPublisher.publish(name, messages.getProperty("resource.type.query.specific"));
     }
@@ -100,7 +112,7 @@ public class GuiPublisher {
         textRequestPublisher.publish(name, messages.getProperty("miscItemTypes.remove"));
     }
 
-    public void removeRangedWeapon(String name) {
+    public void removeRangedTypeWeapon(String name) {
         textRequestPublisher.publish(name, messages.getProperty("rangedWeapons.remove"));
     }
 
@@ -118,6 +130,10 @@ public class GuiPublisher {
 
     public void removeHandWeapon(String name) {
         contentPublisher.publish(name, messages.getProperty("weapons.hand.remove"));
+    }
+
+    public void removeRangedWeapon(String name) {
+        textRequestPublisher.publish(name, messages.getProperty("weapons.ranged.remove"));
     }
 
     public void publish(String text) {

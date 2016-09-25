@@ -97,7 +97,7 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
         initializeValidation();
         removeAction = guiPublisher::removeWhiteWeapon;
         saveAction = this::saveWhiteWeaponType;
-        getAction = guiPublisher::requestWhiteWeaponLoad;
+        getAction = guiPublisher::requestWhiteWeaponType;
         initFieldsMap();
         fillComboBoxesWithEnums();
     }

@@ -46,7 +46,7 @@ public class MainWindowController implements Controller {
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
         guiPublisher.requestWhiteWeapons();
-        guiPublisher.requestRangedWeapons();
+        guiPublisher.requestRangedWeaponsTypes();
     }
 
     @FXML

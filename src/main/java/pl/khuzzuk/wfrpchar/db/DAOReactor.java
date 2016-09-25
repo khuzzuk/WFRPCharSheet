@@ -152,7 +152,7 @@ public class DAOReactor {
     }
 
     private void getAllRangedWeaponTypes() {
-        daoPublisher.publishRangedWeapons(dao.getAllRangedWeapons());
+        daoPublisher.publishRangedWeaponTypes(dao.getAllRangedWeapons());
     }
 
     private void getRangedWeaponTypeByName(String name) {
@@ -169,6 +169,10 @@ public class DAOReactor {
 
     private void getAllHandWeapons() {
         daoPublisher.publishHandWeapons(dao.getAllHandWeapons());
+    }
+
+    private void getAllRangedWeapons() {
+        daoPublisher.publish
     }
 
     private void getAllWWBaseType() {

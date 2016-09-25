@@ -18,11 +18,14 @@ public class RangeWeaponsPaneController extends AbstractWeaponController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
+        removeAction = guiPublisher::removeRangedWeapon;
+        getAction = guiPublisher::requestRangedWeapon;
+        guiPublisher.requestRangedWeapons();
     }
 
     @FXML
     private void chooseDeterminant() {
-
+        guiPublisher.publish(messages.getProperty("determinants.creator.show.rw"));
     }
 
     @FXML

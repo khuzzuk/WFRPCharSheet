@@ -64,8 +64,8 @@ public class RangedWeaponTypePaneController extends ItemsListedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        removeAction = guiPublisher::removeRangedWeapon;
-        getAction = guiPublisher::requestRangedWeaponLoad;
+        removeAction = guiPublisher::removeRangedTypeWeapon;
+        getAction = guiPublisher::requestRangedWeaponType;
         saveAction = this::saveRangedWeaponType;
         ComboBoxHandler.fill(LoadingTimes.SET, rwLoadTime);
     }
