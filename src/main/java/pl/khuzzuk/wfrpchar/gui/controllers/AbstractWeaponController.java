@@ -38,6 +38,7 @@ public abstract class AbstractWeaponController extends ItemsListedController {
     Button chooseBaseButton;
 
     Collection<ResourceType> resources;
+    String baseType;
     @Inject
     @Named("messages")
     Properties messages;
@@ -54,5 +55,10 @@ public abstract class AbstractWeaponController extends ItemsListedController {
         Set<ResourceType> toFill = resources.stream().collect(Collectors.toSet());
         ComboBoxHandler.fill(toFill, primaryResource);
         ComboBoxHandler.fill(toFill, secondaryResource);
+    }
+
+    public void setBaseType(String type) {
+        baseType = type;
+        chooseBaseButton.setText(type);
     }
 }

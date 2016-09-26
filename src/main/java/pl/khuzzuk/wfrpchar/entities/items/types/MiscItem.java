@@ -26,6 +26,6 @@ public class MiscItem extends Item {
     @Override
     public String toCsv() {
         return name + ";" + weight + ";" + price + ";" + accessibility + ";" +
-                specialFeature + ";;" + type;
+                specialFeatures + ";;" + type;
     }
 }

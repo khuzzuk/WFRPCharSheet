@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
+import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
 
@@ -37,5 +38,15 @@ public class Gun extends AbstractWeapon implements RangedWeapon, Persistable {
     @Override
     public LoadingTimes getReloadTime() {
         return baseType != null ? baseType.getReloadTime() : null;
+    }
+
+    @Override
+    public String toCsv() {
+        return null;
+    }
+
+    @Override
+    public Placement getPlacement() {
+        return baseType.getPlacement();
     }
 }

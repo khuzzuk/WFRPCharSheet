@@ -113,7 +113,7 @@ public class ArmorTypesPaneController extends ItemsListedController {
                 .forEach(a -> MappingUtil.mapDeterminant(a, determinantsMap));
         armor.getNames()
                 .forEach((k, v) -> MappingUtil.mapDeterminant(new Context<>(k, v), langElementsMap));
-        armSpecialFeatures.setText(armor.getSpecialFeature());
+        armSpecialFeatures.setText(armor.getSpecialFeatures());
     }
 
     @FXML

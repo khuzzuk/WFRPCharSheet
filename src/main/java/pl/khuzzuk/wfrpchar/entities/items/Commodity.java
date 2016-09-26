@@ -8,4 +8,6 @@ public interface Commodity extends Named<String>, Persistable {
     Accessibility getAccessibility();
 
     Price getPrice();
+
+    String getSpecialFeatures();
 }

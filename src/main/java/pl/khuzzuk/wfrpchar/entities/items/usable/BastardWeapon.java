@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.Bastard;
+import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 
@@ -12,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @DiscriminatorValue("5")
-public class BastardWeapon extends AbstractHandWeapon implements Bastard {
+public class BastardWeapon extends AbstractHandWeapon<BastardWeaponType> implements Bastard {
     @Getter
     @ManyToOne
     private BastardWeaponType baseType;
@@ -26,12 +27,17 @@ public class BastardWeapon extends AbstractHandWeapon implements Bastard {
     private Set<Determinant> oneHandedDeterminants;
 
     @Override
-    public void setBaseType(WhiteWeaponType baseType) {
-        this.baseType = (BastardWeaponType) baseType;
+    public void setBaseType(BastardWeaponType baseType) {
+        this.baseType = baseType;
     }
 
     @Override
     public int getOneHandedStrength() {
         return baseType != null ? baseType.getOneHandedStrength() : 0;
+    }
+
+    @Override
+    public Placement getPlacement() {
+        return baseType.getPlacement();
     }
 }

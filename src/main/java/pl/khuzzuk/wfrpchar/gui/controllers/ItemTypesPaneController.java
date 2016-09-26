@@ -51,7 +51,7 @@ public class ItemTypesPaneController extends ItemsListedController {
     public void loadMiscItemToEditor(MiscItem item) {
         name.setText(item.getName());
         iWeight.setText(item.getWeight() + "");
-        iSpecialFeatures.setText(item.getSpecialFeature());
+        iSpecialFeatures.setText(item.getSpecialFeatures());
         iGold.setText(item.getPrice().getGold() + "");
         iSilver.setText(item.getPrice().getSilver() + "");
         iLead.setText(item.getPrice().getLead() + "");

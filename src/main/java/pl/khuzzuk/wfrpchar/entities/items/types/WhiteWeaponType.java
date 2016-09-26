@@ -58,12 +58,12 @@ public abstract class WhiteWeaponType extends WeaponType implements HandWeapon {
                 weight + ";" +
                 price.getGold() + "|" + price.getSilver() + "|" + price.getLead() + ";" +
                 accessibility + ";" +
-                specialFeature + ";" +
+                specialFeatures + ";" +
                 strength + ";" +
                 type + ";" +
                 placement + ";" +
                 getLangToCsv() + ";" +
-                determinantsToCsv(determinants) + ";" +
+                Determinant.determinantsToCsv(determinants) + ";" +
                 typeName + ";" +
                 dices + ";" +
                 rolls

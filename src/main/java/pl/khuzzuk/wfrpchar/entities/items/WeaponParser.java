@@ -1,11 +1,15 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
-import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
+import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
 import pl.khuzzuk.wfrpchar.entities.Price;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractCommodity;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.BastardWeapon;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import javax.inject.Inject;
@@ -81,7 +85,7 @@ public class WeaponParser {
         item.setWeight(Float.parseFloat(columns[1]));
         item.setPrice(Price.parsePrice(columns[2]));
         item.setAccessibility(Accessibility.valueOf(columns[3]));
-        item.setSpecialFeature(columns[4]);
+        item.setSpecialFeatures(columns[4]);
     }
 
     private void fillFightingEquipmentFields(String[] columns, FightingEquipment equipment) {
@@ -93,5 +97,44 @@ public class WeaponParser {
 
     private void fillWeaponFields(String[] columns, WeaponType weaponType) {
         weaponType.setTypeName(columns[10]);
+    }
+
+    @SuppressWarnings("unchecked")
+    public AbstractHandWeapon parseHandWeapon(String[] fields, ParserBag<HandWeapon> bag) {
+        AbstractHandWeapon weapon = AbstractWeapon.getFromPlacement(bag.getBaseType().getPlacement());
+        weapon.setBaseType((WhiteWeaponType) bag.getBaseType());
+        fillCommodityItem(fields, weapon);
+        fillBattleEquipment(fields, weapon, bag.getPrimaryResource(), bag.getSecondaryResource());
+        fillHandWeapon(fields, weapon);
+        if (weapon instanceof Bastard) {
+            fillBastard(fields, (BastardWeapon) weapon);
+        }
+        return weapon;
+    }
+
+    private void fillCommodityItem(String[] fields, AbstractCommodity commodity) {
+        commodity.setName(fields[0]);
+        commodity.setBasePrice(Price.parsePrice(fields[1]));
+        commodity.setAccessibility(Accessibility.valueOf(fields[2]));
+        commodity.setSpecialFeatures(fields[3]);
+    }
+
+    private void fillBattleEquipment(String[] line, AbstractWeapon weapon, ResourceType primaryResource, ResourceType secondaryResource) {
+        weapon.setPrimaryResource(primaryResource);
+        weapon.setSecondaryResource(secondaryResource);
+        weapon.setDeterminants(determinantFactory.createDeterminants(line[7]));
+    }
+
+    private void fillHandWeapon(String[] fields, AbstractHandWeapon weapon) {
+        if (fields[8].length() > 0) {
+            weapon.setDices(Dices.valueOf(fields[8]));
+        }
+        if (fields[9].length() > 0) {
+            weapon.setRolls(Integer.parseInt(fields[9]));
+        }
+    }
+
+    private void fillBastard(String[] fields, BastardWeapon weapon) {
+        weapon.setOneHandedDeterminants(determinantFactory.createDeterminants(fields[10]));
     }
 }

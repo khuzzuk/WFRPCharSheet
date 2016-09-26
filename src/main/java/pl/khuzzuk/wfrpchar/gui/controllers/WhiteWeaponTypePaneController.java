@@ -141,7 +141,7 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
         strengthBasicWW.setText("" + weaponType.getStrength());
         weaponType.getDeterminants().forEach(d -> MappingUtil.mapDeterminant(d, whiteWeaponModifiers));
         weaponType.getNames().forEach((lang, val) -> whiteWeaponLangFields.get(lang).setText(val));
-        specialFeaturesWW.setText(weaponType.getSpecialFeature());
+        specialFeaturesWW.setText(weaponType.getSpecialFeatures());
         if (weaponType instanceof BastardWeaponType) {
             BastardWeaponType bastard = (BastardWeaponType) weaponType;
             strengthBastardWW.setText("" + bastard.getOneHandedStrength());

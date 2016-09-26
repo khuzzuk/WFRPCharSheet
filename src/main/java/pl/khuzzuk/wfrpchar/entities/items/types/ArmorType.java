@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.ArmorPattern;
 
 import javax.persistence.DiscriminatorValue;
@@ -25,12 +26,12 @@ public class ArmorType extends FightingEquipment {
                 weight + ";" +
                 price.toString() + ";" +
                 accessibility.name() + ";" +
-                specialFeature + ";" +
+                specialFeatures + ";" +
                 strength + ";" +
                 type.name() + ";" +
                 placement.name() + ";" +
                 getLangToCsv() + ";" +
-                determinantsToCsv(determinants) + ";" +
+                Determinant.determinantsToCsv(determinants) + ";" +
                 pattern.name();
     }
 }

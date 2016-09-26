@@ -43,7 +43,7 @@ public abstract class Item implements Named<String>, Persistable {
     Accessibility accessibility;
     @Getter
     @Setter
-    String specialFeature;
+    String specialFeatures;
 
     public abstract String toCsv();
 

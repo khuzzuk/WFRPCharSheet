@@ -4,13 +4,11 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
-import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.Bastard;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("7")
@@ -35,6 +33,6 @@ public class BastardWeaponType extends WhiteWeaponType implements Bastard {
     @Override
     public String toCsv() {
         return super.toCsv() + ";" + oneHandedStrength +
-                ";" + determinantsToCsv(oneHandedDeterminants);
+                ";" + Determinant.determinantsToCsv(oneHandedDeterminants);
     }
 }

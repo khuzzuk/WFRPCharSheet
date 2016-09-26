@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
 
 import javax.persistence.DiscriminatorValue;
@@ -45,12 +46,12 @@ public class RangedWeaponType extends WeaponType implements RangedWeapon {
         elements.add("" + weight);
         elements.add(price.toString());
         elements.add(accessibility.name());
-        elements.add(specialFeature);
+        elements.add(specialFeatures);
         elements.add("" + strength);
         elements.add(type.name());
         elements.add(placement.name());
         elements.add(getLangToCsv());
-        elements.add(determinantsToCsv(determinants));
+        elements.add(Determinant.determinantsToCsv(determinants));
         elements.add(typeName);
         elements.add("" + shortRange);
         elements.add("" + effectiveRange);

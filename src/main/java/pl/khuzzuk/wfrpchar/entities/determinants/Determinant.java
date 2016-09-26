@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -33,6 +34,10 @@ public abstract class Determinant implements Labelled<DeterminantsType, String>,
     @Setter
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Extension> extensions = new ArrayList<>();
+
+    public static String determinantsToCsv(Collection<Determinant> determinants) {
+        return determinants.stream().map(Determinant::toCSV).collect(Collectors.joining("|"));
+    }
 
     public int getActualValue() {
         int value = baseValue;
@@ -87,5 +92,9 @@ public abstract class Determinant implements Labelled<DeterminantsType, String>,
     @Override
     public String getName() {
         return toString();
+    }
+
+    public static Set<Determinant> parseFromGui(Collection<String> determinants) {
+        return determinants.stream().map(DeterminantFactory::getDeterminantByName).collect(Collectors.toSet());
     }
 }

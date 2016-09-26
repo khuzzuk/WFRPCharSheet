@@ -45,7 +45,7 @@ public class DAO {
     @Resources
     @Types
     private DAOTransactional<ResourceType, String> daoResources;
-    private DAOTransactional<AbstractHandWeapon, String> daoHandWeapons;
+    private DAOTransactional<AbstractHandWeapon<? extends WhiteWeaponType>, String> daoHandWeapons;
     private final DAOTransactional<Gun, String> daoRangedWeapons;
     @Getter(AccessLevel.PACKAGE)
     private DAOManager manager;
@@ -58,7 +58,7 @@ public class DAO {
                @Constants @Characters DAOTransactional<Character, String> daoCharacters,
                @Players DAOTransactional<Player, String> daoPlayer,
                @Currencies DAOTransactional<Currency, String> daoCurrencies,
-               @WhiteWeapons DAOTransactional<AbstractHandWeapon, String> daoHandWeapons,
+               @WhiteWeapons DAOTransactional<AbstractHandWeapon<? extends WhiteWeaponType>, String> daoHandWeapons,
                @RangedWeapons DAOTransactional<Gun, String> daoRangedWeapons,
                @Manager DAOManager manager) {
         this.daoItems = daoItems;
@@ -133,7 +133,7 @@ public class DAO {
         return daoResources.getAllItems();
     }
 
-    Collection<AbstractHandWeapon> getAllHandWeapons() {
+    Collection<AbstractHandWeapon<? extends WhiteWeaponType>> getAllHandWeapons() {
         assureSessionInit(daoHandWeapons);
         return daoHandWeapons.getAllItems();
     }

@@ -6,20 +6,19 @@ import javafx.scene.control.TextField;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Price;
-import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
-import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
-import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
-import pl.khuzzuk.wfrpchar.entities.items.usable.OneHandedWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -31,7 +30,6 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
     TextField rolls;
     @FXML
     private ComboBox<String> dices;
-    private WhiteWeaponType baseType;
     private AbstractHandWeapon handWeapon;
 
     @Override
@@ -47,11 +45,6 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
         guiPublisher.publish(messages.getProperty("weapons.hand.baseType.getAllTypes"));
     }
 
-    public void setBaseType(WhiteWeaponType baseType) {
-        this.baseType = baseType;
-        chooseBaseButton.setText(baseType.getName());
-    }
-
     @FXML
     void chooseDeterminant() {
         guiPublisher.publish(messages.getProperty("determinants.creator.show.hw"));
@@ -61,36 +54,35 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
         determinantsView.getItems().add(determinant);
     }
 
-    private AbstractHandWeapon startWeapon() {
-        if (baseType == null) {
-            return new OneHandedWeapon();
-        }
-        return AbstractWeapon.getFromPlacement(baseType.getPlacement());
-    }
-
-    private void setHandWeapon(AbstractHandWeapon handWeapon) {
-        handWeapon.setBaseType(baseType);
-        handWeapon.setName(name.getText());
-        handWeapon.setAccessibility(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()));
-        handWeapon.setPrimaryResource(getResourceFromList(primaryResource));
-        handWeapon.setSecondaryResource(getResourceFromList(secondaryResource));
-        handWeapon.setBasePrice(Price.parsePrice(gold.getText() + "|" + silver.getText() + "|" + lead.getText()));
-        handWeapon.setDeterminants(determinantsView.getItems().stream().map(DeterminantFactory::getDeterminantByName)
-                .collect(Collectors.toSet()));
-        handWeapon.setSpecialFeatures(specialFeatures.getText());
-    }
-
     @FXML
     private void saveWeapon() {
-        handWeapon = startWeapon();
-        setHandWeapon(handWeapon);
-        guiPublisher.publish(handWeapon);
+        guiPublisher.publish(weaponToLine(), messages.getProperty("weapons.hand.save"));
+    }
+
+    private String weaponToLine() {
+        if (name.getText().length() >= 3 && baseType.length() >= 3) {
+            List<String> fields = new ArrayList<>();
+            fields.add(name.getText());
+            fields.add(gold.getText() + "|" + silver.getText() + "|" + lead.getText());
+            fields.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
+            fields.add(specialFeatures.getText());
+            fields.add(baseType);
+            fields.add(primaryResource.getSelectionModel().getSelectedItem());
+            fields.add(secondaryResource.getSelectionModel().getSelectedItem());
+            fields.add(Determinant.determinantsToCsv(Determinant.parseFromGui(
+                    determinantsView.getItems().stream().collect(Collectors.toList()))));
+            fields.add(dices.getSelectionModel().getSelectedItem());
+            fields.add(rolls.getText());
+            fields.add("");
+            return fields.stream().collect(Collectors.joining(";"));
+        }
+        throw new IllegalStateException("Weapon not started Properly");
     }
 
     public void loadToEditor(AbstractHandWeapon weapon) {
         handWeapon = weapon;
-        baseType = handWeapon.getBaseType();
-        chooseBaseButton.setText(baseType.getName());
+        baseType = handWeapon.getBaseType().getName();
+        chooseBaseButton.setText(baseType);
         name.setText(handWeapon.getName());
         accessibility.getSelectionModel().select(handWeapon.getAccessibility().getName());
         primaryResource.getSelectionModel().select(handWeapon.getPrimaryResource().getName());

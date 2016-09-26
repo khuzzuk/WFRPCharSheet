@@ -78,7 +78,7 @@ public class RangedWeaponTypePaneController extends ItemsListedController {
         rwSilver.setText(rangedWeapon.getPrice().getSilver() + "");
         rwLead.setText(rangedWeapon.getPrice().getLead() + "");
         accessibility.getSelectionModel().select(rangedWeapon.getAccessibility().getName());
-        rwSpecialFeatures.setText(rangedWeapon.getSpecialFeature());
+        rwSpecialFeatures.setText(rangedWeapon.getSpecialFeatures());
         rwStrength.setText(rangedWeapon.getStrength() + "");
         rwMinRange.setText(rangedWeapon.getShortRange() + "");
         rwMedRange.setText(rangedWeapon.getEffectiveRange() + "");

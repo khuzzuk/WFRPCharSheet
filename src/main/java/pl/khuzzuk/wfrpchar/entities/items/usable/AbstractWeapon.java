@@ -39,9 +39,6 @@ public abstract class AbstractWeapon
             joinColumns = {@JoinColumn(name = "EQ_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
     private Set<Determinant> determinants;
-    @Getter
-    @Setter
-    private String specialFeatures;
 
     public abstract Weapon getBaseType();
 

@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
-import pl.khuzzuk.wfrpchar.entities.items.*;
+import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
+import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
+import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
-import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
@@ -113,8 +115,13 @@ public class DAOReactor {
         daoPublisher.publish(resourceTypeQuery);
     }
 
-    private void saveHandWeapon(AbstractHandWeapon weapon) {
-        dao.save(weapon);
+    private void saveHandWeapon(String line) {
+        String[] fields = line.split(";");
+        ParserBag<HandWeapon> bag = new ParserBag<>(
+                dao.getWhiteWeapon(fields[4]),
+                dao.getResourceType(fields[5]),
+                dao.getResourceType(fields[6]));
+        dao.save(weaponParser.parseHandWeapon(fields, bag));
         daoPublisher.publish(messages.getProperty("weapons.hand.query"));
     }
 

@@ -2,19 +2,21 @@ package pl.khuzzuk.wfrpchar.entities.items.usable;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "class", discriminatorType = DiscriminatorType.INTEGER)
 @Entity
 @DiscriminatorValue("0")
 @Table(name = "items_entities")
-public abstract class AbstractCommodity implements Commodity, Named<String> {
+public abstract class AbstractCommodity implements Commodity, Named<String>, Documented {
     @Id
     @GeneratedValue
     @Getter
@@ -29,4 +31,15 @@ public abstract class AbstractCommodity implements Commodity, Named<String> {
     @Getter
     @Setter
     private Price basePrice;
+    @Getter
+    @Setter
+    private String specialFeatures;
+
+    void fillCommodityFields(List<String> fields) {
+        fields.add(name);
+        fields.add(basePrice.toString());
+        fields.add(accessibility.name());
+        fields.add(specialFeatures);
+    }
+
 }

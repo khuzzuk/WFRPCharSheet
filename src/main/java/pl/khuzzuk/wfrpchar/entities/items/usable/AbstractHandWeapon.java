@@ -1,6 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
 import lombok.Setter;
+import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -10,10 +11,13 @@ import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("2")
-public abstract class AbstractHandWeapon extends AbstractWeapon implements HandWeapon, Persistable {
+public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends AbstractWeapon implements Named<String>, HandWeapon, Persistable {
 
     @Setter
     private Dices dices;
@@ -22,8 +26,6 @@ public abstract class AbstractHandWeapon extends AbstractWeapon implements HandW
     private int rolls;
 
     public abstract WhiteWeaponType getBaseType();
-
-    public abstract void setBaseType(WhiteWeaponType baseType);
 
     @Override
     public Dices getDices() {
@@ -54,4 +56,30 @@ public abstract class AbstractHandWeapon extends AbstractWeapon implements HandW
     public int getOpponentParryMod() {
         return Determinant.getSumForType(getAllDeterminants(), DeterminantsType.OPPONENT_PARRY);
     }
+
+    @Override
+    public String toCsv() {
+        List<String> fields = new ArrayList<>();
+        fillCommodityFields(fields);
+        fillHandWeaponCsvFields(fields);
+        return fields.stream().collect(Collectors.joining(";"));
+    }
+
+
+    void fillHandWeaponCsvFields(List<String> fields) {
+        fields.add(getBaseType().getName());
+        if (getPrimaryResource() != null) {
+            fields.add(getPrimaryResource().getName());
+        } else {
+            fields.add("");
+        }
+        if (getSecondaryResource() != null) {
+            fields.add(getSecondaryResource().getName());
+        } else {
+            fields.add("");
+        }
+        fields.add(Determinant.determinantsToCsv(getDeterminants()));
+    }
+
+    public abstract void setBaseType(T baseType);
 }
