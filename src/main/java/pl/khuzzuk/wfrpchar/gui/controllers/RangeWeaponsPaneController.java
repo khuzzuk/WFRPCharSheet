@@ -24,6 +24,16 @@ public class RangeWeaponsPaneController extends AbstractWeaponController {
     }
 
     @FXML
+    private void chooseBaseType() {
+        guiPublisher.publish(messages.getProperty("weapons.ranged.baseType.getAllTypes"));
+    }
+
+    public void setBaseType(RangedWeaponType type) {
+        baseType = type;
+        chooseBaseButton.setText(type.getName());
+    }
+
+    @FXML
     private void chooseDeterminant() {
         guiPublisher.publish(messages.getProperty("determinants.creator.show.rw"));
     }

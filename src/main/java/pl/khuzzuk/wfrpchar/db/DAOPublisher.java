@@ -47,9 +47,6 @@ public class DAOPublisher {
     @Value("${whiteWeapons.result.specific}")
     @NotNull
     private String whiteWeaponNamedResultMsgType;
-    @Value("${rangedWeapons.result}")
-    @NotNull
-    private String rangedWeaponsResult;
     @Value("${rangedWeapons.result.specific}")
     @NotNull
     private String rangeWeaponNamedResult;
@@ -70,8 +67,8 @@ public class DAOPublisher {
         entitiesPublisher.publish(results, weaponResultMsgType);
     }
 
-    void publishRangedWeaponTypes(Collection<RangedWeaponType> results) {
-        entitiesPublisher.publish(results, rangedWeaponsResult);
+    void publishRangedWeaponTypes(Collection<RangedWeaponType> results, String message) {
+        entitiesPublisher.publish(results, message);
     }
 
     void publishArmorTypes(Collection<ArmorType> allArmorTypes) {
@@ -116,6 +113,10 @@ public class DAOPublisher {
 
     void publish(AbstractHandWeapon handWeapon) {
         entitiesPublisher.publish(handWeapon, messages.getProperty("weapons.hand.result.specific"));
+    }
+
+    void publish(Gun gun) {
+        entitiesPublisher.publish(gun, messages.getProperty("weapons.ranged.result.specific"));
     }
 
     void publish(String communicate) {

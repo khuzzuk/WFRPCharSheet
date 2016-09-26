@@ -4,9 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
@@ -18,21 +15,23 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-@Component
-@PropertySource("classpath:messages.properties")
-public class HandWeaponTypeChooserController extends GuiContentSubscriber<Collection<WhiteWeaponType>> implements Controller {
+public class EquipmentTypeChooserController extends GuiContentSubscriber<Collection<WhiteWeaponType>> implements Controller {
     @Inject
     private GuiPublisher publisher;
     @FXML
     private ListView<String> items;
     @Setter
     private Stage parent;
-    @Value("${weapons.hand.baseType.choice}")
+    @Setter
     private String choiceReady;
 
-    @Inject
-    public HandWeaponTypeChooserController(@Value("${weapons.hand.baseType.allTypesList}") String msgType) {
+    public EquipmentTypeChooserController() {
+        super("");
+    }
+
+    public EquipmentTypeChooserController(String msgType, String choiceMsg) {
         super(msgType);
+        choiceReady = choiceMsg;
     }
 
     @Override
@@ -40,8 +39,6 @@ public class HandWeaponTypeChooserController extends GuiContentSubscriber<Collec
         initializeValidation();
     }
 
-    @PostConstruct
-    @Override
     public void subscribe() {
         setConsumer(c -> {
             EntitiesAdapter.sendToListView(items, c);
@@ -54,7 +51,7 @@ public class HandWeaponTypeChooserController extends GuiContentSubscriber<Collec
     private void sendSelected() {
         String selected = items.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            publisher.requestWWBaseType(selected);
+            publisher.publish(selected, choiceReady);
             parent.hide();
         }
     }

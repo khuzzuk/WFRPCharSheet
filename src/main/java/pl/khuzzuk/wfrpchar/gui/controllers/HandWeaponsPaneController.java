@@ -1,7 +1,6 @@
 package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.springframework.context.annotation.PropertySource;
@@ -32,8 +31,6 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
     TextField rolls;
     @FXML
     private ComboBox<String> dices;
-    @FXML
-    private Button chooseBaseButton;
     private WhiteWeaponType baseType;
     private AbstractHandWeapon handWeapon;
 

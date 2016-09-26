@@ -39,7 +39,10 @@
             <Label text="nazwa"/>
             <TextField fx:id="name" GridPane.columnIndex="1"/>
             <Label text="typ" GridPane.columnIndex="2"/>
-            <Button text="wybierz typ" fx:id="type" maxWidth="Infinity" minWidth="100" GridPane.columnIndex="3"/>
+            <Button text="wybierz typ" fx:id="type"
+                    maxWidth="Infinity" minWidth="100"
+                    GridPane.columnIndex="3"
+                    onAction="#chooseBaseType"/>
             <Label text="dostępność" GridPane.columnIndex="4"/>
             <ComboBox fx:id="accessibility" GridPane.columnIndex="5"/>
             <Label text="surowiec" GridPane.rowIndex="1"/>
@@ -71,7 +74,8 @@
                       maxHeight="Infinity" maxWidth="Infinity"/>
             <Button text="Usuń" GridPane.rowIndex="5" maxWidth="Infinity" onAction="#remove"/>
             <Button text="Nowy" GridPane.rowIndex="5" GridPane.columnIndex="1" maxWidth="Infinity"/>
-            <Button text="Zapisz" GridPane.rowIndex="5" GridPane.columnIndex="2" maxWidth="Infinity" onAction="#saveWeapon"/>
+            <Button text="Zapisz" GridPane.rowIndex="5" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#saveWeapon"/>
         </GridPane>
     </SplitPane>
 </TitledPane>

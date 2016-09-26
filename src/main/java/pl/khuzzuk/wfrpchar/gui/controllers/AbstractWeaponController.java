@@ -1,10 +1,7 @@
 package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
@@ -37,6 +34,8 @@ public abstract class AbstractWeaponController extends ItemsListedController {
     ListView<String> determinantsView;
     @FXML
     TextArea specialFeatures;
+    @FXML
+    Button chooseBaseButton;
 
     Collection<ResourceType> resources;
     @Inject

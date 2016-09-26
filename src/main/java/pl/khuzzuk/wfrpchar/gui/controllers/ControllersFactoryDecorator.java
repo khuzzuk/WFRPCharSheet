@@ -21,7 +21,7 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
                                        ResourceTypesPaneController resourceTypesPaneController,
                                        ItemsListedController weaponEntitiesPaneController,
                                        HandWeaponsPaneController handWeaponsPaneController,
-                                       HandWeaponTypeChooserController handWeaponTypeChooserController,
+                                       EquipmentTypeChooserController equipmentTypeChooserController,
                                        RangeWeaponsPaneController rangeWeaponsPaneController) {
         controllers = new ConcurrentHashMap<>();
         controllers.put(mainWindowController.getClass(), mainWindowController);
@@ -32,7 +32,7 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
         controllers.put(resourceTypesPaneController.getClass(), resourceTypesPaneController);
         controllers.put(weaponEntitiesPaneController.getClass(), weaponEntitiesPaneController);
         controllers.put(handWeaponsPaneController.getClass(), handWeaponsPaneController);
-        controllers.put(handWeaponTypeChooserController.getClass(), handWeaponTypeChooserController);
+        controllers.put(equipmentTypeChooserController.getClass(), equipmentTypeChooserController);
         controllers.put(rangedWeaponTypePaneController.getClass(), rangedWeaponTypePaneController);
         controllers.put(rangeWeaponsPaneController.getClass(), rangeWeaponsPaneController);
     }

@@ -11,6 +11,7 @@ import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 
 import javax.inject.Inject;
 
@@ -86,7 +87,8 @@ public class DAOManager {
 
     @Bean
     @RangedWeapons
-    public DAOEntityResolver<RangedWeaponType, String> daoRangedWeapons() {
+    @Types
+    public DAOEntityResolver<RangedWeaponType, String> daoRangedWeaponTyppes() {
         return new DAOEntityResolver<>("FROM Item i where type(i) = RangedWeaponType", openNewSession());
     }
 
@@ -111,5 +113,11 @@ public class DAOManager {
                 "or type(i) = TwoHandedWeapon " +
                 "or type(i) = BastardWeapon ",
                 openNewSession());
+    }
+
+    @Bean
+    @RangedWeapons
+    public DAOEntityResolver<Gun, String> daoRangedWeapons() {
+        return new DAOEntityResolver<Gun, String>("FROM AbstractCommodity i where type(i) = Gun", openNewSession());
     }
 }

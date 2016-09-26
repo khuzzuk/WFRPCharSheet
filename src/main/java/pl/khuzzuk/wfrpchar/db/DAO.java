@@ -6,14 +6,19 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
+import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Player;
+import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @Manager
@@ -26,7 +31,8 @@ public class DAO {
     private DAOTransactional<Currency, String> daoCurrencies;
     @Inject
     @RangedWeapons
-    private DAOTransactional<RangedWeaponType, String> daoRangedWeapons;
+    @Types
+    private DAOTransactional<RangedWeaponType, String> daoRangedWeaponsTypes;
     @Inject
     @Armor
     @Types
@@ -40,8 +46,10 @@ public class DAO {
     @Types
     private DAOTransactional<ResourceType, String> daoResources;
     private DAOTransactional<AbstractHandWeapon, String> daoHandWeapons;
+    private final DAOTransactional<Gun, String> daoRangedWeapons;
     @Getter(AccessLevel.PACKAGE)
     private DAOManager manager;
+    private Map<Class<? extends Persistable>, DAOTransactional<? extends Commodity, String>> resolvers;
 
     @Inject
     public DAO(@Items @NotNull DAOTransactional<Item, String> daoItems,
@@ -51,6 +59,7 @@ public class DAO {
                @Players DAOTransactional<Player, String> daoPlayer,
                @Currencies DAOTransactional<Currency, String> daoCurrencies,
                @WhiteWeapons DAOTransactional<AbstractHandWeapon, String> daoHandWeapons,
+               @RangedWeapons DAOTransactional<Gun, String> daoRangedWeapons,
                @Manager DAOManager manager) {
         this.daoItems = daoItems;
         this.daoWhiteWeapons = daoWhiteWeaponType;
@@ -59,7 +68,39 @@ public class DAO {
         this.daoPlayer = daoPlayer;
         this.daoCurrencies = daoCurrencies;
         this.daoHandWeapons = daoHandWeapons;
+        this.daoRangedWeapons = daoRangedWeapons;
         this.manager = manager;
+        resolvers = new HashMap<>();
+        resolvers.put(Gun.class, daoRangedWeapons);
+    }
+
+    @SuppressWarnings("unchecked")
+    <T extends Commodity> Collection<T> getAllEntities(Class<T> entityType) {
+        DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(entityType);
+        assureSessionInit(resolver);
+        return resolver.getAllItems();
+    }
+
+    @SuppressWarnings("unchecked")
+    <T extends Commodity> T getEntity(Class<T> entityType, String name) {
+        DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(entityType);
+        assureSessionInit(resolver);
+        return resolver.getItem(name);
+    }
+
+    //TODO remove unnecessary class parameter
+    @SuppressWarnings("unchecked")
+    <T extends Commodity> void saveEntity(Class<T> entityType, T entity) {
+        DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(entityType);
+        assureSessionInit(resolver);
+        resolver.commit(entity);
+    }
+
+    @SuppressWarnings("unchecked")
+    <T extends Commodity> void removeEntity(Class<T> entityType, String name) {
+        DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(entityType);
+        assureSessionInit(resolver);
+        resolver.remove(name);
     }
 
     Collection<Item> getAllItems() {
@@ -78,8 +119,8 @@ public class DAO {
     }
 
     Collection<RangedWeaponType> getAllRangedWeapons() {
-        assureSessionInit(daoRangedWeapons);
-        return daoRangedWeapons.getAllItems();
+        assureSessionInit(daoRangedWeaponsTypes);
+        return daoRangedWeaponsTypes.getAllItems();
     }
 
     Collection<ArmorType> getAllArmorTypes() {
@@ -108,8 +149,8 @@ public class DAO {
     }
 
     RangedWeaponType getRangedWeapon(String name) {
-        assureSessionInit(daoRangedWeapons);
-        return daoRangedWeapons.getItem(name);
+        assureSessionInit(daoRangedWeaponsTypes);
+        return daoRangedWeaponsTypes.getItem(name);
     }
 
     ArmorType getArmorType(String name) {
@@ -154,8 +195,8 @@ public class DAO {
     }
 
     void save(RangedWeaponType weaponType) {
-        assureSessionInit(daoRangedWeapons);
-        daoRangedWeapons.commit(weaponType);
+        assureSessionInit(daoRangedWeaponsTypes);
+        daoRangedWeaponsTypes.commit(weaponType);
     }
 
     void save(ArmorType armorType) {
@@ -204,8 +245,8 @@ public class DAO {
     }
 
     void removeRangedWeaponType(String name) {
-        assureSessionInit(daoRangedWeapons);
-        daoRangedWeapons.remove(name);
+        assureSessionInit(daoRangedWeaponsTypes);
+        daoRangedWeaponsTypes.remove(name);
     }
 
     void removeArmorType(String name) {

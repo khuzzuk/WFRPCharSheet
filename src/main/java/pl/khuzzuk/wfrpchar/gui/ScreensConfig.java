@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 import lombok.Setter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import pl.khuzzuk.wfrpchar.gui.controllers.*;
 
 import javax.inject.Inject;
@@ -31,9 +32,27 @@ public class ScreensConfig {
     }
 
     @Bean
-    @Inject
-    public HandWeaponTypeChooserStage handWeaponTypeChooserStage(HandWeaponTypeChooserController controller) {
-        return new HandWeaponTypeChooserStage(stage, controller);
+    @Scope(value = "prototype")
+    public EquipmentTypeChooserController equipmentTypeChooserController() {
+        return new EquipmentTypeChooserController();
+    }
+
+    @Bean
+    public EquipmentTypeChooserStage handWeaponTypeChooserStage() {
+        EquipmentTypeChooserController controller = equipmentTypeChooserController();
+        controller.setMessageType(messages.getProperty("weapons.hand.baseType.allTypesList"));
+        controller.setChoiceReady(messages.getProperty("weapons.hand.baseType.choice"));
+        controller.subscribe();
+        return new EquipmentTypeChooserStage(stage, controller);
+    }
+
+    @Bean
+    public EquipmentTypeChooserStage rangedWeaponTypeChooser() {
+        EquipmentTypeChooserController controller = equipmentTypeChooserController();
+        controller.setMessageType(messages.getProperty("weapons.ranged.baseType.allTypesList"));
+        controller.setChoiceReady(messages.getProperty("weapons.ranged.baseType.choice"));
+        controller.subscribe();
+        return new EquipmentTypeChooserStage(stage, controller);
     }
 
     @Bean

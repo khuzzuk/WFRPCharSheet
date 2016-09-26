@@ -12,18 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.gui.controllers.HandWeaponTypeChooserController;
+import pl.khuzzuk.wfrpchar.gui.controllers.EquipmentTypeChooserController;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
-@Component
 @Log
-public class HandWeaponTypeChooserStage extends Stage {
+public class EquipmentTypeChooserStage extends Stage {
     @Autowired
     private ApplicationContext context;
-    private final HandWeaponTypeChooserController controller;
-    HandWeaponTypeChooserStage(Window parent, HandWeaponTypeChooserController controller) {
+    private final EquipmentTypeChooserController controller;
+    EquipmentTypeChooserStage(Window parent, EquipmentTypeChooserController controller) {
         super(StageStyle.DECORATED);
         this.controller = controller;
         controller.setParent(this);
