@@ -126,10 +126,10 @@ public class WeaponParser {
     }
 
     private void fillHandWeapon(String[] fields, AbstractHandWeapon weapon) {
-        if (fields[8].length() > 0) {
+        if (fields.length >= 9 && fields[8].length() > 0) {
             weapon.setDices(Dices.valueOf(fields[8]));
         }
-        if (fields[9].length() > 0) {
+        if (fields.length >= 10 && fields[9].length() > 0) {
             weapon.setRolls(Integer.parseInt(fields[9]));
         }
     }

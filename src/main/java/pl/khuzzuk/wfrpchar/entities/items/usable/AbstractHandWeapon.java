@@ -62,6 +62,11 @@ public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends Abst
         List<String> fields = new ArrayList<>();
         fillCommodityFields(fields);
         fillHandWeaponCsvFields(fields);
+        if (dices != null) {
+            fields.add(dices.name());
+        } else {
+            fields.add("");
+        }
         return fields.stream().collect(Collectors.joining(";"));
     }
 
