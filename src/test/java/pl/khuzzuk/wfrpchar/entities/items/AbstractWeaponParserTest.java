@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.types.Item;
+import pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 
@@ -37,11 +38,11 @@ public class AbstractWeaponParserTest {
     @Test(groups = "fast")
     public void twoWaysParsingAxe() throws Exception {
         String line = "Topór;0.85;0|7|0;COMMON;Tarcza -1 PP;0;WEAPON;ONE_HAND;|||Toporem;-10,OPPONENT_PARRY|-10,PARRY;Topór;K6;1";
-        Item equipment = parser.parseEquipment(line.split(";"));
-        assertThat(equipment.toCsv()).isEqualTo(line);
+        OneHandedWeaponType equipment = (OneHandedWeaponType) parser.parseEquipment(line.split(";"));
+        assertThat(equipment.getDeterminants().size()).isEqualTo(2);
         line = "Półtorak;1.6;0|8|0;COMMON;Może beć używano jako broń jednoręczna;2;WEAPON;BASTARD;|||Półtorakiem;10,PARRY;Półtorak;K8;1;1;10,PARRY";
-        equipment = parser.parseEquipment(line.split(";"));
-        assertThat(equipment.toCsv()).isEqualTo(line);
+        Item bastard = parser.parseEquipment(line.split(";"));
+        assertThat(bastard.toCsv()).isEqualTo(line);
     }
 
     @Test
