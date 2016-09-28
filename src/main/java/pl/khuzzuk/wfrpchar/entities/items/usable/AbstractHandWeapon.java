@@ -67,6 +67,12 @@ public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends Abst
         } else {
             fields.add("");
         }
+        if (rolls != 0) {
+            fields.add(rolls + "");
+        } else {
+            fields.add("");
+        }
+        fields.add("");
         return fields.stream().collect(Collectors.joining(";"));
     }
 
