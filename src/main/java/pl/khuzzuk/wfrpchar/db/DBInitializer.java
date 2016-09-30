@@ -4,9 +4,12 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
+import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
-import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
+import pl.khuzzuk.wfrpchar.entities.items.types.Item;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -37,6 +40,7 @@ public class DBInitializer {
         loadItems(dao, "/rangedWeaponTypes.csv");
         loadItems(dao, "/armorType.csv");
         loadResources(dao);
+        loadHandWeapons(dao);
     }
 
     private void loadCurrencies(DAO dao) {
@@ -59,6 +63,20 @@ public class DBInitializer {
                 .stream().filter(s -> !s[0].startsWith("spec")).map(ResourceType::getFromCsv)
                 .collect(Collectors.toList());
         resources.forEach(dao::save);
+    }
+
+    private void loadHandWeapons(DAO dao) {
+        List<String[]> lines =
+                readResource("/handWeapons.csv")
+                        .stream().filter(s -> !s[0].startsWith("spec"))
+                        .collect(Collectors.toList());
+        for (String[] s : lines) {
+            ParserBag<HandWeapon> bag = new ParserBag<>(
+                    dao.getWhiteWeapon(s[4]),
+                    dao.getResourceType(s[5]),
+                    dao.getResourceType(s[6]));
+            dao.saveEntity(AbstractHandWeapon.class, weaponParser.parseHandWeapon(s, bag));
+        }
     }
 
     private void loadItems(DAO dao, String path) {

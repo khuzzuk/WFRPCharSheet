@@ -100,7 +100,7 @@ public class WeaponParser {
     }
 
     @SuppressWarnings("unchecked")
-    public AbstractHandWeapon parseHandWeapon(String[] fields, ParserBag<HandWeapon> bag) {
+    public AbstractHandWeapon<? extends WhiteWeaponType> parseHandWeapon(String[] fields, ParserBag<HandWeapon> bag) {
         AbstractHandWeapon weapon = AbstractWeapon.getFromPlacement(bag.getBaseType().getPlacement());
         weapon.setBaseType((WhiteWeaponType) bag.getBaseType());
         fillCommodityItem(fields, weapon);
