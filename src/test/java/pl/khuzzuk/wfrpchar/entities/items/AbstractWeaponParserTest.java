@@ -5,11 +5,9 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
-import pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType;
-import pl.khuzzuk.wfrpchar.entities.items.types.Item;
-import pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType;
-import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -19,12 +17,15 @@ public class AbstractWeaponParserTest {
     private WeaponParser parser;
     @Mock
     private ResourceType resource;
+    @Mock
+    private ResourceType wood;
 
     @BeforeSuite
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         parser = new WeaponParser(new DeterminantFactory());
         when(resource.getName()).thenReturn("Stal");
+        when(wood.getName()).thenReturn("Drewno");
     }
 
     @Test(groups = "fast")
@@ -59,6 +60,13 @@ public class AbstractWeaponParserTest {
         assertThat(equipment.toCsv()).isEqualTo(line);
     }
 
+    @Test(groups = "fast")
+    public void twoWaysResourceParse() throws Exception {
+        String line = "Drewno;33;25;WOOD;COMMON;";
+        ResourceType resourceType = ResourceType.getFromCsv(line.split(";"));
+        assertThat(resourceType.toCsv()).isEqualTo(line);
+    }
+
     @Test
     @SuppressWarnings("unchecked")
     public void twoWaysParsingSteelSword() throws Exception {
@@ -68,5 +76,17 @@ public class AbstractWeaponParserTest {
         ParserBag bag = new ParserBag(base, resource, resource);
         AbstractHandWeapon<? extends WhiteWeaponType> result = parser.parseHandWeapon(line.split(";"), bag);
         assertThat(result.toCsv()).isEqualTo(line);
+    }
+
+    @Test(groups = "fast")
+    public void twoWaysGunParse() throws Exception {
+        String line = "Mistrzowski krótki łuk;2|0|0;UNCOMMON;;Krótki łuk;Drewno;Drewno;10,SHOOTING";
+        String baseTypeLine = "Krótki łuk;0.75;7|0|0;COMMON;;0;RANGED_WEAPON;TWO_HANDS;|||Krótkim łukiem;;łuk;14;32;150;WITH_SHOOTING";
+        String resourceLine = "Drewno;33;25;WOOD;COMMON;";
+        RangedWeaponType type = (RangedWeaponType) parser.parseEquipment(baseTypeLine.split(";"));
+        ResourceType resource = ResourceType.getFromCsv(resourceLine.split(";"));
+        ParserBag<RangedWeaponType> bag = new ParserBag<>(type, resource, resource);
+        Gun gun = parser.parseGun(line.split(";"), bag);
+        assertThat(gun.toCsv()).isEqualTo(line);
     }
 }

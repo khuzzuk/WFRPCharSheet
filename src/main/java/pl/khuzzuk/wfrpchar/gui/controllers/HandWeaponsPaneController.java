@@ -6,8 +6,6 @@ import javafx.scene.control.TextField;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Price;
-import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
-import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
@@ -50,10 +48,6 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
         guiPublisher.publish(messages.getProperty("determinants.creator.show.hw"));
     }
 
-    public void addDeterminant(String determinant) {
-        determinantsView.getItems().add(determinant);
-    }
-
     @FXML
     private void saveWeapon() {
         guiPublisher.publish(weaponToLine(), messages.getProperty("weapons.hand.save"));
@@ -62,15 +56,7 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
     private String weaponToLine() {
         if (name.getText().length() >= 3 && baseType.length() >= 3) {
             List<String> fields = new ArrayList<>();
-            fields.add(name.getText());
-            fields.add(gold.getText() + "|" + silver.getText() + "|" + lead.getText());
-            fields.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
-            fields.add(specialFeatures.getText());
-            fields.add(baseType);
-            fields.add(primaryResource.getSelectionModel().getSelectedItem());
-            fields.add(secondaryResource.getSelectionModel().getSelectedItem());
-            fields.add(Determinant.determinantsToCsv(Determinant.parseFromGui(
-                    determinantsView.getItems().stream().collect(Collectors.toList()))));
+            addWeaponTypeFields(fields);
             fields.add(dices.getSelectionModel().getSelectedItem());
             fields.add(rolls.getText());
             fields.add("");

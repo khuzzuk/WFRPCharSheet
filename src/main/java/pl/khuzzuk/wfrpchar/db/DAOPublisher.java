@@ -88,7 +88,7 @@ public class DAOPublisher {
     }
 
     void publishRangedWeapons(Collection<Gun> allRangedWeapon) {
-        entitiesPublisher.publish(allRangedWeapon, messages.getProperty("weapons.hand.result"));
+        entitiesPublisher.publish(allRangedWeapon, messages.getProperty("weapons.ranged.result"));
     }
 
     void publish(MiscItem item) {
@@ -99,8 +99,8 @@ public class DAOPublisher {
         entitiesPublisher.publish(whiteWeapon, message);
     }
 
-    void publish(RangedWeaponType weapon) {
-        entitiesPublisher.publish(weapon, rangeWeaponNamedResult);
+    void publish(RangedWeaponType weapon, String msg) {
+        entitiesPublisher.publish(weapon, msg);
     }
 
     void publish(ArmorType armorType) {

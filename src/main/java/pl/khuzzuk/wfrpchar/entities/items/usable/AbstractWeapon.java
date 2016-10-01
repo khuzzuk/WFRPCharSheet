@@ -11,9 +11,12 @@ import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.Weapon;
+import pl.khuzzuk.wfrpchar.entities.items.types.FightingEquipment;
+import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,7 +24,7 @@ import java.util.stream.Collectors;
 @DiscriminatorValue("1")
 @ToString
 @NoArgsConstructor
-public abstract class AbstractWeapon
+public abstract class AbstractWeapon<T extends Weapon>
         extends AbstractCommodity
         implements Weapon {
     @Getter
@@ -40,7 +43,7 @@ public abstract class AbstractWeapon
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
     private Set<Determinant> determinants;
 
-    public abstract Weapon getBaseType();
+    public abstract T getBaseType();
 
     public static AbstractHandWeapon getFromPlacement(Placement placement) {
         if (placement == Placement.ONE_HAND) {
@@ -80,5 +83,20 @@ public abstract class AbstractWeapon
     public Collection<Determinant> getDeterminantForType(DeterminantsType type) {
         return getAllDeterminants().stream().filter(d -> d.getLabel() == type)
                 .collect(Collectors.toList());
+    }
+
+    void fillWeaponCsvFields(List<String> fields) {
+        fields.add(getBaseType().getName());
+        if (getPrimaryResource() != null) {
+            fields.add(getPrimaryResource().getName());
+        } else {
+            fields.add("");
+        }
+        if (getSecondaryResource() != null) {
+            fields.add(getSecondaryResource().getName());
+        } else {
+            fields.add("");
+        }
+        fields.add(Determinant.determinantsToCsv(getDeterminants()));
     }
 }

@@ -11,10 +11,13 @@ import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("6")
-public class Gun extends AbstractWeapon implements RangedWeapon, Persistable {
+public class Gun extends AbstractWeapon<RangedWeaponType> implements RangedWeapon, Persistable {
     @Getter
     @Setter
     @ManyToOne
@@ -42,7 +45,10 @@ public class Gun extends AbstractWeapon implements RangedWeapon, Persistable {
 
     @Override
     public String toCsv() {
-        return null;
+        List<String> fields = new ArrayList<>();
+        fillCommodityFields(fields);
+        fillWeaponCsvFields(fields);
+        return fields.stream().collect(Collectors.joining(";"));
     }
 
     @Override

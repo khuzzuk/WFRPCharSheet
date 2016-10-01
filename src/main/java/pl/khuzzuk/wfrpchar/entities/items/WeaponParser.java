@@ -6,10 +6,7 @@ import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
-import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractCommodity;
-import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
-import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
-import pl.khuzzuk.wfrpchar.entities.items.usable.BastardWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.*;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import javax.inject.Inject;
@@ -100,9 +97,9 @@ public class WeaponParser {
     }
 
     @SuppressWarnings("unchecked")
-    public AbstractHandWeapon<? extends WhiteWeaponType> parseHandWeapon(String[] fields, ParserBag<HandWeapon> bag) {
-        AbstractHandWeapon weapon = AbstractWeapon.getFromPlacement(bag.getBaseType().getPlacement());
-        weapon.setBaseType((WhiteWeaponType) bag.getBaseType());
+    public <T extends WhiteWeaponType> AbstractHandWeapon<T> parseHandWeapon(String[] fields, ParserBag<T> bag) {
+        AbstractHandWeapon<T> weapon = AbstractWeapon.getFromPlacement(bag.getBaseType().getPlacement());
+        weapon.setBaseType(bag.getBaseType());
         fillCommodityItem(fields, weapon);
         fillBattleEquipment(fields, weapon, bag.getPrimaryResource(), bag.getSecondaryResource());
         fillHandWeapon(fields, weapon);
@@ -110,6 +107,14 @@ public class WeaponParser {
             fillBastard(fields, (BastardWeapon) weapon);
         }
         return weapon;
+    }
+
+    public Gun parseGun(String[] fields, ParserBag<RangedWeaponType> bag) {
+        Gun gun = new Gun();
+        gun.setBaseType(bag.getBaseType());
+        fillCommodityItem(fields, gun);
+        fillBattleEquipment(fields, gun, bag.getPrimaryResource(), bag.getSecondaryResource());
+        return gun;
     }
 
     private void fillCommodityItem(String[] fields, AbstractCommodity commodity) {

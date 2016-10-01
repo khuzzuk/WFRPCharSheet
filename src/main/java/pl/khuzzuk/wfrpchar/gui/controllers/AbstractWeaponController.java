@@ -2,6 +2,8 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
+import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
@@ -10,10 +12,7 @@ import pl.khuzzuk.wfrpchar.gui.Numeric;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.net.URL;
-import java.util.Collection;
-import java.util.Properties;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class AbstractWeaponController extends ItemsListedController {
@@ -57,8 +56,24 @@ public abstract class AbstractWeaponController extends ItemsListedController {
         ComboBoxHandler.fill(toFill, secondaryResource);
     }
 
+    public void addDeterminant(String determinant) {
+        determinantsView.getItems().add(determinant);
+    }
+
     public void setBaseType(String type) {
         baseType = type;
         chooseBaseButton.setText(type);
+    }
+
+    void addWeaponTypeFields(List<String> fields) {
+        fields.add(name.getText());
+        fields.add(gold.getText() + "|" + silver.getText() + "|" + lead.getText());
+        fields.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
+        fields.add(specialFeatures.getText());
+        fields.add(baseType);
+        fields.add(primaryResource.getSelectionModel().getSelectedItem());
+        fields.add(secondaryResource.getSelectionModel().getSelectedItem());
+        fields.add(Determinant.determinantsToCsv(Determinant.parseFromGui(
+                determinantsView.getItems().stream().collect(Collectors.toList()))));
     }
 }

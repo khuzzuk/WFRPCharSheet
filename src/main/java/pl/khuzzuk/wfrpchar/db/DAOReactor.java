@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
-import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
@@ -117,17 +116,24 @@ public class DAOReactor {
 
     private void saveHandWeapon(String line) {
         String[] fields = line.split(";");
-        ParserBag<HandWeapon> bag = new ParserBag<>(
-                dao.getWhiteWeapon(fields[4]),
-                dao.getResourceType(fields[5]),
-                dao.getResourceType(fields[6]));
+        ParserBag<WhiteWeaponType> bag = getParserBag(WhiteWeaponType.class, fields);
         dao.save(weaponParser.parseHandWeapon(fields, bag));
         daoPublisher.publish(messages.getProperty("weapons.hand.query"));
     }
 
-    private void saveGun(Gun gun) {
+    private void saveRangedWeapon(String line) {
+        String[] fields = line.split(";");
+        ParserBag<RangedWeaponType> bag = getParserBag(RangedWeaponType.class, fields);
+        Gun gun = weaponParser.parseGun(fields, bag);
         dao.saveEntity(Gun.class, gun);
-        daoPublisher.publish(messages.getProperty("weapons.hand.query"));
+        daoPublisher.publish(messages.getProperty("weapons.ranged.query"));
+    }
+
+    private <T extends FightingEquipment> ParserBag<T> getParserBag(Class<T> entityType, String[] fields) {
+        return new ParserBag<>(
+                dao.getEntity(entityType, fields[4]),
+                dao.getResourceType(fields[5]),
+                dao.getResourceType(fields[6]));
     }
 
     private void removeMiscItem(String name) {
@@ -174,7 +180,7 @@ public class DAOReactor {
     }
 
     private void getRangedWeaponTypeByName(String name) {
-        daoPublisher.publish(dao.getRangedWeapon(name));
+        daoPublisher.publish(dao.getRangedWeapon(name), messages.getProperty("rangedWeapons.result.specific"));
     }
 
     private void getAllArmorTypes() {
@@ -230,6 +236,10 @@ public class DAOReactor {
         daoPublisher.publish(dao.getWhiteWeapon(name), messages.getProperty("weapons.hand.baseType.choice"));
     }
 
+    private void getRWBaseTypeByName(String name) {
+        daoPublisher.publish(dao.getEntity(RangedWeaponType.class, name), messages.getProperty("weapons.ranged.baseType.choice"));
+    }
+
     private void resetDB() {
         dao.getManager().resetDB(dao);
         daoPublisher.publish(whiteWeaponQuery);
@@ -268,5 +278,9 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.query.specific"), this::getHandWeapon);
         daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.save"), this::saveHandWeapon);
         daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.remove"), this::removeHandWeapon);
+        daoContentSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.selected"), this::getRWBaseTypeByName);
+        daoContentSubscriber.subscribe(messages.getProperty("weapons.ranged.query.specific"), this::getRangedWeapon);
+        daoContentSubscriber.subscribe(messages.getProperty("weapons.ranged.save"), this::saveRangedWeapon);
+        daoContentSubscriber.subscribe(messages.getProperty("weapons.ranged.remove"), this::removeRangedWeapon);
     }
 }

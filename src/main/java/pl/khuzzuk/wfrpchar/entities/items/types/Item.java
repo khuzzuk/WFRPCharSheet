@@ -5,6 +5,7 @@ import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
+import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 
 import javax.persistence.*;
 
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @DiscriminatorValue(value = "0")
 @ToString(exclude = "id")
 @NoArgsConstructor
-public abstract class Item implements Named<String>, Persistable {
+public abstract class Item implements Named<String>, Commodity, Persistable {
     @Id
     @GeneratedValue
     @Getter

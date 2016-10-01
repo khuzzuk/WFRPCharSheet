@@ -43,6 +43,9 @@ public class GuiReactor {
     @Named("hwDeterminantsCreatorController")
     private DeterminantCreatorController hwDeterminantCreatorController;
     @Inject
+    @Named("rwDeterminantsCreatorController")
+    private DeterminantCreatorController rwDeterminantCreatorController;
+    @Inject
     @MainWindowBean
     @Subscribers
     private MultiSubscriber<Message> communicateSubscriber;
@@ -100,9 +103,13 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.hw"), handWeaponsPaneController::addDeterminant);
+        guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.rw"), rangeWeaponsPaneController::addDeterminant);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result"), handWeaponsPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result.specific"), handWeaponsPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.choice"), rangeWeaponsPaneController::setBaseType);
         communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);
+        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.rw"), rwDeterminantCreatorController::show);
+        guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.result"), rangeWeaponsPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.result.specific"), rangeWeaponsPaneController::loadToEditor);
     }
 }

@@ -4,12 +4,14 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
-import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 import pl.khuzzuk.wfrpchar.entities.items.types.Item;
+import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -41,6 +43,7 @@ public class DBInitializer {
         loadItems(dao, "/armorType.csv");
         loadResources(dao);
         loadHandWeapons(dao);
+        loadGuns(dao);
     }
 
     private void loadCurrencies(DAO dao) {
@@ -71,11 +74,23 @@ public class DBInitializer {
                         .stream().filter(s -> !s[0].startsWith("spec"))
                         .collect(Collectors.toList());
         for (String[] s : lines) {
-            ParserBag<HandWeapon> bag = new ParserBag<>(
+            ParserBag<WhiteWeaponType> bag = new ParserBag<>(
                     dao.getWhiteWeapon(s[4]),
                     dao.getResourceType(s[5]),
                     dao.getResourceType(s[6]));
             dao.saveEntity(AbstractHandWeapon.class, weaponParser.parseHandWeapon(s, bag));
+        }
+    }
+
+    private void loadGuns(DAO dao) {
+        List<String[]> list = readResource("/rangedWeapons.csv")
+                .stream().filter(s -> !s[0].startsWith("spec")).collect(Collectors.toList());
+        for (String[] s : list) {
+            ParserBag<RangedWeaponType> bag = new ParserBag<>(
+                    dao.getEntity(RangedWeaponType.class, s[4]),
+                    dao.getEntity(ResourceType.class, s[5]),
+                    dao.getEntity(ResourceType.class, s[5]));
+            dao.saveEntity(Gun.class, weaponParser.parseGun(s, bag));
         }
     }
 

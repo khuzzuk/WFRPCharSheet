@@ -8,7 +8,6 @@ import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Player;
-import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
@@ -29,9 +28,6 @@ public class DAO {
     private DAOTransactional<Character, String> daoCharacters;
     private DAOTransactional<Player, String> daoPlayer;
     private DAOTransactional<Currency, String> daoCurrencies;
-    @Inject
-    @RangedWeapons
-    @Types
     private DAOTransactional<RangedWeaponType, String> daoRangedWeaponsTypes;
     @Inject
     @Armor
@@ -41,23 +37,22 @@ public class DAO {
     @Types
     @Items
     private DAOTransactional<MiscItem, String> daoMiscItems;
-    @Inject
-    @Resources
-    @Types
     private DAOTransactional<ResourceType, String> daoResources;
     private DAOTransactional<AbstractHandWeapon<? extends WhiteWeaponType>, String> daoHandWeapons;
     private final DAOTransactional<Gun, String> daoRangedWeapons;
     @Getter(AccessLevel.PACKAGE)
     private DAOManager manager;
-    private Map<Class<? extends Persistable>, DAOTransactional<? extends Commodity, String>> resolvers;
+    private Map<Class<? extends Persistable>, DAOTransactional<? extends Persistable, String>> resolvers;
 
     @Inject
     public DAO(@Items @NotNull DAOTransactional<Item, String> daoItems,
                @WhiteWeapons @Types DAOTransactional<WhiteWeaponType, String> daoWhiteWeaponType,
+               @RangedWeapons @Types DAOTransactional<RangedWeaponType, String> daoRangedWeaponsTypes,
                @FightingEquipments DAOTransactional<FightingEquipment, String> daoFightingEquipment,
                @Constants @Characters DAOTransactional<Character, String> daoCharacters,
                @Players DAOTransactional<Player, String> daoPlayer,
                @Currencies DAOTransactional<Currency, String> daoCurrencies,
+               @Resources @Types DAOTransactional<ResourceType, String> daoResources,
                @WhiteWeapons DAOTransactional<AbstractHandWeapon<? extends WhiteWeaponType>, String> daoHandWeapons,
                @RangedWeapons DAOTransactional<Gun, String> daoRangedWeapons,
                @Manager DAOManager manager) {
@@ -67,37 +62,50 @@ public class DAO {
         this.daoCharacters = daoCharacters;
         this.daoPlayer = daoPlayer;
         this.daoCurrencies = daoCurrencies;
+        this.daoResources = daoResources;
         this.daoHandWeapons = daoHandWeapons;
         this.daoRangedWeapons = daoRangedWeapons;
+        this.daoRangedWeaponsTypes = daoRangedWeaponsTypes;
         this.manager = manager;
         resolvers = new HashMap<>();
+        resolvers.put(Item.class, daoItems);
+        resolvers.put(WhiteWeaponType.class, daoWhiteWeaponType);
+        resolvers.put(RangedWeaponType.class, daoRangedWeaponsTypes);
+        resolvers.put(FightingEquipment.class, daoFightingEquipment);
+        resolvers.put(Character.class, daoCharacters);
+        resolvers.put(Player.class, daoPlayer);
+        resolvers.put(Currency.class, daoCurrencies);
+        resolvers.put(ResourceType.class, daoResources);
+        resolvers.put(AbstractHandWeapon.class, daoHandWeapons);
         resolvers.put(Gun.class, daoRangedWeapons);
     }
 
     @SuppressWarnings("unchecked")
-    <T extends Commodity> Collection<T> getAllEntities(Class<T> entityType) {
+    <T extends Persistable> Collection<T> getAllEntities(Class<T> entityType) {
         DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(entityType);
         assureSessionInit(resolver);
         return resolver.getAllItems();
     }
 
     @SuppressWarnings("unchecked")
-    <T extends Commodity> T getEntity(Class<T> entityType, String name) {
+    <T extends Persistable> T getEntity(Class<T> entityType, String name) {
         DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(entityType);
         assureSessionInit(resolver);
         return resolver.getItem(name);
     }
 
-    //TODO remove unnecessary class parameter
     @SuppressWarnings("unchecked")
-    <T extends Commodity> void saveEntity(Class<T> entityType, T entity) {
+    <T extends Persistable> void saveEntity(Class<T> entityType, T entity) {
         DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(entityType);
+        if (resolver == null) {
+            throw new IllegalStateException("no EntityResolver for class " + entityType);
+        }
         assureSessionInit(resolver);
         resolver.commit(entity);
     }
 
     @SuppressWarnings("unchecked")
-    <T extends Commodity> void removeEntity(Class<T> entityType, String name) {
+    <T extends Persistable> void removeEntity(Class<T> entityType, String name) {
         DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(entityType);
         assureSessionInit(resolver);
         resolver.remove(name);

@@ -63,8 +63,21 @@ public class ScreensConfig {
     }
 
     @Bean
+    @Named("rwDeterminantsCreatorController")
+    public DeterminantCreatorController rangedWeaponDeterminantController() {
+        return new DeterminantCreatorController(messages.getProperty("determinants.creator.show.rw"),
+                messages.getProperty("determinants.creator.add.rw"));
+    }
+
+    @Bean
     @Named("handWeaponsDeterminantsCreatorStage")
     public DeterminantCreatorStage determinantCreatorStage() {
         return new DeterminantCreatorStage(handWeaponDeterminantController());
+    }
+
+    @Bean
+    @Named("rangedWeaponsDeterminantsCreatorStage")
+    public DeterminantCreatorStage rangedWeaponDeterminantCreatorStage() {
+        return new DeterminantCreatorStage(rangedWeaponDeterminantController());
     }
 }

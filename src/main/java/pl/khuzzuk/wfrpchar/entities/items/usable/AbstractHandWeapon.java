@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("2")
-public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends AbstractWeapon implements Named<String>, HandWeapon, Persistable {
+public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends AbstractWeapon<T> implements Named<String>, HandWeapon, Persistable {
 
     @Setter
     private Dices dices;
@@ -25,7 +25,7 @@ public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends Abst
     @Setter
     private int rolls;
 
-    public abstract WhiteWeaponType getBaseType();
+    public abstract T getBaseType();
 
     @Override
     public Dices getDices() {
@@ -61,7 +61,7 @@ public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends Abst
     public String toCsv() {
         List<String> fields = new ArrayList<>();
         fillCommodityFields(fields);
-        fillHandWeaponCsvFields(fields);
+        fillWeaponCsvFields(fields);
         if (dices != null) {
             fields.add(dices.name());
         } else {
@@ -74,22 +74,6 @@ public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends Abst
         }
         fields.add("");
         return fields.stream().collect(Collectors.joining(";"));
-    }
-
-
-    void fillHandWeaponCsvFields(List<String> fields) {
-        fields.add(getBaseType().getName());
-        if (getPrimaryResource() != null) {
-            fields.add(getPrimaryResource().getName());
-        } else {
-            fields.add("");
-        }
-        if (getSecondaryResource() != null) {
-            fields.add(getSecondaryResource().getName());
-        } else {
-            fields.add("");
-        }
-        fields.add(Determinant.determinantsToCsv(getDeterminants()));
     }
 
     public abstract void setBaseType(T baseType);

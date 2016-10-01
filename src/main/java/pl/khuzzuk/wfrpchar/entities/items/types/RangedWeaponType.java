@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
+import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @DiscriminatorValue("8")
-public class RangedWeaponType extends WeaponType implements RangedWeapon {
+public class RangedWeaponType extends WeaponType implements RangedWeapon, Persistable {
     @Getter
     @Setter
     @NotNull
