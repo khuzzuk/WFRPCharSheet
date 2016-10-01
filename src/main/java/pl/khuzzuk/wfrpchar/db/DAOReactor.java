@@ -1,7 +1,6 @@
 package pl.khuzzuk.wfrpchar.db;
 
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
@@ -20,7 +19,6 @@ import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
 import java.util.Properties;
 
 @NoArgsConstructor
@@ -45,48 +43,7 @@ public class DAOReactor {
     @Inject
     @Named("messages")
     private Properties messages;
-    @Value("${miscItemTypes.query}")
-    private String miscItemTypeQuery;
-    @Value("${miscItemTypes.query.specific}")
-    private String miscItemTypeNamedQuery;
-    @Value("${miscItemTypes.remove}")
-    private String miscItemTypeRemove;
-    @Value("${whiteWeapons.query}")
-    @NotNull
-    private String whiteWeaponQuery;
-    @Value("${whiteWeapons.query.specific}")
-    private String whiteWeaponNamedQuery;
-    @Value("${whiteWeapons.remove}")
-    @NotNull
-    private String whiteWeaponRemove;
-    @Value("${rangedWeapons.query}")
-    private String rangedWeaponsQuery;
-    @Value("${rangedWeapons.query.specific}")
-    private String rangeWeaponNamedQuery;
-    @Value("${rangedWeapons.remove}")
-    private String rangedWeaponRemove;
-    @Value("${armorTypes.query}")
-    private String armorTypesQuery;
-    @Value("${armorTypes.query.specific}")
-    private String armorTypeNamedQuery;
-    @Value("${armorTypes.remove}")
-    private String armorTypeRemove;
-    @Value("${resource.type.query}")
-    private String resourceTypeQuery;
-    @Value("${resource.type.query.specific}")
-    private String resourceTypeQuerySpecific;
-    @Value("${resource.type.result}")
-    private String resourceTypeResult;
-    @Value("${resource.type.result.specific}")
-    private String resourceTypeResultSpecific;
-    @Value("${resource.type.save}")
-    private String resourceTypeSave;
-    @Value("${resource.type.remove}")
-    private String resourceTypeRemove;
-    @Value("${database.saveEquipment}")
-    private String dbSaveEquipment;
-    @Value("${database.reset}")
-    private String resetDbMessage;
+
 
     private void getAllWhiteWeaponsTypes() {
         daoPublisher.publishWhiteWeapons(dao.getAllWhiteWeaponTypes());
@@ -96,22 +53,22 @@ public class DAOReactor {
         Item i = weaponParser.parseEquipment(line.split(";"));
         if (i instanceof WhiteWeaponType) {
             dao.save((WhiteWeaponType) i);
-            daoPublisher.publish(whiteWeaponQuery);
+            daoPublisher.publish(messages.getProperty("whiteWeapons.query"));
         } else if (i instanceof RangedWeaponType) {
             dao.save((RangedWeaponType) i);
-            daoPublisher.publish(rangedWeaponsQuery);
+            daoPublisher.publish(messages.getProperty("rangedWeapons.query"));
         } else if (i instanceof ArmorType) {
             dao.save((ArmorType) i);
-            daoPublisher.publish(armorTypesQuery);
+            daoPublisher.publish(messages.getProperty("armorTypes.query"));
         } else if (i instanceof MiscItem) {
             dao.save((MiscItem) i);
-            daoPublisher.publish(miscItemTypeQuery);
+            daoPublisher.publish(messages.getProperty("miscItemTypes.query"));
         }
     }
 
     private void saveResourceType(String line) {
         dao.save(ResourceType.getFromCsv(line.split(";")));
-        daoPublisher.publish(resourceTypeQuery);
+        daoPublisher.publish(messages.getProperty("resource.type.query"));
     }
 
     private void saveHandWeapon(String line) {
@@ -138,17 +95,17 @@ public class DAOReactor {
 
     private void removeMiscItem(String name) {
         dao.removeMiscItem(name);
-        daoPublisher.publish(miscItemTypeQuery);
+        daoPublisher.publish(messages.getProperty("miscItemTypes.query"));
     }
 
     private void removeWhiteWeaponType(String name) {
         dao.removeWhiteWeaponType(name);
-        daoPublisher.publish(whiteWeaponQuery);
+        daoPublisher.publish(messages.getProperty("whiteWeapons.query"));
     }
 
     private void removeRangedWeaponType(String name) {
         dao.removeRangedWeaponType(name);
-        daoPublisher.publish(rangedWeaponsQuery);
+        daoPublisher.publish(messages.getProperty("rangedWeapons.query"));
     }
 
     private void removeHandWeapon(String name) {
@@ -163,12 +120,12 @@ public class DAOReactor {
 
     private void removeArmorType(String name) {
         dao.removeArmorType(name);
-        daoPublisher.publish(armorTypesQuery);
+        daoPublisher.publish(messages.getProperty("armorTypes.query"));
     }
 
     private void removeResourceType(String name) {
         dao.removeResourceType(name);
-        daoPublisher.publish(resourceTypeQuery);
+        daoPublisher.publish(messages.getProperty("resource.type.query"));
     }
 
     private void getAllMiscItemsTypes() {
@@ -242,7 +199,12 @@ public class DAOReactor {
 
     private void resetDB() {
         dao.getManager().resetDB(dao);
-        daoPublisher.publish(whiteWeaponQuery);
+        daoPublisher.publish(messages.getProperty("whiteWeapons.query"));
+        daoPublisher.publish(messages.getProperty("rangedWeapons.query"));
+        daoPublisher.publish(messages.getProperty("armorTypes.query"));
+        daoPublisher.publish(messages.getProperty("miscItemTypes.query"));
+        daoPublisher.publish(messages.getProperty("weapons.hand.query"));
+        daoPublisher.publish(messages.getProperty("weapons.ranged.query"));
     }
 
     @Inject
@@ -252,28 +214,28 @@ public class DAOReactor {
 
     @PostConstruct
     private void setReactors() {
-        multiSubscriber.subscribe(miscItemTypeQuery, this::getAllMiscItemsTypes);
-        multiSubscriber.subscribe(whiteWeaponQuery, this::getAllWhiteWeaponsTypes);
-        multiSubscriber.subscribe(resetDbMessage, this::resetDB);
-        multiSubscriber.subscribe(rangedWeaponsQuery, this::getAllRangedWeaponTypes);
-        multiSubscriber.subscribe(armorTypesQuery, this::getAllArmorTypes);
-        multiSubscriber.subscribe(resourceTypeQuery, this::getAllResourceTypes);
+        multiSubscriber.subscribe(messages.getProperty("miscItemTypes.query"), this::getAllMiscItemsTypes);
+        multiSubscriber.subscribe(messages.getProperty("whiteWeapons.query"), this::getAllWhiteWeaponsTypes);
+        multiSubscriber.subscribe(messages.getProperty("database.reset"), this::resetDB);
+        multiSubscriber.subscribe(messages.getProperty("rangedWeapons.query"), this::getAllRangedWeaponTypes);
+        multiSubscriber.subscribe(messages.getProperty("armorTypes.query"), this::getAllArmorTypes);
+        multiSubscriber.subscribe(messages.getProperty("resource.type.query"), this::getAllResourceTypes);
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.getAllTypes"), this::getAllWWBaseType);
         multiSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.getAllTypes"), this::getAllRangedBaseTypes);
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.query"), this::getAllHandWeapons);
         multiSubscriber.subscribe(messages.getProperty("weapons.ranged.query"), this::getAllRangedWeapons);
-        daoContentSubscriber.subscribe(dbSaveEquipment, this::saveItem);
-        daoContentSubscriber.subscribe(miscItemTypeNamedQuery, this::getMiscItemTypeByName);
-        daoContentSubscriber.subscribe(miscItemTypeRemove, this::removeMiscItem);
-        daoContentSubscriber.subscribe(whiteWeaponNamedQuery, this::getWhiteWeaponByName);
-        daoContentSubscriber.subscribe(whiteWeaponRemove, this::removeWhiteWeaponType);
-        daoContentSubscriber.subscribe(rangeWeaponNamedQuery, this::getRangedWeaponTypeByName);
-        daoContentSubscriber.subscribe(rangedWeaponRemove, this::removeRangedWeaponType);
-        daoContentSubscriber.subscribe(armorTypeNamedQuery, this::getArmorTypeByName);
-        daoContentSubscriber.subscribe(armorTypeRemove, this::removeArmorType);
-        daoContentSubscriber.subscribe(resourceTypeQuerySpecific, this::getResourceType);
-        daoContentSubscriber.subscribe(resourceTypeRemove, this::removeResourceType);
-        daoContentSubscriber.subscribe(resourceTypeSave, this::saveResourceType);
+        daoContentSubscriber.subscribe(messages.getProperty("database.saveEquipment"), this::saveItem);
+        daoContentSubscriber.subscribe(messages.getProperty("miscItemTypes.query.specific"), this::getMiscItemTypeByName);
+        daoContentSubscriber.subscribe(messages.getProperty("miscItemTypes.remove"), this::removeMiscItem);
+        daoContentSubscriber.subscribe(messages.getProperty("whiteWeapons.query.specific"), this::getWhiteWeaponByName);
+        daoContentSubscriber.subscribe(messages.getProperty("whiteWeapons.remove"), this::removeWhiteWeaponType);
+        daoContentSubscriber.subscribe(messages.getProperty("rangedWeapons.query.specific"), this::getRangedWeaponTypeByName);
+        daoContentSubscriber.subscribe(messages.getProperty("rangedWeapons.remove"), this::removeRangedWeaponType);
+        daoContentSubscriber.subscribe(messages.getProperty("armorTypes.query.specific"), this::getArmorTypeByName);
+        daoContentSubscriber.subscribe(messages.getProperty("armorTypes.remove"), this::removeArmorType);
+        daoContentSubscriber.subscribe(messages.getProperty("resource.type.query.specific"), this::getResourceType);
+        daoContentSubscriber.subscribe(messages.getProperty("resource.type.remove"), this::removeResourceType);
+        daoContentSubscriber.subscribe(messages.getProperty("resource.type.save"), this::saveResourceType);
         daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.selected"), this::getWWBaseTypeByName);
         daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.query.specific"), this::getHandWeapon);
         daoContentSubscriber.subscribe(messages.getProperty("weapons.hand.save"), this::saveHandWeapon);
