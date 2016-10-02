@@ -64,6 +64,9 @@ public class DAOReactor {
         } else if (i instanceof MiscItem) {
             dao.save((MiscItem) i);
             daoPublisher.publish(messages.getProperty("miscItemTypes.query"));
+        } else if (i instanceof AmmunitionType) {
+            dao.saveEntity(AmmunitionType.class, (AmmunitionType) i);
+            daoPublisher.publish(messages.getProperty("ammo.type.query"));
         }
     }
 
@@ -121,6 +124,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("armorTypes.query"));
     }
 
+    private void removeAmmunitionType(String name) {
+        dao.removeEntity(AmmunitionType.class, name);
+        daoPublisher.publish(messages.getProperty("ammo.type.query"));
+    }
+
     private void removeHandWeapon(String name) {
         dao.removeHandWeapon(name);
         daoPublisher.publish(messages.getProperty("weapons.hand.query"));
@@ -155,6 +163,10 @@ public class DAOReactor {
 
     private void getAllArmorTypes() {
         daoPublisher.publishArmorTypes(dao.getAllArmorTypes());
+    }
+
+    private void getAllAmmunitionTypes() {
+        daoPublisher.publish(dao.getAllEntities(AmmunitionType.class), messages.getProperty("ammo.type.result"));
     }
 
     private void getAllResourceTypes() {
@@ -199,6 +211,10 @@ public class DAOReactor {
         daoPublisher.publish(dao.getArmorType(name));
     }
 
+    private void getAmmunitionTypeByName(String name) {
+        daoPublisher.publish(dao.getEntity(AmmunitionType.class, name), messages.getProperty("ammo.type.result.specific"));
+    }
+
     private void getResourceType(String name) {
         daoPublisher.publish(dao.getResourceType(name));
     }
@@ -236,6 +252,7 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("weapons.hand.query"));
         daoPublisher.publish(messages.getProperty("weapons.ranged.query"));
         daoPublisher.publish(messages.getProperty("armor.query"));
+        daoPublisher.publish(messages.getProperty("ammo.type.query"));
     }
 
     @Inject
@@ -250,6 +267,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("database.reset"), this::resetDB);
         multiSubscriber.subscribe(messages.getProperty("rangedWeapons.query"), this::getAllRangedWeaponTypes);
         multiSubscriber.subscribe(messages.getProperty("armorTypes.query"), this::getAllArmorTypes);
+        multiSubscriber.subscribe(messages.getProperty("ammo.type.query"), this::getAllAmmunitionTypes);
         multiSubscriber.subscribe(messages.getProperty("resource.type.query"), this::getAllResourceTypes);
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.getAllTypes"), this::getAllWWBaseType);
         multiSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.getAllTypes"), this::getAllRangedBaseTypes);
@@ -266,6 +284,8 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(messages.getProperty("rangedWeapons.remove"), this::removeRangedWeaponType);
         daoContentSubscriber.subscribe(messages.getProperty("armorTypes.query.specific"), this::getArmorTypeByName);
         daoContentSubscriber.subscribe(messages.getProperty("armorTypes.remove"), this::removeArmorType);
+        daoContentSubscriber.subscribe(messages.getProperty("ammo.type.query.specific"), this::getAmmunitionTypeByName);
+        daoContentSubscriber.subscribe(messages.getProperty("ammo.type.remove"), this::removeAmmunitionType);
         daoContentSubscriber.subscribe(messages.getProperty("resource.type.query.specific"), this::getResourceType);
         daoContentSubscriber.subscribe(messages.getProperty("resource.type.remove"), this::removeResourceType);
         daoContentSubscriber.subscribe(messages.getProperty("resource.type.save"), this::saveResourceType);

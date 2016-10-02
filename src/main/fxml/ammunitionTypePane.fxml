@@ -1,0 +1,83 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
+<TitledPane maxHeight="Infinity" maxWidth="Infinity"
+            text="Amunicja"
+            xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.AmmunitionTypesPaneController">
+    <SplitPane dividerPositions="0.3" maxHeight="Infinity" maxWidth="Infinity">
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES"
+                                   minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0"
+                                vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <ListView fx:id="items" onMouseClicked="#getEntity"/>
+        </GridPane>
+        <GridPane hgap="5" vgap="3" maxHeight="Infinity" maxWidth="Infinity">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+            <padding>
+                <Insets right="10.0"/>
+            </padding>
+            <Label text="nazwa"/>
+            <TextField fx:id="name" GridPane.columnIndex="1"/>
+            <Label text="dostępność" GridPane.columnIndex="2"/>
+            <ComboBox fx:id="accessibility" GridPane.columnIndex="3"/>
+            <Label text="waga" GridPane.rowIndex="1"/>
+            <TextField fx:id="weight" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="siła" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+            <TextField fx:id="strength" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+            <Label text="cena" GridPane.rowIndex="2"/>
+            <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                <Label text="złoto"/>
+                <TextField fx:id="gold"/>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="2">
+                <Label text="złoto"/>
+                <TextField fx:id="silver"/>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="3">
+                <Label text="złoto"/>
+                <TextField fx:id="lead"/>
+            </VBox>
+            <Label text="cechy specjalne" GridPane.rowIndex="3"/>
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
+            <Button text="Usuń" onAction="#remove"
+                    GridPane.columnIndex="2" GridPane.rowIndex="4"
+                    maxWidth="Infinity"/>
+            <Button text="Nowy"
+                    GridPane.columnIndex="3" GridPane.rowIndex="4"
+                    maxWidth="Infinity"/>
+            <Button text="Zapisz" onAction="#save"
+                    GridPane.columnIndex="4" GridPane.rowIndex="4"
+                    maxWidth="Infinity"/>
+        </GridPane>
+    </SplitPane>
+</TitledPane>

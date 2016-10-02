@@ -28,9 +28,18 @@ public class WeaponParser {
             return parseRangedWeapon(columns);
         } else if (type == EquipmentType.ARMOR) {
             return parseArmorType(columns);
-        } else {
+        } else if (type == EquipmentType.MISC_ITEM) {
             return parseMiscItem(columns);
+        } else {
+            return parseAmmunitionType(columns);
         }
+    }
+
+    private AmmunitionType parseAmmunitionType(String[] columns) {
+        AmmunitionType type = new AmmunitionType();
+        fillItemFields(columns, type);
+        type.setStrength(Integer.parseInt(columns[5]));
+        return type;
     }
 
     private MiscItem parseMiscItem(String[] columns) {

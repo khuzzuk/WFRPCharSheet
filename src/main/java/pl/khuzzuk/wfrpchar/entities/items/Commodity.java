@@ -10,4 +10,6 @@ public interface Commodity extends Named<String>, Persistable {
     Price getPrice();
 
     String getSpecialFeatures();
+
+    float getWeight();
 }

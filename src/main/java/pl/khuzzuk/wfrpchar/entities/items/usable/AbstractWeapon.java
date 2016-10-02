@@ -59,6 +59,11 @@ public abstract class AbstractWeapon<T extends BattleEquipment>
     }
 
     @Override
+    public float getWeight() {
+        return getBaseType().getWeight() * (primaryResource.getWeight() + secondaryResource.getWeight()/100f);
+    }
+
+    @Override
     public String getTypeName() {
         return getBaseType().getTypeName();
     }

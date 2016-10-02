@@ -31,6 +31,7 @@
         <!-- MAPPED ITEMS -->
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.Item"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.MiscItem"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.AmmunitionType"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.FightingEquipment"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.WeaponType"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType"/>

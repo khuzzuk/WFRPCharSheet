@@ -7,10 +7,7 @@ import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
-import pl.khuzzuk.wfrpchar.entities.items.types.ArmorType;
-import pl.khuzzuk.wfrpchar.entities.items.types.Item;
-import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
-import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
@@ -43,6 +40,8 @@ public class DBInitializer {
         loadItems(dao, "/whiteWeaponTypes.csv");
         loadItems(dao, "/rangedWeaponTypes.csv");
         loadItems(dao, "/armorType.csv");
+        parseFileToItems("/ammoTypes.csv").stream()
+                .forEach(a -> dao.saveEntity(AmmunitionType.class, (AmmunitionType) a));
         loadResources(dao);
         loadHandWeapons(dao);
         loadGuns(dao);
@@ -110,10 +109,14 @@ public class DBInitializer {
     }
 
     private void loadItems(DAO dao, String path) {
-        List<Item> equipments = readResource(path)
-                .stream().filter(s -> !s[0].startsWith(DISCLAIMER))
-                .map(weaponParser::parseEquipment).collect(Collectors.toList());
+        List<Item> equipments = parseFileToItems(path);
         equipments.forEach(dao::save);
+    }
+
+    private List<Item> parseFileToItems(String path) {
+        return readResource(path)
+                    .stream().filter(s -> !s[0].startsWith(DISCLAIMER))
+                    .map(weaponParser::parseEquipment).collect(Collectors.toList());
     }
 
     private List<String[]> readResource(String location) {

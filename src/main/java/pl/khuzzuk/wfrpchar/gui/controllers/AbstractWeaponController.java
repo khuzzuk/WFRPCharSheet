@@ -1,7 +1,9 @@
 package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
@@ -11,7 +13,6 @@ import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
-import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,26 +26,12 @@ public abstract class AbstractWeaponController extends ItemsListedController {
     @FXML
     ComboBox<String> primaryResource;
     @FXML
-    @Numeric
-    TextField gold;
-    @FXML
-    @Numeric
-    TextField silver;
-    @FXML
-    @Numeric
-    TextField lead;
-    @FXML
     ListView<String> determinantsView;
-    @FXML
-    TextArea specialFeatures;
     @FXML
     Button chooseBaseButton;
 
     Collection<ResourceType> resources;
     String baseType;
-    @Inject
-    @Named("messages")
-    Properties messages;
     @Inject
     GuiPublisher guiPublisher;
 

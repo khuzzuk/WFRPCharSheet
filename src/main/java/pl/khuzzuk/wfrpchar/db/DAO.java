@@ -47,6 +47,7 @@ public class DAO {
                @WhiteWeapons @Types DAOTransactional<WhiteWeaponType, String> daoWhiteWeaponType,
                @RangedWeapons @Types DAOTransactional<RangedWeaponType, String> daoRangedWeaponsTypes,
                @Armors @Types DAOTransactional<ArmorType, String> daoArmorTypes,
+               @Ammunitions @Types DAOTransactional<AmmunitionType, String> daoAmmunitionTypes,
                @FightingEquipments DAOTransactional<FightingEquipment, String> daoFightingEquipment,
                @Constants @Characters DAOTransactional<Character, String> daoCharacters,
                @Players DAOTransactional<Player, String> daoPlayer,
@@ -73,6 +74,7 @@ public class DAO {
         resolvers.put(WhiteWeaponType.class, daoWhiteWeaponType);
         resolvers.put(RangedWeaponType.class, daoRangedWeaponsTypes);
         resolvers.put(ArmorType.class, daoArmorTypes);
+        resolvers.put(AmmunitionType.class, daoAmmunitionTypes);
         resolvers.put(FightingEquipment.class, daoFightingEquipment);
         resolvers.put(Character.class, daoCharacters);
         resolvers.put(Player.class, daoPlayer);

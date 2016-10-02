@@ -65,4 +65,10 @@ public class ResourceType implements Named<String>, Commodity, Persistable, Docu
     public Price getPrice() {
         return new Price(1,0,0).multiply(((float)priceMod)/100);
     }
+
+    @Override
+    public float getWeight() {
+        //TODO add weigthmod to resources
+        return 1;
+    }
 }

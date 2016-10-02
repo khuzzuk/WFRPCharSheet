@@ -19,7 +19,7 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
                                        WhiteWeaponTypePaneController whiteWeaponTypePaneController,
                                        ItemTypesPaneController itemTypesPaneController,
                                        ResourceTypesPaneController resourceTypesPaneController,
-                                       ItemsListedController weaponEntitiesPaneController,
+                                       AmmunitionTypesPaneController ammunitionTypesPaneController,
                                        HandWeaponsPaneController handWeaponsPaneController,
                                        EquipmentTypeChooserController equipmentTypeChooserController,
                                        RangeWeaponsPaneController rangeWeaponsPaneController,
@@ -32,7 +32,7 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
         controllers.put(whiteWeaponTypePaneController.getClass(), whiteWeaponTypePaneController);
         controllers.put(itemTypesPaneController.getClass(), itemTypesPaneController);
         controllers.put(resourceTypesPaneController.getClass(), resourceTypesPaneController);
-        controllers.put(weaponEntitiesPaneController.getClass(), weaponEntitiesPaneController);
+        controllers.put(ammunitionTypesPaneController.getClass(), ammunitionTypesPaneController);
         controllers.put(handWeaponsPaneController.getClass(), handWeaponsPaneController);
         controllers.put(equipmentTypeChooserController.getClass(), equipmentTypeChooserController);
         controllers.put(rangedWeaponTypePaneController.getClass(), rangedWeaponTypePaneController);

@@ -34,6 +34,8 @@ public class GuiReactor {
     @Inject
     private WhiteWeaponTypePaneController whiteWeaponTypePaneController;
     @Inject
+    private AmmunitionTypesPaneController ammunitionTypesPaneController;
+    @Inject
     private ResourceTypesPaneController resourceTypesPaneController;
     @Inject
     private HandWeaponsPaneController handWeaponsPaneController;
@@ -103,6 +105,7 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(rangedWeaponMsg, rangedWeaponTypePaneController::loadAll);
         guiContentSubscriber.subscribe(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
         guiContentSubscriber.subscribe(listOfArmorTypesResult, armorTypesPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("ammo.type.result"), ammunitionTypesPaneController::loadAll);
         guiContentSubscriber.subscribe(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("resource.type.result"), this::sendResourcesTypes);
         guiContentSubscriber.subscribe(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);

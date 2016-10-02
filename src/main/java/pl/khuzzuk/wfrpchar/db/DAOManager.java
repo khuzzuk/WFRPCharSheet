@@ -100,6 +100,13 @@ public class DAOManager {
     }
 
     @Bean
+    @Ammunitions
+    @Types
+    public DAOEntityResolver<AmmunitionType, String> daoAmmunitionTypes() {
+        return new DAOEntityResolver<>("FROM Item i where type(i) = AmmunitionType", openNewSession());
+    }
+
+    @Bean
     @Resources
     @Types
     public DAOEntityResolver<ResourceType, String> daoResourcesTypes() {
