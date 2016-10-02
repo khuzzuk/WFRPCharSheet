@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -88,5 +89,17 @@ public class AbstractWeaponParserTest {
         ParserBag<RangedWeaponType> bag = new ParserBag<>(type, resource, resource);
         Gun gun = parser.parseGun(line.split(";"), bag);
         assertThat(gun.toCsv()).isEqualTo(line);
+    }
+
+    @Test(groups = "fast")
+    public void twoWaysArmorParse() throws Exception {
+        String line = "Mistrzowski skórzany kaptur;1|0|0;COMMON;;Skórzany kaptur;Skóra;Skóra;1,DURABILITY";
+        String baseTypeLine = "Skórzany kaptur;0.1;0|2|5;COMMON;;1;ARMOR;HEAD;|||Skórzanym kapturem;;LEATHER";
+        String resourceLine = "Skóra;25;20;TEXTILE;COMMON;";
+        ArmorType base = (ArmorType) parser.parseEquipment(baseTypeLine.split(";"));
+        ResourceType resourceType = ResourceType.getFromCsv(resourceLine.split(";"));
+        ParserBag<ArmorType> bag = new ParserBag<>(base, resourceType, resourceType);
+        Armor armor = parser.parseArmor(line.split(";"), bag);
+        assertThat(armor.toCsv()).isEqualTo(line);
     }
 }
