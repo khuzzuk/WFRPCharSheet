@@ -1,4 +1,5 @@
 spec:name;strengthMod;price;type;accessibility;specialFeatures
+Skóra;25;20;TEXTILE;COMMON;
 Drewno;33;25;WOOD;COMMON;
 Żelazo;100;100;METAL;COMMON;
 Stal;120;125;METAL;COMMON;

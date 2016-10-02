@@ -8,6 +8,7 @@ import org.apache.commons.collections4.collection.CompositeCollection;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
+import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.Weapon;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 @DiscriminatorValue("1")
 @ToString
 @NoArgsConstructor
-public abstract class AbstractWeapon<T extends Weapon>
+public abstract class AbstractWeapon<T extends BattleEquipment>
         extends AbstractCommodity
         implements Weapon {
     @Getter

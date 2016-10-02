@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.ArmorPattern;
+import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("9")
-public class ArmorType extends FightingEquipment {
+public class ArmorType extends FightingEquipment implements BattleEquipment {
 
     @Getter
     @Setter
@@ -33,5 +34,11 @@ public class ArmorType extends FightingEquipment {
                 getLangToCsv() + ";" +
                 Determinant.determinantsToCsv(determinants) + ";" +
                 pattern.name();
+    }
+
+    @Override
+    public String getTypeName() {
+        //TODO add typeName to armorTypes
+        return name;
     }
 }

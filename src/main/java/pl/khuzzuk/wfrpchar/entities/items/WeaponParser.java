@@ -117,6 +117,14 @@ public class WeaponParser {
         return gun;
     }
 
+    public Armor parseArmor(String[] fields, ParserBag<ArmorType> bag) {
+        Armor armor = new Armor();
+        armor.setBaseType(bag.getBaseType());
+        fillCommodityItem(fields, armor);
+        fillBattleEquipment(fields, armor, bag.getPrimaryResource(), bag.getSecondaryResource());
+        return armor;
+    }
+
     private void fillCommodityItem(String[] fields, AbstractCommodity commodity) {
         commodity.setName(fields[0]);
         commodity.setBasePrice(Price.parsePrice(fields[1]));
