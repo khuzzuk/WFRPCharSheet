@@ -3,7 +3,6 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.fxml.FXML;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
-import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,17 +21,7 @@ public class RangeWeaponsPaneController extends AbstractWeaponController {
     }
 
     public void loadToEditor(Gun gun) {
-        name.setText(gun.getName());
-        baseType = gun.getBaseType().getName();
-        chooseBaseButton.setText(baseType);
-        accessibility.getSelectionModel().select(gun.getAccessibility().getName());
-        primaryResource.getSelectionModel().select(gun.getPrimaryResource().getName());
-        secondaryResource.getSelectionModel().select(gun.getSecondaryResource().getName());
-        gold.setText(gun.getBasePrice().getGold() + "");
-        silver.setText(gun.getBasePrice().getSilver() + "");
-        lead.setText(gun.getBasePrice().getLead() + "");
-        EntitiesAdapter.sendToListView(determinantsView, gun.getDeterminants());
-        specialFeatures.setText(gun.getSpecialFeatures());
+        loadToInternalEditor(gun);
     }
 
     @FXML

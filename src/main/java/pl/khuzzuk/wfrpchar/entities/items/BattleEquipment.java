@@ -6,6 +6,7 @@ import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import java.util.Collection;
 
 public interface BattleEquipment extends Commodity {
+
     Placement getPlacement();
 
     int getStrength();

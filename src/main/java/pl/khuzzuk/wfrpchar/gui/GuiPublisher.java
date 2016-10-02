@@ -48,6 +48,10 @@ public class GuiPublisher {
         publish(line, messages.getProperty("weapons.ranged.save"));
     }
 
+    public void saveArmor(String line) {
+        publish(line, messages.getProperty("armor.save"));
+    }
+
     public void requestMiscItemType() {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("miscItemTypes.query")));
     }
@@ -70,6 +74,10 @@ public class GuiPublisher {
 
     public void requestRangedWeapons() {
         publish(messages.getProperty("weapons.ranged.query"));
+    }
+
+    public void requestArmor() {
+        publish(messages.getProperty("armor.query"));
     }
 
     public void requestResourceTypes() {
@@ -104,6 +112,10 @@ public class GuiPublisher {
         publish(name, messages.getProperty("weapons.ranged.query.specific"));
     }
 
+    public void requestArmor(String name) {
+        publish(name, messages.getProperty("armor.query.specific"));
+    }
+
     public void requestResourceType(String name) {
         textRequestPublisher.publish(name, messages.getProperty("resource.type.query.specific"));
     }
@@ -134,6 +146,10 @@ public class GuiPublisher {
 
     public void removeRangedWeapon(String name) {
         textRequestPublisher.publish(name, messages.getProperty("weapons.ranged.remove"));
+    }
+
+    public void removeArmor(String name) {
+        textRequestPublisher.publish(name, messages.getProperty("armor.remove"));
     }
 
     public void publish(String text) {

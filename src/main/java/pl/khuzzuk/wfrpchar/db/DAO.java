@@ -11,6 +11,7 @@ import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 
 import javax.inject.Inject;
@@ -29,9 +30,6 @@ public class DAO {
     private DAOTransactional<Player, String> daoPlayer;
     private DAOTransactional<Currency, String> daoCurrencies;
     private DAOTransactional<RangedWeaponType, String> daoRangedWeaponsTypes;
-    @Inject
-    @Armor
-    @Types
     private DAOTransactional<ArmorType, String> daoArmorTypes;
     @Inject
     @Types
@@ -48,6 +46,7 @@ public class DAO {
     public DAO(@Items @NotNull DAOTransactional<Item, String> daoItems,
                @WhiteWeapons @Types DAOTransactional<WhiteWeaponType, String> daoWhiteWeaponType,
                @RangedWeapons @Types DAOTransactional<RangedWeaponType, String> daoRangedWeaponsTypes,
+               @Armors @Types DAOTransactional<ArmorType, String> daoArmorTypes,
                @FightingEquipments DAOTransactional<FightingEquipment, String> daoFightingEquipment,
                @Constants @Characters DAOTransactional<Character, String> daoCharacters,
                @Players DAOTransactional<Player, String> daoPlayer,
@@ -55,9 +54,11 @@ public class DAO {
                @Resources @Types DAOTransactional<ResourceType, String> daoResources,
                @WhiteWeapons DAOTransactional<AbstractHandWeapon<? extends WhiteWeaponType>, String> daoHandWeapons,
                @RangedWeapons DAOTransactional<Gun, String> daoRangedWeapons,
+               @Armors DAOTransactional<Armor, String> daoArmor,
                @Manager DAOManager manager) {
         this.daoItems = daoItems;
         this.daoWhiteWeapons = daoWhiteWeaponType;
+        this.daoArmorTypes = daoArmorTypes;
         this.daoFightingEquipment = daoFightingEquipment;
         this.daoCharacters = daoCharacters;
         this.daoPlayer = daoPlayer;
@@ -71,6 +72,7 @@ public class DAO {
         resolvers.put(Item.class, daoItems);
         resolvers.put(WhiteWeaponType.class, daoWhiteWeaponType);
         resolvers.put(RangedWeaponType.class, daoRangedWeaponsTypes);
+        resolvers.put(ArmorType.class, daoArmorTypes);
         resolvers.put(FightingEquipment.class, daoFightingEquipment);
         resolvers.put(Character.class, daoCharacters);
         resolvers.put(Player.class, daoPlayer);
@@ -78,6 +80,7 @@ public class DAO {
         resolvers.put(ResourceType.class, daoResources);
         resolvers.put(AbstractHandWeapon.class, daoHandWeapons);
         resolvers.put(Gun.class, daoRangedWeapons);
+        resolvers.put(Armor.class, daoArmor);
     }
 
     @SuppressWarnings("unchecked")

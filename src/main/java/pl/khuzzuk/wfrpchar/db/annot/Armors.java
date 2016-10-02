@@ -7,5 +7,5 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
 @Documented
 @Qualifier
-public @interface Armor {
+public @interface Armors {
 }

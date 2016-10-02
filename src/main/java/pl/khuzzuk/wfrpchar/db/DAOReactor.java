@@ -8,6 +8,7 @@ import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
@@ -86,6 +87,13 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("weapons.ranged.query"));
     }
 
+    private void saveArmor(String line) {
+        String[] fields = line.split(";");
+        Armor armor = weaponParser.parseArmor(fields, getParserBag(ArmorType.class, fields));
+        dao.saveEntity(Armor.class, armor);
+        daoPublisher.publish(messages.getProperty("armor.query"));
+    }
+
     private <T extends FightingEquipment> ParserBag<T> getParserBag(Class<T> entityType, String[] fields) {
         return new ParserBag<>(
                 dao.getEntity(entityType, fields[4]),
@@ -108,6 +116,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("rangedWeapons.query"));
     }
 
+    private void removeArmorType(String name) {
+        dao.removeArmorType(name);
+        daoPublisher.publish(messages.getProperty("armorTypes.query"));
+    }
+
     private void removeHandWeapon(String name) {
         dao.removeHandWeapon(name);
         daoPublisher.publish(messages.getProperty("weapons.hand.query"));
@@ -118,9 +131,9 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("weapons.ranged.query"));
     }
 
-    private void removeArmorType(String name) {
-        dao.removeArmorType(name);
-        daoPublisher.publish(messages.getProperty("armorTypes.query"));
+    private void removeArmor(String name) {
+        dao.removeEntity(Armor.class, name);
+        daoPublisher.publish(messages.getProperty("armor.query"));
     }
 
     private void removeResourceType(String name) {
@@ -156,6 +169,10 @@ public class DAOReactor {
         daoPublisher.publishRangedWeapons(dao.getAllEntities(Gun.class));
     }
 
+    private void getAllArmors() {
+        daoPublisher.publish(dao.getAllEntities(Armor.class), messages.getProperty("armor.result"));
+    }
+
     private void getAllWWBaseType() {
         daoPublisher.publishWhiteWeaponsBaseTypes(dao.getAllWhiteWeaponTypes());
     }
@@ -163,6 +180,11 @@ public class DAOReactor {
     private void getAllRangedBaseTypes() {
         daoPublisher.publishRangedWeaponTypes(dao.getAllRangedWeapons(),
                 messages.getProperty("weapons.ranged.baseType.allTypesList"));
+    }
+
+    private void getAllArmorBaseTypes() {
+        daoPublisher.publish(dao.getAllEntities(ArmorType.class),
+                messages.getProperty("armor.baseType.allTypesList"));
     }
 
     private void getWhiteWeaponByName(String name) {
@@ -189,12 +211,20 @@ public class DAOReactor {
         daoPublisher.publish(dao.getEntity(Gun.class, name));
     }
 
+    private void getArmor(String name) {
+        daoPublisher.publish(dao.getEntity(Armor.class, name), messages.getProperty("armor.result.specific"));
+    }
+
     private void getWWBaseTypeByName(String name) {
         daoPublisher.publish(dao.getWhiteWeapon(name), messages.getProperty("weapons.hand.baseType.choice"));
     }
 
     private void getRWBaseTypeByName(String name) {
         daoPublisher.publish(dao.getEntity(RangedWeaponType.class, name), messages.getProperty("weapons.ranged.baseType.choice"));
+    }
+
+    private void getARBaseTypeByName(String name) {
+        daoPublisher.publish(dao.getEntity(RangedWeaponType.class, name), messages.getProperty("armor.baseType.choice"));
     }
 
     private void resetDB() {
@@ -205,6 +235,7 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("miscItemTypes.query"));
         daoPublisher.publish(messages.getProperty("weapons.hand.query"));
         daoPublisher.publish(messages.getProperty("weapons.ranged.query"));
+        daoPublisher.publish(messages.getProperty("armor.query"));
     }
 
     @Inject
@@ -222,8 +253,10 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("resource.type.query"), this::getAllResourceTypes);
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.getAllTypes"), this::getAllWWBaseType);
         multiSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.getAllTypes"), this::getAllRangedBaseTypes);
+        multiSubscriber.subscribe(messages.getProperty("armor.baseType.getAllTypes"), this::getAllArmorBaseTypes);
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.query"), this::getAllHandWeapons);
         multiSubscriber.subscribe(messages.getProperty("weapons.ranged.query"), this::getAllRangedWeapons);
+        multiSubscriber.subscribe(messages.getProperty("armor.query"), this::getAllArmors);
         daoContentSubscriber.subscribe(messages.getProperty("database.saveEquipment"), this::saveItem);
         daoContentSubscriber.subscribe(messages.getProperty("miscItemTypes.query.specific"), this::getMiscItemTypeByName);
         daoContentSubscriber.subscribe(messages.getProperty("miscItemTypes.remove"), this::removeMiscItem);
@@ -244,5 +277,9 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(messages.getProperty("weapons.ranged.query.specific"), this::getRangedWeapon);
         daoContentSubscriber.subscribe(messages.getProperty("weapons.ranged.save"), this::saveRangedWeapon);
         daoContentSubscriber.subscribe(messages.getProperty("weapons.ranged.remove"), this::removeRangedWeapon);
+        daoContentSubscriber.subscribe(messages.getProperty("armor.baseType.selected"), this::getARBaseTypeByName);
+        daoContentSubscriber.subscribe(messages.getProperty("armor.query.specific"), this::getArmor);
+        daoContentSubscriber.subscribe(messages.getProperty("armor.save"), this::saveArmor);
+        daoContentSubscriber.subscribe(messages.getProperty("armor.remove"), this::removeArmor);
     }
 }

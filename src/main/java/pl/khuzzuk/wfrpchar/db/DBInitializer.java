@@ -7,10 +7,12 @@ import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
+import pl.khuzzuk.wfrpchar.entities.items.types.ArmorType;
 import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 
 import javax.inject.Inject;
@@ -44,6 +46,7 @@ public class DBInitializer {
         loadResources(dao);
         loadHandWeapons(dao);
         loadGuns(dao);
+        loadArmors(dao);
     }
 
     private void loadCurrencies(DAO dao) {
@@ -91,6 +94,18 @@ public class DBInitializer {
                     dao.getEntity(ResourceType.class, s[5]),
                     dao.getEntity(ResourceType.class, s[5]));
             dao.saveEntity(Gun.class, weaponParser.parseGun(s, bag));
+        }
+    }
+
+    private void loadArmors(DAO dao) {
+        List<String[]> list = readResource("/armor.csv")
+                .stream().filter(s -> !s[0].startsWith("spec")).collect(Collectors.toList());
+        for (String[] s : list) {
+            ParserBag<ArmorType> bag = new ParserBag<>(
+                    dao.getEntity(ArmorType.class, s[4]),
+                    dao.getEntity(ResourceType.class, s[5]),
+                    dao.getEntity(ResourceType.class, s[5]));
+            dao.saveEntity(Armor.class, weaponParser.parseArmor(s, bag));
         }
     }
 

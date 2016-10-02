@@ -95,8 +95,8 @@ public class DAOPublisher {
         entitiesPublisher.publish(item, mistItemTypeNamedResult);
     }
 
-    public void publish(WhiteWeaponType whiteWeapon, String message) {
-        entitiesPublisher.publish(whiteWeapon, message);
+    public <T> void publish(T content, String message) {
+        entitiesPublisher.publish(content, message);
     }
 
     void publish(RangedWeaponType weapon, String msg) {

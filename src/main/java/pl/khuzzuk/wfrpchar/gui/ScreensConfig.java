@@ -56,6 +56,15 @@ public class ScreensConfig {
     }
 
     @Bean
+    public EquipmentTypeChooserStage armorTypeChooser() {
+        EquipmentTypeChooserController controller = equipmentTypeChooserController();
+        controller.setMessageType(messages.getProperty("armor.baseType.allTypesList"));
+        controller.setChoiceReady(messages.getProperty("armor.baseType.choice"));
+        controller.subscribe();
+        return new EquipmentTypeChooserStage(stage, controller);
+    }
+
+    @Bean
     @Named("hwDeterminantsCreatorController")
     public DeterminantCreatorController handWeaponDeterminantController() {
         return new DeterminantCreatorController(messages.getProperty("determinants.creator.show.hw"),
@@ -70,6 +79,13 @@ public class ScreensConfig {
     }
 
     @Bean
+    @Named("arDeterminantsCreatorController")
+    public DeterminantCreatorController armorDeterminantController() {
+        return new DeterminantCreatorController(messages.getProperty("determinants.creator.show.ar"),
+                messages.getProperty("determinants.creator.add.ar"));
+    }
+
+    @Bean
     @Named("handWeaponsDeterminantsCreatorStage")
     public DeterminantCreatorStage determinantCreatorStage() {
         return new DeterminantCreatorStage(handWeaponDeterminantController());
@@ -79,5 +95,11 @@ public class ScreensConfig {
     @Named("rangedWeaponsDeterminantsCreatorStage")
     public DeterminantCreatorStage rangedWeaponDeterminantCreatorStage() {
         return new DeterminantCreatorStage(rangedWeaponDeterminantController());
+    }
+
+    @Bean
+    @Named("armorDeterminantsCreatorStage")
+    public DeterminantCreatorStage armorDeterminantCreatorStage() {
+        return new DeterminantCreatorStage(armorDeterminantController());
     }
 }

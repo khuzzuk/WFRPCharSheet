@@ -40,11 +40,16 @@ public class GuiReactor {
     @Inject
     private RangeWeaponsPaneController rangeWeaponsPaneController;
     @Inject
+    private ArmorPaneController armorPaneController;
+    @Inject
     @Named("hwDeterminantsCreatorController")
     private DeterminantCreatorController hwDeterminantCreatorController;
     @Inject
     @Named("rwDeterminantsCreatorController")
     private DeterminantCreatorController rwDeterminantCreatorController;
+    @Inject
+    @Named("arDeterminantsCreatorController")
+    private DeterminantCreatorController arDeterminantCreatorController;
     @Inject
     @MainWindowBean
     @Subscribers
@@ -101,15 +106,20 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("resource.type.result"), this::sendResourcesTypes);
         guiContentSubscriber.subscribe(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.hw"), handWeaponsPaneController::addDeterminant);
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.rw"), rangeWeaponsPaneController::addDeterminant);
-        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result"), handWeaponsPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result.specific"), handWeaponsPaneController::loadToEditor);
+        guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.ar"), armorPaneController::addDeterminant);
+        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.choice"), rangeWeaponsPaneController::setBaseType);
         communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);
         communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.rw"), rwDeterminantCreatorController::show);
+        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.ar"), arDeterminantCreatorController::show);
+        guiContentSubscriber.subscribe(messages.getProperty("armor.baseType.choice"), armorPaneController::setBaseType);
+        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result"), handWeaponsPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result.specific"), handWeaponsPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.result"), rangeWeaponsPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.result.specific"), rangeWeaponsPaneController::loadToEditor);
+        guiContentSubscriber.subscribe(messages.getProperty("armor.result"), armorPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("armor.result.specific"), armorPaneController::loadToEditor);
     }
 }

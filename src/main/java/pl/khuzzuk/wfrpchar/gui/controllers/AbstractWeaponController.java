@@ -2,10 +2,14 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
+import pl.khuzzuk.wfrpchar.entities.items.types.FightingEquipment;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
+import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 
@@ -75,5 +79,33 @@ public abstract class AbstractWeaponController extends ItemsListedController {
         fields.add(secondaryResource.getSelectionModel().getSelectedItem());
         fields.add(Determinant.determinantsToCsv(Determinant.parseFromGui(
                 determinantsView.getItems().stream().collect(Collectors.toList()))));
+    }
+
+    void loadToInternalEditor(AbstractWeapon<? extends FightingEquipment> weapon) {
+        baseType = weapon.getBaseType().getName();
+        chooseBaseButton.setText(baseType);
+        name.setText(weapon.getName());
+        accessibility.getSelectionModel().select(weapon.getAccessibility().getName());
+        primaryResource.getSelectionModel().select(weapon.getPrimaryResource().getName());
+        secondaryResource.getSelectionModel().select(weapon.getSecondaryResource().getName());
+        Price basePrice = weapon.getBasePrice();
+        gold.setText(basePrice.getGold() + "");
+        silver.setText(basePrice.getSilver() + "");
+        lead.setText(basePrice.getLead() + "");
+        EntitiesAdapter.sendToListView(determinantsView, weapon.getDeterminants());
+        specialFeatures.setText(weapon.getSpecialFeatures());
+    }
+
+    @FXML
+    void clearEditor() {
+        name.setText("");
+        accessibility.getSelectionModel().clearSelection();
+        primaryResource.getSelectionModel().clearSelection();
+        secondaryResource.getSelectionModel().clearSelection();
+        specialFeatures.setText("");
+        gold.setText("");
+        silver.setText("");
+        lead.setText("");
+        determinantsView.getItems().clear();
     }
 }

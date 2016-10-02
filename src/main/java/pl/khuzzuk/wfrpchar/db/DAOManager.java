@@ -5,13 +5,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
+import pl.khuzzuk.wfrpchar.db.annot.Armors;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
-import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
-import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
+import pl.khuzzuk.wfrpchar.entities.items.usable.*;
 
 import javax.inject.Inject;
 
@@ -88,12 +88,12 @@ public class DAOManager {
     @Bean
     @RangedWeapons
     @Types
-    public DAOEntityResolver<RangedWeaponType, String> daoRangedWeaponTyppes() {
+    public DAOEntityResolver<RangedWeaponType, String> daoRangedWeaponTypes() {
         return new DAOEntityResolver<>("FROM Item i where type(i) = RangedWeaponType", openNewSession());
     }
 
     @Bean
-    @Armor
+    @Armors
     @Types
     public DAOEntityResolver<ArmorType, String> daoArmorTypes() {
         return new DAOEntityResolver<>("FROM Item i where type(i) = ArmorType", openNewSession());
@@ -119,5 +119,11 @@ public class DAOManager {
     @RangedWeapons
     public DAOEntityResolver<Gun, String> daoRangedWeapons() {
         return new DAOEntityResolver<Gun, String>("FROM AbstractCommodity i where type(i) = Gun", openNewSession());
+    }
+
+    @Bean
+    @Armors
+    public DAOEntityResolver<Armor, String> daoArmorType() {
+        return new DAOEntityResolver<>("FROM AbstractCommodity i where type(i) = Armor", openNewSession());
     }
 }

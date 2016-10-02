@@ -20,6 +20,8 @@ import java.util.ResourceBundle;
 @PropertySource("classpath:messages.properties")
 public class MainWindowController implements Controller {
     @FXML
+    private TitledPane armorPane;
+    @FXML
     private TitledPane rangedWeaponsPane;
     @FXML
     private TitledPane handWeaponsPane;

@@ -5,11 +5,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.entities.Price;
-import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
+import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
-import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
@@ -65,25 +63,9 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
         throw new IllegalStateException("Weapon not started Properly");
     }
 
-    public void loadToEditor(AbstractHandWeapon weapon) {
+    public void loadToEditor(AbstractHandWeapon<? extends WhiteWeaponType> weapon) {
         handWeapon = weapon;
-        baseType = handWeapon.getBaseType().getName();
-        chooseBaseButton.setText(baseType);
-        name.setText(handWeapon.getName());
-        accessibility.getSelectionModel().select(handWeapon.getAccessibility().getName());
-        primaryResource.getSelectionModel().select(handWeapon.getPrimaryResource().getName());
-        secondaryResource.getSelectionModel().select(handWeapon.getSecondaryResource().getName());
-        Price basePrice = handWeapon.getBasePrice();
-        gold.setText(basePrice.getGold() + "");
-        silver.setText(basePrice.getSilver() + "");
-        lead.setText(basePrice.getLead() + "");
-        EntitiesAdapter.sendToListView(determinantsView, handWeapon.getDeterminants());
-    }
-
-    private ResourceType getResourceFromList(ComboBox<String> view) {
-        return resources.stream()
-                .filter(r -> r.getName().equals(view.getSelectionModel().getSelectedItem()))
-                .findAny().orElse(null);
+        loadToInternalEditor(weapon);
     }
 
     @FXML
@@ -93,18 +75,11 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
         }
     }
 
-    private void clearEditor() {
-        handWeapon = null;
-        name.setText("");
+    @Override
+    @FXML
+    void clearEditor() {
+        super.clearEditor();
         rolls.setText("");
         dices.getSelectionModel().clearSelection();
-        accessibility.getSelectionModel().clearSelection();
-        primaryResource.getSelectionModel().clearSelection();
-        secondaryResource.getSelectionModel().clearSelection();
-        specialFeatures.setText("");
-        gold.setText("");
-        silver.setText("");
-        lead.setText("");
-        determinantsView.getItems().clear();
     }
 }
