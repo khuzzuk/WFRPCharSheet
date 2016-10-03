@@ -61,6 +61,13 @@ public class AbstractWeaponParserTest {
         assertThat(equipment.toCsv()).isEqualTo(line);
     }
 
+    @Test
+    public void twoWaysParsingAmmo() throws Exception {
+        String line = "Strzała;0.1;0|0|1;COMMON;;0;AMMO";
+        Item ammo = parser.parseEquipment(line.split(";"));
+        assertThat(ammo.toCsv()).isEqualTo(line);
+    }
+
     @Test(groups = "fast")
     public void twoWaysResourceParse() throws Exception {
         String line = "Drewno;33;25;WOOD;COMMON;";

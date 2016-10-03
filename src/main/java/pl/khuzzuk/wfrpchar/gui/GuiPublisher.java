@@ -104,6 +104,10 @@ public class GuiPublisher {
         textRequestPublisher.publish(name, messages.getProperty("armorTypes.query.specific"));
     }
 
+    public void requestAmmunitionType(String name) {
+        textRequestPublisher.publish(name, messages.getProperty("ammo.type.query.specific"));
+    }
+
     public void requestHandWeapon(String name) {
         textRequestPublisher.publish(name, messages.getProperty("weapons.hand.query.specific"));
     }
@@ -134,6 +138,10 @@ public class GuiPublisher {
 
     public void removeArmorType(String name) {
         textRequestPublisher.publish(name, messages.getProperty("armorTypes.remove"));
+    }
+
+    public void removeAmmunitionType(String name) {
+        textRequestPublisher.publish(name, messages.getProperty("ammo.type.remove"));
     }
 
     public void removeResourceType(String name) {

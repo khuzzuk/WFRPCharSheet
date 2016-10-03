@@ -107,6 +107,7 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(listOfArmorTypesResult, armorTypesPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("ammo.type.result"), ammunitionTypesPaneController::loadAll);
         guiContentSubscriber.subscribe(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
+        guiContentSubscriber.subscribe(messages.getProperty("ammo.type.result.specific"), ammunitionTypesPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("resource.type.result"), this::sendResourcesTypes);
         guiContentSubscriber.subscribe(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.hw"), handWeaponsPaneController::addDeterminant);
@@ -114,10 +115,10 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.ar"), armorPaneController::addDeterminant);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.choice"), rangeWeaponsPaneController::setBaseType);
+        guiContentSubscriber.subscribe(messages.getProperty("armor.baseType.choice"), armorPaneController::setBaseType);
         communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);
         communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.rw"), rwDeterminantCreatorController::show);
         communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.ar"), arDeterminantCreatorController::show);
-        guiContentSubscriber.subscribe(messages.getProperty("armor.baseType.choice"), armorPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result"), handWeaponsPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result.specific"), handWeaponsPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.result"), rangeWeaponsPaneController::loadAll);
