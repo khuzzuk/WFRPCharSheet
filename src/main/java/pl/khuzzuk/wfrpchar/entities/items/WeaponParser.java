@@ -39,6 +39,7 @@ public class WeaponParser {
         AmmunitionType type = new AmmunitionType();
         fillItemFields(columns, type);
         type.setStrength(Integer.parseInt(columns[5]));
+        type.setPlacement(Placement.valueOf(columns[7]));
         return type;
     }
 

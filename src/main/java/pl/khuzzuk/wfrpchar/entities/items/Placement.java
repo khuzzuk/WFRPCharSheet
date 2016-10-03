@@ -4,11 +4,12 @@ import lombok.Getter;
 import pl.khuzzuk.wfrpchar.entities.Named;
 
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public enum Placement implements Named<String> {
     ONE_HAND("Jedna ręka"), TWO_HANDS("Dwie ręce"), BASTARD("Półtoraręczny"),
-    HEAD("Głowa"), CORPUS("Tors"), HANDS("Ręce"), LEGS("Nogi"), BELT("Pas"), FEET("Stopy");
-
+    HEAD("Głowa"), CORPUS("Tors"), HANDS("Ręce"), LEGS("Nogi"), BELT("Pas"), FEET("Stopy"), AMMO("Amunicja");
     @Getter
     private String name;
 

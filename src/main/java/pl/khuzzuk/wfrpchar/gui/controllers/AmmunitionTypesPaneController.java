@@ -42,6 +42,7 @@ public class AmmunitionTypesPaneController extends ItemsListedController {
         fields.add(specialFeatures.getText());
         fields.add(strength.getText());
         fields.add("AMMO");
+        fields.add("AMMO");
         guiPublisher.publish(fields.stream().collect(Collectors.joining(";")),
                 messages.getProperty("database.saveEquipment"));
     }

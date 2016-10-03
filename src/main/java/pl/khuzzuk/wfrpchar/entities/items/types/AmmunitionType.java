@@ -1,7 +1,5 @@
 package pl.khuzzuk.wfrpchar.entities.items.types;
 
-import lombok.Getter;
-import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.items.Ammo;
 
 import javax.persistence.DiscriminatorValue;
@@ -9,11 +7,7 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("10")
-public class AmmunitionType extends Item implements Ammo {
-    @Getter
-    @Setter
-    private int strength;
-
+public class AmmunitionType extends FightingEquipment implements Ammo {
     public AmmunitionType() {
         type = EquipmentType.AMMO;
     }
@@ -22,5 +16,10 @@ public class AmmunitionType extends Item implements Ammo {
     public String toCsv() {
         return name + ";" + weight + ";" + price.toString() + ";" + accessibility.name() + ";" +
                 specialFeatures + ";" + strength + ";" + type.name();
+    }
+
+    @Override
+    public String getTypeName() {
+        return name;
     }
 }

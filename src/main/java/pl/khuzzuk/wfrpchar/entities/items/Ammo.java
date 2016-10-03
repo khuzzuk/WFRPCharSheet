@@ -1,5 +1,5 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
-public interface Ammo extends Commodity {
+public interface Ammo extends BattleEquipment {
     int getStrength();
 }
