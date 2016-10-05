@@ -86,6 +86,13 @@ public class ScreensConfig {
     }
 
     @Bean
+    @Named("amDeterminantsCreatorController")
+    public DeterminantCreatorController ammunitionDeterminantController() {
+        return new DeterminantCreatorController(messages.getProperty("determinants.creator.show.am"),
+                messages.getProperty("determinants.creator.add.am"));
+    }
+
+    @Bean
     @Named("handWeaponsDeterminantsCreatorStage")
     public DeterminantCreatorStage determinantCreatorStage() {
         return new DeterminantCreatorStage(handWeaponDeterminantController());
@@ -101,5 +108,11 @@ public class ScreensConfig {
     @Named("armorDeterminantsCreatorStage")
     public DeterminantCreatorStage armorDeterminantCreatorStage() {
         return new DeterminantCreatorStage(armorDeterminantController());
+    }
+
+    @Bean
+    @Named("ammunitionDeterminantsCreatorStage")
+    public DeterminantCreatorStage ammunitionDeterminantCreatorStage() {
+        return new DeterminantCreatorStage(ammunitionDeterminantController());
     }
 }

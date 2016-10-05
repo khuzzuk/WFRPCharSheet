@@ -10,6 +10,7 @@ import pl.khuzzuk.wfrpchar.entities.items.usable.*;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 
 @Component
 public class WeaponParser {
@@ -135,6 +136,14 @@ public class WeaponParser {
         return armor;
     }
 
+    public Ammunition parseAmmunition(String[] fields, ParserBag<AmmunitionType> bag) {
+        Ammunition ammunition = new Ammunition();
+        ammunition.setBaseType(bag.getBaseType());
+        fillCommodityItem(fields, ammunition);
+        fillBattleEquipment(fields, ammunition, bag.getPrimaryResource(), bag.getSecondaryResource());
+        return ammunition;
+    }
+
     private void fillCommodityItem(String[] fields, AbstractCommodity commodity) {
         commodity.setName(fields[0]);
         commodity.setBasePrice(Price.parsePrice(fields[1]));
@@ -142,10 +151,13 @@ public class WeaponParser {
         commodity.setSpecialFeatures(fields[3]);
     }
 
+    @SuppressWarnings("unchecked")
     private void fillBattleEquipment(String[] line, AbstractWeapon weapon, ResourceType primaryResource, ResourceType secondaryResource) {
         weapon.setPrimaryResource(primaryResource);
         weapon.setSecondaryResource(secondaryResource);
-        weapon.setDeterminants(determinantFactory.createDeterminants(line[7]));
+        weapon.setDeterminants(line.length >= 8 ?
+                determinantFactory.createDeterminants(line[7]) :
+                new HashSet<>());
     }
 
     private void fillHandWeapon(String[] fields, AbstractHandWeapon weapon) {

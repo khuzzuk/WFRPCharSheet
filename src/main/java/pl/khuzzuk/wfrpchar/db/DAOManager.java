@@ -133,4 +133,10 @@ public class DAOManager {
     public DAOEntityResolver<Armor, String> daoArmorType() {
         return new DAOEntityResolver<>("FROM AbstractCommodity i where type(i) = Armor", openNewSession());
     }
+
+    @Bean
+    @Ammunitions
+    public DAOEntityResolver<Ammunition, String> daoAmmunition() {
+        return new DAOEntityResolver<>("FROM AbstractCommodity i where type(i) = Ammunition", openNewSession());
+    }
 }

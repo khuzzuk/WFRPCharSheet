@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 
@@ -108,5 +109,20 @@ public class AbstractWeaponParserTest {
         ParserBag<ArmorType> bag = new ParserBag<>(base, resourceType, resourceType);
         Armor armor = parser.parseArmor(line.split(";"), bag);
         assertThat(armor.toCsv()).isEqualTo(line);
+    }
+
+    @Test
+    public void twoWaysAmmoParse() throws Exception {
+        String line = "Kołczan strzał;0|5|0;COMMON;;Strzała;Drewno;Żelazo;";
+        String baseTypeLine = "Strzała;0.1;0|0|1;COMMON;;0;AMMO;AMMO";
+        String woodLine = "Drewno;33;25;WOOD;COMMON;";
+        String ironLine = "Żelazo;100;100;METAL;COMMON;";
+        AmmunitionType type = (AmmunitionType) parser.parseEquipment(baseTypeLine.split(";"));
+        ParserBag<AmmunitionType> bag = new ParserBag<>(
+                type,
+                ResourceType.getFromCsv(woodLine.split(";")),
+                ResourceType.getFromCsv(ironLine.split(";")));
+        Ammunition item = parser.parseAmmunition(line.split(";"), bag);
+        assertThat(item.toCsv()).isEqualTo(line);
     }
 }

@@ -44,14 +44,6 @@ public class GuiPublisher {
         textRequestPublisher.publish(line, messages.getProperty("resource.type.save"));
     }
 
-    public void saveRangedWeapon(String line) {
-        publish(line, messages.getProperty("weapons.ranged.save"));
-    }
-
-    public void saveArmor(String line) {
-        publish(line, messages.getProperty("armor.save"));
-    }
-
     public void requestMiscItemType() {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("miscItemTypes.query")));
     }
@@ -78,6 +70,10 @@ public class GuiPublisher {
 
     public void requestArmor() {
         publish(messages.getProperty("armor.query"));
+    }
+
+    public void requestAmmunition() {
+        publish(messages.getProperty("ammunition.query"));
     }
 
     public void requestResourceTypes() {
@@ -120,44 +116,52 @@ public class GuiPublisher {
         publish(name, messages.getProperty("armor.query.specific"));
     }
 
+    public void requestAmmunition(String name) {
+        publish(name, messages.getProperty("ammunition.query.specific"));
+    }
+
     public void requestResourceType(String name) {
-        textRequestPublisher.publish(name, messages.getProperty("resource.type.query.specific"));
+        publish(name, messages.getProperty("resource.type.query.specific"));
     }
 
     public void removeMiscItemType(String name) {
-        textRequestPublisher.publish(name, messages.getProperty("miscItemTypes.remove"));
+        publish(name, messages.getProperty("miscItemTypes.remove"));
     }
 
     public void removeRangedTypeWeapon(String name) {
-        textRequestPublisher.publish(name, messages.getProperty("rangedWeapons.remove"));
+        publish(name, messages.getProperty("rangedWeapons.remove"));
     }
 
     public void removeWhiteWeapon(String name) {
-        textRequestPublisher.publish(name, messages.getProperty("whiteWeapons.remove"));
+        publish(name, messages.getProperty("whiteWeapons.remove"));
     }
 
     public void removeArmorType(String name) {
-        textRequestPublisher.publish(name, messages.getProperty("armorTypes.remove"));
+        publish(name, messages.getProperty("armorTypes.remove"));
     }
 
     public void removeAmmunitionType(String name) {
-        textRequestPublisher.publish(name, messages.getProperty("ammo.type.remove"));
+        publish(name, messages.getProperty("ammo.type.remove"));
     }
 
     public void removeResourceType(String name) {
-        textRequestPublisher.publish(name, messages.getProperty("resource.type.remove"));
+        publish(name, messages.getProperty("resource.type.remove"));
     }
 
     public void removeHandWeapon(String name) {
-        contentPublisher.publish(name, messages.getProperty("weapons.hand.remove"));
+        publish(name, messages.getProperty("weapons.hand.remove"));
     }
 
     public void removeRangedWeapon(String name) {
-        textRequestPublisher.publish(name, messages.getProperty("weapons.ranged.remove"));
+        publish(name, messages.getProperty("weapons.ranged.remove"));
     }
 
     public void removeArmor(String name) {
-        textRequestPublisher.publish(name, messages.getProperty("armor.remove"));
+        publish(name, messages.getProperty("armor.remove"));
+    }
+
+    public void removeAmmunition(String name) {
+        publish(name, messages.getProperty("ammunition.remove"));
     }
 
     public void publish(String text) {

@@ -68,6 +68,7 @@
                                             <fx:include fx:id="handWeaponsPane" source="handWeaponsPane.fxml"/>
                                             <fx:include fx:id="rangedWeaponsPane" source="rangeWeaponsPane.fxml"/>
                                             <fx:include fx:id="armorPane" source="armorPane.fxml"/>
+                                            <fx:include fx:id="ammunitionPane" source="ammunitionPane.fxml"/>
                                             <fx:include fx:id="itemTypesPane" source="itemTypesPane.fxml"/>
                                         </panes>
                                     </Accordion>
