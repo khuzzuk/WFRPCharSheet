@@ -1,0 +1,50 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<TitledPane animated="false" text="Umiejętności"
+            xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.SkillsPaneController">
+    <SplitPane dividerPositions="0.3">
+        <GridPane hgap="10" maxWidth="Infinity" maxHeight="Infinity">
+            <columnConstraints>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+            </rowConstraints>
+            <ListView fx:id="items" maxHeight="Infinity" maxWidth="Infinity"
+                      onMouseClicked="#getEntity"/>
+        </GridPane>
+        <GridPane hgap="5" vgap="3">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+            <padding>
+                <Insets right="10" left="10"/>
+            </padding>
+            <Label text="nazwa"/>
+            <TextField fx:id="name" GridPane.columnIndex="1"/>
+            <Label text="modyfikatory" GridPane.rowIndex="1"/>
+            <ListView fx:id="determinantsView" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Button text="dodaj" GridPane.rowIndex="1" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#chooseDeterminant"/>
+            <Label text="cechy specjalne" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                      GridPane.columnSpan="2"
+                      maxHeight="Infinity" maxWidth="Infinity"/>
+            <Button text="Usuń" GridPane.rowIndex="3" maxWidth="Infinity" onAction="#remove"/>
+            <Button text="Nowy" GridPane.rowIndex="3" GridPane.columnIndex="1" maxWidth="Infinity"/>
+            <Button text="Zapisz" GridPane.rowIndex="3" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#save"/>
+        </GridPane>
+    </SplitPane>
+</TitledPane>

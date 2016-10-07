@@ -1,0 +1,60 @@
+package pl.khuzzuk.wfrpchar.entities.skills;
+
+import lombok.Getter;
+import lombok.Setter;
+import pl.khuzzuk.wfrpchar.entities.Documented;
+import pl.khuzzuk.wfrpchar.entities.Named;
+import pl.khuzzuk.wfrpchar.entities.Persistable;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+public class Skill implements Named<String>, Persistable, Documented {
+    @Getter
+    @Setter
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @Getter
+    @Setter
+    private String name;
+
+    @Getter
+    @Setter
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "DET_SKILL_MAP",
+            joinColumns = {@JoinColumn(name = "SKILL_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
+    private Set<Determinant> determinants;
+
+    @Getter
+    @Setter
+    private String specialFeatures;
+
+    @Override
+    public String toCsv() {
+        return name + ";" + specialFeatures + ";" + Determinant.determinantsToCsv(determinants);
+    }
+
+    public static Skill fromCsv(String[] fields) {
+        Skill skill = new Skill();
+        skill.name = fields[0];
+        if (fields.length >= 2) {
+            skill.specialFeatures = fields[1];
+        } else {
+            skill.specialFeatures = "";
+        }
+        if (fields.length >= 3) {
+            DeterminantFactory factory = new DeterminantFactory();
+            skill.determinants = factory.createDeterminants(fields[2]);
+        } else {
+            skill.determinants = new HashSet<>();
+        }
+        return skill;
+    }
+}

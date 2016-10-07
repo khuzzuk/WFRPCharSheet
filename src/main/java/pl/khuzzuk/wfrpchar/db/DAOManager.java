@@ -12,6 +12,7 @@ import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.*;
+import pl.khuzzuk.wfrpchar.entities.skills.Skill;
 
 import javax.inject.Inject;
 
@@ -138,5 +139,11 @@ public class DAOManager {
     @Ammunitions
     public DAOEntityResolver<Ammunition, String> daoAmmunition() {
         return new DAOEntityResolver<>("FROM AbstractCommodity i where type(i) = Ammunition", openNewSession());
+    }
+
+    @Bean
+    @Skills
+    public DAOEntityResolver<Skill, String> daoSkills() {
+        return new DAOEntityResolver<>("FROM Skill", openNewSession());
     }
 }

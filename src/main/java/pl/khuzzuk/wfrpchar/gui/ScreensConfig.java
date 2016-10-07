@@ -67,50 +67,79 @@ public class ScreensConfig {
     @Bean
     @Named("hwDeterminantsCreatorController")
     public DeterminantCreatorController handWeaponDeterminantController() {
-        return new DeterminantCreatorController(messages.getProperty("determinants.creator.show.hw"),
+        DeterminantCreatorController controller = new DeterminantCreatorController(messages.getProperty("determinants.creator.show.hw"),
                 messages.getProperty("determinants.creator.add.hw"));
+        DeterminantCreatorStage stage = determinantStage();
+        stage.setController(controller);
+        stage.init();
+        return controller;
     }
 
     @Bean
     @Named("rwDeterminantsCreatorController")
     public DeterminantCreatorController rangedWeaponDeterminantController() {
-        return new DeterminantCreatorController(messages.getProperty("determinants.creator.show.rw"),
+        DeterminantCreatorController controller = new DeterminantCreatorController(messages.getProperty("determinants.creator.show.rw"),
                 messages.getProperty("determinants.creator.add.rw"));
+        DeterminantCreatorStage stage = determinantStage();
+        stage.setController(controller);
+        stage.init();
+        return controller;
     }
 
     @Bean
     @Named("arDeterminantsCreatorController")
     public DeterminantCreatorController armorDeterminantController() {
-        return new DeterminantCreatorController(messages.getProperty("determinants.creator.show.ar"),
+        DeterminantCreatorController controller = new DeterminantCreatorController(messages.getProperty("determinants.creator.show.ar"),
                 messages.getProperty("determinants.creator.add.ar"));
+        DeterminantCreatorStage stage = determinantStage();
+        stage.setController(controller);
+        stage.init();
+        return controller;
     }
 
     @Bean
     @Named("amDeterminantsCreatorController")
     public DeterminantCreatorController ammunitionDeterminantController() {
-        return new DeterminantCreatorController(messages.getProperty("determinants.creator.show.am"),
+        DeterminantCreatorController controller = new DeterminantCreatorController(messages.getProperty("determinants.creator.show.am"),
                 messages.getProperty("determinants.creator.add.am"));
+        DeterminantCreatorStage stage = determinantStage();
+        stage.setController(controller);
+        stage.init();
+        return controller;
     }
 
     @Bean
+    @Named("skDeterminantsCreatorController")
+    public DeterminantCreatorController skillDeterminantController() {
+        DeterminantCreatorController controller = new DeterminantCreatorController(messages.getProperty("determinants.creator.show.sk"),
+                messages.getProperty("determinants.creator.add.sk"));
+        DeterminantCreatorStage stage = determinantStage();
+        stage.setController(controller);
+        stage.init();
+        return controller;
+    }
+
+    @Bean
+    @Scope(value = "prototype")
+    public DeterminantCreatorStage determinantStage() {
+        return new DeterminantCreatorStage();
+    }
+
     @Named("handWeaponsDeterminantsCreatorStage")
     public DeterminantCreatorStage determinantCreatorStage() {
         return new DeterminantCreatorStage(handWeaponDeterminantController());
     }
 
-    @Bean
     @Named("rangedWeaponsDeterminantsCreatorStage")
     public DeterminantCreatorStage rangedWeaponDeterminantCreatorStage() {
         return new DeterminantCreatorStage(rangedWeaponDeterminantController());
     }
 
-    @Bean
     @Named("armorDeterminantsCreatorStage")
     public DeterminantCreatorStage armorDeterminantCreatorStage() {
         return new DeterminantCreatorStage(armorDeterminantController());
     }
 
-    @Bean
     @Named("ammunitionDeterminantsCreatorStage")
     public DeterminantCreatorStage ammunitionDeterminantCreatorStage() {
         return new DeterminantCreatorStage(ammunitionDeterminantController());

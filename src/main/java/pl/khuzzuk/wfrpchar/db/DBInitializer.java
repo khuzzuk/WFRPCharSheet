@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
+import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
@@ -12,6 +13,7 @@ import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
+import pl.khuzzuk.wfrpchar.entities.skills.Skill;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
 public class DBInitializer {
     private static final String DISCLAIMER = "spec:";
     private WeaponParser weaponParser;
+    private DAO dao;
 
     @Inject
     public DBInitializer(WeaponParser weaponParser) {
@@ -35,29 +38,31 @@ public class DBInitializer {
     }
 
     void resetDatabase(DAO dao) {
-        loadCurrencies(dao);
-        loadCharacters(dao);
-        loadItems(dao, "/items.csv");
-        loadItems(dao, "/whiteWeaponTypes.csv");
-        loadItems(dao, "/rangedWeaponTypes.csv");
-        loadItems(dao, "/armorType.csv");
+        this.dao = dao;
+        loadCurrencies();
+        loadCharacters();
+        loadItems("/items.csv");
+        loadItems("/whiteWeaponTypes.csv");
+        loadItems("/rangedWeaponTypes.csv");
+        loadItems("/armorType.csv");
         parseFileToItems("/ammoTypes.csv")
                 .forEach(a -> dao.saveEntity(AmmunitionType.class, (AmmunitionType) a));
-        loadResources(dao);
-        loadHandWeapons(dao);
-        loadGuns(dao);
-        loadArmors(dao);
-        loadAmmunitions(dao);
+        loadResources();
+        loadHandWeapons();
+        loadGuns();
+        loadArmors();
+        loadAmmunitions();
+        loadSkills();
     }
 
-    private void loadCurrencies(DAO dao) {
+    private void loadCurrencies() {
         List<Currency> currencies = readResource("/currencies.csv").stream()
                 .map(values -> new Currency(values[0], values[1], values[2], values[3], Float.parseFloat(values[4])))
                 .collect(Collectors.toList());
         currencies.forEach(dao::save);
     }
 
-    private void loadCharacters(DAO dao) {
+    private void loadCharacters() {
         List<Character> characters = readResource("/characters.csv")
                 .stream()
                 .map(s -> new Character(s[0]))
@@ -65,14 +70,14 @@ public class DBInitializer {
         characters.forEach(dao::save);
     }
 
-    private void loadResources(DAO dao) {
+    private void loadResources() {
         List<ResourceType> resources = readResource("/resources.csv")
                 .stream().filter(s -> !s[0].startsWith("spec")).map(ResourceType::getFromCsv)
                 .collect(Collectors.toList());
         resources.forEach(dao::save);
     }
 
-    private void loadHandWeapons(DAO dao) {
+    private void loadHandWeapons() {
         List<String[]> lines =
                 readResource("/handWeapons.csv")
                         .stream().filter(s -> !s[0].startsWith("spec"))
@@ -86,7 +91,7 @@ public class DBInitializer {
         }
     }
 
-    private void loadGuns(DAO dao) {
+    private void loadGuns() {
         List<String[]> list = readResource("/rangedWeapons.csv")
                 .stream().filter(s -> !s[0].startsWith("spec")).collect(Collectors.toList());
         for (String[] s : list) {
@@ -98,7 +103,7 @@ public class DBInitializer {
         }
     }
 
-    private void loadArmors(DAO dao) {
+    private void loadArmors() {
         List<String[]> list = readResource("/armor.csv")
                 .stream().filter(s -> !s[0].startsWith("spec")).collect(Collectors.toList());
         for (String[] s : list) {
@@ -110,9 +115,9 @@ public class DBInitializer {
         }
     }
 
-    private void loadAmmunitions(DAO dao) {
+    private void loadAmmunitions() {
         List<String[]> list = readResource("/ammo.csv")
-                .stream().filter(s -> !s[0].startsWith("spec")).collect(Collectors.toList());
+                .stream().filter(s -> !s[0].startsWith(DISCLAIMER)).collect(Collectors.toList());
         for (String[] s : list) {
             ParserBag<AmmunitionType> bag = new ParserBag<>(
                     dao.getEntity(AmmunitionType.class, s[4]),
@@ -122,14 +127,19 @@ public class DBInitializer {
         }
     }
 
-    private void loadItems(DAO dao, String path) {
+    private void loadSkills() {
+        readResource("/skills.csv").stream().filter(this::linesFilter)
+        .map(Skill::fromCsv).forEach(this::saveEntity);
+    }
+
+    private void loadItems(String path) {
         List<Item> equipments = parseFileToItems(path);
         equipments.forEach(dao::save);
     }
 
     private List<Item> parseFileToItems(String path) {
         return readResource(path)
-                    .stream().filter(s -> !s[0].startsWith(DISCLAIMER))
+                    .stream().filter(this::linesFilter)
                     .map(weaponParser::parseEquipment).collect(Collectors.toList());
     }
 
@@ -141,5 +151,14 @@ public class DBInitializer {
             e.printStackTrace();
         }
         return Collections.emptyList();
+    }
+
+    private boolean linesFilter(String[] line) {
+        return !line[0].startsWith(DISCLAIMER);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends Persistable> void saveEntity(T entity) {
+        dao.saveEntity((Class<T>) entity.getClass(), entity);
     }
 }

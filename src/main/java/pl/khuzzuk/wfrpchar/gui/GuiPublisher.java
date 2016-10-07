@@ -80,6 +80,10 @@ public class GuiPublisher {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("resource.type.query")));
     }
 
+    public void requestSkills() {
+        publish(messages.getProperty("skills.query"));
+    }
+
     public void requestResetDB() {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("database.reset")));
     }
@@ -124,6 +128,10 @@ public class GuiPublisher {
         publish(name, messages.getProperty("resource.type.query.specific"));
     }
 
+    public void requestSkill(String name) {
+        publish(name, messages.getProperty("skills.query.specific"));
+    }
+
     public void removeMiscItemType(String name) {
         publish(name, messages.getProperty("miscItemTypes.remove"));
     }
@@ -162,6 +170,10 @@ public class GuiPublisher {
 
     public void removeAmmunition(String name) {
         publish(name, messages.getProperty("ammunition.remove"));
+    }
+
+    public void removeSkill(String name) {
+        publish(name, messages.getProperty("skills.remove"));
     }
 
     public void publish(String text) {

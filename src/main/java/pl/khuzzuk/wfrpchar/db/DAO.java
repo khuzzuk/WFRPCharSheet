@@ -14,6 +14,7 @@ import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
+import pl.khuzzuk.wfrpchar.entities.skills.Skill;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -58,6 +59,7 @@ public class DAO {
                @RangedWeapons DAOTransactional<Gun, String> daoRangedWeapons,
                @Armors DAOTransactional<Armor, String> daoArmor,
                @Ammunitions DAOTransactional<Ammunition, String> daoAmmunition,
+               @Skills DAOTransactional<Skill, String> daoSkills,
                @Manager DAOManager manager) {
         this.daoItems = daoItems;
         this.daoWhiteWeapons = daoWhiteWeaponType;
@@ -86,6 +88,7 @@ public class DAO {
         resolvers.put(Gun.class, daoRangedWeapons);
         resolvers.put(Armor.class, daoArmor);
         resolvers.put(Ammunition.class, daoAmmunition);
+        resolvers.put(Skill.class, daoSkills);
     }
 
     @SuppressWarnings("unchecked")

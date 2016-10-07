@@ -24,7 +24,8 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
                                        EquipmentTypeChooserController equipmentTypeChooserController,
                                        RangeWeaponsPaneController rangeWeaponsPaneController,
                                        ArmorPaneController armorPaneController,
-                                       AmmunitionPaneController ammunitionPaneController) {
+                                       AmmunitionPaneController ammunitionPaneController,
+                                       SkillsPaneController skillsPaneController) {
         controllers = new ConcurrentHashMap<>();
         //TODO rework it to use ApplicationContext instead
         controllers.put(mainWindowController.getClass(), mainWindowController);
@@ -40,6 +41,7 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
         controllers.put(rangeWeaponsPaneController.getClass(), rangeWeaponsPaneController);
         controllers.put(armorPaneController.getClass(), armorPaneController);
         controllers.put(ammunitionPaneController.getClass(), ammunitionPaneController);
+        controllers.put(skillsPaneController.getClass(), skillsPaneController);
     }
 
     @Override
