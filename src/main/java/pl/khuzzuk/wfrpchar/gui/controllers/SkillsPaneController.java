@@ -3,7 +3,7 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.fxml.FXML;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
-import pl.khuzzuk.wfrpchar.entities.skills.Skill;
+import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
 import java.net.URL;

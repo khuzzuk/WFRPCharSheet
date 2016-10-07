@@ -13,7 +13,7 @@ import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
-import pl.khuzzuk.wfrpchar.entities.skills.Skill;
+import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 
 import javax.inject.Inject;
 import java.io.IOException;

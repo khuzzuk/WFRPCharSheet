@@ -17,7 +17,7 @@ public enum DeterminantsType implements Named<String> {
     SHOOTING("US", PERCENTAGE, PercentageDeterminant::new),
     STRENGTH("S", ABSOLUTE, AbsoluteDeterminant::new),
     DURABILITY("Wt", ABSOLUTE, AbsoluteDeterminant::new),
-    HEALTH("Wt", ABSOLUTE, AbsoluteDeterminant::new),
+    HEALTH("Żw", ABSOLUTE, AbsoluteDeterminant::new),
     INITIATIVE("I", PERCENTAGE, PercentageDeterminant::new),
     ATTACKS("A", ABSOLUTE, AbsoluteDeterminant::new),
     DEXTERITY("Zr", PERCENTAGE, PercentageDeterminant::new),

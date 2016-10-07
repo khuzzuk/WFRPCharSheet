@@ -1,4 +1,4 @@
-package pl.khuzzuk.wfrpchar.entities.skills;
+package pl.khuzzuk.wfrpchar.entities.competency;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -12,7 +12,7 @@ import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.*;
-import pl.khuzzuk.wfrpchar.entities.skills.Skill;
+import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 
 import javax.inject.Inject;
 
