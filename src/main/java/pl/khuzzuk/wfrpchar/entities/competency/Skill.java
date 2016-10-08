@@ -52,8 +52,7 @@ public class Skill implements Named<String>, Persistable, Documented {
             skill.specialFeatures = "";
         }
         if (fields.length >= 3) {
-            DeterminantFactory factory = new DeterminantFactory();
-            skill.determinants = factory.createDeterminants(fields[2]);
+            skill.determinants = DeterminantFactory.createDeterminants(fields[2]);
         } else {
             skill.determinants = new HashSet<>();
         }

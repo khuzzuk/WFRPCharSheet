@@ -1,18 +1,13 @@
 package pl.khuzzuk.wfrpchar.entities.determinants;
 
-import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-@NoArgsConstructor
-@Component
 public class DeterminantFactory {
-    @NotNull
-    public Set<Determinant> createDeterminants(@NotNull @Valid String data) {
+    public static Set<Determinant> createDeterminants(String data) {
         Set<Determinant> determinants = new HashSet<>();
         String[] columns = data.split("\\|");
         if (columns.length==1 && columns[0].equals("")) return determinants;
@@ -26,14 +21,13 @@ public class DeterminantFactory {
         }
         return determinants;
     }
-    private void addExtensions(Determinant toDeterminant, String with) {
+    private static void addExtensions(Determinant toDeterminant, String with) {
         String[] columns = with.split(":");
         for (String s : columns) {
             toDeterminant.addExtension(Extension.parseExtension(s));
         }
     }
-    @NotNull
-    private Determinant createDeterminant(@NotNull @Valid String[] data) {
+    private static Determinant createDeterminant(String[] data) {
         DeterminantsType type = DeterminantsType.valueOf(data[1]);
         Determinant determinant;
         if (type.getObjectType() == DeterminantsType.DetObjectType.PERCENTAGE) {
@@ -46,7 +40,7 @@ public class DeterminantFactory {
         return determinant;
     }
 
-    public static Determinant getDeterminantByName(String name) {
+    static Determinant getDeterminantByName(String name) {
         String[] elements = name.replaceAll(" ", "").split(":");
         DeterminantsType determinantsType = DeterminantsType.forName(elements[0]);
         Determinant determinant = determinantsType.getDeterminant();
@@ -58,5 +52,23 @@ public class DeterminantFactory {
         }
         determinant.addExtension(extension);
         return determinant;
+    }
+
+    public static String getProfessionDeterminant(String entry) {
+        String[] parts = entry.replaceAll(" ", "").split(":");
+        List<String> fields = new ArrayList<>();
+        fields.add("0");
+        fields.add(DeterminantsType.forName(parts[0]).name());
+        fields.add(getExtensions(parts[1]));
+        return fields.stream().collect(Collectors.joining(","));
+    }
+
+    private static String getExtensions(String entry) {
+        List<String> fields = new ArrayList<>();
+        int extensionLevel = 0;
+        for (int value = Integer.parseInt(entry); value > 0; value -= 10) {
+            fields.add("10-" + ++extensionLevel + "-true");
+        }
+        return fields.stream().collect(Collectors.joining(":"));
     }
 }

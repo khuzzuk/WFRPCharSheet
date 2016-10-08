@@ -2,7 +2,7 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
-import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
 import java.net.URL;
@@ -34,8 +34,13 @@ public class ProfessionPaneController extends AbstractFeaturedController {
         fields.add(specialFeatures.getText());
         fields.add("");
         fields.add("");
-        fields.add(Determinant.determinantsToCsv(Determinant.parseFromGui(
-                determinantsView.getItems().stream().collect(Collectors.toList()))));
+        fields.add(getDeterminantsFromList());
         guiPublisher.publish(fields.stream().collect(Collectors.joining(";")), messages.getProperty("professions.save"));
+    }
+
+    private String getDeterminantsFromList() {
+        return determinantsView.getItems().stream()
+                .map(DeterminantFactory::getProfessionDeterminant)
+                .collect(Collectors.joining("|"));
     }
 }

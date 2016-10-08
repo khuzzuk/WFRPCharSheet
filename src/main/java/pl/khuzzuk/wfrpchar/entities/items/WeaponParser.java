@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
@@ -9,17 +10,11 @@ import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.*;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
-import javax.inject.Inject;
 import java.util.HashSet;
 
 @Component
+@NoArgsConstructor
 public class WeaponParser {
-    private DeterminantFactory determinantFactory;
-
-    @Inject
-    public WeaponParser(DeterminantFactory determinantFactory) {
-        this.determinantFactory = determinantFactory;
-    }
 
     public Item parseEquipment(String[] columns) {
         EquipmentType type = EquipmentType.valueOf(columns[6]);
@@ -85,7 +80,7 @@ public class WeaponParser {
 
     private void addBastardFields(BastardWeaponType weaponType, String[] columns) {
         weaponType.setOneHandedStrength(Integer.parseInt(columns[13]));
-        weaponType.setOneHandedDeterminants(determinantFactory.createDeterminants(columns[14]));
+        weaponType.setOneHandedDeterminants(DeterminantFactory.createDeterminants(columns[14]));
     }
 
     private void fillItemFields(String[] columns, Item item) {
@@ -100,7 +95,7 @@ public class WeaponParser {
         equipment.setStrength(Integer.parseInt(columns[5]));
         equipment.setPlacement(Placement.valueOf(columns[7]));
         equipment.setNames(LangElement.parseLang(columns[8]));
-        equipment.setDeterminants(determinantFactory.createDeterminants(columns[9]));
+        equipment.setDeterminants(DeterminantFactory.createDeterminants(columns[9]));
     }
 
     private void fillWeaponFields(String[] columns, WeaponType weaponType) {
@@ -156,7 +151,7 @@ public class WeaponParser {
         weapon.setPrimaryResource(primaryResource);
         weapon.setSecondaryResource(secondaryResource);
         weapon.setDeterminants(line.length >= 8 ?
-                determinantFactory.createDeterminants(line[7]) :
+                DeterminantFactory.createDeterminants(line[7]) :
                 new HashSet<>());
     }
 
@@ -170,6 +165,6 @@ public class WeaponParser {
     }
 
     private void fillBastard(String[] fields, BastardWeapon weapon) {
-        weapon.setOneHandedDeterminants(determinantFactory.createDeterminants(fields[10]));
+        weapon.setOneHandedDeterminants(DeterminantFactory.createDeterminants(fields[10]));
     }
 }

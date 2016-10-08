@@ -68,8 +68,7 @@ public class Profession implements Named<String>, Persistable, Documented {
         profession.setSpecialFeatures(fields[1]);
         profession.setSkills(skills != null ? skills : new HashSet<>());
         profession.setNextProfessions(professions != null ? professions : new HashSet<>());
-        DeterminantFactory factory = new DeterminantFactory();
-        profession.setDeterminants(factory.createDeterminants(fields[4]));
+        profession.setDeterminants(DeterminantFactory.createDeterminants(fields[4]));
         return profession;
     }
 

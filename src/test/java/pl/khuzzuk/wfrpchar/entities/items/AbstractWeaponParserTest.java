@@ -4,7 +4,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
@@ -25,7 +24,7 @@ public class AbstractWeaponParserTest {
     @BeforeSuite
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        parser = new WeaponParser(new DeterminantFactory());
+        parser = new WeaponParser();
         when(resource.getName()).thenReturn("Stal");
         when(wood.getName()).thenReturn("Drewno");
     }
