@@ -31,6 +31,7 @@
                 <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
                 <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
                 <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
             </rowConstraints>
             <padding>
                 <Insets right="10"/>
@@ -64,17 +65,19 @@
                 <TextField fx:id="lead"/>
             </VBox>
             <Label text="modyfikatory" GridPane.rowIndex="3"/>
-            <ListView fx:id="determinantsView" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <ListView fx:id="determinantsView" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.rowSpan="2"/>
             <Button text="dodaj" GridPane.rowIndex="3" GridPane.columnIndex="2" maxWidth="Infinity"
                     onAction="#chooseDeterminant"/>
-            <Label text="cechy specjalne" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
-            <TextArea fx:id="specialFeatures" GridPane.rowIndex="3" GridPane.columnIndex="4"
+            <Button text="usuń" GridPane.rowIndex="4" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#removeDeterminant"/>
+            <Label text="cechy specjalne" GridPane.rowIndex="3" GridPane.columnIndex="3" GridPane.rowSpan="2"/>
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="4" GridPane.columnIndex="4"
                       GridPane.columnSpan="2"
                       maxHeight="Infinity" maxWidth="Infinity"/>
-            <Button text="Usuń" GridPane.rowIndex="5" maxWidth="Infinity" onAction="#remove"/>
-            <Button text="Nowy" GridPane.rowIndex="5" GridPane.columnIndex="1" maxWidth="Infinity"
-            onAction="#clearEditor"/>
-            <Button text="Zapisz" GridPane.rowIndex="5" GridPane.columnIndex="2" maxWidth="Infinity"
+            <Button text="Usuń" GridPane.rowIndex="6" maxWidth="Infinity" onAction="#remove"/>
+            <Button text="Nowy" GridPane.rowIndex="6" GridPane.columnIndex="1" maxWidth="Infinity"
+                    onAction="#clearEditor"/>
+            <Button text="Zapisz" GridPane.rowIndex="6" GridPane.columnIndex="2" maxWidth="Infinity"
                     onAction="#saveWeapon"/>
         </GridPane>
     </SplitPane>

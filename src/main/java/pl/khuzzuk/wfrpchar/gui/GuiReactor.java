@@ -110,6 +110,8 @@ public class GuiReactor {
         resourceTypesPaneController.loadAllResources(resources);
         handWeaponsPaneController.fillResourceBoxes(resources);
         rangeWeaponsPaneController.fillResourceBoxes(resources);
+        ammunitionPaneController.fillResourceBoxes(resources);
+        armorPaneController.fillResourceBoxes(resources);
     }
     @PostConstruct
     private void setConsumers() {

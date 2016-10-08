@@ -19,7 +19,7 @@
             </rowConstraints>
             <ListView fx:id="items" onMouseClicked="#getEntity"/>
         </GridPane>
-        <GridPane hgap="10">
+        <GridPane hgap="5" vgap="3">
             <columnConstraints>
                 <ColumnConstraints halignment="RIGHT"
                                    hgrow="ALWAYS"

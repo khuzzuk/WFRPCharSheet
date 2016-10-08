@@ -28,7 +28,7 @@
             </rowConstraints>
             <ListView fx:id="items" onMouseClicked="#getEntity"/>
         </GridPane>
-        <GridPane>
+        <GridPane hgap="5" vgap="3">
             <padding>
                 <Insets right="10.0"/>
             </padding>
