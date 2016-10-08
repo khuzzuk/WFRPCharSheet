@@ -8,6 +8,7 @@ import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Player;
+import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
@@ -60,6 +61,7 @@ public class DAO {
                @Armors DAOTransactional<Armor, String> daoArmor,
                @Ammunitions DAOTransactional<Ammunition, String> daoAmmunition,
                @Skills DAOTransactional<Skill, String> daoSkills,
+               @Professions DAOTransactional<Profession, String> daoProffesion,
                @Manager DAOManager manager) {
         this.daoItems = daoItems;
         this.daoWhiteWeapons = daoWhiteWeaponType;
@@ -89,6 +91,7 @@ public class DAO {
         resolvers.put(Armor.class, daoArmor);
         resolvers.put(Ammunition.class, daoAmmunition);
         resolvers.put(Skill.class, daoSkills);
+        resolvers.put(Profession.class, daoProffesion);
     }
 
     @SuppressWarnings("unchecked")
@@ -99,7 +102,7 @@ public class DAO {
     }
 
     @SuppressWarnings("unchecked")
-    <T extends Persistable> T getEntity(Class<T> entityType, String name) {
+    public <T extends Persistable> T getEntity(Class<T> entityType, String name) {
         DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(entityType);
         assureSessionInit(resolver);
         return resolver.getItem(name);

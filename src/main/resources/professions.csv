@@ -1,3 +1,2 @@
 spec:name;specialFeatures;skills;nextProfessions;determinants
-Aptekarz;1,HEALTH|10,DEXTERITY|10,INTELLIGENCE;;Chemia|Leczenie ran|Farmacja|Leczenie chorób|Odporność na trucizny|Warzenie trucizn
-
+Aptekarz;;Chemia|Leczenie ran|Farmacja|Leczenie chorób|Odporność na trucizny|Warzenie trucizn;;1,HEALTH|10,DEXTERITY|10,INTELLIGENCE

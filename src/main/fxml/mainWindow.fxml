@@ -77,7 +77,7 @@
                         </Accordion>
                     </TitledPane>
                     <fx:include fx:id="skillsPane" source="skillsPane.fxml"/>
-                    <TitledPane text="Profesje"/>
+                    <fx:include fx:id="professionPane" source="professionPane.fxml"/>
                 </panes>
             </Accordion>
         </Tab>

@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
-public class SkillsPaneController extends AbstractWeaponController {
+public class SkillsPaneController extends AbstractFeaturedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         getAction = guiPublisher::requestSkill;

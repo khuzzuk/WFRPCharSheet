@@ -3,7 +3,6 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
@@ -12,28 +11,24 @@ import pl.khuzzuk.wfrpchar.entities.items.types.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
-import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.net.URL;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class AbstractWeaponController extends ItemsListedController {
+public abstract class AbstractWeaponController extends AbstractFeaturedController {
     @FXML
     ComboBox<String> secondaryResource;
     @FXML
     ComboBox<String> primaryResource;
     @FXML
-    ListView<String> determinantsView;
-    @FXML
     Button chooseBaseButton;
 
     Collection<ResourceType> resources;
     String baseType;
-    @Inject
-    GuiPublisher guiPublisher;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -45,10 +40,6 @@ public abstract class AbstractWeaponController extends ItemsListedController {
         Set<ResourceType> toFill = resources.stream().collect(Collectors.toSet());
         ComboBoxHandler.fill(toFill, primaryResource);
         ComboBoxHandler.fill(toFill, secondaryResource);
-    }
-
-    public void addDeterminant(String determinant) {
-        determinantsView.getItems().add(determinant);
     }
 
     public void setBaseType(String type) {
@@ -85,14 +76,8 @@ public abstract class AbstractWeaponController extends ItemsListedController {
 
     @FXML
     void clearEditor() {
-        name.setText("");
-        accessibility.getSelectionModel().clearSelection();
+        super.clearEditor();
         primaryResource.getSelectionModel().clearSelection();
         secondaryResource.getSelectionModel().clearSelection();
-        specialFeatures.setText("");
-        gold.setText("");
-        silver.setText("");
-        lead.setText("");
-        determinantsView.getItems().clear();
     }
 }

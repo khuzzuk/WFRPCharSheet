@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
+import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
@@ -119,6 +120,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("skills.query"));
     }
 
+    private void saveProfession(String line) {
+        dao.saveEntity(Profession.class, Profession.build(line.split(";"), dao));
+        daoPublisher.publish(messages.getProperty("professions.query"));
+    }
+
     private void removeMiscItem(String name) {
         dao.removeMiscItem(name);
         daoPublisher.publish(messages.getProperty("miscItemTypes.query"));
@@ -174,6 +180,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("skills.query"));
     }
 
+    private void removeProfession(String name) {
+        dao.removeEntity(Profession.class, name);
+        daoPublisher.publish(messages.getProperty("professions.query"));
+    }
+
     private void getAllMiscItemsTypes() {
         daoPublisher.publishMiscItems(dao.getAllMiscItems());
     }
@@ -216,6 +227,10 @@ public class DAOReactor {
 
     private void getAllSkills() {
         daoPublisher.publish(dao.getAllEntities(Skill.class), messages.getProperty("skills.result"));
+    }
+
+    private void getAllProfessions() {
+        daoPublisher.publish(dao.getAllEntities(Profession.class), messages.getProperty("professions.result"));
     }
 
     private void getAllWWBaseType() {
@@ -272,6 +287,10 @@ public class DAOReactor {
         daoPublisher.publish(dao.getEntity(Skill.class, name), messages.getProperty("skills.result.specific"));
     }
 
+    private void getProfession(String name) {
+        daoPublisher.publish(dao.getEntity(Profession.class, name), messages.getProperty("professions.result.specific"));
+    }
+
     private void getWWBaseTypeByName(String name) {
         daoPublisher.publish(dao.getWhiteWeapon(name), messages.getProperty("weapons.hand.baseType.choice"));
     }
@@ -300,6 +319,7 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("armor.query"));
         daoPublisher.publish(messages.getProperty("ammunition.query"));
         daoPublisher.publish(messages.getProperty("skills.query"));
+        daoPublisher.publish(messages.getProperty("professions.query"));
     }
 
     @Inject

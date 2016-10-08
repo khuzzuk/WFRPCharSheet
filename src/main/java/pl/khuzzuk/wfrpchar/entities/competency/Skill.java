@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.entities.competency;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
@@ -13,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@ToString(exclude = "id")
 public class Skill implements Named<String>, Persistable, Documented {
     @Getter
     @Setter
@@ -56,5 +58,15 @@ public class Skill implements Named<String>, Persistable, Documented {
             skill.determinants = new HashSet<>();
         }
         return skill;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return namedEquals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return namedHashCode();
     }
 }

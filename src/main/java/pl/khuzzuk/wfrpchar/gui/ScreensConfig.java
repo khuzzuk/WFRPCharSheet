@@ -120,6 +120,17 @@ public class ScreensConfig {
     }
 
     @Bean
+    @Named("prDeterminantsCreatorController")
+    public DeterminantCreatorController professionDeterminantController() {
+        DeterminantCreatorController controller = new DeterminantCreatorController(messages.getProperty("determinants.creator.show.pr"),
+                messages.getProperty("determinants.creator.add.pr"));
+        DeterminantCreatorStage stage = determinantStage();
+        stage.setController(controller);
+        stage.init();
+        return controller;
+    }
+
+    @Bean
     @Scope(value = "prototype")
     public DeterminantCreatorStage determinantStage() {
         return new DeterminantCreatorStage();

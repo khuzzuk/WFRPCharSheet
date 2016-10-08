@@ -5,6 +5,8 @@ import pl.khuzzuk.wfrpchar.db.annot.Initializer;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
+import pl.khuzzuk.wfrpchar.entities.competency.Profession;
+import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
@@ -13,7 +15,6 @@ import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
-import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -53,6 +55,7 @@ public class DBInitializer {
         loadArmors();
         loadAmmunitions();
         loadSkills();
+        loadProfessions();
     }
 
     private void loadCurrencies() {
@@ -63,24 +66,20 @@ public class DBInitializer {
     }
 
     private void loadCharacters() {
-        List<Character> characters = readResource("/characters.csv")
-                .stream()
-                .map(s -> new Character(s[0]))
-                .collect(Collectors.toList());
+        List<Character> characters = readResource("/characters.csv").stream()
+                .map(s -> new Character(s[0])).collect(Collectors.toList());
         characters.forEach(dao::save);
     }
 
     private void loadResources() {
         List<ResourceType> resources = readResource("/resources.csv")
-                .stream().filter(s -> !s[0].startsWith("spec")).map(ResourceType::getFromCsv)
-                .collect(Collectors.toList());
+                .stream().map(ResourceType::getFromCsv).collect(Collectors.toList());
         resources.forEach(dao::save);
     }
 
     private void loadHandWeapons() {
         List<String[]> lines =
-                readResource("/handWeapons.csv")
-                        .stream().filter(s -> !s[0].startsWith("spec"))
+                readResource("/handWeapons.csv").stream()
                         .collect(Collectors.toList());
         for (String[] s : lines) {
             ParserBag<WhiteWeaponType> bag = new ParserBag<>(
@@ -93,7 +92,7 @@ public class DBInitializer {
 
     private void loadGuns() {
         List<String[]> list = readResource("/rangedWeapons.csv")
-                .stream().filter(s -> !s[0].startsWith("spec")).collect(Collectors.toList());
+                .stream().collect(Collectors.toList());
         for (String[] s : list) {
             ParserBag<RangedWeaponType> bag = new ParserBag<>(
                     dao.getEntity(RangedWeaponType.class, s[4]),
@@ -117,7 +116,7 @@ public class DBInitializer {
 
     private void loadAmmunitions() {
         List<String[]> list = readResource("/ammo.csv")
-                .stream().filter(s -> !s[0].startsWith(DISCLAIMER)).collect(Collectors.toList());
+                .stream().collect(Collectors.toList());
         for (String[] s : list) {
             ParserBag<AmmunitionType> bag = new ParserBag<>(
                     dao.getEntity(AmmunitionType.class, s[4]),
@@ -128,8 +127,16 @@ public class DBInitializer {
     }
 
     private void loadSkills() {
-        readResource("/skills.csv").stream().filter(this::linesFilter)
+        readResource("/skills.csv").stream()
         .map(Skill::fromCsv).forEach(this::saveEntity);
+    }
+
+    private void loadProfessions() {
+        Map<Profession, String[]> map = readResource("/professions.csv").stream()
+                .collect(Collectors.toMap(l -> Profession.build(l, null, null), l -> l));
+        map.keySet().forEach(p -> dao.saveEntity(Profession.class, p));
+        map.forEach((p, l) -> Profession.update(p, l, dao));
+        map.keySet().forEach(p -> dao.saveEntity(Profession.class, p));
     }
 
     private void loadItems(String path) {
@@ -138,23 +145,22 @@ public class DBInitializer {
     }
 
     private List<Item> parseFileToItems(String path) {
-        return readResource(path)
-                    .stream().filter(this::linesFilter)
+        return readResource(path).stream()
                     .map(weaponParser::parseEquipment).collect(Collectors.toList());
     }
 
     private List<String[]> readResource(String location) {
         try {
             Path resource = Paths.get(getClass().getResource(location).toURI());
-            return Files.readAllLines(resource).stream().map(s -> s.split(";")).collect(Collectors.toList());
+            return Files.readAllLines(resource).stream().filter(this::linesFilter).map(s -> s.split(";")).collect(Collectors.toList());
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
         return Collections.emptyList();
     }
 
-    private boolean linesFilter(String[] line) {
-        return !line[0].startsWith(DISCLAIMER);
+    private boolean linesFilter(String line) {
+        return !line.startsWith(DISCLAIMER);
     }
 
     @SuppressWarnings("unchecked")
