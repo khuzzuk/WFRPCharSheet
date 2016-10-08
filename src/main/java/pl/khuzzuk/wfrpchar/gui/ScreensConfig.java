@@ -33,35 +33,55 @@ public class ScreensConfig {
 
     @Bean
     @Scope(value = "prototype")
-    public EquipmentTypeChooserController equipmentTypeChooserController() {
-        return new EquipmentTypeChooserController();
+    public LinkedEntityChooserController equipmentTypeChooserController() {
+        return new LinkedEntityChooserController();
     }
 
-    @Bean
-    public EquipmentTypeChooserStage handWeaponTypeChooserStage() {
-        EquipmentTypeChooserController controller = equipmentTypeChooserController();
-        controller.setMessageType(messages.getProperty("weapons.hand.baseType.allTypesList"));
-        controller.setChoiceReady(messages.getProperty("weapons.hand.baseType.choice"));
+    private LinkedEntityChooserController getController(String subscripsion, String publishing) {
+        LinkedEntityChooserController controller = equipmentTypeChooserController();
+        controller.setMessageType(subscripsion);
+        controller.setChoiceReady(publishing);
         controller.subscribe();
-        return new EquipmentTypeChooserStage(stage, controller);
+        return controller;
     }
 
     @Bean
-    public EquipmentTypeChooserStage rangedWeaponTypeChooser() {
-        EquipmentTypeChooserController controller = equipmentTypeChooserController();
+    public LinkedEntityChooserStage handWeaponTypeChooserStage() {
+        return new LinkedEntityChooserStage(stage,getController(
+                messages.getProperty("weapons.hand.baseType.allTypesList"),
+                messages.getProperty("weapons.hand.baseType.choice")));
+    }
+
+    @Bean
+    public LinkedEntityChooserStage rangedWeaponTypeChooser() {
+        LinkedEntityChooserController controller = equipmentTypeChooserController();
         controller.setMessageType(messages.getProperty("weapons.ranged.baseType.allTypesList"));
         controller.setChoiceReady(messages.getProperty("weapons.ranged.baseType.choice"));
         controller.subscribe();
-        return new EquipmentTypeChooserStage(stage, controller);
+        return new LinkedEntityChooserStage(stage, controller);
     }
 
     @Bean
-    public EquipmentTypeChooserStage armorTypeChooser() {
-        EquipmentTypeChooserController controller = equipmentTypeChooserController();
+    public LinkedEntityChooserStage armorTypeChooser() {
+        LinkedEntityChooserController controller = equipmentTypeChooserController();
         controller.setMessageType(messages.getProperty("armor.baseType.allTypesList"));
         controller.setChoiceReady(messages.getProperty("armor.baseType.choice"));
         controller.subscribe();
-        return new EquipmentTypeChooserStage(stage, controller);
+        return new LinkedEntityChooserStage(stage, controller);
+    }
+
+    @Bean
+    public LinkedEntityChooserStage professionsSkillsChooser() {
+        return new LinkedEntityChooserStage(stage, getController(
+                messages.getProperty("professions.skills.allTypesList"),
+                messages.getProperty("professions.skills.choice")));
+    }
+
+    @Bean
+    public LinkedEntityChooserStage professionNextChooser() {
+        return new LinkedEntityChooserStage(stage, getController(
+                messages.getProperty("professions.next.allTypesList"),
+                messages.getProperty("professions.next.choice")));
     }
 
     @Bean

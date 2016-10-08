@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 
 import javax.inject.Inject;
@@ -26,6 +27,11 @@ public abstract class AbstractFeaturedController extends ItemsListedController {
     @FXML
     private void chooseDeterminant() {
         guiPublisher.publish(showDeterminantCreatorMsg);
+    }
+
+    @FXML
+    private void removeDeterminant() {
+        EntitiesAdapter.removeSelected(determinantsView);
     }
 
     @FXML

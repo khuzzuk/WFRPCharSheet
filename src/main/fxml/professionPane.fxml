@@ -32,6 +32,10 @@
                 <RowConstraints vgrow="ALWAYS"/>
                 <RowConstraints vgrow="ALWAYS"/>
                 <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
             </rowConstraints>
             <padding>
                 <Insets right="10" left="10"/>
@@ -39,16 +43,33 @@
             <Label text="nazwa"/>
             <TextField fx:id="name" GridPane.columnIndex="1"/>
             <Label text="modyfikatory" GridPane.rowIndex="1"/>
-            <ListView fx:id="determinantsView" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <ListView fx:id="determinantsView" GridPane.rowIndex="1" GridPane.columnIndex="1"
+            GridPane.rowSpan="2"/>
             <Button text="dodaj" GridPane.rowIndex="1" GridPane.columnIndex="2" maxWidth="Infinity"
                     onAction="#chooseDeterminant"/>
-            <Label text="cechy specjalne" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextArea fx:id="specialFeatures" GridPane.rowIndex="3" GridPane.columnIndex="1"
+            <Button text="usuń" GridPane.rowIndex="2" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#removeDeterminant"/>
+            <Label text="umiejętności" GridPane.rowIndex="3"/>
+            <ListView fx:id="skillsView" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                      GridPane.rowSpan="2"/>
+            <Button text="dodaj" GridPane.rowIndex="3" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#showSkillChooser"/>
+            <Button text="usuń" GridPane.rowIndex="4" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#removeSkill"/>
+            <Label text="profesje wyjściowe" GridPane.rowIndex="5"/>
+            <ListView fx:id="professionsNextView" GridPane.rowIndex="6" GridPane.columnIndex="1"
+                      GridPane.rowSpan="2"/>
+            <Button text="dodaj" GridPane.rowIndex="6" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#showProfessionChooser"/>
+            <Button text="usuń" GridPane.rowIndex="7" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#removeProfession"/>
+            <Label text="cechy specjalne" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="8" GridPane.columnIndex="1"
                       GridPane.columnSpan="2"
                       maxHeight="Infinity" maxWidth="Infinity"/>
-            <Button text="Usuń" GridPane.rowIndex="4" maxWidth="Infinity" onAction="#remove"/>
-            <Button text="Nowy" GridPane.rowIndex="4" GridPane.columnIndex="1" maxWidth="Infinity"/>
-            <Button text="Zapisz" GridPane.rowIndex="4" GridPane.columnIndex="2" maxWidth="Infinity"
+            <Button text="Usuń" GridPane.rowIndex="9" maxWidth="Infinity" onAction="#remove"/>
+            <Button text="Nowy" GridPane.rowIndex="9" GridPane.columnIndex="1" maxWidth="Infinity"/>
+            <Button text="Zapisz" GridPane.rowIndex="9" GridPane.columnIndex="2" maxWidth="Infinity"
                     onAction="#save"/>
         </GridPane>
     </SplitPane>

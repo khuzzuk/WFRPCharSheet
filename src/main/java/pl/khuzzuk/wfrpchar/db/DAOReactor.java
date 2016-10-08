@@ -307,6 +307,14 @@ public class DAOReactor {
         daoPublisher.publish(dao.getEntity(AmmunitionType.class, name), messages.getProperty("ammunition.baseType.choice"));
     }
 
+    private void getSkillsToChoose() {
+        daoPublisher.publish(dao.getAllEntities(Skill.class), messages.getProperty("professions.skills.allTypesList"));
+    }
+
+    private void getProfessionsToNextChoose() {
+        daoPublisher.publish(dao.getAllEntities(Profession.class), messages.getProperty("professions.next.allTypesList"));
+    }
+
     private void resetDB() {
         dao.getManager().resetDB(dao);
         daoPublisher.publish(messages.getProperty("whiteWeapons.query"));
@@ -339,6 +347,8 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.getAllTypes"), this::getAllWWBaseType);
         multiSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.getAllTypes"), this::getAllRangedBaseTypes);
         multiSubscriber.subscribe(messages.getProperty("armor.baseType.getAllTypes"), this::getAllArmorBaseTypes);
+        multiSubscriber.subscribe(messages.getProperty("professions.skills.getAllTypes"), this::getSkillsToChoose);
+        multiSubscriber.subscribe(messages.getProperty("professions.next.getAllTypes"), this::getProfessionsToNextChoose);
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.query"), this::getAllHandWeapons);
         multiSubscriber.subscribe(messages.getProperty("weapons.ranged.query"), this::getAllRangedWeapons);
         multiSubscriber.subscribe(messages.getProperty("armor.query"), this::getAllArmors);

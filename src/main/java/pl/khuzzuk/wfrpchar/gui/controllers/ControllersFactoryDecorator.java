@@ -21,7 +21,7 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
                                        ResourceTypesPaneController resourceTypesPaneController,
                                        AmmunitionTypesPaneController ammunitionTypesPaneController,
                                        HandWeaponsPaneController handWeaponsPaneController,
-                                       EquipmentTypeChooserController equipmentTypeChooserController,
+                                       LinkedEntityChooserController equipmentTypeChooserController,
                                        RangeWeaponsPaneController rangeWeaponsPaneController,
                                        ArmorPaneController armorPaneController,
                                        AmmunitionPaneController ammunitionPaneController,

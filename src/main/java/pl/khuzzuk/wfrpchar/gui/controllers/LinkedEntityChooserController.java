@@ -4,18 +4,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import lombok.Setter;
-import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
+import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 import pl.khuzzuk.wfrpchar.messaging.subscribers.GuiContentSubscriber;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.net.URL;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-public class EquipmentTypeChooserController extends GuiContentSubscriber<Collection<WhiteWeaponType>> implements Controller {
+public class LinkedEntityChooserController extends GuiContentSubscriber<Collection<? extends Named<String>>> implements Controller {
     @Inject
     private GuiPublisher publisher;
     @FXML
@@ -25,11 +24,11 @@ public class EquipmentTypeChooserController extends GuiContentSubscriber<Collect
     @Setter
     private String choiceReady;
 
-    public EquipmentTypeChooserController() {
+    public LinkedEntityChooserController() {
         super("");
     }
 
-    public EquipmentTypeChooserController(String msgType, String choiceMsg) {
+    public LinkedEntityChooserController(String msgType, String choiceMsg) {
         super(msgType);
         choiceReady = choiceMsg;
     }

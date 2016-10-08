@@ -11,18 +11,17 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.gui.controllers.EquipmentTypeChooserController;
+import pl.khuzzuk.wfrpchar.gui.controllers.LinkedEntityChooserController;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 @Log
-public class EquipmentTypeChooserStage extends Stage {
+public class LinkedEntityChooserStage extends Stage {
     @Autowired
     private ApplicationContext context;
-    private final EquipmentTypeChooserController controller;
-    EquipmentTypeChooserStage(Window parent, EquipmentTypeChooserController controller) {
+    private final LinkedEntityChooserController controller;
+    LinkedEntityChooserStage(Window parent, LinkedEntityChooserController controller) {
         super(StageStyle.DECORATED);
         this.controller = controller;
         controller.setParent(this);

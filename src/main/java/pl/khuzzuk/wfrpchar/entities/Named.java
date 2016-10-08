@@ -1,6 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities;
 
-public interface Named<T extends Comparable<T>> {
+public interface Named<T extends Comparable<? super T>> {
     T getName();
     default boolean namedEquals(Object o) {
         if (this == o) return true;
