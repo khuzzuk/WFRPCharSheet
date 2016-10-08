@@ -35,21 +35,15 @@ public class Profession implements Named<String>, Persistable, Documented {
     private String specialFeatures;
     @Getter
     @Setter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "PROF_DET",
-            joinColumns = {@JoinColumn(name = "PROF_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Skill> skills;
     @Getter
     @Setter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "PROF_NEXTPROF",
-            joinColumns = {@JoinColumn(name = "PRIM_PROF")},
-            inverseJoinColumns = {@JoinColumn(name = "NEXT_PROF")})
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Profession> nextProfessions;
     @Getter
     @Setter
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "DET_PROF_MAP",
             joinColumns = {@JoinColumn(name = "PROF_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
@@ -91,7 +85,10 @@ public class Profession implements Named<String>, Persistable, Documented {
 
     private static Set<Skill> getSkills(String[] fields, DAO dao) {
         Set<Skill> skills = new HashSet<>();
-        for (String name : fields[2].split("|")) {
+        if (fields[2].equals("")) {
+            return skills;
+        }
+        for (String name : fields[2].split("\\|")) {
             skills.add(dao.getEntity(Skill.class, name));
         }
         return skills;
@@ -99,7 +96,10 @@ public class Profession implements Named<String>, Persistable, Documented {
 
     private static Set<Profession> getProfessions(String[] fields, DAO dao) {
         Set<Profession> professions = new HashSet<>();
-        for (String name : fields[3].split("|")) {
+        if (fields[3].equals("")) {
+            return professions;
+        }
+        for (String name : fields[3].split("\\|")) {
             professions.add(dao.getEntity(Profession.class, name));
         }
         return professions;

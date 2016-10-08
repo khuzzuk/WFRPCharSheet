@@ -344,6 +344,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("armor.query"), this::getAllArmors);
         multiSubscriber.subscribe(messages.getProperty("ammunition.query"), this::getAllAmmunitions);
         multiSubscriber.subscribe(messages.getProperty("skills.query"), this::getAllSkills);
+        multiSubscriber.subscribe(messages.getProperty("professions.query"), this::getAllProfessions);
         daoContentSubscriber.subscribe(messages.getProperty("database.saveEquipment"), this::saveItem);
         daoContentSubscriber.subscribe(messages.getProperty("miscItemTypes.query.specific"), this::getMiscItemTypeByName);
         daoContentSubscriber.subscribe(messages.getProperty("miscItemTypes.remove"), this::removeMiscItem);
@@ -377,5 +378,8 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(messages.getProperty("skills.query.specific"), this::getSkill);
         daoContentSubscriber.subscribe(messages.getProperty("skills.save"), this::saveSkill);
         daoContentSubscriber.subscribe(messages.getProperty("skills.remove"), this::removeSkill);
+        daoContentSubscriber.subscribe(messages.getProperty("professions.query.specific"), this::getProfession);
+        daoContentSubscriber.subscribe(messages.getProperty("professions.save"), this::saveProfession);
+        daoContentSubscriber.subscribe(messages.getProperty("professions.remove"), this::removeProfession);
     }
 }

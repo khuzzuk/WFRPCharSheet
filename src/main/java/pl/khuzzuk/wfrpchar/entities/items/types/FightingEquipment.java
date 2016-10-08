@@ -27,7 +27,7 @@ public abstract class FightingEquipment extends Item implements Wearable {
     @NonNull
     @Setter
     @Getter
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "DET_EQ_MAP",
             joinColumns = {@JoinColumn(name = "EQ_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})

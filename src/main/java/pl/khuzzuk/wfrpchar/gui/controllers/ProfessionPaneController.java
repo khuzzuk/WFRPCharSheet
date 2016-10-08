@@ -19,6 +19,7 @@ public class ProfessionPaneController extends AbstractFeaturedController {
         getAction = guiPublisher::requestProfession;
         removeAction = guiPublisher::removeProfession;
         saveAction = this::save;
+        guiPublisher.requestProfessions();
     }
 
     public void loadToEditor(Profession profession) {
@@ -35,5 +36,6 @@ public class ProfessionPaneController extends AbstractFeaturedController {
         fields.add("");
         fields.add(Determinant.determinantsToCsv(Determinant.parseFromGui(
                 determinantsView.getItems().stream().collect(Collectors.toList()))));
+        guiPublisher.publish(fields.stream().collect(Collectors.joining(";")), messages.getProperty("professions.save"));
     }
 }

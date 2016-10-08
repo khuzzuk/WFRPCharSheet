@@ -12,7 +12,6 @@ import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.FloatNumeric;
 import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.Reactor;
 
 import javax.inject.Inject;
 import java.net.URL;
@@ -47,7 +46,7 @@ public abstract class ItemsListedController implements Controller {
     @javax.inject.Named("messages")
     Properties messages;
 
-    Reactor saveAction;
+    Runnable saveAction;
     Consumer<String> removeAction;
     Consumer<String> getAction;
 
@@ -72,7 +71,7 @@ public abstract class ItemsListedController implements Controller {
     @FXML
     private void save() {
         if (name.getText().length() >= 3) {
-            saveAction.resolve();
+            saveAction.run();
         }
     }
 
