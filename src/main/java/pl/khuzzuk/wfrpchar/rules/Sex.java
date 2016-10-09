@@ -3,8 +3,14 @@ package pl.khuzzuk.wfrpchar.rules;
 import lombok.Getter;
 import pl.khuzzuk.wfrpchar.entities.Named;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 public enum Sex implements Named<String> {
     MALE("Mężczyzna"), FEMALE("Kobieta");
+
+    public static final Set<Sex> SET = EnumSet.allOf(Sex.class);
+
     @Getter
     private final String name;
 
