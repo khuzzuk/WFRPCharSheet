@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
+import pl.khuzzuk.wfrpchar.rules.Sex;
 
 import javax.persistence.*;
 
@@ -24,4 +25,7 @@ public class Player implements Named<String>, Persistable {
     @Setter
     @ManyToOne
     private ProfessionClass professionClass;
+    @Getter
+    @Setter
+    private Sex sex;
 }
