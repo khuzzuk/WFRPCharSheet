@@ -4,10 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
+import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
-import pl.khuzzuk.wfrpchar.entities.Currency;
-import pl.khuzzuk.wfrpchar.entities.Persistable;
-import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
@@ -64,6 +62,7 @@ public class DAO {
                @Skills DAOTransactional<Skill, String> daoSkills,
                @Professions DAOTransactional<Profession, String> daoProffesion,
                @Professions @Types DAOTransactional<ProfessionClass, String> daoProfessionClass,
+               @Races DAOTransactional<Race, String> daoRaces,
                @Manager DAOManager manager) {
         this.daoItems = daoItems;
         this.daoWhiteWeapons = daoWhiteWeaponType;
@@ -95,6 +94,7 @@ public class DAO {
         resolvers.put(Skill.class, daoSkills);
         resolvers.put(ProfessionClass.class, daoProfessionClass);
         resolvers.put(Profession.class, daoProffesion);
+        resolvers.put(Race.class, daoRaces);
     }
 
     @SuppressWarnings("unchecked")

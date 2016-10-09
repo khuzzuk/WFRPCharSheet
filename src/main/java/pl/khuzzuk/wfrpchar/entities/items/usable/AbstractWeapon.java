@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.collections4.collection.CompositeCollection;
+import org.apache.commons.collections4.set.CompositeSet;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -12,8 +13,6 @@ import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.Weapon;
-import pl.khuzzuk.wfrpchar.entities.items.types.FightingEquipment;
-import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -36,7 +35,6 @@ public abstract class AbstractWeapon<T extends BattleEquipment>
     @Setter
     @ManyToOne
     private ResourceType secondaryResource;
-    @Getter
     @Setter
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "DET_REQ_MAP",
@@ -81,14 +79,14 @@ public abstract class AbstractWeapon<T extends BattleEquipment>
     }
 
     @Override
-    public Collection<Determinant> getAllDeterminants() {
-        return new CompositeCollection<>(determinants, getBaseType().getDeterminants());
+    public Set<Determinant> getBaseDeterminants() {
+        return determinants;
     }
 
     @Override
-    public Collection<Determinant> getDeterminantForType(DeterminantsType type) {
-        return getAllDeterminants().stream().filter(d -> d.getLabel() == type)
-                .collect(Collectors.toList());
+    @SuppressWarnings("unchecked")
+    public Set<Determinant> getDeterminants() {
+        return new CompositeSet<>(getBaseDeterminants(), getBaseType().getDeterminants());
     }
 
     void fillWeaponCsvFields(List<String> fields) {

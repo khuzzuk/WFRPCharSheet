@@ -9,6 +9,7 @@ import pl.khuzzuk.wfrpchar.db.annot.Armors;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Player;
+import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
@@ -160,5 +161,11 @@ public class DAOManager {
     @Professions
     public DAOEntityResolver<Profession, String> daoProfession() {
         return new DAOEntityResolver<>("FROM Profession", openNewSession());
+    }
+
+    @Bean
+    @Races
+    public DAOEntityResolver<Race, String> daoRaces() {
+        return new DAOEntityResolver<>("FROM Race", openNewSession());
     }
 }

@@ -1,7 +1,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<TitledPane animated="false" text="Profesje"
+<TitledPane animated="false" text="Klasy"
             xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.ProfessionClassPaneController">

@@ -1,13 +1,16 @@
 package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.*;
+import pl.khuzzuk.wfrpchar.entities.DeterminantContainer;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
+import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.Wearable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,10 +18,10 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public abstract class FightingEquipment extends Item implements Wearable {
-    @NonNull
+public abstract class FightingEquipment extends Item implements Wearable, BattleEquipment {
     @Getter
     @Setter
+    @Min(0)
     int strength;
     @NonNull
     @Getter
@@ -39,7 +42,7 @@ public abstract class FightingEquipment extends Item implements Wearable {
     @Column(name = "TEXT", nullable = false)
     @JoinTable(name = "LAN_NAMES_MAP",
             joinColumns = {@JoinColumn(name = "ITEM_ID")})
-            Map<LangElement, String> names;
+    Map<LangElement, String> names;
 
     String getLangToCsv() {
         return (names.get(LangElement.ADJECTIVE_MASC_SING) != null ? names.get(LangElement.ADJECTIVE_MASC_SING) : "") +
@@ -67,4 +70,8 @@ public abstract class FightingEquipment extends Item implements Wearable {
         return determinants != null ? determinants : Collections.emptyList();
     }
 
+    @Override
+    public Collection<Determinant> getBaseDeterminants() {
+        return getDeterminants();
+    }
 }

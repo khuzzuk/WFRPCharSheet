@@ -39,22 +39,22 @@ public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends Abst
 
     @Override
     public int getBattleMod() {
-        return Determinant.getSumForType(getAllDeterminants(), DeterminantsType.BATTLE);
+        return Determinant.getSumForType(getBaseDeterminants(), DeterminantsType.BATTLE);
     }
 
     @Override
     public int getInitiativeMod() {
-        return Determinant.getSumForType(getAllDeterminants(), DeterminantsType.INITIATIVE);
+        return Determinant.getSumForType(getBaseDeterminants(), DeterminantsType.INITIATIVE);
     }
 
     @Override
     public int getParryMod() {
-        return Determinant.getSumForType(getAllDeterminants(), DeterminantsType.PARRY);
+        return Determinant.getSumForType(getBaseDeterminants(), DeterminantsType.PARRY);
     }
 
     @Override
     public int getOpponentParryMod() {
-        return Determinant.getSumForType(getAllDeterminants(), DeterminantsType.OPPONENT_PARRY);
+        return Determinant.getSumForType(getBaseDeterminants(), DeterminantsType.OPPONENT_PARRY);
     }
 
     @Override

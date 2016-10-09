@@ -53,6 +53,8 @@ public class GuiReactor {
     @Inject
     private ProfessionPaneController professionPaneController;
     @Inject
+    private RacesPaneController racesPaneController;
+    @Inject
     @Named("hwDeterminantsCreatorController")
     private DeterminantCreatorController hwDeterminantCreatorController;
     @Inject
@@ -136,12 +138,24 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("ammo.type.result.specific"), ammunitionTypesPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("resource.type.result"), this::sendResourcesTypes);
         guiContentSubscriber.subscribe(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
+
+        //DeterminantsCreator start action
+        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);
+        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.rw"), rwDeterminantCreatorController::show);
+        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.ar"), arDeterminantCreatorController::show);
+        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.am"), amDeterminantCreatorController::show);
+        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.sk"), skDeterminantCreatorController::show);
+        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.pr"), prDeterminantCreatorController::show);
+
+        //DeterminantsCreator end actions
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.hw"), handWeaponsPaneController::addDeterminant);
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.rw"), rangeWeaponsPaneController::addDeterminant);
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.ar"), armorPaneController::addDeterminant);
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.am"), ammunitionPaneController::addDeterminant);
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.sk"), skillsPaneController::addDeterminant);
         guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.pr"), professionPaneController::addDeterminant);
+
+        //Base type choosers
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.choice"), rangeWeaponsPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("armor.baseType.choice"), armorPaneController::setBaseType);
@@ -149,12 +163,9 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("professions.skills.choice"), professionPaneController::addSkill);
         guiContentSubscriber.subscribe(messages.getProperty("professions.next.choice"), professionPaneController::addProfession);
         guiContentSubscriber.subscribe(messages.getProperty("ammunition.baseType.choice"), ammunitionPaneController::setBaseType);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.rw"), rwDeterminantCreatorController::show);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.ar"), arDeterminantCreatorController::show);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.am"), amDeterminantCreatorController::show);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.sk"), skDeterminantCreatorController::show);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.pr"), prDeterminantCreatorController::show);
+        guiContentSubscriber.subscribe(messages.getProperty("race.skills.choice"), racesPaneController::addSkill);
+
+        //regular queries
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result"), handWeaponsPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result.specific"), handWeaponsPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.result"), rangeWeaponsPaneController::loadAll);
@@ -169,5 +180,7 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("professions.class.result.specific"), professionClassPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("professions.result"), professionPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("professions.result.specific"), professionPaneController::loadToEditor);
+        guiContentSubscriber.subscribe(messages.getProperty("race.result"), racesPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("race.result.specific"), racesPaneController::loadToEditor);
     }
 }

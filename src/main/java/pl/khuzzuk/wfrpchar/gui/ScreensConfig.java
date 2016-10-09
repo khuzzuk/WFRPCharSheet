@@ -76,7 +76,6 @@ public class ScreensConfig {
                 messages.getProperty("professions.class.skills.allTypesList"),
                 messages.getProperty("professions.class.skills.choice")));
     }
-
     @Bean
     public LinkedEntityChooserStage professionsSkillsChooser() {
         return new LinkedEntityChooserStage(stage, getController(
@@ -89,6 +88,13 @@ public class ScreensConfig {
         return new LinkedEntityChooserStage(stage, getController(
                 messages.getProperty("professions.next.allTypesList"),
                 messages.getProperty("professions.next.choice")));
+    }
+
+    @Bean
+    public LinkedEntityChooserStage raceSkillsChooser() {
+        return new LinkedEntityChooserStage(stage, getController(
+                messages.getProperty("race.skills.allTypesList"),
+                messages.getProperty("race.skills.choice")));
     }
 
     @Bean

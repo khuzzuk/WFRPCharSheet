@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<TitledPane animated="false" text="Rasy" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.RacesPaneController">
+    <SplitPane dividerPositions="0.3">
+        <GridPane hgap="10" maxHeight="Infinity" maxWidth="Infinity">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+            </rowConstraints>
+            <ListView fx:id="items" maxHeight="Infinity" maxWidth="Infinity" onMouseClicked="#getEntity"/>
+        </GridPane>
+        <GridPane hgap="5" vgap="3">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="100"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="100"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="100"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="100"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+            <padding>
+                <Insets left="10" right="10" top="10" bottom="10"/>
+            </padding>
+            <Label text="nazwa"/>
+            <TextField fx:id="name" GridPane.columnIndex="1"/>
+            <Label text="modyfikatory" GridPane.rowIndex="1"/>
+            <HBox maxHeight="Infinity" maxWidth="Infinity" spacing="5.0"
+                  GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1">
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="Sz"/>
+                    <TextField fx:id="speed" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="WW"/>
+                    <TextField fx:id="battle" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="US"/>
+                    <TextField fx:id="shooting" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="S"/>
+                    <TextField fx:id="strength" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="Wt"/>
+                    <TextField fx:id="endurance" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="Żw"/>
+                    <TextField fx:id="health" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="I"/>
+                    <TextField fx:id="initiative" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="A"/>
+                    <TextField fx:id="attacks" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="Zr"/>
+                    <TextField fx:id="dexterity" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="Cp"/>
+                    <TextField fx:id="leaderSkills" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="Int"/>
+                    <TextField fx:id="intelligence" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="Op"/>
+                    <TextField fx:id="control" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="SW"/>
+                    <TextField fx:id="will" prefWidth="30"/>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+                    <Label text="Ogd"/>
+                    <TextField fx:id="charisma" prefWidth="30"/>
+                </VBox>
+            </HBox>
+            <Label text="cechy specjalne" GridPane.rowIndex="2"/>
+            <TextArea fx:id="specialFeatures" maxHeight="Infinity" maxWidth="200"
+                      GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2"/>
+            <Label text="umiejętności" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+            <ListView fx:id="skillsView" GridPane.rowIndex="2" GridPane.columnIndex="3" GridPane.rowSpan="2"
+                      maxHeight="Infinity" maxWidth="Infinity"/>
+            <Button text="dodaj" GridPane.rowIndex="2" GridPane.columnIndex="4" maxWidth="Infinity"
+                    onAction="#showSkillChooser"/>
+            <Button text="usuń" GridPane.rowIndex="3" GridPane.columnIndex="4" maxWidth="Infinity"
+                    onAction="#removeSkill"/>
+            <Button maxWidth="Infinity" onAction="#remove" text="Usuń" GridPane.rowIndex="4"/>
+            <Button maxWidth="Infinity" text="Nowy" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <Button maxWidth="Infinity" onAction="#save" text="Zapisz" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+        </GridPane>
+    </SplitPane>
+</TitledPane>

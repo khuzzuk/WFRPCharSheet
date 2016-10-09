@@ -15,17 +15,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class ProfessionPaneController extends AbstractFeaturedController {
+public class ProfessionPaneController extends SkillViewController {
     @FXML
     private ComboBox<String> professionClass;
     @FXML
     private ListView<String> professionsNextView;
-    @FXML
-    private ListView<String> skillsView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showDeterminantCreatorMsg = messages.getProperty("determinants.creator.show.pr");
+        skillChooserMsg = messages.getProperty("professions.skills.getAllTypes");
         getAction = guiPublisher::requestProfession;
         removeAction = guiPublisher::removeProfession;
         saveAction = this::saveProfession;
@@ -46,17 +45,8 @@ public class ProfessionPaneController extends AbstractFeaturedController {
     }
 
     @FXML
-    private void showSkillChooser() {
-        guiPublisher.publish(messages.getProperty("professions.skills.getAllTypes"));
-    }
-
-    @FXML
     private void showProfessionChooser() {
         guiPublisher.publish(messages.getProperty("professions.next.getAllTypes"));
-    }
-
-    public void addSkill(String skill) {
-        skillsView.getItems().add(skill);
     }
 
     public void addProfession(String profession) {
@@ -78,11 +68,6 @@ public class ProfessionPaneController extends AbstractFeaturedController {
         return determinantsView.getItems().stream()
                 .map(DeterminantFactory::getProfessionDeterminant)
                 .collect(Collectors.joining("|"));
-    }
-
-    @FXML
-    private void removeSkill() {
-        EntitiesAdapter.removeSelected(skillsView);
     }
 
     @FXML

@@ -2,9 +2,8 @@ package pl.khuzzuk.wfrpchar.db;
 
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.Initializer;
+import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
-import pl.khuzzuk.wfrpchar.entities.Currency;
-import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.competency.Skill;
@@ -58,6 +57,7 @@ public class DBInitializer {
         loadSkills();
         loadProfessionClasses();
         loadProfessions();
+        loadRaces();
     }
 
     private void loadCurrencies() {
@@ -135,11 +135,8 @@ public class DBInitializer {
 
     private void loadProfessionClasses() {
         readResource("/professionClass.csv").stream()
-                .collect(Collectors.toMap(ProfessionClass::fromCsv, l -> l))
-                .forEach((p, l) -> {
-                    ProfessionClass.updateSkills(p, l, dao);
-                    dao.saveEntity(ProfessionClass. class, p);
-                });
+                .map(l -> ProfessionClass.fromCsv(l, dao))
+                .forEach(p -> dao.saveEntity(ProfessionClass.class, p));
     }
 
     private void loadProfessions() {
@@ -148,6 +145,11 @@ public class DBInitializer {
         map.keySet().forEach(p -> dao.saveEntity(Profession.class, p));
         map.forEach((p, l) -> Profession.update(p, l, dao));
         map.keySet().forEach(p -> dao.saveEntity(Profession.class, p));
+    }
+
+    private void loadRaces() {
+        readResource("/races.csv").stream()
+                .map(l -> Race.fromCsv(l ,dao)).forEach(r -> dao.saveEntity(Race.class, r));
     }
 
     private void loadItems(String path) {

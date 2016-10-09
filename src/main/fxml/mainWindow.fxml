@@ -89,6 +89,7 @@
                             </panes>
                         </Accordion>
                     </TitledPane>
+                    <fx:include fx:id="racePane" source="racesPane.fxml"/>
                 </panes>
             </Accordion>
         </Tab>

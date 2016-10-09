@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
-public class ProfessionClassPaneController extends ItemsListedController {
+public class ProfessionClassPaneController extends SkillViewController {
     @FXML
     private ComboBox<String> baseDeterminantType;
     @FXML
@@ -26,6 +26,7 @@ public class ProfessionClassPaneController extends ItemsListedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ComboBoxHandler.fill(EnumSet.allOf(DeterminantsType.class), baseDeterminantType);
+        skillChooserMsg = messages.getProperty("professions.class.skills.getAllTypes");
         guiPublisher.requestProfessionClasses();
         getAction = guiPublisher::requestProfessionClass;
         removeAction = guiPublisher::removeProfessionClass;
@@ -41,20 +42,6 @@ public class ProfessionClassPaneController extends ItemsListedController {
         }
         fields.add(skillsView.getItems().stream().collect(Collectors.joining("|")));
         guiPublisher.publish(fields.stream().collect(Collectors.joining(";")), messages.getProperty("professions.class.save"));
-    }
-
-    @FXML
-    private void showSkillChooser() {
-        guiPublisher.publish(messages.getProperty("professions.class.skills.getAllTypes"));
-    }
-
-    @FXML
-    private void removeSkill() {
-        EntitiesAdapter.removeSelected(skillsView);
-    }
-
-    public void addSkill(String skill) {
-        skillsView.getItems().add(skill);
     }
 
     public void loadToEditor(ProfessionClass professionClass) {
