@@ -75,7 +75,7 @@ public abstract class ItemsListedController implements Controller {
         }
     }
 
-    public void loadAll(Collection<Named<String>> itemsList) {
+    public void loadAll(Collection<? extends Named<String>> itemsList) {
         items.getItems().clear();
         items.getItems().addAll(itemsList.stream()
                 .map(Named::getName).collect(Collectors.toList()));

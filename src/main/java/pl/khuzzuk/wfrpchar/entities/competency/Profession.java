@@ -48,6 +48,10 @@ public class Profession implements Named<String>, Persistable, Documented {
             joinColumns = {@JoinColumn(name = "PROF_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
     private Set<Determinant> determinants;
+    @Setter
+    @Getter
+    @ManyToOne
+    private ProfessionClass professionClass;
 
     @Override
     public String toCsv() {
@@ -79,6 +83,7 @@ public class Profession implements Named<String>, Persistable, Documented {
     public static Profession update(final Profession profession, String[] fields, DAO dao) {
         profession.setSkills(getSkills(fields, dao));
         profession.setNextProfessions(getProfessions(fields, dao));
+        profession.setProfessionClass(dao.getEntity(ProfessionClass.class, fields[5]));
         return profession;
     }
 

@@ -6,6 +6,7 @@ import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
+import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
@@ -55,6 +56,7 @@ public class DBInitializer {
         loadArmors();
         loadAmmunitions();
         loadSkills();
+        loadProfessionClasses();
         loadProfessions();
     }
 
@@ -129,6 +131,15 @@ public class DBInitializer {
     private void loadSkills() {
         readResource("/skills.csv").stream()
         .map(Skill::fromCsv).forEach(this::saveEntity);
+    }
+
+    private void loadProfessionClasses() {
+        readResource("/professionClass.csv").stream()
+                .collect(Collectors.toMap(ProfessionClass::fromCsv, l -> l))
+                .forEach((p, l) -> {
+                    ProfessionClass.updateSkills(p, l, dao);
+                    dao.saveEntity(ProfessionClass. class, p);
+                });
     }
 
     private void loadProfessions() {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
+import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
@@ -120,6 +121,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("skills.query"));
     }
 
+    private void saveProfessionClass(String line) {
+        dao.saveEntity(ProfessionClass.class, ProfessionClass.fromCsv(line.split(";"), dao));
+        daoPublisher.publish(messages.getProperty("professions.class.query"));
+    }
+
     private void saveProfession(String line) {
         dao.saveEntity(Profession.class, Profession.build(line.split(";"), dao));
         daoPublisher.publish(messages.getProperty("professions.query"));
@@ -180,6 +186,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("skills.query"));
     }
 
+    private void removeProfessionClass(String name) {
+        dao.removeEntity(ProfessionClass.class, name);
+        daoPublisher.publish(messages.getProperty("professions.class.query"));
+    }
+
     private void removeProfession(String name) {
         dao.removeEntity(Profession.class, name);
         daoPublisher.publish(messages.getProperty("professions.query"));
@@ -227,6 +238,10 @@ public class DAOReactor {
 
     private void getAllSkills() {
         daoPublisher.publish(dao.getAllEntities(Skill.class), messages.getProperty("skills.result"));
+    }
+
+    private void getAllProfessionClasses() {
+        daoPublisher.publish(dao.getAllEntities(ProfessionClass.class), messages.getProperty("professions.class.result"));
     }
 
     private void getAllProfessions() {
@@ -287,6 +302,11 @@ public class DAOReactor {
         daoPublisher.publish(dao.getEntity(Skill.class, name), messages.getProperty("skills.result.specific"));
     }
 
+    private void getProfessionClass(String name) {
+        daoPublisher.publish(dao.getEntity(ProfessionClass.class, name),
+                messages.getProperty("professions.class.result.specific"));
+    }
+
     private void getProfession(String name) {
         daoPublisher.publish(dao.getEntity(Profession.class, name), messages.getProperty("professions.result.specific"));
     }
@@ -311,6 +331,10 @@ public class DAOReactor {
         daoPublisher.publish(dao.getAllEntities(Skill.class), messages.getProperty("professions.skills.allTypesList"));
     }
 
+    private void getSkillsToProfessionClassChooser() {
+        daoPublisher.publish(dao.getAllEntities(Skill.class), messages.getProperty("professions.class.skills.allTypesList"));
+    }
+
     private void getProfessionsToNextChoose() {
         daoPublisher.publish(dao.getAllEntities(Profession.class), messages.getProperty("professions.next.allTypesList"));
     }
@@ -327,6 +351,7 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("armor.query"));
         daoPublisher.publish(messages.getProperty("ammunition.query"));
         daoPublisher.publish(messages.getProperty("skills.query"));
+        daoPublisher.publish(messages.getProperty("professions.class.query"));
         daoPublisher.publish(messages.getProperty("professions.query"));
     }
 
@@ -347,6 +372,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.getAllTypes"), this::getAllWWBaseType);
         multiSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.getAllTypes"), this::getAllRangedBaseTypes);
         multiSubscriber.subscribe(messages.getProperty("armor.baseType.getAllTypes"), this::getAllArmorBaseTypes);
+        multiSubscriber.subscribe(messages.getProperty("professions.class.skills.getAllTypes"), this::getSkillsToProfessionClassChooser);
         multiSubscriber.subscribe(messages.getProperty("professions.skills.getAllTypes"), this::getSkillsToChoose);
         multiSubscriber.subscribe(messages.getProperty("professions.next.getAllTypes"), this::getProfessionsToNextChoose);
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.query"), this::getAllHandWeapons);
@@ -354,6 +380,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("armor.query"), this::getAllArmors);
         multiSubscriber.subscribe(messages.getProperty("ammunition.query"), this::getAllAmmunitions);
         multiSubscriber.subscribe(messages.getProperty("skills.query"), this::getAllSkills);
+        multiSubscriber.subscribe(messages.getProperty("professions.class.query"), this::getAllProfessionClasses);
         multiSubscriber.subscribe(messages.getProperty("professions.query"), this::getAllProfessions);
         daoContentSubscriber.subscribe(messages.getProperty("database.saveEquipment"), this::saveItem);
         daoContentSubscriber.subscribe(messages.getProperty("miscItemTypes.query.specific"), this::getMiscItemTypeByName);
@@ -388,6 +415,9 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(messages.getProperty("skills.query.specific"), this::getSkill);
         daoContentSubscriber.subscribe(messages.getProperty("skills.save"), this::saveSkill);
         daoContentSubscriber.subscribe(messages.getProperty("skills.remove"), this::removeSkill);
+        daoContentSubscriber.subscribe(messages.getProperty("professions.class.query.specific"), this::getProfessionClass);
+        daoContentSubscriber.subscribe(messages.getProperty("professions.class.save"), this::saveProfessionClass);
+        daoContentSubscriber.subscribe(messages.getProperty("professions.class.remove"), this::removeProfessionClass);
         daoContentSubscriber.subscribe(messages.getProperty("professions.query.specific"), this::getProfession);
         daoContentSubscriber.subscribe(messages.getProperty("professions.save"), this::saveProfession);
         daoContentSubscriber.subscribe(messages.getProperty("professions.remove"), this::removeProfession);

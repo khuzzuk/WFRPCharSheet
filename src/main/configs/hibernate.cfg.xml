@@ -49,8 +49,11 @@
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.Gun"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.Armor"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition"/>
+
+        <!--COMPETENCY-->
         <mapping class="pl.khuzzuk.wfrpchar.entities.competency.Skill"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.competency.Profession"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass"/>
 
         <!--DETERMINANTS-->
         <mapping class="pl.khuzzuk.wfrpchar.entities.determinants.Determinant"/>

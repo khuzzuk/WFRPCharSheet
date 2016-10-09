@@ -1,20 +1,23 @@
 package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
+import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
+import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
 public class ProfessionPaneController extends AbstractFeaturedController {
+    @FXML
+    private ComboBox<String> professionClass;
     @FXML
     private ListView<String> professionsNextView;
     @FXML
@@ -29,12 +32,17 @@ public class ProfessionPaneController extends AbstractFeaturedController {
         guiPublisher.requestProfessions();
     }
 
+    public void loadProfessionClasses(Collection<ProfessionClass> professionClasses) {
+        ComboBoxHandler.fill(professionClasses.stream().collect(Collectors.toSet()), professionClass);
+    }
+
     public void loadToEditor(Profession profession) {
         name.setText(profession.getName());
         specialFeatures.setText(profession.getSpecialFeatures());
         EntitiesAdapter.sendToListView(determinantsView, profession.getDeterminants());
         EntitiesAdapter.sendToListView(skillsView, profession.getSkills());
         EntitiesAdapter.sendToListView(professionsNextView, profession.getNextProfessions());
+        professionClass.getSelectionModel().select(profession.getProfessionClass().getName());
     }
 
     @FXML
@@ -62,6 +70,7 @@ public class ProfessionPaneController extends AbstractFeaturedController {
         fields.add(skillsView.getItems().stream().collect(Collectors.joining("|")));
         fields.add(professionsNextView.getItems().stream().collect(Collectors.joining("|")));
         fields.add(getDeterminantsFromList());
+        fields.add(professionClass.getSelectionModel().getSelectedItem());
         guiPublisher.publish(fields.stream().collect(Collectors.joining(";")), messages.getProperty("professions.save"));
     }
 

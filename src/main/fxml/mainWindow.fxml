@@ -52,7 +52,8 @@
                                         </padding>
                                         <panes>
                                             <fx:include fx:id="whiteWeaponTypePane" source="whiteWeaponTypePane.fxml"/>
-                                            <fx:include fx:id="rangedWeaponTypePane" source="rangedWeaponTypePane.fxml"/>
+                                            <fx:include fx:id="rangedWeaponTypePane"
+                                                        source="rangedWeaponTypePane.fxml"/>
                                             <fx:include fx:id="armorTypesPane" source="armorTypePane.fxml"/>
                                             <fx:include fx:id="ammunitionTypesPane" source="ammunitionTypePane.fxml"/>
                                             <fx:include fx:id="resourceTypesPane" source="resourceTypesPane.fxml"/>
@@ -76,8 +77,18 @@
                             </panes>
                         </Accordion>
                     </TitledPane>
-                    <fx:include fx:id="skillsPane" source="skillsPane.fxml"/>
-                    <fx:include fx:id="professionPane" source="professionPane.fxml"/>
+                    <TitledPane maxWidth="Infinity" maxHeight="Infinity" text="Wiedza">
+                        <Accordion maxHeight="Infinity" maxWidth="Infinity">
+                            <padding>
+                                <Insets left="10"/>
+                            </padding>
+                            <panes>
+                                <fx:include fx:id="skillsPane" source="skillsPane.fxml"/>
+                                <fx:include fx:id="professionClassPane" source="professionClassPane.fxml"/>
+                                <fx:include fx:id="professionPane" source="professionPane.fxml"/>
+                            </panes>
+                        </Accordion>
+                    </TitledPane>
                 </panes>
             </Accordion>
         </Tab>

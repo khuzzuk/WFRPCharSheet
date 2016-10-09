@@ -9,6 +9,7 @@ import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Player;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
+import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
@@ -62,6 +63,7 @@ public class DAO {
                @Ammunitions DAOTransactional<Ammunition, String> daoAmmunition,
                @Skills DAOTransactional<Skill, String> daoSkills,
                @Professions DAOTransactional<Profession, String> daoProffesion,
+               @Professions @Types DAOTransactional<ProfessionClass, String> daoProfessionClass,
                @Manager DAOManager manager) {
         this.daoItems = daoItems;
         this.daoWhiteWeapons = daoWhiteWeaponType;
@@ -91,6 +93,7 @@ public class DAO {
         resolvers.put(Armor.class, daoArmor);
         resolvers.put(Ammunition.class, daoAmmunition);
         resolvers.put(Skill.class, daoSkills);
+        resolvers.put(ProfessionClass.class, daoProfessionClass);
         resolvers.put(Profession.class, daoProffesion);
     }
 

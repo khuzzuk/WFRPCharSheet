@@ -1,0 +1,57 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<TitledPane animated="false" text="Profesje"
+            xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.ProfessionClassPaneController">
+    <SplitPane dividerPositions="0.3">
+        <GridPane hgap="10" maxWidth="Infinity" maxHeight="Infinity">
+            <columnConstraints>
+                <ColumnConstraints maxWidth="Infinity" hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+            </rowConstraints>
+            <ListView fx:id="items" maxHeight="Infinity" maxWidth="Infinity"
+                      onMouseClicked="#getEntity"/>
+        </GridPane>
+        <GridPane hgap="5" vgap="3">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+            <padding>
+                <Insets right="10" left="10" top="10" bottom="10"/>
+            </padding>
+            <Label text="nazwa"/>
+            <TextField fx:id="name" GridPane.columnIndex="1"/>
+            <Label text="cecha bazowa" GridPane.rowIndex="1"/>
+            <ComboBox fx:id="baseDeterminantType" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="umiejętności" GridPane.rowIndex="2"/>
+            <ListView fx:id="skillsView" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                      GridPane.rowSpan="2"/>
+            <Button text="dodaj" GridPane.rowIndex="2" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#showSkillChooser"/>
+            <Button text="usuń" GridPane.rowIndex="3" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#removeSkill"/>
+            <Label text="cechy specjalne" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                      GridPane.columnSpan="2"
+                      maxHeight="Infinity" maxWidth="Infinity"/>
+            <Button text="Usuń" GridPane.rowIndex="5" maxWidth="Infinity" onAction="#remove"/>
+            <Button text="Nowy" GridPane.rowIndex="5" GridPane.columnIndex="1" maxWidth="Infinity"/>
+            <Button text="Zapisz" GridPane.rowIndex="5" GridPane.columnIndex="2" maxWidth="Infinity"
+                    onAction="#save"/>
+        </GridPane>
+    </SplitPane>
+</TitledPane>

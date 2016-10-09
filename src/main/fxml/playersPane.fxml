@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+
+<SplitPane dividerPositions="0.2" maxHeight="Infinity" maxWidth="Infinity" prefHeight="800" prefWidth="1000" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.PlayerPaneController">
+    <items>
+        <ListView fx:id="items" maxHeight="Infinity" maxWidth="Infinity" />
+        <SplitPane maxHeight="Infinity" maxWidth="Infinity" />
+    </items>
+</SplitPane>

@@ -3,6 +3,7 @@ package pl.khuzzuk.wfrpchar.gui;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.gui.controllers.*;
 import pl.khuzzuk.wfrpchar.messaging.Message;
@@ -47,6 +48,8 @@ public class GuiReactor {
     private AmmunitionPaneController ammunitionPaneController;
     @Inject
     private SkillsPaneController skillsPaneController;
+    @Inject
+    private ProfessionClassPaneController professionClassPaneController;
     @Inject
     private ProfessionPaneController professionPaneController;
     @Inject
@@ -113,6 +116,12 @@ public class GuiReactor {
         ammunitionPaneController.fillResourceBoxes(resources);
         armorPaneController.fillResourceBoxes(resources);
     }
+
+    private void sendProfessionClass(Collection<ProfessionClass> professionClasses) {
+        professionClassPaneController.loadAll(professionClasses);
+        professionPaneController.loadProfessionClasses(professionClasses);
+    }
+
     @PostConstruct
     private void setConsumers() {
         guiContentSubscriber.subscribe(miscItemResult, itemTypesPaneController::loadAll);
@@ -136,6 +145,7 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.choice"), rangeWeaponsPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("armor.baseType.choice"), armorPaneController::setBaseType);
+        guiContentSubscriber.subscribe(messages.getProperty("professions.class.skills.choice"), professionClassPaneController::addSkill);
         guiContentSubscriber.subscribe(messages.getProperty("professions.skills.choice"), professionPaneController::addSkill);
         guiContentSubscriber.subscribe(messages.getProperty("professions.next.choice"), professionPaneController::addProfession);
         guiContentSubscriber.subscribe(messages.getProperty("ammunition.baseType.choice"), ammunitionPaneController::setBaseType);
@@ -155,6 +165,8 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("ammunition.result.specific"), ammunitionPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("skills.result"), skillsPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("skills.result.specific"), skillsPaneController::loadToEditor);
+        guiContentSubscriber.subscribe(messages.getProperty("professions.class.result"), this::sendProfessionClass);
+        guiContentSubscriber.subscribe(messages.getProperty("professions.class.result.specific"), professionClassPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("professions.result"), professionPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("professions.result.specific"), professionPaneController::loadToEditor);
     }

@@ -16,7 +16,7 @@
             <ListView fx:id="items" maxHeight="Infinity" maxWidth="Infinity"
                       onMouseClicked="#getEntity"/>
         </GridPane>
-        <GridPane hgap="5" vgap="3">
+        <GridPane hgap="5" vgap="3" maxWidth="Infinity">
             <columnConstraints>
                 <ColumnConstraints hgrow="ALWAYS"/>
                 <ColumnConstraints hgrow="ALWAYS"/>
@@ -38,13 +38,18 @@
                 <RowConstraints vgrow="ALWAYS"/>
             </rowConstraints>
             <padding>
-                <Insets right="10" left="10"/>
+                <Insets right="10" left="10" top="10" bottom="10"/>
             </padding>
             <Label text="nazwa"/>
             <TextField fx:id="name" GridPane.columnIndex="1"/>
+            <VBox maxHeight="Infinity" maxWidth="Infinity" alignment="CENTER"
+                  GridPane.columnIndex="2">
+                <Label text="klasa"/>
+                <ComboBox fx:id="professionClass"/>
+            </VBox>
             <Label text="modyfikatory" GridPane.rowIndex="1"/>
             <ListView fx:id="determinantsView" GridPane.rowIndex="1" GridPane.columnIndex="1"
-            GridPane.rowSpan="2"/>
+                      GridPane.rowSpan="2"/>
             <Button text="dodaj" GridPane.rowIndex="1" GridPane.columnIndex="2" maxWidth="Infinity"
                     onAction="#chooseDeterminant"/>
             <Button text="usuń" GridPane.rowIndex="2" GridPane.columnIndex="2" maxWidth="Infinity"

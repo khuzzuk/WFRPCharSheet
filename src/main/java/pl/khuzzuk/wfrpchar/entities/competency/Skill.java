@@ -10,8 +10,10 @@ import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @ToString(exclude = "id")
@@ -57,6 +59,10 @@ public class Skill implements Named<String>, Persistable, Documented {
             skill.determinants = new HashSet<>();
         }
         return skill;
+    }
+
+    public static String collectionToCsv(Collection<Skill> skills) {
+        return skills == null ? "" : skills.stream().map(Skill::getName).collect(Collectors.joining("|"));
     }
 
     @Override
