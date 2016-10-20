@@ -34,6 +34,7 @@ public class Price {
     public static Price parsePrice(String s) {
         String[] values = s.split("\\|");
         Price price = new Price();
+        if (values.length==1) return price;
         if (values.length > 0) {
             price.gold = Integer.parseInt(values[0]);
             if (values.length > 1) {

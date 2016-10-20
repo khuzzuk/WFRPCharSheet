@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
 <SplitPane dividerPositions="0.2" maxHeight="Infinity" maxWidth="Infinity" prefHeight="800" prefWidth="1000"
-           xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
+           xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.PlayerPaneController">
     <items>
         <ListView fx:id="items" maxHeight="Infinity" maxWidth="Infinity" onMouseClicked="#getEntity"/>
@@ -12,69 +25,77 @@
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES"/>
                 <ColumnConstraints hgrow="SOMETIMES"/>
+                <ColumnConstraints hgrow="SOMETIMES"/>
+                <ColumnConstraints hgrow="SOMETIMES"/>
+                <ColumnConstraints hgrow="SOMETIMES"/>
             </columnConstraints>
             <rowConstraints>
+                <RowConstraints maxHeight="35.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="35.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="35.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="35.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="35.0" vgrow="SOMETIMES"/>
                 <RowConstraints vgrow="SOMETIMES"/>
                 <RowConstraints vgrow="SOMETIMES"/>
-                <RowConstraints vgrow="SOMETIMES"/>
-                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints/>
+                <RowConstraints/>
             </rowConstraints>
             <padding>
-                <Insets top="10" bottom="10" left="10" right="10"/>
+                <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER">
+            <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
                 <Label text="imię"/>
                 <TextField fx:id="name"/>
             </VBox>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER" GridPane.rowIndex="1">
+            <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" GridPane.rowIndex="1">
                 <Label text="rasa"/>
                 <ComboBox fx:id="race"/>
             </VBox>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER" GridPane.rowIndex="2">
+            <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" GridPane.rowIndex="2">
                 <Label text="płeć"/>
                 <ComboBox fx:id="sex"/>
             </VBox>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER" GridPane.rowIndex="3">
+            <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" GridPane.rowIndex="3">
                 <Label text="charakter"/>
                 <ComboBox fx:id="character"/>
             </VBox>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER" GridPane.rowIndex="4">
+            <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" GridPane.rowIndex="4">
                 <Label text="klasa"/>
                 <ComboBox fx:id="professionClass"/>
             </VBox>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER" GridPane.rowIndex="0"
-                  GridPane.columnIndex="1">
+            <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="1"
+                  GridPane.rowIndex="0">
                 <Label text="wiek"/>
                 <TextField fx:id="age"/>
             </VBox>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER" GridPane.rowIndex="1"
-                  GridPane.columnIndex="1">
+            <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="1"
+                  GridPane.rowIndex="1">
                 <Label text="wzrost"/>
                 <TextField fx:id="height"/>
             </VBox>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER" GridPane.rowIndex="2"
-                  GridPane.columnIndex="1">
+            <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="1"
+                  GridPane.rowIndex="2">
                 <Label text="waga"/>
                 <TextField fx:id="weight"/>
             </VBox>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER" GridPane.rowIndex="3"
-                  GridPane.columnIndex="1">
+            <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="1"
+                  GridPane.rowIndex="3">
                 <Label text="oczy"/>
                 <ComboBox fx:id="eyes"/>
             </VBox>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER" GridPane.rowIndex="4"
-                  GridPane.columnIndex="1">
+            <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="1"
+                  GridPane.rowIndex="4">
                 <Label text="włosy"/>
                 <ComboBox fx:id="hair"/>
             </VBox>
-            <VBox maxWidth="Infinity" maxHeight="Infinity" alignment="CENTER" GridPane.rowIndex="0"
-                  GridPane.columnIndex="2"
-                  GridPane.rowSpan="4">
+            <VBox alignment="TOP_LEFT" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="2"
+                  GridPane.rowIndex="0" GridPane.rowSpan="4">
                 <Label text="opis"/>
-                <TextArea fx:id="specialFeatures" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextArea fx:id="specialFeatures" GridPane.columnIndex="2" GridPane.rowIndex="0"
+                maxWidth="200" maxHeight="100"/>
             </VBox>
-            <HBox maxHeight="Infinity" maxWidth="Infinity" spacing="5.0"
-                  GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5">
+            <HBox maxHeight="Infinity" maxWidth="Infinity" spacing="5.0" GridPane.columnIndex="1"
+                  GridPane.columnSpan="4" GridPane.rowIndex="5">
                 <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
                     <Label text="Sz"/>
                     <TextField fx:id="speed" prefWidth="30"/>
@@ -132,6 +153,74 @@
                     <TextField fx:id="charisma" prefWidth="30"/>
                 </VBox>
             </HBox>
+            <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0"
+                  GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="1"
+                  spacing="5">
+                <HBox spacing="10.0">
+                    <Button text="+"/>
+                    <Button text="-"/>
+                    <Label text="Broń ręczna"/>
+                </HBox>
+                <TableView fx:id="weapons" maxWidth="350">
+                    <columns>
+                        <TableColumn prefWidth="180" text="Nazwa"/>
+                        <TableColumn prefWidth="30" text="WW"/>
+                        <TableColumn prefWidth="30" text="I"/>
+                        <TableColumn prefWidth="30" text="PP"/>
+                        <TableColumn prefWidth="30" text="P"/>
+                        <TableColumn prefWidth="50" text="K"/>
+                    </columns>
+                </TableView>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0"
+                  GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.rowSpan="1"
+                  spacing="5">
+                <HBox spacing="10.0">
+                    <Button text="+"/>
+                    <Button text="-"/>
+                    <Label text="Broń dystansowa"/>
+                </HBox>
+                <TableView fx:id="rangedWeapons" maxWidth="350" prefWidth="Infinity">
+                    <columns>
+                        <TableColumn prefWidth="180" text="Nazwa"/>
+                        <TableColumn prefWidth="30" text="min"/>
+                        <TableColumn prefWidth="30" text="d"/>
+                        <TableColumn prefWidth="30" text="max"/>
+                        <TableColumn prefWidth="30" text="przeł."/>
+                        <TableColumn prefWidth="50" text="obraż."/>
+                    </columns>
+                </TableView>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0"
+                  GridPane.columnSpan="2" GridPane.rowIndex="8" GridPane.rowSpan="1" spacing="5">
+                <HBox spacing="10.0">
+                    <Button text="+"/>
+                    <Button text="-"/>
+                    <Label text="Pancerz"/>
+                </HBox>
+                <TableView fx:id="armors" maxWidth="350" prefWidth="Infinity">
+                    <columns>
+                        <TableColumn prefWidth="210" text="Nazwa"/>
+                        <TableColumn prefWidth="70" text="umiejsc."/>
+                        <TableColumn prefWidth="70" text="PP"/>
+                    </columns>
+                </TableView>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="2"
+                  GridPane.columnSpan="1" GridPane.rowIndex="6" GridPane.rowSpan="3" spacing="5">
+                <HBox spacing="10.0">
+                    <Button text="+"/>
+                    <Button text="-"/>
+                    <Label text="Ekwipunek"/>
+                </HBox>
+                <TableView fx:id="equipment" maxWidth="290" prefWidth="Infinity">
+                    <columns>
+                        <TableColumn prefWidth="150" text="Nazwa"/>
+                        <TableColumn prefWidth="70" text="umiejsc."/>
+                        <TableColumn prefWidth="70" text="PP"/>
+                    </columns>
+                </TableView>
+            </VBox>
         </GridPane>
     </items>
 </SplitPane>

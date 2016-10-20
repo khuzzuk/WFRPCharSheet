@@ -4,23 +4,21 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
-import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
+import pl.khuzzuk.wfrpchar.entities.Currency;
+import pl.khuzzuk.wfrpchar.entities.Persistable;
+import pl.khuzzuk.wfrpchar.entities.Race;
+import pl.khuzzuk.wfrpchar.entities.characters.Player;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
+import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
-import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
-import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
-import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
-import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
-import pl.khuzzuk.wfrpchar.entities.competency.Skill;
+import pl.khuzzuk.wfrpchar.entities.items.usable.*;
 
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @Manager
@@ -55,6 +53,7 @@ public class DAO {
                @Players DAOTransactional<Player, String> daoPlayer,
                @Currencies DAOTransactional<Currency, String> daoCurrencies,
                @Resources @Types DAOTransactional<ResourceType, String> daoResources,
+               @Commodities DAOTransactional<AbstractCommodity, String> daoCommodity,
                @WhiteWeapons DAOTransactional<AbstractHandWeapon<? extends WhiteWeaponType>, String> daoHandWeapons,
                @RangedWeapons DAOTransactional<Gun, String> daoRangedWeapons,
                @Armors DAOTransactional<Armor, String> daoArmor,
@@ -87,6 +86,7 @@ public class DAO {
         resolvers.put(Player.class, daoPlayer);
         resolvers.put(Currency.class, daoCurrencies);
         resolvers.put(ResourceType.class, daoResources);
+        resolvers.put(AbstractCommodity.class, daoCommodity);
         resolvers.put(AbstractHandWeapon.class, daoHandWeapons);
         resolvers.put(Gun.class, daoRangedWeapons);
         resolvers.put(Armor.class, daoArmor);
@@ -109,6 +109,28 @@ public class DAO {
         DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(entityType);
         assureSessionInit(resolver);
         return resolver.getItem(name);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Persistable> Set<T> getEntities(Class<T> type, String... names) {
+        DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(type);
+        assureSessionInit(resolver);
+        Set<T> entities = new HashSet<>();
+        for (String n : names) {
+            entities.add(getEntity(type, n));
+        }
+        return entities;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Persistable> List<T> getEntitiesAsList(Class<T> type, String... names) {
+        DAOTransactional<T, String> resolver = (DAOTransactional<T, String>) resolvers.get(type);
+        assureSessionInit(resolver);
+        List<T> entities = new ArrayList<>();
+        for (String n : names) {
+            entities.add(getEntity(type, n));
+        }
+        return entities;
     }
 
     @SuppressWarnings("unchecked")

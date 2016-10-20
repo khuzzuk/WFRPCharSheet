@@ -96,6 +96,10 @@ public class GuiPublisher {
         publish(messages.getProperty("race.query"));
     }
 
+    public void requestPlayers() {
+        publish(messages.getProperty("player.query"));
+    }
+
     public void requestResetDB() {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("database.reset")));
     }
@@ -156,6 +160,10 @@ public class GuiPublisher {
         publish(name, messages.getProperty("race.query.specific"));
     }
 
+    public void requestPlayer(String name) {
+        publish(name, messages.getProperty("player.query.specific"));
+    }
+
     public void removeMiscItemType(String name) {
         publish(name, messages.getProperty("miscItemTypes.remove"));
     }
@@ -210,6 +218,14 @@ public class GuiPublisher {
 
     public void removeRace(String name) {
         publish(name, messages.getProperty("race.remove"));
+    }
+
+    public void removePlayer(String name) {
+        publish(name, messages.getProperty("player.remove"));
+    }
+
+    public void savePlayer(String line) {
+        publish(line, messages.getProperty("player.save"));
     }
 
     public void publish(String text) {

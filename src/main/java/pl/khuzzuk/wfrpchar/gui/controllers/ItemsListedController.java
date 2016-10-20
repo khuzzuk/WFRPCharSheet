@@ -96,4 +96,11 @@ public abstract class ItemsListedController implements Controller {
         initializeValidation();
         ComboBoxHandler.fill(Accessibility.SET, accessibility);
     }
+
+    String getPriceFromFields() {
+        if (gold == null) {
+            return "";
+        }
+        return gold.getText() + "|" + silver.getText() + "|" + lead.getText();
+    }
 }

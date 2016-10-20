@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.Race;
+import pl.khuzzuk.wfrpchar.entities.characters.Player;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
+import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
@@ -14,7 +16,6 @@ import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
-import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.messaging.Message;
 import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
 import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
@@ -137,6 +138,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("race.query"));
     }
 
+    private void savePlayer(String line) {
+        dao.saveEntity(Player.class, Player.fromCsv(line.split(";"), dao));
+        daoPublisher.publish(messages.getProperty("player.query"));
+    }
+
     private void removeMiscItem(String name) {
         dao.removeMiscItem(name);
         daoPublisher.publish(messages.getProperty("miscItemTypes.query"));
@@ -207,6 +213,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("race.query"));
     }
 
+    private void removePlayer(String name) {
+        dao.removeEntity(Player.class, name);
+        daoPublisher.publish(messages.getProperty("player.query"));
+    }
+
     private void getAllMiscItemsTypes() {
         daoPublisher.publishMiscItems(dao.getAllMiscItems());
     }
@@ -261,6 +272,10 @@ public class DAOReactor {
 
     private void getAllRaces() {
         daoPublisher.publish(dao.getAllEntities(Race.class), messages.getProperty("race.result"));
+    }
+
+    private void getAllPlayers() {
+        daoPublisher.publish(dao.getAllEntities(Player.class), messages.getProperty("player.result"));
     }
 
     private void getAllWWBaseType() {
@@ -330,6 +345,10 @@ public class DAOReactor {
         daoPublisher.publish(dao.getEntity(Race.class, name), messages.getProperty("race.result.specific"));
     }
 
+    private void getPlayer(String name) {
+        daoPublisher.publish(dao.getEntity(Player.class, name), messages.getProperty("player.result.specific"));
+    }
+
     private void getWWBaseTypeByName(String name) {
         daoPublisher.publish(dao.getWhiteWeapon(name), messages.getProperty("weapons.hand.baseType.choice"));
     }
@@ -386,20 +405,15 @@ public class DAOReactor {
 
     @PostConstruct
     private void setReactors() {
+        multiSubscriber.subscribe(messages.getProperty("database.reset"), this::resetDB);
+
+        //get all queries
         multiSubscriber.subscribe(messages.getProperty("miscItemTypes.query"), this::getAllMiscItemsTypes);
         multiSubscriber.subscribe(messages.getProperty("whiteWeapons.query"), this::getAllWhiteWeaponsTypes);
-        multiSubscriber.subscribe(messages.getProperty("database.reset"), this::resetDB);
         multiSubscriber.subscribe(messages.getProperty("rangedWeapons.query"), this::getAllRangedWeaponTypes);
         multiSubscriber.subscribe(messages.getProperty("armorTypes.query"), this::getAllArmorTypes);
         multiSubscriber.subscribe(messages.getProperty("ammo.type.query"), this::getAllAmmunitionTypes);
         multiSubscriber.subscribe(messages.getProperty("resource.type.query"), this::getAllResourceTypes);
-        multiSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.getAllTypes"), this::getAllWWBaseType);
-        multiSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.getAllTypes"), this::getAllRangedBaseTypes);
-        multiSubscriber.subscribe(messages.getProperty("armor.baseType.getAllTypes"), this::getAllArmorBaseTypes);
-        multiSubscriber.subscribe(messages.getProperty("professions.class.skills.getAllTypes"), this::getSkillsToProfessionClassChooser);
-        multiSubscriber.subscribe(messages.getProperty("professions.skills.getAllTypes"), this::getSkillsToChoose);
-        multiSubscriber.subscribe(messages.getProperty("professions.next.getAllTypes"), this::getProfessionsToNextChoose);
-        multiSubscriber.subscribe(messages.getProperty("race.skills.getAllTypes"), this::getSkillsForRaceChooser);
         multiSubscriber.subscribe(messages.getProperty("weapons.hand.query"), this::getAllHandWeapons);
         multiSubscriber.subscribe(messages.getProperty("weapons.ranged.query"), this::getAllRangedWeapons);
         multiSubscriber.subscribe(messages.getProperty("armor.query"), this::getAllArmors);
@@ -408,6 +422,18 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("professions.class.query"), this::getAllProfessionClasses);
         multiSubscriber.subscribe(messages.getProperty("professions.query"), this::getAllProfessions);
         multiSubscriber.subscribe(messages.getProperty("race.query"), this::getAllRaces);
+        multiSubscriber.subscribe(messages.getProperty("player.query"), this::getAllPlayers);
+
+        //get all linked entities queries
+        multiSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.getAllTypes"), this::getAllWWBaseType);
+        multiSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.getAllTypes"), this::getAllRangedBaseTypes);
+        multiSubscriber.subscribe(messages.getProperty("armor.baseType.getAllTypes"), this::getAllArmorBaseTypes);
+        multiSubscriber.subscribe(messages.getProperty("professions.class.skills.getAllTypes"), this::getSkillsToProfessionClassChooser);
+        multiSubscriber.subscribe(messages.getProperty("professions.skills.getAllTypes"), this::getSkillsToChoose);
+        multiSubscriber.subscribe(messages.getProperty("professions.next.getAllTypes"), this::getProfessionsToNextChoose);
+        multiSubscriber.subscribe(messages.getProperty("race.skills.getAllTypes"), this::getSkillsForRaceChooser);
+
+        //content queries
         daoContentSubscriber.subscribe(messages.getProperty("database.saveEquipment"), this::saveItem);
         daoContentSubscriber.subscribe(messages.getProperty("miscItemTypes.query.specific"), this::getMiscItemTypeByName);
         daoContentSubscriber.subscribe(messages.getProperty("miscItemTypes.remove"), this::removeMiscItem);
@@ -450,5 +476,8 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(messages.getProperty("race.query.specific"), this::getRace);
         daoContentSubscriber.subscribe(messages.getProperty("race.save"), this::saveRace);
         daoContentSubscriber.subscribe(messages.getProperty("race.remove"), this::removeRace);
+        daoContentSubscriber.subscribe(messages.getProperty("player.query.specific"), this::getPlayer);
+        daoContentSubscriber.subscribe(messages.getProperty("player.save"), this::savePlayer);
+        daoContentSubscriber.subscribe(messages.getProperty("player.remove"), this::removePlayer);
     }
 }

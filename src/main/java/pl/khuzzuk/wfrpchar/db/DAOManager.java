@@ -8,7 +8,7 @@ import pl.khuzzuk.wfrpchar.db.annot.*;
 import pl.khuzzuk.wfrpchar.db.annot.Armors;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
-import pl.khuzzuk.wfrpchar.entities.Player;
+import pl.khuzzuk.wfrpchar.entities.characters.Player;
 import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
@@ -118,6 +118,12 @@ public class DAOManager {
     }
 
     @Bean
+    @Commodities
+    public DAOEntityResolver<AbstractCommodity, String> daoCommodity() {
+        return new DAOEntityResolver<>("FROM AbstractCommodity", openNewSession());
+    }
+
+    @Bean
     @WhiteWeapons
     public DAOEntityResolver<AbstractHandWeapon<? extends WhiteWeaponType>, String> daoHandWeapons() {
         return new DAOEntityResolver<>("FROM AbstractCommodity i where type(i) = OneHandedWeapon " +
@@ -129,7 +135,7 @@ public class DAOManager {
     @Bean
     @RangedWeapons
     public DAOEntityResolver<Gun, String> daoRangedWeapons() {
-        return new DAOEntityResolver<Gun, String>("FROM AbstractCommodity i where type(i) = Gun", openNewSession());
+        return new DAOEntityResolver<>("FROM AbstractCommodity i where type(i) = Gun", openNewSession());
     }
 
     @Bean

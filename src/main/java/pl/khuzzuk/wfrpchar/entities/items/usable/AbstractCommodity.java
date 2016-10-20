@@ -42,4 +42,13 @@ public abstract class AbstractCommodity implements Commodity, Named<String>, Doc
         fields.add(specialFeatures);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return namedEquals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return namedHashCode();
+    }
 }

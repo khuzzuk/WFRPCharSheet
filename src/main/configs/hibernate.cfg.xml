@@ -23,7 +23,7 @@
 
 
         <!-- MAPPED CLASSES -->
-        <mapping class="pl.khuzzuk.wfrpchar.entities.Player"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.characters.Player"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.Character"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.Currency"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.ResourceType"/>

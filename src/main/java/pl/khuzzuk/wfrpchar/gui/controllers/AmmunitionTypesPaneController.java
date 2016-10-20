@@ -37,7 +37,7 @@ public class AmmunitionTypesPaneController extends ItemsListedController {
         List<String> fields = new ArrayList<>();
         fields.add(name.getText());
         fields.add(weight.getText());
-        fields.add(gold.getText() + "|" + silver.getText() + "|" + lead.getText());
+        fields.add(getPriceFromFields());
         fields.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
         fields.add(specialFeatures.getText());
         fields.add(strength.getText());

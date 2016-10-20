@@ -49,7 +49,7 @@ public abstract class AbstractWeaponController extends AbstractFeaturedControlle
 
     void addWeaponTypeFields(List<String> fields) {
         fields.add(name.getText());
-        fields.add(gold.getText() + "|" + silver.getText() + "|" + lead.getText());
+        fields.add(getPriceFromFields());
         fields.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
         fields.add(specialFeatures.getText());
         fields.add(baseType);

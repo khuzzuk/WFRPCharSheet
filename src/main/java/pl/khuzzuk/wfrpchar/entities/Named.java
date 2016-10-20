@@ -1,5 +1,8 @@
 package pl.khuzzuk.wfrpchar.entities;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 public interface Named<T extends Comparable<? super T>> {
     T getName();
     default boolean namedEquals(Object o) {
@@ -16,4 +19,7 @@ public interface Named<T extends Comparable<? super T>> {
         return getName() != null ? getName().hashCode() : 0;
     }
 
+    static String toCsv(Collection<? extends Named<String>> elements, String sepaerator) {
+        return elements.stream().map(Named::getName).collect(Collectors.joining(sepaerator));
+    }
 }
