@@ -3,6 +3,7 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TitledPane;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,8 @@ import java.util.ResourceBundle;
 @MainWindowBean
 @PropertySource("classpath:messages.properties")
 public class MainWindowController implements Controller {
+    @FXML
+    private SplitPane playersPane;
     @FXML
     private TitledPane racePane;
     @FXML

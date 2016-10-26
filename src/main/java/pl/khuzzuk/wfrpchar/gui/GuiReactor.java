@@ -55,6 +55,8 @@ public class GuiReactor {
     @Inject
     private RacesPaneController racesPaneController;
     @Inject
+    private PlayerPaneController playerPaneController;
+    @Inject
     @Named("hwDeterminantsCreatorController")
     private DeterminantCreatorController hwDeterminantCreatorController;
     @Inject
@@ -174,6 +176,7 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("armor.result.specific"), armorPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("ammunition.result"), ammunitionPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("ammunition.result.specific"), ammunitionPaneController::loadToEditor);
+        guiContentSubscriber.subscribe(messages.getProperty("character.result"), playerPaneController::loadCharacters);
         guiContentSubscriber.subscribe(messages.getProperty("skills.result"), skillsPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("skills.result.specific"), skillsPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("professions.class.result"), this::sendProfessionClass);
@@ -182,5 +185,6 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("professions.result.specific"), professionPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("race.result"), racesPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("race.result.specific"), racesPaneController::loadToEditor);
+        guiContentSubscriber.subscribe(messages.getProperty("player.result"), playerPaneController::loadAll);
     }
 }

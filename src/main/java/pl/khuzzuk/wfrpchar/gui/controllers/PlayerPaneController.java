@@ -3,8 +3,12 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.entities.Character;
+import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
 import pl.khuzzuk.wfrpchar.entities.characters.EyesColor;
 import pl.khuzzuk.wfrpchar.entities.characters.HairColor;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -16,7 +20,22 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class PlayerPaneController extends ItemsListedController {
+    public Label speedAct;
+    public Label battleAct;
+    public Label shootingAct;
+    public Label strengthAct;
+    public Label enduranceAct;
+    public Label healthAct;
+    public Label initiativeAct;
+    public Label attacksAct;
+    public Label dexterityAct;
+    public Label leaderSkillsAct;
+    public Label intelligenceAct;
+    public Label controlAct;
+    public Label willAct;
+    public Label charismaAct;
     @FXML
     private TableView equipment;
     @FXML
@@ -95,7 +114,9 @@ public class PlayerPaneController extends ItemsListedController {
         ComboBoxHandler.fill(HairColor.SET, hair);
         getAction = guiPublisher::requestPlayer;
         removeAction = guiPublisher::removePlayer;
+        saveAction = this::savePlayer;
         guiPublisher.requestPlayers();
+        initDeterminantsMap();
     }
 
     private void initDeterminantsMap() {
@@ -117,29 +138,34 @@ public class PlayerPaneController extends ItemsListedController {
     }
 
     private void savePlayer() {
-        List<String> fields = new ArrayList<>(32);
-        fields.add(name.getText());
-        fields.add(""); //profession class
-        fields.add(""); //profession
-        fields.add(""); //career
-        fields.add(""); //character
-        fields.add(Sex.forName(sex.getSelectionModel().getSelectedItem()).name());
-        fields.add(age.getText());
-        fields.add(height.getText());
-        fields.add(weight.getText());
-        fields.add(EyesColor.forName(eyes.getSelectionModel().getSelectedItem()).name());
-        fields.add(HairColor.forName(hair.getSelectionModel().getSelectedItem()).name());
-        fields.add(specialFeatures.getText());
-        fields.add(getDeterminantsFromFields());
-        fields.add(""); //equipment
-        fields.add(""); //commodities
-        fields.add(""); //skills
-        fields.add(getPriceFromFields());
-        fields.add(""); //history
-        fields.add(""); //birthplace
-        fields.add(""); //father
-        fields.add(""); //mother
-        fields.add(""); //siblings
+        CsvBuilder builder = new CsvBuilder(new ArrayList<>());
+        builder.add(name.getText())
+                .add("") //profession class
+                .add("") //profession
+                .add("") //career
+                .add(getSelected(character)) //character
+                .add(Sex.forName(sex.getSelectionModel().getSelectedItem()).name())
+                .add(age.getText())
+                .add(height.getText())
+                .add(weight.getText())
+                .add(EyesColor.forName(eyes.getSelectionModel().getSelectedItem()).name())
+                .add(HairColor.forName(hair.getSelectionModel().getSelectedItem()).name())
+                .add(specialFeatures.getText())
+                .add(getDeterminantsFromFields())
+                .add("") //equipment
+                .add("") //commodities
+                .add("") //skills
+                .add(getPriceFromFields())
+                .add("") //history
+                .add("") //birthplace
+                .add("") //father
+                .add("") //mother
+                .add("none"); //siblings
+        guiPublisher.savePlayer(builder.build());
+    }
+
+    public void loadCharacters(Set<Character> characters) {
+        ComboBoxHandler.fill(characters, character);
     }
 
     private String getDeterminantsFromFields() {

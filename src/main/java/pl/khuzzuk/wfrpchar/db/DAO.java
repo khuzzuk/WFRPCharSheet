@@ -119,6 +119,9 @@ public class DAO {
         for (String n : names) {
             entities.add(getEntity(type, n));
         }
+        if (!entities.isEmpty() && entities.iterator().next() == null) {
+            return Collections.emptySet();
+        }
         return entities;
     }
 

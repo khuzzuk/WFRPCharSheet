@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.DaoBean;
 import pl.khuzzuk.wfrpchar.db.annot.Manager;
+import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.characters.Player;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
@@ -258,6 +259,10 @@ public class DAOReactor {
         daoPublisher.publish(dao.getAllEntities(Ammunition.class), messages.getProperty("ammunition.result"));
     }
 
+    private void getAllCharacters() {
+        daoPublisher.publish(dao.getAllEntities(Character.class), messages.getProperty("character.result"));
+    }
+
     private void getAllSkills() {
         daoPublisher.publish(dao.getAllEntities(Skill.class), messages.getProperty("skills.result"));
     }
@@ -418,6 +423,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("weapons.ranged.query"), this::getAllRangedWeapons);
         multiSubscriber.subscribe(messages.getProperty("armor.query"), this::getAllArmors);
         multiSubscriber.subscribe(messages.getProperty("ammunition.query"), this::getAllAmmunitions);
+        multiSubscriber.subscribe(messages.getProperty("character.query"), this::getAllCharacters);
         multiSubscriber.subscribe(messages.getProperty("skills.query"), this::getAllSkills);
         multiSubscriber.subscribe(messages.getProperty("professions.class.query"), this::getAllProfessionClasses);
         multiSubscriber.subscribe(messages.getProperty("professions.query"), this::getAllProfessions);

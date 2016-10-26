@@ -80,6 +80,10 @@ public class GuiPublisher {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("resource.type.query")));
     }
 
+    public void requestCharacters() {
+        publish(messages.getProperty("character.query"));
+    }
+
     public void requestSkills() {
         publish(messages.getProperty("skills.query"));
     }

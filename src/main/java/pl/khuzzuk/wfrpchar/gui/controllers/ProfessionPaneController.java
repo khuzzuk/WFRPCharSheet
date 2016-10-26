@@ -60,7 +60,7 @@ public class ProfessionPaneController extends SkillViewController {
         fields.add(skillsView.getItems().stream().collect(Collectors.joining("|")));
         fields.add(professionsNextView.getItems().stream().collect(Collectors.joining("|")));
         fields.add(getDeterminantsFromList());
-        fields.add(professionClass.getSelectionModel().getSelectedItem());
+        fields.add(getSelected(professionClass));
         guiPublisher.publish(fields.stream().collect(Collectors.joining(";")), messages.getProperty("professions.save"));
     }
 

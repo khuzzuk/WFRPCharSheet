@@ -103,4 +103,9 @@ public abstract class ItemsListedController implements Controller {
         }
         return gold.getText() + "|" + silver.getText() + "|" + lead.getText();
     }
+
+    String getSelected(ComboBox<String> comboBox) {
+        String selected = comboBox.getSelectionModel().getSelectedItem();
+        return selected != null ? selected : "";
+    }
 }
