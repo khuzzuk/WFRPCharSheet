@@ -11,6 +11,7 @@ import pl.khuzzuk.wfrpchar.entities.characters.Appearance;
 import pl.khuzzuk.wfrpchar.entities.characters.EyesColor;
 import pl.khuzzuk.wfrpchar.entities.characters.HairColor;
 import pl.khuzzuk.wfrpchar.entities.characters.Player;
+import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
@@ -26,7 +27,7 @@ import static pl.khuzzuk.wfrpchar.gui.ComboBoxHandler.selectOrEmpty;
 @Component
 public class PlayerPaneController extends ItemsListedController {
     @FXML
-    private ListView professionsHistory;
+    private ListView<String> professionsHistory;
     @FXML
     private Button profession;
     @FXML
@@ -164,6 +165,13 @@ public class PlayerPaneController extends ItemsListedController {
         selectOrEmpty(race, player.getRace());
         selectOrEmpty(character, player.getCharacter());
         selectOrEmpty(professionClass, player.getProfessionClass());
+        profession.setText("brak");
+        Optional.ofNullable(player.getCurrentProfession()).ifPresent(p ->
+                profession.setText(p.getName()));
+        professionsHistory.getItems().clear();
+        Optional.ofNullable(player.getCareer()).ifPresent(c ->
+                professionsHistory.getItems().addAll(c.stream().map(Profession::getName)
+                        .collect(Collectors.toList())));
         Appearance appearance = player.getAppearance();
         if (appearance != null) {
             selectOrEmpty(sex, appearance.getSex());
@@ -183,8 +191,8 @@ public class PlayerPaneController extends ItemsListedController {
         builder.add(name.getText())
                 .add(ComboBoxHandler.getEmptyIfNotPresent(race))
                 .add(ComboBoxHandler.getEmptyIfNotPresent(professionClass))
-                .add("") //profession
-                .add("") //career
+                .add(profession.getText().equals("brak") ? "" : profession.getText())
+                .add(getItemsToCsv(professionsHistory))
                 .add(ComboBoxHandler.getEmptyIfNotPresent(character))
                 .add(Sex.forName(sex.getSelectionModel().getSelectedItem()).name())
                 .add(age.getText())
@@ -218,10 +226,31 @@ public class PlayerPaneController extends ItemsListedController {
         ComboBoxHandler.fill(classes, professionClass);
     }
 
+    public void loadProfessionChoice(String name) {
+        if (shouldAddToList(name, professionsHistory)) {
+            professionsHistory.getItems().add(name);
+        }
+        profession.setText(name);
+    }
+
+    private boolean shouldAddToList(String name, ListView<String> listView) {
+        return name != null && !name.equals("brak") &&
+                !listView.getItems().contains(name);
+    }
+
+    @FXML
+    private void chooseProfession() {
+        guiPublisher.publish(messages.getProperty("player.profession.getAllTypes"));
+    }
+
     private String getDeterminantsFromFields() {
         List<String> determinants = new ArrayList<>(16);
         guiDeterminants.forEach((t, g) -> determinants.add(g.toString(t)));
         return determinants.stream().collect(Collectors.joining("|"));
+    }
+
+    private String getItemsToCsv(ListView<String> listView) {
+        return listView.getItems().stream().collect(Collectors.joining("|"));
     }
 
     private class GuiDeterminant {

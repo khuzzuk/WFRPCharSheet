@@ -98,6 +98,13 @@ public class ScreensConfig {
     }
 
     @Bean
+    public LinkedEntityChooserStage playerProfessionChooser() {
+        return new LinkedEntityChooserStage(stage, getController(
+                messages.getProperty("player.profession.allTypesList"),
+                messages.getProperty("player.profession.choice")));
+    }
+
+    @Bean
     @Named("hwDeterminantsCreatorController")
     public DeterminantCreatorController handWeaponDeterminantController() {
         DeterminantCreatorController controller = new DeterminantCreatorController(messages.getProperty("determinants.creator.show.hw"),

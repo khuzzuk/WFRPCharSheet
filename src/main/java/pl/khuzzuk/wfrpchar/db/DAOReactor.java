@@ -386,6 +386,10 @@ public class DAOReactor {
         daoPublisher.publish(dao.getAllEntities(Profession.class), messages.getProperty("professions.next.allTypesList"));
     }
 
+    private void getProfessionsForPlayerChoice() {
+        daoPublisher.publish(dao.getAllEntities(Profession.class), messages.getProperty("player.profession.allTypesList"));
+    }
+
     private void resetDB() {
         dao.getManager().resetDB(dao);
         daoPublisher.publish(messages.getProperty("whiteWeapons.query"));
@@ -438,6 +442,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("professions.skills.getAllTypes"), this::getSkillsToChoose);
         multiSubscriber.subscribe(messages.getProperty("professions.next.getAllTypes"), this::getProfessionsToNextChoose);
         multiSubscriber.subscribe(messages.getProperty("race.skills.getAllTypes"), this::getSkillsForRaceChooser);
+        multiSubscriber.subscribe(messages.getProperty("player.profession.getAllTypes"), this::getProfessionsForPlayerChoice);
 
         //content queries
         daoContentSubscriber.subscribe(messages.getProperty("database.saveEquipment"), this::saveItem);

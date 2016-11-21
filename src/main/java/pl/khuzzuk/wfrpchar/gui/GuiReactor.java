@@ -173,6 +173,7 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("professions.next.choice"), professionPaneController::addProfession);
         guiContentSubscriber.subscribe(messages.getProperty("ammunition.baseType.choice"), ammunitionPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("race.skills.choice"), racesPaneController::addSkill);
+        guiContentSubscriber.subscribe(messages.getProperty("player.profession.choice"), playerPaneController::loadProfessionChoice);
 
         //regular queries
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result"), handWeaponsPaneController::loadAll);

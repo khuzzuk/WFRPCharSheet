@@ -96,7 +96,7 @@
         <VBox maxWidth="Infinity" maxHeight="Infinity"
               GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.rowSpan="4">
             <Label text="profesja"/>
-            <Button fx:id="profession" text="brak"/>
+            <Button fx:id="profession" text="brak" onAction="#chooseProfession"/>
             <Label text="przebieg kariery"/>
             <ListView fx:id="professionsHistory"/>
         </VBox>
