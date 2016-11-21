@@ -2,15 +2,16 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
+import pl.khuzzuk.wfrpchar.entities.Race;
+import pl.khuzzuk.wfrpchar.entities.characters.Appearance;
 import pl.khuzzuk.wfrpchar.entities.characters.EyesColor;
 import pl.khuzzuk.wfrpchar.entities.characters.HairColor;
+import pl.khuzzuk.wfrpchar.entities.characters.Player;
+import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
@@ -20,22 +21,42 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static pl.khuzzuk.wfrpchar.gui.ComboBoxHandler.selectOrEmpty;
+
 @Component
 public class PlayerPaneController extends ItemsListedController {
-    public Label speedAct;
-    public Label battleAct;
-    public Label shootingAct;
-    public Label strengthAct;
-    public Label enduranceAct;
-    public Label healthAct;
-    public Label initiativeAct;
-    public Label attacksAct;
-    public Label dexterityAct;
-    public Label leaderSkillsAct;
-    public Label intelligenceAct;
-    public Label controlAct;
-    public Label willAct;
-    public Label charismaAct;
+    @FXML
+    private ListView professionsHistory;
+    @FXML
+    private Button profession;
+    @FXML
+    private Label speedAct;
+    @FXML
+    private Label battleAct;
+    @FXML
+    private Label shootingAct;
+    @FXML
+    private Label strengthAct;
+    @FXML
+    private Label enduranceAct;
+    @FXML
+    private Label healthAct;
+    @FXML
+    private Label initiativeAct;
+    @FXML
+    private Label attacksAct;
+    @FXML
+    private Label dexterityAct;
+    @FXML
+    private Label leaderSkillsAct;
+    @FXML
+    private Label intelligenceAct;
+    @FXML
+    private Label controlAct;
+    @FXML
+    private Label willAct;
+    @FXML
+    private Label charismaAct;
     @FXML
     private TableView equipment;
     @FXML
@@ -116,6 +137,7 @@ public class PlayerPaneController extends ItemsListedController {
         removeAction = guiPublisher::removePlayer;
         saveAction = this::savePlayer;
         guiPublisher.requestPlayers();
+        guiPublisher.requestCharacters();
         initDeterminantsMap();
     }
 
@@ -137,13 +159,33 @@ public class PlayerPaneController extends ItemsListedController {
         guiDeterminants.put(DeterminantsType.CHARISMA, new GuiDeterminant(charisma.textProperty()));
     }
 
+    public void loadPlayer(Player player) {
+        name.setText(player.getName());
+        selectOrEmpty(race, player.getRace());
+        selectOrEmpty(character, player.getCharacter());
+        selectOrEmpty(professionClass, player.getProfessionClass());
+        Appearance appearance = player.getAppearance();
+        if (appearance != null) {
+            selectOrEmpty(sex, appearance.getSex());
+            age.setText("" + appearance.getAge());
+            height.setText("" + appearance.getHeight());
+            weight.setText("" + appearance.getWeight());
+            selectOrEmpty(eyes, appearance.getEyesColor());
+            selectOrEmpty(hair, appearance.getHairColor());
+            specialFeatures.setText(appearance.getDescription());
+        }
+        player.getDeterminants().forEach(d ->
+                guiDeterminants.get(d.getType()).setCurrentValue(d.getBaseValue() + ""));
+    }
+
     private void savePlayer() {
         CsvBuilder builder = new CsvBuilder(new ArrayList<>());
         builder.add(name.getText())
-                .add("") //profession class
+                .add(ComboBoxHandler.getEmptyIfNotPresent(race))
+                .add(ComboBoxHandler.getEmptyIfNotPresent(professionClass))
                 .add("") //profession
                 .add("") //career
-                .add(getSelected(character)) //character
+                .add(ComboBoxHandler.getEmptyIfNotPresent(character))
                 .add(Sex.forName(sex.getSelectionModel().getSelectedItem()).name())
                 .add(age.getText())
                 .add(height.getText())
@@ -164,8 +206,16 @@ public class PlayerPaneController extends ItemsListedController {
         guiPublisher.savePlayer(builder.build());
     }
 
-    public void loadCharacters(Set<Character> characters) {
+    public void loadCharacters(Collection<Character> characters) {
         ComboBoxHandler.fill(characters, character);
+    }
+
+    public void loadRaces(Collection<Race> races) {
+        ComboBoxHandler.fill(races, race);
+    }
+
+    public void loadClasses(Collection<ProfessionClass> classes) {
+        ComboBoxHandler.fill(classes, professionClass);
     }
 
     private String getDeterminantsFromFields() {
@@ -179,6 +229,10 @@ public class PlayerPaneController extends ItemsListedController {
 
         private GuiDeterminant(StringProperty baseValue) {
             this.baseValue = baseValue;
+        }
+
+        private void setCurrentValue(String value) {
+            baseValue.setValue(value);
         }
 
         private String toString(DeterminantsType type) {

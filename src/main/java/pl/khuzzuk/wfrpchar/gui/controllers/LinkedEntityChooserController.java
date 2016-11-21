@@ -48,9 +48,8 @@ public class LinkedEntityChooserController extends GuiContentSubscriber<Collecti
 
     @FXML
     private void sendSelected() {
-        String selected = items.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            publisher.publish(selected, choiceReady);
+        if (!items.getSelectionModel().isEmpty()) {
+            publisher.publish(items.getSelectionModel().getSelectedItem(), choiceReady);
             parent.hide();
         }
     }

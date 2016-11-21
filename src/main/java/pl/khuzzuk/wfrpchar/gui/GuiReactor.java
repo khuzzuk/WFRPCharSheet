@@ -3,6 +3,7 @@ package pl.khuzzuk.wfrpchar.gui;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.gui.controllers.*;
@@ -124,6 +125,12 @@ public class GuiReactor {
     private void sendProfessionClass(Collection<ProfessionClass> professionClasses) {
         professionClassPaneController.loadAll(professionClasses);
         professionPaneController.loadProfessionClasses(professionClasses);
+        playerPaneController.loadClasses(professionClasses);
+    }
+
+    private void sendRaces(Collection<Race> races) {
+        racesPaneController.loadAll(races);
+        playerPaneController.loadRaces(races);
     }
 
     @PostConstruct
@@ -183,8 +190,9 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("professions.class.result.specific"), professionClassPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("professions.result"), professionPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("professions.result.specific"), professionPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("race.result"), racesPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("race.result"), this::sendRaces);
         guiContentSubscriber.subscribe(messages.getProperty("race.result.specific"), racesPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("player.result"), playerPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("player.result.specific"), playerPaneController::loadPlayer);
     }
 }

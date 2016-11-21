@@ -26,7 +26,6 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
     TextField rolls;
     @FXML
     private ComboBox<String> dices;
-    private AbstractHandWeapon handWeapon;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -64,7 +63,6 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
     }
 
     public void loadToEditor(AbstractHandWeapon<? extends WhiteWeaponType> weapon) {
-        handWeapon = weapon;
         loadToInternalEditor(weapon);
     }
 

@@ -34,6 +34,10 @@ public class Player implements Named<String>, Persistable, Documented {
     private String name;
     @Getter
     @Setter
+    @ManyToOne
+    private Race race;
+    @Getter
+    @Setter
     @ManyToOne(fetch = FetchType.EAGER)
     private ProfessionClass professionClass;
     @Getter
@@ -77,22 +81,23 @@ public class Player implements Named<String>, Persistable, Documented {
     private PersonalHistory personalHistory;
 
     public static Player fromCsv(String[] fields, DAO dao) {
-        if (fields.length < 22) {
+        if (fields.length < 23) {
             throw new IllegalArgumentException("player lines have not enough fields, required 23, had " + fields.length);
         }
         Player player = new Player();
         player.setName(fields[0]);
-        player.setProfessionClass(dao.getEntity(ProfessionClass.class, fields[1]));
-        player.setCurrentProfession(dao.getEntity(Profession.class, fields[2]));
-        player.setCareer(dao.getEntities(Profession.class, fields[3].split("\\|")));
-        player.setCharacter(dao.getEntity(Character.class, fields[4]));
-        player.setAppearance(Appearance.getFromCsv(Arrays.copyOfRange(fields, 5, 12)));
-        player.setDeterminants(DeterminantFactory.createDeterminants(fields[12]));
-        player.setEquipment(dao.getEntitiesAsList(Item.class, fields[13].split("\\|")));
-        player.setCommodities(dao.getEntitiesAsList(AbstractCommodity.class, fields[14].split("\\|")));
-        player.setSkills(dao.getEntities(Skill.class, fields[15].split("\\|")));
-        player.setMoney(Price.parsePrice(fields[16]));
-        player.setPersonalHistory(PersonalHistory.fromCsv(Arrays.copyOfRange(fields, 17, 22)));
+        player.setRace(dao.getEntity(Race.class, fields[1]));
+        player.setProfessionClass(dao.getEntity(ProfessionClass.class, fields[2]));
+        player.setCurrentProfession(dao.getEntity(Profession.class, fields[3]));
+        player.setCareer(dao.getEntities(Profession.class, fields[4].split("\\|")));
+        player.setCharacter(dao.getEntity(Character.class, fields[5]));
+        player.setAppearance(Appearance.getFromCsv(Arrays.copyOfRange(fields, 6, 13)));
+        player.setDeterminants(DeterminantFactory.createDeterminants(fields[13]));
+        player.setEquipment(dao.getEntitiesAsList(Item.class, fields[14].split("\\|")));
+        player.setCommodities(dao.getEntitiesAsList(AbstractCommodity.class, fields[15].split("\\|")));
+        player.setSkills(dao.getEntities(Skill.class, fields[16].split("\\|")));
+        player.setMoney(Price.parsePrice(fields[17]));
+        player.setPersonalHistory(PersonalHistory.fromCsv(Arrays.copyOfRange(fields, 18, 23)));
         return player;
     }
 
@@ -100,6 +105,7 @@ public class Player implements Named<String>, Persistable, Documented {
     public String toCsv() {
         return new CsvBuilder(new ArrayList<>())
                 .add(name)
+                .add(getRace())
                 .add(professionClass)
                 .add(currentProfession)
                 .add(Named.toCsv(career, "|"))

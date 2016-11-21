@@ -42,7 +42,7 @@
         <padding>
             <Insets bottom="10" left="10" right="10" top="10"/>
         </padding>
-        <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity">
+        <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" minHeight="20">
             <Label text="imię"/>
             <TextField fx:id="name"/>
         </VBox>
@@ -92,6 +92,13 @@
             <Label text="opis"/>
             <TextArea fx:id="specialFeatures" GridPane.columnIndex="2" GridPane.rowIndex="0"
                       maxWidth="200" maxHeight="100"/>
+        </VBox>
+        <VBox maxWidth="Infinity" maxHeight="Infinity"
+              GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.rowSpan="4">
+            <Label text="profesja"/>
+            <Button fx:id="profession" text="brak"/>
+            <Label text="przebieg kariery"/>
+            <ListView fx:id="professionsHistory"/>
         </VBox>
         <VBox maxHeight="Infinity" maxWidth="Infinity"
               GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="5">
