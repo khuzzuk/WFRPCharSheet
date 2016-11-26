@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@ToString(of = "name")
 public class Skill implements Named<String>, Persistable, Documented {
     @Getter
     @Setter
@@ -73,5 +72,10 @@ public class Skill implements Named<String>, Persistable, Documented {
     @Override
     public int hashCode() {
         return namedHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

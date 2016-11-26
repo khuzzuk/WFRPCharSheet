@@ -178,6 +178,7 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("player.weapons.ranged.choice"), playerPaneController::loadRangedWeaponChoice);
         guiContentSubscriber.subscribe(messages.getProperty("player.armors.choice"), playerPaneController::loadArmorsChoice);
         guiContentSubscriber.subscribe(messages.getProperty("player.equipment.choice"), playerPaneController::loadEquipment);
+        guiContentSubscriber.subscribe(messages.getProperty("player.skills.choice"), playerPaneController::loadSkill);
 
         //regular queries
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result"), handWeaponsPaneController::loadAll);

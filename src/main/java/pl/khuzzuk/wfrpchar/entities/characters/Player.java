@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.commons.collections4.MultiValuedMap;
 import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.*;
@@ -13,7 +12,6 @@ import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
-import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.ProtectiveWearings;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
@@ -71,8 +69,6 @@ public class Player implements Named<String>, Persistable, Documented {
     @Setter
     @ManyToMany(fetch = FetchType.EAGER)
     private List<AbstractCommodity> commodities;
-    @Transient
-    private MultiValuedMap<Class<?>, Commodity> items;
     @Getter
     @Setter
     @OneToMany(fetch = FetchType.EAGER)

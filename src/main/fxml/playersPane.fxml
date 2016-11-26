@@ -31,15 +31,18 @@
                 <ColumnConstraints hgrow="SOMETIMES"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="35.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="35.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="35.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="35.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="35.0" vgrow="SOMETIMES"/>
-                <RowConstraints vgrow="SOMETIMES"/>
-                <RowConstraints vgrow="SOMETIMES"/>
-                <RowConstraints/>
-                <RowConstraints/>
+                <RowConstraints maxHeight="35" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="35" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="35" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="35" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="35" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="70" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="100" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="40" vgrow="SOMETIMES"/>
             </rowConstraints>
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10"/>
@@ -96,13 +99,13 @@
                           maxWidth="200" maxHeight="100"/>
             </VBox>
             <VBox maxWidth="Infinity" maxHeight="Infinity"
-                  GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.rowSpan="4">
+                  GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.rowSpan="5">
                 <Label text="profesja"/>
                 <Button fx:id="profession" text="brak" onAction="#chooseProfession"/>
                 <Label text="przebieg kariery"/>
                 <ListView fx:id="professionsHistory"/>
             </VBox>
-            <VBox maxHeight="60" maxWidth="Infinity"
+            <VBox maxHeight="Infinity" maxWidth="Infinity"
                   GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="5">
                 <HBox maxHeight="Infinity" maxWidth="Infinity" spacing="5.0" alignment="CENTER">
                     <Label text="bazowe"/>
@@ -211,7 +214,7 @@
             </VBox>
             <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0"
                   GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="1"
-                  spacing="5" maxHeight="100">
+                  spacing="5" maxHeight="Infinity">
                 <HBox spacing="10.0">
                     <Button text="+" onAction="#chooseHandWeapon"/>
                     <Label text="Broń ręczna"/>
@@ -229,7 +232,7 @@
             </VBox>
             <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0"
                   GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.rowSpan="1"
-                  spacing="5" maxHeight="100">
+                  spacing="5" maxHeight="Infinity">
                 <HBox spacing="10.0">
                     <Button text="+" onAction="#chooseRangedWeapon"/>
                     <Label text="Broń dystansowa"/>
@@ -246,7 +249,24 @@
                 </TableView>
             </VBox>
             <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0"
-                  GridPane.columnSpan="2" GridPane.rowIndex="8" GridPane.rowSpan="1" spacing="5" maxHeight="100">
+                  GridPane.columnSpan="2" GridPane.rowIndex="8" GridPane.rowSpan="1"
+                  spacing="5" maxHeight="Infinity">
+                <HBox spacing="10.0">
+                    <Button text="+"/>
+                    <Label text="Amunicja"/>
+                </HBox>
+                <TableView fx:id="ammunition" maxWidth="350" prefWidth="Infinity" editable="true">
+                    <columns>
+                        <TableColumn prefWidth="200" text="Nazwa" editable="false"/>
+                        <TableColumn prefWidth="90" text="przeł." editable="false"/>
+                        <TableColumn prefWidth="30" text="obraż." editable="false"/>
+                        <TableColumn prefWidth="30" text="il."/>
+                    </columns>
+                </TableView>
+            </VBox>
+            <VBox alignment="CENTER_LEFT"
+                  GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="9" GridPane.rowSpan="1"
+                  spacing="5" maxHeight="Infinity">
                 <HBox spacing="10.0">
                     <Button text="+" onAction="#chooseArmor"/>
                     <Label text="Pancerz"/>
@@ -259,8 +279,8 @@
                     </columns>
                 </TableView>
             </VBox>
-            <VBox alignment="CENTER_LEFT" maxHeight="300" prefHeight="300" maxWidth="Infinity" GridPane.columnIndex="2"
-                  GridPane.columnSpan="1" GridPane.rowIndex="6" GridPane.rowSpan="3" spacing="5">
+            <VBox alignment="CENTER_LEFT" maxHeight="Infinity" maxWidth="Infinity" GridPane.columnIndex="2"
+                  GridPane.columnSpan="1" GridPane.rowIndex="6" GridPane.rowSpan="4" spacing="5">
                 <HBox spacing="10.0">
                     <Button text="+" onAction="#chooseEquipment"/>
                     <Label text="Ekwipunek"/>
@@ -271,12 +291,47 @@
                         <TableColumn prefWidth="70" text="waga"/>
                     </columns>
                 </TableView>
+                <Label text="majątek"/>
+                <HBox spacing="4">
+                    <Label text="zł."/>
+                    <TextField fx:id="gold" maxWidth="30"/>
+                    <Label text="sr."/>
+                    <TextField fx:id="silver" maxWidth="30"/>
+                    <Label text="m."/>
+                    <TextField fx:id="lead" maxWidth="30"/>
+                </HBox>
             </VBox>
-            <Button text="Nowy" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
-            <Button text="Zapisz" GridPane.rowIndex="9" GridPane.columnIndex="2"
-                    onAction="#save"/>
-            <Button text="Usuń" GridPane.rowIndex="9" GridPane.columnIndex="3"
-                    onAction="#remove"/>
+            <VBox alignment="CENTER_LEFT" maxHeight="Infinity" maxWidth="Infinity"
+                  GridPane.columnIndex="3" GridPane.rowIndex="6" GridPane.rowSpan="4" spacing="5">
+                <HBox spacing="10.0">
+                    <Button text="+" onAction="#chooseSkill"/>
+                    <Label text="Umiejętności"/>
+                </HBox>
+                <ListView fx:id="skills" maxHeight="Infinity" maxWidth="Infinity"/>
+            </VBox>
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="10" GridPane.columnSpan="3" spacing="5">
+                <Label text="historia"/>
+                <TextArea fx:id="history"/>
+                <HBox spacing="5">
+                    <Label text="miejsc. ur."/>
+                    <TextField fx:id="birthplace"/>
+                </HBox>
+                <HBox spacing="5">
+                    <Label text="ojciec"/>
+                    <TextField fx:id="father"/>
+                    <Label text="matka"/>
+                    <TextField fx:id="mother"/>
+                    <Label text="rodz."/>
+                    <TextField fx:id="siblings"/>
+                </HBox>
+            </VBox>
+            <HBox GridPane.rowIndex="11">
+                <Button text="Nowy" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+                <Button text="Zapisz" GridPane.rowIndex="11" GridPane.columnIndex="2"
+                        onAction="#save"/>
+                <Button text="Usuń" GridPane.rowIndex="11" GridPane.columnIndex="3"
+                        onAction="#remove"/>
+            </HBox>
         </GridPane>
     </ScrollPane>
 </SplitPane>

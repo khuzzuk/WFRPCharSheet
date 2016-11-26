@@ -411,6 +411,11 @@ public class DAOReactor {
                 messages.getProperty("player.equipment.allTypesList"));
     }
 
+    private void getSkillsForPlayerChoice() {
+        daoPublisher.publish(dao.getAllEntities(Skill.class),
+                messages.getProperty("player.skills.allTypesList"));
+    }
+
     private void resetDB() {
         dao.getManager().resetDB(dao);
         daoPublisher.publish(messages.getProperty("whiteWeapons.query"));
@@ -468,6 +473,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("player.weapons.ranged.getAllTypes"), this::getRangedWeaponsForPlayerChoice);
         multiSubscriber.subscribe(messages.getProperty("player.armors.getAllTypes"), this::getArmorsForPlayerChoice);
         multiSubscriber.subscribe(messages.getProperty("player.equipment.getAllTypes"), this::getItemsForPlayerChoice);
+        multiSubscriber.subscribe(messages.getProperty("player.skills.getAllTypes"), this::getSkillsForPlayerChoice);
 
         //content queries
         daoContentSubscriber.subscribe(messages.getProperty("database.saveEquipment"), this::saveItem);

@@ -10,10 +10,7 @@ import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Race;
-import pl.khuzzuk.wfrpchar.entities.characters.Appearance;
-import pl.khuzzuk.wfrpchar.entities.characters.EyesColor;
-import pl.khuzzuk.wfrpchar.entities.characters.HairColor;
-import pl.khuzzuk.wfrpchar.entities.characters.Player;
+import pl.khuzzuk.wfrpchar.entities.characters.*;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -21,6 +18,7 @@ import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.ProtectiveWearings;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 import pl.khuzzuk.wfrpchar.rules.Sex;
@@ -33,6 +31,20 @@ import static pl.khuzzuk.wfrpchar.gui.ComboBoxHandler.selectOrEmpty;
 
 @Component
 public class PlayerPaneController extends ItemsListedController {
+    @FXML
+    private TextArea history;
+    @FXML
+    private TextField birthplace;
+    @FXML
+    private TextField father;
+    @FXML
+    private TextField mother;
+    @FXML
+    private TextField siblings;
+    @FXML
+    private TableView<Ammunition> ammunition;
+    @FXML
+    private ListView<String> skills;
     @FXML
     private ListView<String> professionsHistory;
     @FXML
@@ -254,6 +266,16 @@ public class PlayerPaneController extends ItemsListedController {
         weapons.getItems().addAll(player.getHandWeapons());
         rangedWeapons.getItems().addAll(player.getRangedWeapons());
         armors.getItems().addAll(player.getArmors());
+        gold.setText(player.getMoney().getGold() + "");
+        silver.setText(player.getMoney().getSilver() + "");
+        lead.setText(player.getMoney().getLead() + "");
+        PersonalHistory playerHistory = player.getPersonalHistory();
+        history.setText(playerHistory.getHistory());
+        birthplace.setText(playerHistory.getBirthplace());
+        father.setText(playerHistory.getFather());
+        mother.setText(playerHistory.getMother());
+        siblings.setText(playerHistory.getSiblings());
+
     }
 
     private void clear() {
@@ -262,6 +284,14 @@ public class PlayerPaneController extends ItemsListedController {
         height.clear();
         weight.clear();
         specialFeatures.clear();
+        gold.clear();
+        silver.clear();
+        lead.clear();
+        history.clear();
+        birthplace.clear();
+        father.clear();
+        mother.clear();
+        siblings.clear();
         race.getSelectionModel().clearSelection();
         character.getSelectionModel().clearSelection();
         professionClass.getSelectionModel().clearSelection();
@@ -274,6 +304,7 @@ public class PlayerPaneController extends ItemsListedController {
         weapons.getItems().clear();
         rangedWeapons.getItems().clear();
         armors.getItems().clear();
+        skills.getItems().clear();
         guiDeterminants.forEach((type, guiDeterminant) -> guiDeterminant.setCurrentValue(null));
     }
 
@@ -297,13 +328,13 @@ public class PlayerPaneController extends ItemsListedController {
                         .collect(Collectors.joining("|")))
                 .add(getFightingEquipment().stream().map(Named::getName)
                         .collect(Collectors.joining("|")))
-                .add("") //skills
+                .add(skills.getItems().stream().collect(Collectors.joining("|")))
                 .add(getPriceFromFields())
-                .add("") //history
-                .add("") //birthplace
-                .add("") //father
-                .add("") //mother
-                .add("none"); //siblings
+                .add(history.getText())
+                .add(birthplace.getText())
+                .add(father.getText())
+                .add(mother.getText())
+                .add(siblings.getText());
         guiPublisher.savePlayer(builder.build());
     }
 
@@ -348,6 +379,12 @@ public class PlayerPaneController extends ItemsListedController {
         equipment.getItems().add(commodity);
     }
 
+    public void loadSkill(String skill) {
+        if (shouldAddToList(skill, skills)) {
+            skills.getItems().add(skill);
+        }
+    }
+
     private boolean shouldAddToList(String name, ListView<String> listView) {
         return name != null && !name.equals("brak") &&
                 !listView.getItems().contains(name);
@@ -376,6 +413,11 @@ public class PlayerPaneController extends ItemsListedController {
     @FXML
     private void chooseEquipment() {
         guiPublisher.publish(messages.getProperty("player.equipment.getAllTypes"));
+    }
+
+    @FXML
+    private void chooseSkill() {
+        guiPublisher.publish(messages.getProperty("player.skills.getAllTypes"));
     }
 
     private String getDeterminantsFromFields() {
