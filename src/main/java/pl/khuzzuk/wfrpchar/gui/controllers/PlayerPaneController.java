@@ -4,9 +4,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.apache.commons.collections4.collection.CompositeCollection;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
+import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.characters.Appearance;
 import pl.khuzzuk.wfrpchar.entities.characters.EyesColor;
@@ -225,11 +227,11 @@ public class PlayerPaneController extends ItemsListedController {
     }
 
     public void loadPlayer(Player player) {
+        clear();
         name.setText(player.getName());
         selectOrEmpty(race, player.getRace());
         selectOrEmpty(character, player.getCharacter());
         selectOrEmpty(professionClass, player.getProfessionClass());
-        profession.setText("brak");
         Optional.ofNullable(player.getCurrentProfession()).ifPresent(p ->
                 profession.setText(p.getName()));
         professionsHistory.getItems().clear();
@@ -248,6 +250,31 @@ public class PlayerPaneController extends ItemsListedController {
         }
         player.getDeterminants().forEach(d ->
                 guiDeterminants.get(d.getType()).setCurrentValue(d.getBaseValue() + ""));
+        equipment.getItems().addAll(player.getEquipment());
+        weapons.getItems().addAll(player.getHandWeapons());
+        rangedWeapons.getItems().addAll(player.getRangedWeapons());
+        armors.getItems().addAll(player.getArmors());
+    }
+
+    private void clear() {
+        name.clear();
+        age.clear();
+        height.clear();
+        weight.clear();
+        specialFeatures.clear();
+        race.getSelectionModel().clearSelection();
+        character.getSelectionModel().clearSelection();
+        professionClass.getSelectionModel().clearSelection();
+        sex.getSelectionModel().clearSelection();
+        eyes.getSelectionModel().clearSelection();
+        hair.getSelectionModel().clearSelection();
+        profession.setText("brak");
+        professionsHistory.getItems().clear();
+        equipment.getItems().clear();
+        weapons.getItems().clear();
+        rangedWeapons.getItems().clear();
+        armors.getItems().clear();
+        guiDeterminants.forEach((type, guiDeterminant) -> guiDeterminant.setCurrentValue(null));
     }
 
     private void savePlayer() {
@@ -266,8 +293,10 @@ public class PlayerPaneController extends ItemsListedController {
                 .add(HairColor.forName(hair.getSelectionModel().getSelectedItem()).name())
                 .add(specialFeatures.getText())
                 .add(getDeterminantsFromFields())
-                .add("") //equipment
-                .add("") //commodities
+                .add(equipment.getItems().stream().map(Named::getName)
+                        .collect(Collectors.joining("|")))
+                .add(getFightingEquipment().stream().map(Named::getName)
+                        .collect(Collectors.joining("|")))
                 .add("") //skills
                 .add(getPriceFromFields())
                 .add("") //history
@@ -276,6 +305,12 @@ public class PlayerPaneController extends ItemsListedController {
                 .add("") //mother
                 .add("none"); //siblings
         guiPublisher.savePlayer(builder.build());
+    }
+
+    @SuppressWarnings("unchecked")
+    private Collection<Named<String>> getFightingEquipment() {
+        return new CompositeCollection(
+                weapons.getItems(), rangedWeapons.getItems(), armors.getItems());
     }
 
     public void loadCharacters(Collection<Character> characters) {

@@ -14,11 +14,15 @@ import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.items.Commodity;
+import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.ProtectiveWearings;
+import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractCommodity;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -118,5 +122,26 @@ public class Player implements Named<String>, Persistable, Documented {
                 .add(money.toString())
                 .add(personalHistory.toCsv())
                 .build();
+    }
+
+    public Collection<HandWeapon> getHandWeapons() {
+        return commodities.stream()
+                .filter(e -> e instanceof HandWeapon)
+                .map(e -> (HandWeapon) e)
+                .collect(Collectors.toList());
+    }
+
+    public Collection<RangedWeapon> getRangedWeapons() {
+        return commodities.stream()
+                .filter(e -> e instanceof RangedWeapon)
+                .map(e -> (RangedWeapon) e)
+                .collect(Collectors.toList());
+    }
+
+    public Collection<ProtectiveWearings> getArmors() {
+        return commodities.stream()
+                .filter(e -> e instanceof ProtectiveWearings)
+                .map(e -> (ProtectiveWearings) e)
+                .collect(Collectors.toList());
     }
 }
