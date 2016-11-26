@@ -174,6 +174,10 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("ammunition.baseType.choice"), ammunitionPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("race.skills.choice"), racesPaneController::addSkill);
         guiContentSubscriber.subscribe(messages.getProperty("player.profession.choice"), playerPaneController::loadProfessionChoice);
+        guiContentSubscriber.subscribe(messages.getProperty("player.weapons.white.choice"), playerPaneController::loadWhiteWeaponChoice);
+        guiContentSubscriber.subscribe(messages.getProperty("player.weapons.ranged.choice"), playerPaneController::loadRangedWeaponChoice);
+        guiContentSubscriber.subscribe(messages.getProperty("player.armors.choice"), playerPaneController::loadArmorsChoice);
+        guiContentSubscriber.subscribe(messages.getProperty("player.equipment.choice"), playerPaneController::loadEquipment);
 
         //regular queries
         guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result"), handWeaponsPaneController::loadAll);

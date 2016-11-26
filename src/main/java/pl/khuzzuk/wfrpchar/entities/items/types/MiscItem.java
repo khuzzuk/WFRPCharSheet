@@ -7,6 +7,7 @@ import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+//TODO move this to AbstractCommodity hierarchy
 @Entity
 @DiscriminatorValue("1")
 @EqualsAndHashCode(callSuper = true)

@@ -14,7 +14,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@ToString(exclude = "id")
+@ToString(of = "name")
 public class ProfessionClass implements Named<String>, Persistable, Documented, SkillContainer {
     @Getter
     @Setter

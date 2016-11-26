@@ -4,10 +4,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.db.annot.*;
+import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
-import pl.khuzzuk.wfrpchar.entities.Persistable;
-import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.characters.Player;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
@@ -16,6 +15,7 @@ import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.*;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -31,6 +31,7 @@ public class DAO {
     private DAOTransactional<Currency, String> daoCurrencies;
     private DAOTransactional<RangedWeaponType, String> daoRangedWeaponsTypes;
     private DAOTransactional<ArmorType, String> daoArmorTypes;
+    //TODO remove this, use resolvers instead
     @Inject
     @Types
     @Items
@@ -95,6 +96,16 @@ public class DAO {
         resolvers.put(ProfessionClass.class, daoProfessionClass);
         resolvers.put(Profession.class, daoProffesion);
         resolvers.put(Race.class, daoRaces);
+    }
+
+    //TODO put resolvers here
+    @PostConstruct
+    private void initResolvers() {
+        putResolver("from Item i where type(i) = MiscItem", MiscItem.class);
+    }
+
+    private <T extends Persistable & Named<String>> void putResolver(String query, Class<T> type) {
+        resolvers.put(type, new DAOEntityResolver<T, String>(query, manager.openNewSession()));
     }
 
     @SuppressWarnings("unchecked")

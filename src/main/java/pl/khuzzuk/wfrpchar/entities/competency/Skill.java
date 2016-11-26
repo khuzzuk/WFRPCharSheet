@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@ToString(exclude = "id")
+@ToString(of = "name")
 public class Skill implements Named<String>, Persistable, Documented {
     @Getter
     @Setter

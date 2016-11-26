@@ -14,15 +14,15 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-public class LinkedEntityChooserController extends GuiContentSubscriber<Collection<? extends Named<String>>> implements Controller {
+public class LinkedEntityChooserController<T extends Named<String>> extends GuiContentSubscriber<Collection<T>> implements Controller {
     @Inject
-    private GuiPublisher publisher;
+    GuiPublisher publisher;
     @FXML
-    private ListView<String> items;
+    ListView<T> items;
     @Setter
-    private Stage parent;
+    Stage parent;
     @Setter
-    private String choiceReady;
+    String choiceReady;
 
     public LinkedEntityChooserController() {
         super("");
@@ -40,7 +40,7 @@ public class LinkedEntityChooserController extends GuiContentSubscriber<Collecti
 
     public void subscribe() {
         setConsumer(c -> {
-            EntitiesAdapter.sendToListView(items, c);
+            EntitiesAdapter.sendToListViewUnchanged(items, c);
             parent.show();
         });
         super.subscribe();

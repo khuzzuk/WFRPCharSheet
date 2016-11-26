@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.gui.controllers;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,6 +15,10 @@ import pl.khuzzuk.wfrpchar.entities.characters.Player;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
+import pl.khuzzuk.wfrpchar.entities.items.Commodity;
+import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.ProtectiveWearings;
+import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 import pl.khuzzuk.wfrpchar.rules.Sex;
@@ -59,13 +64,13 @@ public class PlayerPaneController extends ItemsListedController {
     @FXML
     private Label charismaAct;
     @FXML
-    private TableView equipment;
+    private TableView<Commodity> equipment;
     @FXML
-    private TableView armors;
+    private TableView<ProtectiveWearings> armors;
     @FXML
-    private TableView rangedWeapons;
+    private TableView<RangedWeapon> rangedWeapons;
     @FXML
-    private TableView weapons;
+    private TableView<HandWeapon> weapons;
     @FXML
     @Numeric
     TextField speed;
@@ -140,6 +145,7 @@ public class PlayerPaneController extends ItemsListedController {
         guiPublisher.requestPlayers();
         guiPublisher.requestCharacters();
         initDeterminantsMap();
+        initTableViews();
     }
 
     private void initDeterminantsMap() {
@@ -158,6 +164,64 @@ public class PlayerPaneController extends ItemsListedController {
         guiDeterminants.put(DeterminantsType.CONTROL, new GuiDeterminant(control.textProperty()));
         guiDeterminants.put(DeterminantsType.WILL, new GuiDeterminant(will.textProperty()));
         guiDeterminants.put(DeterminantsType.CHARISMA, new GuiDeterminant(charisma.textProperty()));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initTableViews() {
+        ((TableColumn<HandWeapon, String>) weapons.getColumns().get(0))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getName()));
+        ((TableColumn<HandWeapon, String>) weapons.getColumns().get(1))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getInitiativeMod() + ""));
+        ((TableColumn<HandWeapon, String>) weapons.getColumns().get(2))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getBattleMod() + ""));
+        ((TableColumn<HandWeapon, String>) weapons.getColumns().get(3))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getParryMod() + ""));
+        ((TableColumn<HandWeapon, String>) weapons.getColumns().get(4))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getOpponentParryMod() + ""));
+        ((TableColumn<HandWeapon, String>) weapons.getColumns().get(5))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getDices().getName()));
+
+        ((TableColumn<RangedWeapon, String>) rangedWeapons.getColumns().get(0))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getName()));
+        ((TableColumn<RangedWeapon, String>) rangedWeapons.getColumns().get(1))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getShortRange() + ""));
+        ((TableColumn<RangedWeapon, String>) rangedWeapons.getColumns().get(2))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getEffectiveRange() + ""));
+        ((TableColumn<RangedWeapon, String>) rangedWeapons.getColumns().get(3))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getMaximumRange() + ""));
+        ((TableColumn<RangedWeapon, String>) rangedWeapons.getColumns().get(4))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getReloadTime().getName()));
+        ((TableColumn<RangedWeapon, String>) rangedWeapons.getColumns().get(5))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getStrength() + ""));
+
+        ((TableColumn<ProtectiveWearings, String>) armors.getColumns().get(0))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getName()));
+        ((TableColumn<ProtectiveWearings, String>) armors.getColumns().get(1))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getStrength() + ""));
+        ((TableColumn<ProtectiveWearings, String>) armors.getColumns().get(2))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getPlacement().getName()));
+
+        ((TableColumn<Commodity, String>) equipment.getColumns().get(0))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getName()));
+        ((TableColumn<Commodity, String>) equipment.getColumns().get(1))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getWeight() + ""));
     }
 
     public void loadPlayer(Player player) {
@@ -233,6 +297,22 @@ public class PlayerPaneController extends ItemsListedController {
         profession.setText(name);
     }
 
+    public void loadWhiteWeaponChoice(HandWeapon handWeapon) {
+        weapons.getItems().add(handWeapon);
+    }
+
+    public void loadRangedWeaponChoice(RangedWeapon weapon) {
+        rangedWeapons.getItems().add(weapon);
+    }
+
+    public void loadArmorsChoice(ProtectiveWearings armor) {
+        armors.getItems().add(armor);
+    }
+
+    public void loadEquipment(Commodity commodity) {
+        equipment.getItems().add(commodity);
+    }
+
     private boolean shouldAddToList(String name, ListView<String> listView) {
         return name != null && !name.equals("brak") &&
                 !listView.getItems().contains(name);
@@ -241,6 +321,26 @@ public class PlayerPaneController extends ItemsListedController {
     @FXML
     private void chooseProfession() {
         guiPublisher.publish(messages.getProperty("player.profession.getAllTypes"));
+    }
+
+    @FXML
+    private void chooseHandWeapon() {
+        guiPublisher.publish(messages.getProperty("player.weapons.white.getAllTypes"));
+    }
+
+    @FXML
+    private void chooseRangedWeapon() {
+        guiPublisher.publish(messages.getProperty("player.weapons.ranged.getAllTypes"));
+    }
+
+    @FXML
+    private void chooseArmor() {
+        guiPublisher.publish(messages.getProperty("player.armors.getAllTypes"));
+    }
+
+    @FXML
+    private void chooseEquipment() {
+        guiPublisher.publish(messages.getProperty("player.equipment.getAllTypes"));
     }
 
     private String getDeterminantsFromFields() {

@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class DAOEntityResolver<T extends Named<U> & Persistable, U extends Comparable<U>>
+public class DAOEntityResolver<T extends Named<U> & Persistable, U extends Comparable<? super U>>
         implements Stateful, DAOTransactional<T, U> {
     @NotNull
     private Map<U, T> elements;

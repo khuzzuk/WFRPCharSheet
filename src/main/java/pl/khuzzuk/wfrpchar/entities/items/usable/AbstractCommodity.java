@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.entities.items.usable;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Price;
@@ -50,5 +51,10 @@ public abstract class AbstractCommodity implements Commodity, Named<String>, Doc
     @Override
     public int hashCode() {
         return namedHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -13,6 +13,11 @@ public class EntitiesAdapter {
         view.getItems().addAll(items.stream().map(Named::getName).collect(Collectors.toList()));
     }
 
+    public static <T> void sendToListViewUnchanged(ListView<T> list, Collection<T> elements) {
+        list.getItems().clear();
+        list.getItems().addAll(elements);
+    }
+
     public static void removeSelected(ListView<String> view) {
         if (view.getSelectionModel().getSelectedIndex() > -1) {
             view.getItems().remove(view.getSelectionModel().getSelectedIndex());

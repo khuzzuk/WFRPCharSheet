@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "class", discriminatorType = DiscriminatorType.INTEGER)
 @DiscriminatorValue(value = "0")
-@ToString(exclude = "id")
 @NoArgsConstructor
 public abstract class Item implements Named<String>, Commodity, Persistable {
     @Id
@@ -62,5 +61,10 @@ public abstract class Item implements Named<String>, Commodity, Persistable {
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (int) weight;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

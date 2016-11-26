@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("1")
-@ToString
 @NoArgsConstructor
 public abstract class AbstractWeapon<T extends BattleEquipment>
         extends AbstractCommodity

@@ -244,6 +244,10 @@ public class GuiPublisher {
         textRequestPublisher.publish(textContent, msg);
     }
 
+    public <T> void publish(T content, String msg) {
+        contentPublisher.publish(content, msg);
+    }
+
     public void publish(AbstractHandWeapon handWeapon) {
         contentPublisher.publish(handWeapon, messages.getProperty("weapons.hand.save"));
     }

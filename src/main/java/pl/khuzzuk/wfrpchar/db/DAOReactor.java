@@ -14,6 +14,7 @@ import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Armor;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
@@ -390,6 +391,26 @@ public class DAOReactor {
         daoPublisher.publish(dao.getAllEntities(Profession.class), messages.getProperty("player.profession.allTypesList"));
     }
 
+    private void getHandWeaponsForPlayerChoice() {
+        daoPublisher.publish(dao.getAllEntities(AbstractHandWeapon.class),
+                messages.getProperty("player.weapons.white.allTypesList"));
+    }
+
+    private void getRangedWeaponsForPlayerChoice() {
+        daoPublisher.publish(dao.getAllEntities(Gun.class),
+                messages.getProperty("player.weapons.ranged.allTypesList"));
+    }
+
+    private void getArmorsForPlayerChoice() {
+        daoPublisher.publish(dao.getAllEntities(Armor.class),
+                messages.getProperty("player.armors.allTypesList"));
+    }
+
+    private void getItemsForPlayerChoice() {
+        daoPublisher.publish(dao.getAllEntities(MiscItem.class),
+                messages.getProperty("player.equipment.allTypesList"));
+    }
+
     private void resetDB() {
         dao.getManager().resetDB(dao);
         daoPublisher.publish(messages.getProperty("whiteWeapons.query"));
@@ -443,6 +464,10 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("professions.next.getAllTypes"), this::getProfessionsToNextChoose);
         multiSubscriber.subscribe(messages.getProperty("race.skills.getAllTypes"), this::getSkillsForRaceChooser);
         multiSubscriber.subscribe(messages.getProperty("player.profession.getAllTypes"), this::getProfessionsForPlayerChoice);
+        multiSubscriber.subscribe(messages.getProperty("player.weapons.white.getAllTypes"), this::getHandWeaponsForPlayerChoice);
+        multiSubscriber.subscribe(messages.getProperty("player.weapons.ranged.getAllTypes"), this::getRangedWeaponsForPlayerChoice);
+        multiSubscriber.subscribe(messages.getProperty("player.armors.getAllTypes"), this::getArmorsForPlayerChoice);
+        multiSubscriber.subscribe(messages.getProperty("player.equipment.getAllTypes"), this::getItemsForPlayerChoice);
 
         //content queries
         daoContentSubscriber.subscribe(messages.getProperty("database.saveEquipment"), this::saveItem);
