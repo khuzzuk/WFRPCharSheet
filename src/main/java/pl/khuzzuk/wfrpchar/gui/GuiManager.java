@@ -17,6 +17,7 @@ public class GuiManager extends Application {
         ApplicationContext context = new AnnotationConfigApplicationContext("pl.khuzzuk.wfrpchar.config");
         log.info("context ready");
         ScreensConfig screens = context.getBean(ScreensConfig.class);
+        primaryStage.setOnCloseRequest(e -> System.exit(0));
         screens.setStage(primaryStage);
         ControllersFactoryDecorator decorator = context.getBean(ControllersFactoryDecorator.class);
         screens.mainWindowConfiguration(decorator).show();

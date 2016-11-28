@@ -83,7 +83,7 @@ public class DAOPublisher {
         entitiesPublisher.publish(results, messages.getProperty("weapons.hand.baseType.allTypesList"));
     }
 
-    void publishHandWeapons(Collection<AbstractHandWeapon<? extends WhiteWeaponType>> allHandWeapons) {
+    void publishHandWeapons(Collection<AbstractHandWeapon> allHandWeapons) {
         entitiesPublisher.publish(allHandWeapons, messages.getProperty("weapons.hand.result"));
     }
 

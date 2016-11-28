@@ -55,22 +55,22 @@ public class DAOReactor {
 
 
     private void getAllWhiteWeaponsTypes() {
-        daoPublisher.publishWhiteWeapons(dao.getAllWhiteWeaponTypes());
+        daoPublisher.publishWhiteWeapons(dao.getAllEntities(WhiteWeaponType.class));
     }
 
     private void saveItem(String line) {
         Item i = weaponParser.parseEquipment(line.split(";"));
         if (i instanceof WhiteWeaponType) {
-            dao.save((WhiteWeaponType) i);
+            dao.saveEntity(WhiteWeaponType.class, (WhiteWeaponType) i);
             daoPublisher.publish(messages.getProperty("whiteWeapons.query"));
         } else if (i instanceof RangedWeaponType) {
-            dao.save((RangedWeaponType) i);
+            dao.saveEntity(RangedWeaponType.class, (RangedWeaponType) i);
             daoPublisher.publish(messages.getProperty("rangedWeapons.query"));
         } else if (i instanceof ArmorType) {
-            dao.save((ArmorType) i);
+            dao.saveEntity(ArmorType.class, (ArmorType) i);
             daoPublisher.publish(messages.getProperty("armorTypes.query"));
         } else if (i instanceof MiscItem) {
-            dao.save((MiscItem) i);
+            dao.saveEntity(MiscItem.class, (MiscItem) i);
             daoPublisher.publish(messages.getProperty("miscItemTypes.query"));
         } else if (i instanceof AmmunitionType) {
             dao.saveEntity(AmmunitionType.class, (AmmunitionType) i);
@@ -79,14 +79,14 @@ public class DAOReactor {
     }
 
     private void saveResourceType(String line) {
-        dao.save(ResourceType.getFromCsv(line.split(";")));
+        dao.saveEntity(ResourceType.class, ResourceType.getFromCsv(line.split(";")));
         daoPublisher.publish(messages.getProperty("resource.type.query"));
     }
 
     private void saveHandWeapon(String line) {
         String[] fields = line.split(";");
         ParserBag<WhiteWeaponType> bag = getParserBag(WhiteWeaponType.class, fields);
-        dao.save(weaponParser.parseHandWeapon(fields, bag));
+        dao.saveEntity(AbstractHandWeapon.class, weaponParser.parseHandWeapon(fields, bag));
         daoPublisher.publish(messages.getProperty("weapons.hand.query"));
     }
 
@@ -116,8 +116,8 @@ public class DAOReactor {
     private <T extends FightingEquipment> ParserBag<T> getParserBag(Class<T> entityType, String[] fields) {
         return new ParserBag<>(
                 dao.getEntity(entityType, fields[4]),
-                dao.getResourceType(fields[5]),
-                dao.getResourceType(fields[6]));
+                dao.getEntity(ResourceType.class, fields[5]),
+                dao.getEntity(ResourceType.class, fields[6]));
     }
 
     private void saveSkill(String line) {
@@ -146,22 +146,22 @@ public class DAOReactor {
     }
 
     private void removeMiscItem(String name) {
-        dao.removeMiscItem(name);
+        dao.removeEntity(MiscItem.class, name);
         daoPublisher.publish(messages.getProperty("miscItemTypes.query"));
     }
 
     private void removeWhiteWeaponType(String name) {
-        dao.removeWhiteWeaponType(name);
+        dao.removeEntity(WhiteWeaponType.class, name);
         daoPublisher.publish(messages.getProperty("whiteWeapons.query"));
     }
 
     private void removeRangedWeaponType(String name) {
-        dao.removeRangedWeaponType(name);
+        dao.removeEntity(RangedWeaponType.class, name);
         daoPublisher.publish(messages.getProperty("rangedWeapons.query"));
     }
 
     private void removeArmorType(String name) {
-        dao.removeArmorType(name);
+        dao.removeEntity(ArmorType.class, name);
         daoPublisher.publish(messages.getProperty("armorTypes.query"));
     }
 
@@ -171,7 +171,7 @@ public class DAOReactor {
     }
 
     private void removeHandWeapon(String name) {
-        dao.removeHandWeapon(name);
+        dao.removeEntity(AbstractHandWeapon.class, name);
         daoPublisher.publish(messages.getProperty("weapons.hand.query"));
     }
 
@@ -191,7 +191,7 @@ public class DAOReactor {
     }
 
     private void removeResourceType(String name) {
-        dao.removeResourceType(name);
+        dao.removeEntity(ResourceType.class, name);
         daoPublisher.publish(messages.getProperty("resource.type.query"));
     }
 
@@ -221,19 +221,19 @@ public class DAOReactor {
     }
 
     private void getAllMiscItemsTypes() {
-        daoPublisher.publishMiscItems(dao.getAllMiscItems());
+        daoPublisher.publishMiscItems(dao.getAllEntities(MiscItem.class));
     }
 
     private void getAllRangedWeaponTypes() {
-        daoPublisher.publishRangedWeaponTypes(dao.getAllRangedWeapons(), messages.getProperty("rangedWeapons.result"));
+        daoPublisher.publishRangedWeaponTypes(dao.getAllEntities(RangedWeaponType.class), messages.getProperty("rangedWeapons.result"));
     }
 
     private void getRangedWeaponTypeByName(String name) {
-        daoPublisher.publish(dao.getRangedWeapon(name), messages.getProperty("rangedWeapons.result.specific"));
+        daoPublisher.publish(dao.getEntity(RangedWeaponType.class, name), messages.getProperty("rangedWeapons.result.specific"));
     }
 
     private void getAllArmorTypes() {
-        daoPublisher.publishArmorTypes(dao.getAllArmorTypes());
+        daoPublisher.publishArmorTypes(dao.getAllEntities(ArmorType.class));
     }
 
     private void getAllAmmunitionTypes() {
@@ -241,11 +241,11 @@ public class DAOReactor {
     }
 
     private void getAllResourceTypes() {
-        daoPublisher.publishResourceTypes(dao.getAllResourceTypes());
+        daoPublisher.publishResourceTypes(dao.getAllEntities(ResourceType.class));
     }
 
-    private void getAllHandWeapons() {
-        daoPublisher.publishHandWeapons(dao.getAllHandWeapons());
+    private <T extends WhiteWeaponType> void getAllHandWeapons() {
+        daoPublisher.publishHandWeapons(dao.getAllEntities(AbstractHandWeapon.class));
     }
 
     private void getAllRangedWeapons() {
@@ -285,11 +285,11 @@ public class DAOReactor {
     }
 
     private void getAllWWBaseType() {
-        daoPublisher.publishWhiteWeaponsBaseTypes(dao.getAllWhiteWeaponTypes());
+        daoPublisher.publishWhiteWeaponsBaseTypes(dao.getAllEntities(WhiteWeaponType.class));
     }
 
     private void getAllRangedBaseTypes() {
-        daoPublisher.publishRangedWeaponTypes(dao.getAllRangedWeapons(),
+        daoPublisher.publishRangedWeaponTypes(dao.getAllEntities(RangedWeaponType.class),
                 messages.getProperty("weapons.ranged.baseType.allTypesList"));
     }
 
@@ -299,15 +299,15 @@ public class DAOReactor {
     }
 
     private void getWhiteWeaponByName(String name) {
-        daoPublisher.publish(dao.getWhiteWeapon(name), messages.getProperty("whiteWeapons.result.specific"));
+        daoPublisher.publish(dao.getEntity(WhiteWeaponType.class, name), messages.getProperty("whiteWeapons.result.specific"));
     }
 
     private void getMiscItemTypeByName(String name) {
-        daoPublisher.publish(dao.getMiscItem(name));
+        daoPublisher.publish(dao.getEntity(MiscItem.class, name));
     }
 
     private void getArmorTypeByName(String name) {
-        daoPublisher.publish(dao.getArmorType(name));
+        daoPublisher.publish(dao.getEntity(ArmorType.class, name));
     }
 
     private void getAmmunitionTypeByName(String name) {
@@ -315,11 +315,11 @@ public class DAOReactor {
     }
 
     private void getResourceType(String name) {
-        daoPublisher.publish(dao.getResourceType(name));
+        daoPublisher.publish(dao.getEntity(ResourceType.class, name));
     }
 
     private void getHandWeapon(String name) {
-        daoPublisher.publish(dao.getHandWeapon(name));
+        daoPublisher.publish(dao.getEntity(AbstractHandWeapon.class, name));
     }
 
     private void getRangedWeapon(String name) {
@@ -356,7 +356,7 @@ public class DAOReactor {
     }
 
     private void getWWBaseTypeByName(String name) {
-        daoPublisher.publish(dao.getWhiteWeapon(name), messages.getProperty("weapons.hand.baseType.choice"));
+        daoPublisher.publish(dao.getEntity(WhiteWeaponType.class, name), messages.getProperty("weapons.hand.baseType.choice"));
     }
 
     private void getRWBaseTypeByName(String name) {
