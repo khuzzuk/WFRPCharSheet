@@ -48,7 +48,7 @@ public class Player implements Named<String>, Persistable, Documented {
     private Profession currentProfession;
     @Getter
     @Setter
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Profession> career;
     @Getter
     @Setter
@@ -71,7 +71,7 @@ public class Player implements Named<String>, Persistable, Documented {
     private List<AbstractCommodity> commodities;
     @Getter
     @Setter
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Skill> skills;
     @Getter
     @Setter

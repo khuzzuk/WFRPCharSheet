@@ -12,6 +12,7 @@ import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 
 import javax.inject.Inject;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Component
 @Manager
@@ -23,6 +24,10 @@ public class DAOManager {
     public DAOManager(SessionFactory factory, @Initializer DBInitializer initializer) {
         this.factory = factory;
         this.initializer = initializer;
+    }
+
+    public CriteriaBuilder getCriteriaBuilder() {
+        return factory.getCriteriaBuilder();
     }
 
     public synchronized Session openNewSession() {

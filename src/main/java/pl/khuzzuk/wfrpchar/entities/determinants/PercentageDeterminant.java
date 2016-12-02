@@ -6,5 +6,4 @@ import javax.persistence.Entity;
 @DiscriminatorValue("1")
 @Entity
 public class PercentageDeterminant extends Determinant {
-
 }

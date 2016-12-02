@@ -1,7 +1,5 @@
 package pl.khuzzuk.wfrpchar.db;
 
-import org.hibernate.Session;
-
 import java.util.Collection;
 
 public interface DAOTransactional<T, U> {
@@ -12,10 +10,4 @@ public interface DAOTransactional<T, U> {
     boolean commit(T toCommit);
 
     boolean remove(U toRemove);
-
-    boolean requireInitialization();
-
-    void assureInitialization(Session session);
-
-    void closeSession();
 }

@@ -41,7 +41,7 @@
                 <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="100" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="120" vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="40" vgrow="SOMETIMES"/>
             </rowConstraints>
             <padding>

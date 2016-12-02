@@ -2,7 +2,6 @@ package pl.khuzzuk.wfrpchar.entities.competency;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;

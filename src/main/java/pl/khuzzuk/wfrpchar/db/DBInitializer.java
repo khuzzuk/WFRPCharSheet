@@ -154,7 +154,7 @@ public class DBInitializer {
 
     private void loadItems(String path) {
         List<Item> equipments = parseFileToItems(path);
-        equipments.forEach(this::saveEntity);
+        equipments.forEach(w -> dao.saveEntity(Item.class, w));
     }
 
     private List<Item> parseFileToItems(String path) {

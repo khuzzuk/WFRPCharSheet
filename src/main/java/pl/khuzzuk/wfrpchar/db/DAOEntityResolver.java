@@ -4,16 +4,13 @@ import org.hibernate.Session;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 
-import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class DAOEntityResolver<T extends Named<U> & Persistable, U extends Comparable<? super U>>
         implements Stateful, DAOTransactional<T, U> {
-    @NotNull
-    private Map<U, T> elements;
-    @NotNull
     private String query;
     private Session session;
     private Lock lock = new ReentrantLock();
@@ -24,57 +21,61 @@ public class DAOEntityResolver<T extends Named<U> & Persistable, U extends Compa
     }
 
     @Override
-    public T getItem(U criteria) {
-        return elements.get(criteria);
+    @SuppressWarnings("unchecked")
+    public synchronized T getItem(U criteria) {
+        if (isInvalid(criteria)) {
+            return null;
+        }
+        session.beginTransaction();
+        List<T> list = session.createQuery(query).list();
+        session.getTransaction().commit();
+        return list.stream().filter(n -> n.getName().equals(criteria)).findAny().orElse(null);
     }
 
     @Override
-    public Collection<T> getAllItems() {
-        return elements.values();
+    @SuppressWarnings("unchecked")
+    public synchronized Collection<T> getAllItems() {
+        session.beginTransaction();
+        List<T> items = session.createQuery(query).list();
+        session.getTransaction().commit();
+        return items;
     }
 
     @Override
-    public boolean commit(T toCommit) {
-        lock.lock();
+    public synchronized boolean commit(T toCommit) {
         if (session == null || !session.isOpen()) {
             throw new IllegalStateException("No session started for committing " + toCommit);
         }
         session.beginTransaction();
-        T other = elements.get(toCommit.getName());
+        List<T> elements = session.createQuery(query).list();
+        T other = elements.stream().filter(n -> n.getName().equals(toCommit.getName())).findAny().orElse(null);
         if (other == null) {
-            elements.put(toCommit.getName(), toCommit);
             session.save(toCommit);
         } else {
             toCommit.setId(other.getId());
             session.detach(other);
-            elements.remove(other.getName());
-            elements.put(toCommit.getName(), toCommit);
             session.saveOrUpdate(toCommit);
         }
         closeTransaction();
-        lock.unlock();
         return other == null;
     }
 
     @Override
     public boolean remove(U toRemove) {
+        if (isInvalid(toRemove)) {
+            throw new IllegalArgumentException(toRemove.toString());
+        }
         lock.lock();
         if (session == null || !session.isOpen()) {
             throw new IllegalStateException("No session started for removing " + toRemove);
         }
-        Optional<T> element = Optional.ofNullable(elements.get(toRemove));
-        if (!element.isPresent()) {
-            return false;
-        }
-        elements.remove(toRemove);
         session.beginTransaction();
-        session.remove(element.get());
+        session.remove(toRemove);
         closeTransaction();
         lock.unlock();
         return true;
     }
 
-    @Override
     public void assureInitialization(Session session) {
         lock.lock();
         if (this.session == session) {
@@ -84,32 +85,29 @@ public class DAOEntityResolver<T extends Named<U> & Persistable, U extends Compa
             this.session.close();
         }
         this.session = session;
-        init(session);
         lock.unlock();
     }
 
     @Override
     public boolean requireInitialization() {
-        return elements==null || session == null;
+        return session == null;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void init(Session session) {
-        session.beginTransaction();
-        elements = new TreeMap<>();
-        Collection<T> result = session.createQuery(query).list();
-        result.forEach(e -> elements.put(e.getName(), e));
-        closeTransaction();
     }
 
-    @Override
-    public void closeSession() {
+    public synchronized void closeSession() {
         session.close();
         session = null;
     }
 
     private void closeTransaction() {
         session.getTransaction().commit();
+    }
+
+    private boolean isInvalid(U argument) {
+        return argument == null || argument.equals("");
     }
 }

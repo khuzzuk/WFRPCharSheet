@@ -1,7 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.determinants;
 
 import lombok.*;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
