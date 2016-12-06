@@ -24,6 +24,7 @@ import java.util.Properties;
 @ReactorBean
 @PropertySource("classpath:messages.properties")
 public class GuiReactor {
+    //TODO reduce this injects
     @Inject
     @MainWindowBean
     private MainWindowController controller;
@@ -55,6 +56,8 @@ public class GuiReactor {
     private ProfessionPaneController professionPaneController;
     @Inject
     private RacesPaneController racesPaneController;
+    @Inject
+    private MagicSchoolsPaneController magicSchoolsPaneController;
     @Inject
     private PlayerPaneController playerPaneController;
     @Inject
@@ -198,6 +201,8 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("professions.result.specific"), professionPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("race.result"), this::sendRaces);
         guiContentSubscriber.subscribe(messages.getProperty("race.result.specific"), racesPaneController::loadToEditor);
+        guiContentSubscriber.subscribe(messages.getProperty("magic.schools.result"), magicSchoolsPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("magic.schools.result.specific"), magicSchoolsPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("player.result"), playerPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("player.result.specific"), playerPaneController::loadPlayer);
     }

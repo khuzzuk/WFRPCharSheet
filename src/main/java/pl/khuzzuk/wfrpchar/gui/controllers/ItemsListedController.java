@@ -75,6 +75,17 @@ public abstract class ItemsListedController implements Controller {
         }
     }
 
+    @FXML
+    void clear() {
+        name.clear();
+        specialFeatures.clear();
+        weight.clear();
+        gold.clear();
+        silver.clear();
+        lead.clear();
+        accessibility.getSelectionModel().clearSelection();
+    }
+
     public void loadAll(Collection<? extends Named<String>> itemsList) {
         items.getItems().clear();
         items.getItems().addAll(itemsList.stream()

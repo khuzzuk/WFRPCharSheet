@@ -100,6 +100,10 @@ public class GuiPublisher {
         publish(messages.getProperty("race.query"));
     }
 
+    public void requestMagicSchools() {
+        publish(messages.getProperty("magic.schools.query"));
+    }
+
     public void requestPlayers() {
         publish(messages.getProperty("player.query"));
     }
@@ -164,6 +168,10 @@ public class GuiPublisher {
         publish(name, messages.getProperty("race.query.specific"));
     }
 
+    public void requestMagicSchool(String name) {
+        publish(name, messages.getProperty("magic.schools.query.specific"));
+    }
+
     public void requestPlayer(String name) {
         publish(name, messages.getProperty("player.query.specific"));
     }
@@ -222,6 +230,10 @@ public class GuiPublisher {
 
     public void removeRace(String name) {
         publish(name, messages.getProperty("race.remove"));
+    }
+
+    public void removeMagicSchool(String name) {
+        publish(name, messages.getProperty("magic.schools.remove"));
     }
 
     public void removePlayer(String name) {

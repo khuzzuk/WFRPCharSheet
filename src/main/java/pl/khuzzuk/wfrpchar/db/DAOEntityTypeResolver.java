@@ -4,9 +4,7 @@ import org.hibernate.Session;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -46,7 +44,7 @@ public class DAOEntityTypeResolver<T extends Named<U> & Persistable, U extends C
         CriteriaQuery<T> criteria = manager.getCriteriaBuilder().createQuery(query);
         criteria.from(query);
         session.beginTransaction();
-        List<T> items = session.createQuery(criteria).list();
+        List<T> items = session.createQuery(criteria).getResultList();
         session.getTransaction().commit();
         return items;
     }
@@ -78,8 +76,12 @@ public class DAOEntityTypeResolver<T extends Named<U> & Persistable, U extends C
             throw new IllegalArgumentException(toRemove.toString());
         }
         Session session = manager.openNewSession();
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaDelete<T> criteria = builder.createCriteriaDelete(query);
+        Root<T> from = criteria.from(query);
+        criteria.where(builder.equal(from.get("name"), toRemove));
         session.beginTransaction();
-        session.remove(toRemove);
+        session.createQuery(criteria).executeUpdate();
         closeTransaction(session);
         return true;
     }

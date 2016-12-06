@@ -32,7 +32,7 @@ public class ProfessionClass implements Named<String>, Persistable, Documented, 
     private DeterminantsType primaryDeterminant;
     @Getter
     @Setter
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Skill> skills;
 
     @Override

@@ -7,6 +7,7 @@ import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.characters.Player;
+import pl.khuzzuk.wfrpchar.entities.competency.MagicSchool;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.competency.Skill;
@@ -29,6 +30,8 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Properties;
+
+import static pl.khuzzuk.wfrpchar.db.LineParser.getFrom;
 
 @NoArgsConstructor
 @Subscribers
@@ -140,8 +143,13 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("race.query"));
     }
 
+    private void saveMagicSchool(String line) {
+        dao.saveEntity(MagicSchool.class, MagicSchool.getFromCsv(line.split(";")));
+        daoPublisher.publish(messages.getProperty("magic.schools.query"));
+    }
+
     private void savePlayer(String line) {
-        dao.saveEntity(Player.class, Player.fromCsv(line.split(";"), dao));
+        dao.saveEntity(Player.class, Player.fromCsv(getFrom(line, 24), dao));
         daoPublisher.publish(messages.getProperty("player.query"));
     }
 
@@ -215,6 +223,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("race.query"));
     }
 
+    private void removeMagicSchool(String name) {
+        dao.removeEntity(MagicSchool.class, name);
+        daoPublisher.publish(messages.getProperty("magic.schools.query"));
+    }
+
     private void removePlayer(String name) {
         dao.removeEntity(Player.class, name);
         daoPublisher.publish(messages.getProperty("player.query"));
@@ -278,6 +291,10 @@ public class DAOReactor {
 
     private void getAllRaces() {
         daoPublisher.publish(dao.getAllEntities(Race.class), messages.getProperty("race.result"));
+    }
+
+    private void getAllMagicSchools() {
+        daoPublisher.publish(dao.getAllEntities(MagicSchool.class), messages.getProperty("magic.schools.result"));
     }
 
     private void getAllPlayers() {
@@ -349,6 +366,10 @@ public class DAOReactor {
 
     private void getRace(String name) {
         daoPublisher.publish(dao.getEntity(Race.class, name), messages.getProperty("race.result.specific"));
+    }
+
+    private void getMagicSchool(String name) {
+        daoPublisher.publish(dao.getEntity(MagicSchool.class, name), messages.getProperty("magic.schools.result.specific"));
     }
 
     private void getPlayer(String name) {
@@ -458,6 +479,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("professions.class.query"), this::getAllProfessionClasses);
         multiSubscriber.subscribe(messages.getProperty("professions.query"), this::getAllProfessions);
         multiSubscriber.subscribe(messages.getProperty("race.query"), this::getAllRaces);
+        multiSubscriber.subscribe(messages.getProperty("magic.schools.query"), this::getAllMagicSchools);
         multiSubscriber.subscribe(messages.getProperty("player.query"), this::getAllPlayers);
 
         //get all linked entities queries
@@ -518,6 +540,9 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(messages.getProperty("race.query.specific"), this::getRace);
         daoContentSubscriber.subscribe(messages.getProperty("race.save"), this::saveRace);
         daoContentSubscriber.subscribe(messages.getProperty("race.remove"), this::removeRace);
+        daoContentSubscriber.subscribe(messages.getProperty("magic.schools.query.specific"), this::getMagicSchool);
+        daoContentSubscriber.subscribe(messages.getProperty("magic.schools.save"), this::saveMagicSchool);
+        daoContentSubscriber.subscribe(messages.getProperty("magic.schools.remove"), this::removeMagicSchool);
         daoContentSubscriber.subscribe(messages.getProperty("player.query.specific"), this::getPlayer);
         daoContentSubscriber.subscribe(messages.getProperty("player.save"), this::savePlayer);
         daoContentSubscriber.subscribe(messages.getProperty("player.remove"), this::removePlayer);

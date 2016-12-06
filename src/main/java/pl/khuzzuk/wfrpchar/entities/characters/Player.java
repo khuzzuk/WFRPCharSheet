@@ -101,6 +101,15 @@ public class Player implements Named<String>, Persistable, Documented {
         return player;
     }
 
+    private static String[] extend(String[] array) {
+        String[] out = new String[23];
+        for (int x=0; x<out.length; x++) {
+            out[x] = array.length <= x ? array[x] : null;
+        }
+        Arrays.copyOfRange(array, 0, 24);
+        return out;
+    }
+
     @Override
     public String toCsv() {
         return new CsvBuilder(new ArrayList<>())

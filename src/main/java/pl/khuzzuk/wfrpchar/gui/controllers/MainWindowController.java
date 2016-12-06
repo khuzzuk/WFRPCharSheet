@@ -21,6 +21,8 @@ import java.util.ResourceBundle;
 @PropertySource("classpath:messages.properties")
 public class MainWindowController implements Controller {
     @FXML
+    private TitledPane magicSchoolPane;
+    @FXML
     private SplitPane playersPane;
     @FXML
     private TitledPane racePane;

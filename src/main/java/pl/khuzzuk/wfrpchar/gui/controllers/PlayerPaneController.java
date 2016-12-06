@@ -278,7 +278,8 @@ public class PlayerPaneController extends ItemsListedController {
 
     }
 
-    private void clear() {
+    @FXML
+    void clear() {
         name.clear();
         age.clear();
         height.clear();

@@ -87,6 +87,7 @@
                                 <fx:include fx:id="skillsPane" source="skillsPane.fxml"/>
                                 <fx:include fx:id="professionClassPane" source="professionClassPane.fxml"/>
                                 <fx:include fx:id="professionPane" source="professionPane.fxml"/>
+                                <fx:include fx:id="magicSchoolPane" source="magicSchoolsPane.fxml"/>
                             </panes>
                         </Accordion>
                     </TitledPane>
