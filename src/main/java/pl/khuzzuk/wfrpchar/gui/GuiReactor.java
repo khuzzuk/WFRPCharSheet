@@ -59,6 +59,8 @@ public class GuiReactor {
     @Inject
     private MagicSchoolsPaneController magicSchoolsPaneController;
     @Inject
+    private SpellsPaneController spellsPaneController;
+    @Inject
     private PlayerPaneController playerPaneController;
     @Inject
     @Named("hwDeterminantsCreatorController")
@@ -176,6 +178,8 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("professions.next.choice"), professionPaneController::addProfession);
         guiContentSubscriber.subscribe(messages.getProperty("ammunition.baseType.choice"), ammunitionPaneController::setBaseType);
         guiContentSubscriber.subscribe(messages.getProperty("race.skills.choice"), racesPaneController::addSkill);
+        guiContentSubscriber.subscribe(messages.getProperty("magic.spells.school.choice"), spellsPaneController::setSchool);
+        guiContentSubscriber.subscribe(messages.getProperty("magic.spells.ingredients.choice"), spellsPaneController::addIngredient);
         guiContentSubscriber.subscribe(messages.getProperty("player.profession.choice"), playerPaneController::loadProfessionChoice);
         guiContentSubscriber.subscribe(messages.getProperty("player.weapons.white.choice"), playerPaneController::loadWhiteWeaponChoice);
         guiContentSubscriber.subscribe(messages.getProperty("player.weapons.ranged.choice"), playerPaneController::loadRangedWeaponChoice);
@@ -203,6 +207,8 @@ public class GuiReactor {
         guiContentSubscriber.subscribe(messages.getProperty("race.result.specific"), racesPaneController::loadToEditor);
         guiContentSubscriber.subscribe(messages.getProperty("magic.schools.result"), magicSchoolsPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("magic.schools.result.specific"), magicSchoolsPaneController::loadToEditor);
+        guiContentSubscriber.subscribe(messages.getProperty("magic.spells.result"), spellsPaneController::loadAll);
+        guiContentSubscriber.subscribe(messages.getProperty("magic.spells.result.specific"), spellsPaneController::loadSpell);
         guiContentSubscriber.subscribe(messages.getProperty("player.result"), playerPaneController::loadAll);
         guiContentSubscriber.subscribe(messages.getProperty("player.result.specific"), playerPaneController::loadPlayer);
     }

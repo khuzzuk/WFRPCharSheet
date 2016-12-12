@@ -3,6 +3,7 @@ package pl.khuzzuk.wfrpchar.entities.items.usable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Price;
@@ -25,6 +26,7 @@ public abstract class AbstractCommodity implements Commodity, Named<String>, Doc
     private long id;
     @Getter
     @Setter
+    @NaturalId
     private String name;
     @Getter
     @Setter

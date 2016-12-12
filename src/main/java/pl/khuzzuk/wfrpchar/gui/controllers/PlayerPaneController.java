@@ -20,6 +20,7 @@ import pl.khuzzuk.wfrpchar.entities.items.ProtectiveWearings;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
+import pl.khuzzuk.wfrpchar.gui.ListViewHandler;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 import pl.khuzzuk.wfrpchar.rules.Sex;
 
@@ -28,6 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static pl.khuzzuk.wfrpchar.gui.ComboBoxHandler.selectOrEmpty;
+import static pl.khuzzuk.wfrpchar.gui.ListViewHandler.shouldAddToList;
 
 @Component
 public class PlayerPaneController extends ItemsListedController {
@@ -150,6 +152,7 @@ public class PlayerPaneController extends ItemsListedController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        initializeValidation();
         ComboBoxHandler.fill(Sex.SET, sex);
         ComboBoxHandler.fill(EyesColor.SET, eyes);
         ComboBoxHandler.fill(HairColor.SET, hair);
@@ -329,7 +332,7 @@ public class PlayerPaneController extends ItemsListedController {
                         .collect(Collectors.joining("|")))
                 .add(getFightingEquipment().stream().map(Named::getName)
                         .collect(Collectors.joining("|")))
-                .add(skills.getItems().stream().collect(Collectors.joining("|")))
+                .add(ListViewHandler.getFromList(skills))
                 .add(getPriceFromFields())
                 .add(history.getText())
                 .add(birthplace.getText())
@@ -384,11 +387,6 @@ public class PlayerPaneController extends ItemsListedController {
         if (shouldAddToList(skill, skills)) {
             skills.getItems().add(skill);
         }
-    }
-
-    private boolean shouldAddToList(String name, ListView<String> listView) {
-        return name != null && !name.equals("brak") &&
-                !listView.getItems().contains(name);
     }
 
     @FXML

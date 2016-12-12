@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.entities.competency;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
@@ -21,6 +22,7 @@ public class MagicSchool implements Named<String>, Persistable, Documented {
     private long id;
     @Getter
     @Setter
+    @NaturalId
     private String name;
     @Getter
     @Setter
@@ -38,5 +40,10 @@ public class MagicSchool implements Named<String>, Persistable, Documented {
             school.setDescription(line[1]);
         }
         return school;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

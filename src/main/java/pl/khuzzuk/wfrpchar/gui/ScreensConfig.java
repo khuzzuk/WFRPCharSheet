@@ -114,6 +114,20 @@ public class ScreensConfig {
     }
 
     @Bean
+    public LinkedEntityChooserStage spellSchoolChooser() {
+        return new LinkedEntityChooserStage(stage, linkedStringChooserController(
+                messages.getProperty("magic.spells.school.allTypesList"),
+                messages.getProperty("magic.spells.school.choice")));
+    }
+
+    @Bean
+    public LinkedEntityChooserStage spellIngredientsChooser() {
+        return new LinkedEntityChooserStage(stage, linkedStringChooserController(
+                messages.getProperty("magic.spells.ingredients.allTypesList"),
+                messages.getProperty("magic.spells.ingredients.choice")));
+    }
+
+    @Bean
     public LinkedEntityChooserStage playerProfessionChooser() {
         return new LinkedEntityChooserStage(stage, linkedStringChooserController(
                 messages.getProperty("player.profession.allTypesList"),

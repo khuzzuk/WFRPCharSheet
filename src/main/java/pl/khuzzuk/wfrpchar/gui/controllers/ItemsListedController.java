@@ -49,6 +49,7 @@ public abstract class ItemsListedController implements Controller {
     Runnable saveAction;
     Consumer<String> removeAction;
     Consumer<String> getAction;
+    Runnable clearAction;
 
     @FXML
     ListView<String> items;
@@ -65,6 +66,7 @@ public abstract class ItemsListedController implements Controller {
     private void remove() {
         if (name.getText().length() >= 3) {
             removeAction.accept(name.getText());
+            clearAction.run();
         }
     }
 

@@ -30,7 +30,8 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
                                        ProfessionPaneController professionPaneController,
                                        RacesPaneController racesPaneController,
                                        PlayerPaneController playerPaneController,
-                                       MagicSchoolsPaneController magicSchoolsPaneController) {
+                                       MagicSchoolsPaneController magicSchoolsPaneController,
+                                       SpellsPaneController spellsPaneController) {
         controllers = new ConcurrentHashMap<>();
         //TODO rework it to use ApplicationContext instead
         controllers.put(mainWindowController.getClass(), mainWindowController);
@@ -52,6 +53,7 @@ public class ControllersFactoryDecorator implements Callback<Class<?>, Object> {
         controllers.put(racesPaneController.getClass(), racesPaneController);
         controllers.put(playerPaneController.getClass(), playerPaneController);
         controllers.put(magicSchoolsPaneController.getClass(), magicSchoolsPaneController);
+        controllers.put(spellsPaneController.getClass(), spellsPaneController);
     }
 
     @Override

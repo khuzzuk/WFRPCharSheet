@@ -1,9 +1,12 @@
 package pl.khuzzuk.wfrpchar.entities;
 
+import org.hibernate.annotations.NaturalId;
+
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 public interface Named<T extends Comparable<? super T>> {
+    @NaturalId
     T getName();
     default boolean namedEquals(Object o) {
         if (this == o) return true;

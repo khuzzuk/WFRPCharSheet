@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.entities;
 
 import lombok.*;
 import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ public class Currency implements Named<String>, Persistable {
     @Getter
     @Setter
     @NonNull
+    @NaturalId
     private String name;
     @Getter
     @Setter

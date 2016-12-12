@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.entities.competency;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
@@ -21,11 +22,10 @@ public class Skill implements Named<String>, Persistable, Documented {
     @Id
     @GeneratedValue
     private long id;
-
     @Getter
     @Setter
+    @NaturalId
     private String name;
-
     @Getter
     @Setter
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -33,7 +33,6 @@ public class Skill implements Named<String>, Persistable, Documented {
             joinColumns = {@JoinColumn(name = "SKILL_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
     private Set<Determinant> determinants;
-
     @Getter
     @Setter
     private String specialFeatures;

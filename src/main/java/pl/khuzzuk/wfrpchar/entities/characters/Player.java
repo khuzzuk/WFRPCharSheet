@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.*;
@@ -33,6 +34,7 @@ public class Player implements Named<String>, Persistable, Documented {
     private long id;
     @Getter
     @Setter
+    @NaturalId
     private String name;
     @Getter
     @Setter

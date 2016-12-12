@@ -3,6 +3,7 @@ package pl.khuzzuk.wfrpchar.entities.competency;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
@@ -23,6 +24,7 @@ public class ProfessionClass implements Named<String>, Persistable, Documented, 
     private long id;
     @Getter
     @Setter
+    @NaturalId
     private String name;
     @Getter
     @Setter

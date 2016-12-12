@@ -1,6 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.*;
+import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Price;
@@ -23,6 +24,7 @@ public abstract class Item implements Named<String>, Commodity, Persistable {
     @Getter
     @Setter
     @NonNull
+    @NaturalId
     String name;
     @NonNull
     @Getter

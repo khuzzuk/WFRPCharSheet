@@ -33,7 +33,7 @@ public class DAOEntityTypeResolver<T extends Named<U> & Persistable, U extends C
         Root<T> from = criteriaQuery.from(query);
         criteriaQuery.select(from).where(builder.equal(from.get("name"), criteria));
         session.beginTransaction();
-        T t = session.createQuery(criteriaQuery).getResultList().stream().findAny().orElse(null);
+        T t = session.byNaturalId(query).using("name", criteria).load();
         session.getTransaction().commit();
         return t;
     }

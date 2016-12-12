@@ -1,0 +1,77 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.VBox?>
+<TitledPane maxHeight="Infinity" maxWidth="Infinity"
+            text="Czary"
+            xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.SpellsPaneController">
+    <SplitPane dividerPositions="0.3" maxHeight="Infinity" maxWidth="Infinity">
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES"
+                                   minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0"
+                                vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <ListView fx:id="items" onMouseClicked="#getEntity"/>
+        </GridPane>
+        <GridPane hgap="5" vgap="3" maxHeight="Infinity" maxWidth="Infinity">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+            <padding>
+                <Insets right="10.0"/>
+            </padding>
+            <Label text="nazwa"/>
+            <TextField fx:id="name" GridPane.columnIndex="1"/>
+            <Label text="czas rzucania" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <ComboBox fx:id="loadingTimes" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="koszt many" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <TextField fx:id="magicCost" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+            <Label text="szkoła" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Button fx:id="school" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#chooseSchool"/>
+            <Label text="poziom" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <TextField fx:id="level" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="3">
+                <Label text="składniki"/>
+                <Button text="+" onAction="#chooseIngredient"/>
+            </VBox>
+            <ListView fx:id="ingredients" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <Label text="opis" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+            <Button text="Usuń" onAction="#remove"
+                    GridPane.columnIndex="2" GridPane.rowIndex="4"
+                    maxWidth="Infinity"/>
+            <Button text="Nowy"
+                    GridPane.columnIndex="3" GridPane.rowIndex="4"
+                    maxWidth="Infinity" onAction="#clear"/>
+            <Button text="Zapisz" onAction="#save"
+                    GridPane.columnIndex="4" GridPane.rowIndex="4"
+                    maxWidth="Infinity"/>
+        </GridPane>
+    </SplitPane>
+</TitledPane>

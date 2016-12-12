@@ -7,10 +7,7 @@ import pl.khuzzuk.wfrpchar.db.annot.Manager;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.characters.Player;
-import pl.khuzzuk.wfrpchar.entities.competency.MagicSchool;
-import pl.khuzzuk.wfrpchar.entities.competency.Profession;
-import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
-import pl.khuzzuk.wfrpchar.entities.competency.Skill;
+import pl.khuzzuk.wfrpchar.entities.competency.*;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
@@ -148,6 +145,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("magic.schools.query"));
     }
 
+    private void saveSpell(String line) {
+        dao.saveEntity(Spell.class, Spell.fromCsv(line.split(";"), dao));
+        daoPublisher.publish(messages.getProperty("magic.spells.query"));
+    }
+
     private void savePlayer(String line) {
         dao.saveEntity(Player.class, Player.fromCsv(getFrom(line, 24), dao));
         daoPublisher.publish(messages.getProperty("player.query"));
@@ -228,6 +230,11 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("magic.schools.query"));
     }
 
+    private void removeSpell(String name) {
+        dao.removeEntity(Spell.class, name);
+        daoPublisher.publish(messages.getProperty("magic.spells.query"));
+    }
+
     private void removePlayer(String name) {
         dao.removeEntity(Player.class, name);
         daoPublisher.publish(messages.getProperty("player.query"));
@@ -295,6 +302,10 @@ public class DAOReactor {
 
     private void getAllMagicSchools() {
         daoPublisher.publish(dao.getAllEntities(MagicSchool.class), messages.getProperty("magic.schools.result"));
+    }
+
+    private void getAllSpells() {
+        daoPublisher.publish(dao.getAllEntities(Spell.class), messages.getProperty("magic.spells.result"));
     }
 
     private void getAllPlayers() {
@@ -372,6 +383,10 @@ public class DAOReactor {
         daoPublisher.publish(dao.getEntity(MagicSchool.class, name), messages.getProperty("magic.schools.result.specific"));
     }
 
+    private void getSpell(String name) {
+        daoPublisher.publish(dao.getEntity(Spell.class, name), messages.getProperty("magic.spells.result.specific"));
+    }
+
     private void getPlayer(String name) {
         daoPublisher.publish(dao.getEntity(Player.class, name), messages.getProperty("player.result.specific"));
     }
@@ -406,6 +421,14 @@ public class DAOReactor {
 
     private void getProfessionsToNextChoose() {
         daoPublisher.publish(dao.getAllEntities(Profession.class), messages.getProperty("professions.next.allTypesList"));
+    }
+
+    private void getSchoolForSpell() {
+        daoPublisher.publish(dao.getAllEntities(MagicSchool.class), messages.getProperty("magic.spells.school.allTypesList"));
+    }
+
+    private void getIngredientsForSpell() {
+        daoPublisher.publish(dao.getAllEntities(MiscItem.class), messages.getProperty("magic.spells.ingredients.allTypesList"));
     }
 
     private void getProfessionsForPlayerChoice() {
@@ -452,6 +475,8 @@ public class DAOReactor {
         daoPublisher.publish(messages.getProperty("professions.class.query"));
         daoPublisher.publish(messages.getProperty("professions.query"));
         daoPublisher.publish(messages.getProperty("race.query"));
+        daoPublisher.publish(messages.getProperty("magic.schools.query"));
+        daoPublisher.publish(messages.getProperty("magic.spells.query"));
     }
 
     @Inject
@@ -480,6 +505,7 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("professions.query"), this::getAllProfessions);
         multiSubscriber.subscribe(messages.getProperty("race.query"), this::getAllRaces);
         multiSubscriber.subscribe(messages.getProperty("magic.schools.query"), this::getAllMagicSchools);
+        multiSubscriber.subscribe(messages.getProperty("magic.spells.query"), this::getAllSpells);
         multiSubscriber.subscribe(messages.getProperty("player.query"), this::getAllPlayers);
 
         //get all linked entities queries
@@ -490,6 +516,8 @@ public class DAOReactor {
         multiSubscriber.subscribe(messages.getProperty("professions.skills.getAllTypes"), this::getSkillsToChoose);
         multiSubscriber.subscribe(messages.getProperty("professions.next.getAllTypes"), this::getProfessionsToNextChoose);
         multiSubscriber.subscribe(messages.getProperty("race.skills.getAllTypes"), this::getSkillsForRaceChooser);
+        multiSubscriber.subscribe(messages.getProperty("magic.spells.school.getAllTypes"), this::getSchoolForSpell);
+        multiSubscriber.subscribe(messages.getProperty("magic.spells.ingredients.getAllTypes"), this::getIngredientsForSpell);
         multiSubscriber.subscribe(messages.getProperty("player.profession.getAllTypes"), this::getProfessionsForPlayerChoice);
         multiSubscriber.subscribe(messages.getProperty("player.weapons.white.getAllTypes"), this::getHandWeaponsForPlayerChoice);
         multiSubscriber.subscribe(messages.getProperty("player.weapons.ranged.getAllTypes"), this::getRangedWeaponsForPlayerChoice);
@@ -543,6 +571,9 @@ public class DAOReactor {
         daoContentSubscriber.subscribe(messages.getProperty("magic.schools.query.specific"), this::getMagicSchool);
         daoContentSubscriber.subscribe(messages.getProperty("magic.schools.save"), this::saveMagicSchool);
         daoContentSubscriber.subscribe(messages.getProperty("magic.schools.remove"), this::removeMagicSchool);
+        daoContentSubscriber.subscribe(messages.getProperty("magic.spells.query.specific"), this::getSpell);
+        daoContentSubscriber.subscribe(messages.getProperty("magic.spells.save"), this::saveSpell);
+        daoContentSubscriber.subscribe(messages.getProperty("magic.spells.remove"), this::removeSpell);
         daoContentSubscriber.subscribe(messages.getProperty("player.query.specific"), this::getPlayer);
         daoContentSubscriber.subscribe(messages.getProperty("player.save"), this::savePlayer);
         daoContentSubscriber.subscribe(messages.getProperty("player.remove"), this::removePlayer);

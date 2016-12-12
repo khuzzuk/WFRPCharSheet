@@ -8,10 +8,7 @@ import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.entities.characters.Player;
-import pl.khuzzuk.wfrpchar.entities.competency.MagicSchool;
-import pl.khuzzuk.wfrpchar.entities.competency.Profession;
-import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
-import pl.khuzzuk.wfrpchar.entities.competency.Skill;
+import pl.khuzzuk.wfrpchar.entities.competency.*;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.*;
 import pl.khuzzuk.wfrpchar.entities.items.usable.*;
@@ -56,6 +53,7 @@ public class DAO {
         putResolver(Profession.class);
         putResolver(Race.class);
         putResolver(MagicSchool.class);
+        putResolver(Spell.class);
     }
 
     private <T extends Persistable & Named<U>, U extends Comparable<? super U>> void putResolver(Class<T> type) {

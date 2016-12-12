@@ -6,10 +6,7 @@ import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Race;
-import pl.khuzzuk.wfrpchar.entities.competency.MagicSchool;
-import pl.khuzzuk.wfrpchar.entities.competency.Profession;
-import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
-import pl.khuzzuk.wfrpchar.entities.competency.Skill;
+import pl.khuzzuk.wfrpchar.entities.competency.*;
 import pl.khuzzuk.wfrpchar.entities.items.ParserBag;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.WeaponParser;
@@ -61,6 +58,7 @@ public class DBInitializer {
         loadProfessions();
         loadRaces();
         loadMagicSchools();
+        loadSpells();
     }
 
     private void loadCurrencies() {
@@ -157,6 +155,11 @@ public class DBInitializer {
     private void loadMagicSchools() {
         readResource("/magicSchools.csv").stream()
                 .map(MagicSchool::getFromCsv).forEach(s -> dao.saveEntity(MagicSchool.class, s));
+    }
+
+    private void loadSpells() {
+        readResource("/spells.csv").stream()
+                .map(s -> Spell.fromCsv(s, dao)).forEach(s -> dao.saveEntity(Spell.class, s));
     }
 
     private void loadItems(String path) {

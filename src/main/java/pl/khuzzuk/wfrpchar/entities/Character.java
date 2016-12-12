@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.entities;
 
 import lombok.*;
 import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,5 +23,6 @@ public class Character implements Named<String>, Persistable {
     @NonNull
     @Getter
     @Setter
+    @NaturalId
     private String name;
 }

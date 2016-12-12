@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
@@ -24,6 +25,7 @@ public class ResourceType implements Named<String>, Commodity, Persistable, Docu
     private long id;
     @Getter
     @Setter
+    @NaturalId
     private String name;
     @Getter
     @Setter
