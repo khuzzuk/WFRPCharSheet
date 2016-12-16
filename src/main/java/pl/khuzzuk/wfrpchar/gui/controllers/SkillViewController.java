@@ -22,4 +22,9 @@ public abstract class SkillViewController extends AbstractFeaturedController {
     private void showSkillChooser() {
         guiPublisher.publish(messages.getProperty(skillChooserMsg));
     }
+
+    void clear() {
+        super.clearEditor();
+        skillsView.getItems().clear();
+    }
 }

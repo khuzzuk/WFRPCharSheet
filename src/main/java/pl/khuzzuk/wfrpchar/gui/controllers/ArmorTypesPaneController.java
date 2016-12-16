@@ -29,8 +29,6 @@ public class ArmorTypesPaneController extends ItemsListedController {
     @FXML
     private ComboBox<String> armPlacement;
     @FXML
-    private TextField armSpecialFeatures;
-    @FXML
     private TextField armMasc;
     @FXML
     private TextField armFem;
@@ -55,20 +53,6 @@ public class ArmorTypesPaneController extends ItemsListedController {
     @FXML
     @Numeric
     TextField armStrength;
-    @FXML
-    @Numeric
-    TextField armGold;
-    @FXML
-    @Numeric
-    TextField armSilver;
-    @FXML
-    @Numeric
-    TextField armLead;
-    @FXML
-    private ComboBox<String> armAccessibility;
-    @FXML
-    @FloatNumeric
-    TextField armWeight;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,7 +60,8 @@ public class ArmorTypesPaneController extends ItemsListedController {
         removeAction = guiPublisher::removeArmorType;
         saveAction = this::saveArmorType;
         getAction = guiPublisher::requestArmorTypeLoad;
-        ComboBoxHandler.fill(EnumSet.allOf(Accessibility.class), armAccessibility);
+        clearAction = this::clear;
+        ComboBoxHandler.fill(Accessibility.SET, accessibility);
         ComboBoxHandler.fill(EnumSet.allOf(ArmorPattern.class), armPattern);
         ComboBoxHandler.fill(EnumSet.of(Placement.CORPUS, Placement.HEAD,
                 Placement.BELT, Placement.HANDS,
@@ -101,11 +86,11 @@ public class ArmorTypesPaneController extends ItemsListedController {
 
     public void loadArmorTypeToEditor(ArmorType armor) {
         name.setText(armor.getName());
-        armWeight.setText(armor.getWeight() + "");
-        armAccessibility.getSelectionModel().select(armor.getAccessibility().getName());
-        armLead.setText(armor.getPrice().getLead() + "");
-        armSilver.setText(armor.getPrice().getSilver() + "");
-        armGold.setText(armor.getPrice().getGold() + "");
+        weight.setText(armor.getWeight() + "");
+        accessibility.getSelectionModel().select(armor.getAccessibility().getName());
+        lead.setText(armor.getPrice().getLead() + "");
+        silver.setText(armor.getPrice().getSilver() + "");
+        gold.setText(armor.getPrice().getGold() + "");
         armStrength.setText(armor.getStrength() + "");
         armPattern.getSelectionModel().select(armor.getPattern().getName());
         armPlacement.getSelectionModel().select(armor.getPlacement().getName());
@@ -113,20 +98,20 @@ public class ArmorTypesPaneController extends ItemsListedController {
                 .forEach(a -> MappingUtil.mapDeterminant(a, determinantsMap));
         armor.getNames()
                 .forEach((k, v) -> MappingUtil.mapDeterminant(new Context<>(k, v), langElementsMap));
-        armSpecialFeatures.setText(armor.getSpecialFeatures());
+        specialFeatures.setText(armor.getSpecialFeatures());
     }
 
     @FXML
-    void saveArmorType() {
+    private void saveArmorType() {
         if (name.getText().length() < 3) {
             return;
         }
         List<String> fields = new LinkedList<>();
         fields.add(name.getText());
-        fields.add(armWeight.getText());
-        fields.add(armGold.getText() + "|" + armSilver.getText() + "|" + armLead.getText());
-        fields.add(Accessibility.forName(armAccessibility.getSelectionModel().getSelectedItem()).name());
-        fields.add(armSpecialFeatures.getText());
+        fields.add(weight.getText());
+        fields.add(getPriceFromFields());
+        fields.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
+        fields.add(specialFeatures.getText());
         fields.add(armStrength.getText());
         fields.add(TYPE);
         fields.add(Placement.forName(armPlacement.getSelectionModel().getSelectedItem()).name());
@@ -137,5 +122,16 @@ public class ArmorTypesPaneController extends ItemsListedController {
         fields.add(MappingUtil.getDeterminants(determinantsMap));
         fields.add(ArmorPattern.forName(armPattern.getSelectionModel().getSelectedItem()).name());
         publisher.saveItem(fields.stream().collect(Collectors.joining(";")));
+    }
+
+    @Override
+    @FXML
+    void clear() {
+        super.clear();
+        armStrength.clear();
+        armPlacement.getSelectionModel().clearSelection();
+        langElementsMap.values().forEach(TextField::clear);
+        determinantsMap.values().forEach(TextField::clear);
+        armPattern.getSelectionModel().clearSelection();
     }
 }

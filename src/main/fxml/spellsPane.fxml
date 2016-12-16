@@ -68,7 +68,7 @@
                     maxWidth="Infinity"/>
             <Button text="Nowy"
                     GridPane.columnIndex="3" GridPane.rowIndex="4"
-                    maxWidth="Infinity" onAction="#clear"/>
+                    maxWidth="Infinity" onAction="#newItem"/>
             <Button text="Zapisz" onAction="#save"
                     GridPane.columnIndex="4" GridPane.rowIndex="4"
                     maxWidth="Infinity"/>

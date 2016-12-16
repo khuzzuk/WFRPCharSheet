@@ -10,13 +10,14 @@ import java.util.ResourceBundle;
 
 //TODO extend something else since it has too much fields from ItemsListedController
 @Component
-public class MagicSchoolsPaneController extends ItemsListedController {
+public class MagicSchoolsPaneController extends EntitiesListedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
         getAction = guiPublisher::requestMagicSchool;
         removeAction = guiPublisher::removeMagicSchool;
         saveAction = this::saveSchool;
+        clearAction = super::clear;
         guiPublisher.requestMagicSchools();
     }
 

@@ -2,7 +2,6 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -20,8 +19,6 @@ import java.util.stream.Collectors;
 public class ProfessionClassPaneController extends SkillViewController {
     @FXML
     private ComboBox<String> baseDeterminantType;
-    @FXML
-    private ListView<String> skillsView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -31,6 +28,7 @@ public class ProfessionClassPaneController extends SkillViewController {
         getAction = guiPublisher::requestProfessionClass;
         removeAction = guiPublisher::removeProfessionClass;
         saveAction = this::saveClass;
+        clearAction = this::clear;
     }
 
     private void saveClass() {
@@ -51,5 +49,10 @@ public class ProfessionClassPaneController extends SkillViewController {
         if (professionClass.getSkills() != null) {
             EntitiesAdapter.sendToListView(skillsView, professionClass.getSkills());
         }
+    }
+
+    void clear() {
+        super.clear();
+        baseDeterminantType.getSelectionModel().clearSelection();
     }
 }

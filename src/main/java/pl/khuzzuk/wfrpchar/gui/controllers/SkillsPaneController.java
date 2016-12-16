@@ -19,6 +19,7 @@ public class SkillsPaneController extends AbstractFeaturedController {
         getAction = guiPublisher::requestSkill;
         removeAction = guiPublisher::removeSkill;
         saveAction = this::saveSkill;
+        clearAction = this::clear;
         guiPublisher.requestSkills();
     }
 

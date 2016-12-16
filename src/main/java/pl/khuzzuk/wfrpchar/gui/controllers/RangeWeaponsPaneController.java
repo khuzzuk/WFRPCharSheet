@@ -17,6 +17,7 @@ public class RangeWeaponsPaneController extends AbstractWeaponController {
         super.initialize(location, resources);
         removeAction = guiPublisher::removeRangedWeapon;
         getAction = guiPublisher::requestRangedWeapon;
+        clearAction = this::clear;
         guiPublisher.requestRangedWeapons();
     }
 

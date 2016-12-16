@@ -26,6 +26,7 @@ public class AmmunitionTypesPaneController extends ItemsListedController {
         getAction = guiPublisher::requestAmmunitionType;
         removeAction = guiPublisher::removeAmmunitionType;
         saveAction = this::save;
+        clearAction = this::clear;
     }
 
     public void loadToEditor(AmmunitionType ammunitionType) {
@@ -45,5 +46,11 @@ public class AmmunitionTypesPaneController extends ItemsListedController {
         fields.add("AMMO");
         guiPublisher.publish(fields.stream().collect(Collectors.joining(";")),
                 messages.getProperty("database.saveEquipment"));
+    }
+
+    @Override
+    void clear() {
+        super.clear();
+        strength.clear();
     }
 }

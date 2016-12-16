@@ -51,6 +51,7 @@
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.Gun"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.Armor"/>
         <mapping class="pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition"/>
+        <mapping class="pl.khuzzuk.wfrpchar.entities.characters.PlayersAmmunition"/>
 
         <!--COMPETENCY-->
         <mapping class="pl.khuzzuk.wfrpchar.entities.competency.Skill"/>

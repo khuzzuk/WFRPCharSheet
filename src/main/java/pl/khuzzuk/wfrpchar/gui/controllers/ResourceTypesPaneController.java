@@ -42,6 +42,7 @@ public class ResourceTypesPaneController extends ItemsListedController implement
         };
         removeAction = guiPublisher::removeResourceType;
         getAction = guiPublisher::requestResourceType;
+        clearAction = this::clear;
         ComboBoxHandler.fill(EnumSet.allOf(SubstanceType.class), resType);
         guiPublisher.requestResourceTypes();
     }
@@ -57,4 +58,11 @@ public class ResourceTypesPaneController extends ItemsListedController implement
         resType.getSelectionModel().select(resource.getSubstanceType().getName());
     }
 
+    @Override
+    void clear() {
+        super.clear();
+        resStrength.clear();
+        resPrice.clear();
+        resType.getSelectionModel().clearSelection();
+    }
 }

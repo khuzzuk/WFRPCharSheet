@@ -35,24 +35,24 @@
             <Label text="nazwa"/>
             <TextField fx:id="name" GridPane.columnIndex="1"/>
             <Label text="dostępność" GridPane.columnIndex="2"/>
-            <ComboBox fx:id="iAccessibility" GridPane.columnIndex="3"/>
+            <ComboBox fx:id="accessibility" GridPane.columnIndex="3"/>
             <Label text="waga" GridPane.rowIndex="1"/>
-            <TextField fx:id="iWeight" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <TextField fx:id="weight" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
             <Label text="cena" GridPane.rowIndex="2"/>
             <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="1">
                 <Label text="złoto"/>
-                <TextField fx:id="iGold"/>
+                <TextField fx:id="gold"/>
             </VBox>
             <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="2">
                 <Label text="złoto"/>
-                <TextField fx:id="iSilver"/>
+                <TextField fx:id="silver"/>
             </VBox>
             <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="3">
                 <Label text="złoto"/>
-                <TextField fx:id="iLead"/>
+                <TextField fx:id="lead"/>
             </VBox>
             <Label text="cechy specjalne" GridPane.rowIndex="3"/>
-            <TextArea fx:id="iSpecialFeatures" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
             <Button text="Usuń" onAction="#remove"
                     GridPane.columnIndex="2" GridPane.rowIndex="4"
                     maxWidth="Infinity"/>

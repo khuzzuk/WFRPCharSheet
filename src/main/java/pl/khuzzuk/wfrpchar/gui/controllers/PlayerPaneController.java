@@ -13,12 +13,12 @@ import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.characters.*;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
+import pl.khuzzuk.wfrpchar.entities.competency.Spell;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.ProtectiveWearings;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
-import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.ListViewHandler;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
@@ -34,6 +34,8 @@ import static pl.khuzzuk.wfrpchar.gui.ListViewHandler.shouldAddToList;
 @Component
 public class PlayerPaneController extends ItemsListedController {
     @FXML
+    private TableView<Spell> spells;
+    @FXML
     private TextArea history;
     @FXML
     private TextField birthplace;
@@ -44,7 +46,7 @@ public class PlayerPaneController extends ItemsListedController {
     @FXML
     private TextField siblings;
     @FXML
-    private TableView<Ammunition> ammunition;
+    private TableView<PlayersAmmunition> ammunition;
     @FXML
     private ListView<String> skills;
     @FXML
@@ -159,6 +161,7 @@ public class PlayerPaneController extends ItemsListedController {
         getAction = guiPublisher::requestPlayer;
         removeAction = guiPublisher::removePlayer;
         saveAction = this::savePlayer;
+        clearAction = this::clear;
         guiPublisher.requestPlayers();
         guiPublisher.requestCharacters();
         initDeterminantsMap();
@@ -239,6 +242,39 @@ public class PlayerPaneController extends ItemsListedController {
         ((TableColumn<Commodity, String>) equipment.getColumns().get(1))
                 .setCellValueFactory(param -> new SimpleStringProperty(
                         param.getValue().getWeight() + ""));
+
+        ((TableColumn<PlayersAmmunition, String>) ammunition.getColumns().get(0))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getName()));
+        ((TableColumn<PlayersAmmunition, String>) ammunition.getColumns().get(1))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getStrength() + ""));
+        ((TableColumn<PlayersAmmunition, String>) ammunition.getColumns().get(2))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getCount() + ""));
+
+        ((TableColumn<Spell, String>) spells.getColumns().get(0))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getName()));
+        ((TableColumn<Spell, String>) spells.getColumns().get(1))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getCastTime().getName()));
+        ((TableColumn<Spell, String>) spells.getColumns().get(2))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getMagicCost() + ""));
+        ((TableColumn<Spell, String>) spells.getColumns().get(3))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getSchool().getName()));
+        ((TableColumn<Spell, String>) spells.getColumns().get(4))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getLevel() + ""));
+        ((TableColumn<Spell, String>) spells.getColumns().get(5))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getIngredients().stream()
+                                .map(Named::getName).collect(Collectors.joining(", "))));
+        ((TableColumn<Spell, String>) spells.getColumns().get(6))
+                .setCellValueFactory(param -> new SimpleStringProperty(
+                        param.getValue().getDescription()));
     }
 
     public void loadPlayer(Player player) {
@@ -265,20 +301,23 @@ public class PlayerPaneController extends ItemsListedController {
         }
         player.getDeterminants().forEach(d ->
                 guiDeterminants.get(d.getType()).setCurrentValue(d.getBaseValue() + ""));
-        equipment.getItems().addAll(player.getEquipment());
         weapons.getItems().addAll(player.getHandWeapons());
+        ammunition.getItems().addAll(player.getAmmunition());
         rangedWeapons.getItems().addAll(player.getRangedWeapons());
         armors.getItems().addAll(player.getArmors());
+        skills.getItems().addAll(player.getSkills().stream().map(Named::getName).collect(Collectors.toList()));
+        spells.getItems().addAll(player.getSpells());
         gold.setText(player.getMoney().getGold() + "");
         silver.setText(player.getMoney().getSilver() + "");
         lead.setText(player.getMoney().getLead() + "");
         PersonalHistory playerHistory = player.getPersonalHistory();
-        history.setText(playerHistory.getHistory());
-        birthplace.setText(playerHistory.getBirthplace());
-        father.setText(playerHistory.getFather());
-        mother.setText(playerHistory.getMother());
-        siblings.setText(playerHistory.getSiblings());
-
+        if (playerHistory != null) {
+            history.setText(playerHistory.getHistory());
+            birthplace.setText(playerHistory.getBirthplace());
+            father.setText(playerHistory.getFather());
+            mother.setText(playerHistory.getMother());
+            siblings.setText(playerHistory.getSiblings());
+        }
     }
 
     @FXML
@@ -307,9 +346,11 @@ public class PlayerPaneController extends ItemsListedController {
         equipment.getItems().clear();
         weapons.getItems().clear();
         rangedWeapons.getItems().clear();
+        ammunition.getItems().clear();
         armors.getItems().clear();
         skills.getItems().clear();
-        guiDeterminants.forEach((type, guiDeterminant) -> guiDeterminant.setCurrentValue(null));
+        spells.getItems().clear();
+        guiDeterminants.forEach((type, guiDeterminant) -> guiDeterminant.setCurrentValue(0 + ""));
     }
 
     private void savePlayer() {
@@ -332,8 +373,11 @@ public class PlayerPaneController extends ItemsListedController {
                         .collect(Collectors.joining("|")))
                 .add(getFightingEquipment().stream().map(Named::getName)
                         .collect(Collectors.joining("|")))
+                .add(ammunition.getItems().stream()
+                        .map(PlayersAmmunition::toCsv).collect(Collectors.joining("|")))
                 .add(ListViewHandler.getFromList(skills))
                 .add(getPriceFromFields())
+                .add(spells.getItems().stream().map(Named::getName).collect(Collectors.joining("|")))
                 .add(history.getText())
                 .add(birthplace.getText())
                 .add(father.getText())
@@ -389,6 +433,12 @@ public class PlayerPaneController extends ItemsListedController {
         }
     }
 
+    public void loadSpell(Spell spell) {
+        if (shouldAddToList(spell, spells)) {
+            spells.getItems().add(spell);
+        }
+    }
+
     @FXML
     private void chooseProfession() {
         guiPublisher.publish(messages.getProperty("player.profession.getAllTypes"));
@@ -417,6 +467,11 @@ public class PlayerPaneController extends ItemsListedController {
     @FXML
     private void chooseSkill() {
         guiPublisher.publish(messages.getProperty("player.skills.getAllTypes"));
+    }
+
+    @FXML
+    private void chooseSpell() {
+        guiPublisher.publish(messages.getProperty("player.spells.getAllTypes"));
     }
 
     private String getDeterminantsFromFields() {

@@ -41,6 +41,7 @@
                 <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="140" vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="120" vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="40" vgrow="SOMETIMES"/>
             </rowConstraints>
@@ -257,10 +258,9 @@
                 </HBox>
                 <TableView fx:id="ammunition" maxWidth="350" prefWidth="Infinity" editable="true">
                     <columns>
-                        <TableColumn prefWidth="200" text="Nazwa" editable="false"/>
-                        <TableColumn prefWidth="90" text="przeł." editable="false"/>
-                        <TableColumn prefWidth="30" text="obraż." editable="false"/>
-                        <TableColumn prefWidth="30" text="il."/>
+                        <TableColumn prefWidth="270" text="Nazwa" editable="false"/>
+                        <TableColumn prefWidth="40" text="obraż." editable="false"/>
+                        <TableColumn prefWidth="40" text="il."/>
                     </columns>
                 </TableView>
             </VBox>
@@ -309,7 +309,25 @@
                 </HBox>
                 <ListView fx:id="skills" maxHeight="Infinity" maxWidth="Infinity"/>
             </VBox>
-            <VBox GridPane.columnIndex="0" GridPane.rowIndex="10" GridPane.columnSpan="3" spacing="5">
+            <VBox alignment="CENTER_LEFT" maxHeight="Infinity" maxWidth="Infinity"
+                  GridPane.columnIndex="0" GridPane.rowIndex="10" GridPane.columnSpan="4" spacing="5">
+                <HBox spacing="10.0">
+                    <Button text="+" onAction="#chooseSpell"/>
+                    <Label text="Czary"/>
+                </HBox>
+                <TableView fx:id="spells" maxWidth="1000" prefWidth="Infinity">
+                    <columns>
+                        <TableColumn prefWidth="160" text="Nazwa"/>
+                        <TableColumn prefWidth="100" text="czas rzucania"/>
+                        <TableColumn prefWidth="40" text="koszt"/>
+                        <TableColumn prefWidth="120" text="szkoła"/>
+                        <TableColumn prefWidth="30" text="poz."/>
+                        <TableColumn prefWidth="300" text="składniki"/>
+                        <TableColumn prefWidth="250" text="opis"/>
+                    </columns>
+                </TableView>
+            </VBox>
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="11" GridPane.columnSpan="3" spacing="5">
                 <Label text="historia"/>
                 <TextArea fx:id="history"/>
                 <HBox spacing="5">
@@ -326,10 +344,10 @@
                 </HBox>
             </VBox>
             <HBox GridPane.rowIndex="11">
-                <Button text="Nowy" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
-                <Button text="Zapisz" GridPane.rowIndex="11" GridPane.columnIndex="2"
+                <Button text="Nowy" GridPane.rowIndex="12" GridPane.columnIndex="1" onAction="#clear"/>
+                <Button text="Zapisz" GridPane.rowIndex="12" GridPane.columnIndex="2"
                         onAction="#save"/>
-                <Button text="Usuń" GridPane.rowIndex="11" GridPane.columnIndex="3"
+                <Button text="Usuń" GridPane.rowIndex="12" GridPane.columnIndex="3"
                         onAction="#remove"/>
             </HBox>
         </GridPane>

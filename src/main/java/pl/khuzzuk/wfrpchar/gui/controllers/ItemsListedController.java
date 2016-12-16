@@ -2,28 +2,17 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.FloatNumeric;
-import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 
-import javax.inject.Inject;
 import java.net.URL;
-import java.util.Collection;
-import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
-public abstract class ItemsListedController implements Controller {
-    @FXML
-    TextField name;
+public abstract class ItemsListedController extends EntitiesListedController {
     @FXML
     ComboBox<String> accessibility;
     @FXML
@@ -38,49 +27,10 @@ public abstract class ItemsListedController implements Controller {
     @FXML
     @FloatNumeric
     TextField weight;
-    @Inject
-    GuiPublisher guiPublisher;
-    @FXML
-    TextArea specialFeatures;
-    @Inject
-    @javax.inject.Named("messages")
-    Properties messages;
-
-    Runnable saveAction;
-    Consumer<String> removeAction;
-    Consumer<String> getAction;
-    Runnable clearAction;
-
-    @FXML
-    ListView<String> items;
-
-    @FXML
-    private void getEntity() {
-        String selected = items.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            getAction.accept(selected);
-        }
-    }
-
-    @FXML
-    private void remove() {
-        if (name.getText().length() >= 3) {
-            removeAction.accept(name.getText());
-            clearAction.run();
-        }
-    }
-
-    @FXML
-    private void save() {
-        if (name.getText().length() >= 3) {
-            saveAction.run();
-        }
-    }
 
     @FXML
     void clear() {
-        name.clear();
-        specialFeatures.clear();
+        super.clear();
         weight.clear();
         gold.clear();
         silver.clear();
@@ -88,16 +38,13 @@ public abstract class ItemsListedController implements Controller {
         accessibility.getSelectionModel().clearSelection();
     }
 
-    public void loadAll(Collection<? extends Named<String>> itemsList) {
-        items.getItems().clear();
-        items.getItems().addAll(itemsList.stream()
-                .map(Named::getName).collect(Collectors.toList()));
-    }
 
     void loadToInternalEditor(Commodity commodity) {
-        name.setText(commodity.getName());
+        super.loadToInternalEditor(commodity);
         accessibility.getSelectionModel().select(commodity.getAccessibility().getName());
-        weight.setText(commodity.getWeight() + "");
+        //TODO remove this if and solve it differently. usable controllers extends this class but don't need weight field.
+        if (weight != null)
+            weight.setText(commodity.getWeight() + "");
         gold.setText(commodity.getPrice().getGold() + "");
         silver.setText(commodity.getPrice().getSilver() + "");
         lead.setText(commodity.getPrice().getLead() + "");

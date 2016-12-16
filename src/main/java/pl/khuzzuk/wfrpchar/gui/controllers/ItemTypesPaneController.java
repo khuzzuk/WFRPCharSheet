@@ -1,9 +1,6 @@
 package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.types.EquipmentType;
@@ -14,7 +11,6 @@ import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;
 import java.net.URL;
-import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -25,18 +21,6 @@ public class ItemTypesPaneController extends ItemsListedController {
     @Inject
     @Publishers
     private GuiPublisher publisher;
-    @FXML
-    private ComboBox<String> iAccessibility;
-    @FXML
-    private TextArea iSpecialFeatures;
-    @FXML
-    private TextField iGold;
-    @FXML
-    private TextField iSilver;
-    @FXML
-    private TextField iLead;
-    @FXML
-    private TextField iWeight;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,18 +28,19 @@ public class ItemTypesPaneController extends ItemsListedController {
         saveAction = this::saveItem;
         getAction = guiPublisher::requestMiscItemTypeLoad;
         removeAction = guiPublisher::removeMiscItemType;
-        ComboBoxHandler.fill(EnumSet.allOf(Accessibility.class), iAccessibility);
+        clearAction = this::clear;
+        ComboBoxHandler.fill(Accessibility.SET, accessibility);
         publisher.requestMiscItemType();
     }
 
     public void loadMiscItemToEditor(MiscItem item) {
         name.setText(item.getName());
-        iWeight.setText(item.getWeight() + "");
-        iSpecialFeatures.setText(item.getSpecialFeatures());
-        iGold.setText(item.getPrice().getGold() + "");
-        iSilver.setText(item.getPrice().getSilver() + "");
-        iLead.setText(item.getPrice().getLead() + "");
-        iAccessibility.getSelectionModel().select(item.getAccessibility().getName());
+        weight.setText(item.getWeight() + "");
+        specialFeatures.setText(item.getSpecialFeatures());
+        gold.setText(item.getPrice().getGold() + "");
+        silver.setText(item.getPrice().getSilver() + "");
+        lead.setText(item.getPrice().getLead() + "");
+        accessibility.getSelectionModel().select(item.getAccessibility().getName());
     }
 
     @FXML
@@ -65,10 +50,10 @@ public class ItemTypesPaneController extends ItemsListedController {
         }
         List<String> line = new LinkedList<>();
         line.add(name.getText());
-        line.add(iWeight.getText());
-        line.add(iGold.getText() + "|" + iSilver.getText() + "|" + iLead.getText());
-        line.add(Accessibility.forName(iAccessibility.getSelectionModel().getSelectedItem()).name());
-        line.add(iSpecialFeatures.getText());
+        line.add(weight.getText());
+        line.add(getPriceFromFields());
+        line.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
+        line.add(specialFeatures.getText());
         line.add("");
         line.add(EquipmentType.MISC_ITEM.name());
         publisher.saveItem(line.stream().collect(Collectors.joining(";")));

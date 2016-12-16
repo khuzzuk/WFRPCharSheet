@@ -19,6 +19,7 @@ public class AmmunitionPaneController extends AbstractWeaponController {
         getAction = guiPublisher::requestAmmunition;
         removeAction = guiPublisher::removeAmmunition;
         saveAction = this::saveAmmunition;
+        clearAction = this::clear;
     }
 
     @FXML

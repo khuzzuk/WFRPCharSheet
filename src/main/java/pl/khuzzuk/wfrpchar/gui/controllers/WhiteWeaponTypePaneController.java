@@ -1,7 +1,10 @@
 package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -10,7 +13,6 @@ import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
-import pl.khuzzuk.wfrpchar.gui.FloatNumeric;
 import pl.khuzzuk.wfrpchar.gui.MappingUtil;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 import pl.khuzzuk.wfrpchar.rules.Dices;
@@ -27,18 +29,6 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
 
     @FXML
     TextField typeNameWW;
-    @FXML
-    @FloatNumeric
-    TextField weightWW;
-    @FXML
-    @Numeric
-    TextField goldWW;
-    @FXML
-    @Numeric
-    TextField silverWW;
-    @FXML
-    @Numeric
-    TextField leadWW;
     @FXML
     @Numeric
     TextField strengthBasicWW;
@@ -81,10 +71,6 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
     @FXML
     TextField langAblativeWW;
     @FXML
-    TextArea specialFeaturesWW;
-    @FXML
-    ComboBox<String> accessibilityBoxWW;
-    @FXML
     ComboBox<String> placementBoxWW;
     @FXML
     ComboBox<String> diceWW;
@@ -98,12 +84,13 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
         removeAction = guiPublisher::removeWhiteWeapon;
         saveAction = this::saveWhiteWeaponType;
         getAction = guiPublisher::requestWhiteWeaponType;
+        clearAction = this::clear;
         initFieldsMap();
         fillComboBoxesWithEnums();
     }
 
     private void fillComboBoxesWithEnums() {
-        ComboBoxHandler.fill(Accessibility.SET, accessibilityBoxWW);
+        ComboBoxHandler.fill(Accessibility.SET, accessibility);
         ComboBoxHandler.fill(Dices.SET, diceWW);
         ComboBoxHandler.fill((Set) EnumSet.of(Placement.ONE_HAND, Placement.TWO_HANDS, Placement.BASTARD),
                 placementBoxWW);
@@ -130,18 +117,18 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
     public void loadWhiteWeaponToEditor(WhiteWeaponType weaponType) {
         name.setText(weaponType.getName());
         typeNameWW.setText(weaponType.getTypeName());
-        accessibilityBoxWW.getSelectionModel().select(weaponType.getAccessibility().getName());
+        accessibility.getSelectionModel().select(weaponType.getAccessibility().getName());
         placementBoxWW.getSelectionModel().select(weaponType.getPlacement().getName());
         diceWW.getSelectionModel().select(weaponType.getDices().name());
         rollsWW.adjustValue(weaponType.getRolls());
-        weightWW.setText("" + weaponType.getWeight());
-        goldWW.setText("" + weaponType.getPrice().getGold());
-        silverWW.setText("" + weaponType.getPrice().getSilver());
-        leadWW.setText("" + weaponType.getPrice().getLead());
+        weight.setText("" + weaponType.getWeight());
+        gold.setText("" + weaponType.getPrice().getGold());
+        silver.setText("" + weaponType.getPrice().getSilver());
+        lead.setText("" + weaponType.getPrice().getLead());
         strengthBasicWW.setText("" + weaponType.getStrength());
         weaponType.getDeterminants().forEach(d -> MappingUtil.mapDeterminant(d, whiteWeaponModifiers));
         weaponType.getNames().forEach((lang, val) -> whiteWeaponLangFields.get(lang).setText(val));
-        specialFeaturesWW.setText(weaponType.getSpecialFeatures());
+        specialFeatures.setText(weaponType.getSpecialFeatures());
         if (weaponType instanceof BastardWeaponType) {
             BastardWeaponType bastard = (BastardWeaponType) weaponType;
             strengthBastardWW.setText("" + bastard.getOneHandedStrength());
@@ -154,12 +141,10 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
         List<String> fields = new LinkedList<>();
         if (name.getText().length() == 0) return;
         fields.add(name.getText());
-        fields.add(weightWW.getText());
-        fields.add(goldWW.getText() + "|" +
-                silverWW.getText() + "|" +
-                leadWW.getText());
-        fields.add(Accessibility.forName(accessibilityBoxWW.getSelectionModel().getSelectedItem()).name());
-        fields.add(specialFeaturesWW.getText());
+        fields.add(weight.getText());
+        fields.add(getPriceFromFields());
+        fields.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
+        fields.add(specialFeatures.getText());
         fields.add(strengthBasicWW.getText());
         fields.add("WEAPON");
         fields.add(Placement.forName(placementBoxWW.getSelectionModel().getSelectedItem()).name());
@@ -181,5 +166,21 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
             fields.add(line);
         }
         guiPublisher.saveItem(fields.stream().collect(Collectors.joining(";")));
+    }
+
+    @Override
+    void clear() {
+        super.clear();
+        strengthBasicWW.clear();
+        placementBoxWW.getSelectionModel().clearSelection();
+        whiteWeaponModifiers.values().forEach(TextField::clear);
+        langMascWW.clear();
+        langFemWW.clear();
+        langNeutrWW.clear();
+        langAblativeWW.clear();
+        typeNameWW.clear();
+        diceWW.getSelectionModel().clearSelection();
+        rollsWW.adjustValue(0);
+        bastWhiteWeaponMods.values().forEach(TextField::clear);
     }
 }

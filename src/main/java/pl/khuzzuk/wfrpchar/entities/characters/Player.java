@@ -11,6 +11,7 @@ import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.competency.Skill;
+import pl.khuzzuk.wfrpchar.entities.competency.Spell;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
@@ -73,8 +74,16 @@ public class Player implements Named<String>, Persistable, Documented {
     private List<AbstractCommodity> commodities;
     @Getter
     @Setter
+    @ManyToMany
+    private Set<PlayersAmmunition> ammunition;
+    @Getter
+    @Setter
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Skill> skills;
+    @Getter
+    @Setter
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Spell> spells;
     @Getter
     @Setter
     private Price money;
@@ -96,11 +105,21 @@ public class Player implements Named<String>, Persistable, Documented {
         player.setAppearance(Appearance.getFromCsv(Arrays.copyOfRange(fields, 6, 13)));
         player.setDeterminants(DeterminantFactory.createDeterminants(fields[13]));
         player.setEquipment(dao.getEntitiesAsList(Item.class, fields[14].split("\\|")));
-        player.setCommodities(dao.getEntitiesAsList(AbstractCommodity.class, fields[15].split("\\|")));
-        player.setSkills(dao.getEntities(Skill.class, fields[16].split("\\|")));
-        player.setMoney(Price.parsePrice(fields[17]));
-        player.setPersonalHistory(PersonalHistory.fromCsv(Arrays.copyOfRange(fields, 18, 23)));
+        player.setCommodities(Documented.toList(fields[15], "|", AbstractCommodity.class, dao));
+        player.setAmmunition(convertAmmunition(fields[16].split("\\|"), ":", dao));
+        player.setSkills(dao.getEntities(Skill.class, fields[17].split("\\|")));
+        player.setMoney(Price.parsePrice(fields[18]));
+        player.setSpells(Documented.toSet(fields[19], "|", Spell.class, dao));
+        player.setPersonalHistory(PersonalHistory.fromCsv(Arrays.copyOfRange(fields, 20, 25)));
         return player;
+    }
+
+    private static Set<PlayersAmmunition> convertAmmunition(String field[], String separator, DAO dao) {
+        if (field == null || field.length == 0 || field[0].length() == 0) {
+            return new HashSet<>();
+        }
+        return Arrays.stream(field)
+                .map(s -> PlayersAmmunition.fromCsv(s.split(separator), dao)).collect(Collectors.toSet());
     }
 
     private static String[] extend(String[] array) {
@@ -125,8 +144,10 @@ public class Player implements Named<String>, Persistable, Documented {
                 .add(Determinant.determinantsToCsv(determinants))
                 .add(Named.toCsv(equipment, "|"))
                 .add(Named.toCsv(commodities, "|"))
+                .add(Documented.toCsv(ammunition, "|"))
                 .add(Named.toCsv(skills, "|"))
                 .add(money.toString())
+                .add(Named.toCsv(spells, "|"))
                 .add(personalHistory.toCsv())
                 .build();
     }

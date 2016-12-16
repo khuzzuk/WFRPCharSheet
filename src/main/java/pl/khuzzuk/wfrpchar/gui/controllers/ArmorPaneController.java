@@ -18,6 +18,7 @@ public class ArmorPaneController extends AbstractWeaponController {
         super.initialize(location, resources);
         getAction = guiPublisher::requestArmor;
         removeAction = guiPublisher::removeArmor;
+        clearAction = this::clear;
         guiPublisher.requestArmor();
     }
 

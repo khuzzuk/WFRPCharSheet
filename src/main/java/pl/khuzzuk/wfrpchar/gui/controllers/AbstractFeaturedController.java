@@ -36,12 +36,7 @@ public abstract class AbstractFeaturedController extends ItemsListedController {
 
     @FXML
     void clearEditor() {
-        name.setText("");
-        accessibility.getSelectionModel().clearSelection();
-        specialFeatures.setText("");
-        gold.setText("");
-        silver.setText("");
-        lead.setText("");
+        super.clear();
         determinantsView.getItems().clear();
     }
 }

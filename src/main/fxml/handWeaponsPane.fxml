@@ -87,9 +87,9 @@
             <TextArea fx:id="specialFeatures" GridPane.rowIndex="4" GridPane.columnIndex="4"
                       GridPane.columnSpan="2" GridPane.rowSpan="2"
                       maxHeight="Infinity" maxWidth="Infinity"/>
-            <Button text="Usuń" GridPane.rowIndex="6" maxWidth="Infinity" onAction="#removeWeapon"/>
+            <Button text="Usuń" GridPane.rowIndex="6" maxWidth="Infinity" onAction="#remove"/>
             <Button text="Nowy" GridPane.rowIndex="6" GridPane.columnIndex="1" maxWidth="Infinity"/>
-            <Button text="Zapisz" GridPane.rowIndex="6" GridPane.columnIndex="2" maxWidth="Infinity" onAction="#saveWeapon"/>
+            <Button text="Zapisz" GridPane.rowIndex="6" GridPane.columnIndex="2" maxWidth="Infinity" onAction="#save"/>
         </GridPane>
     </SplitPane>
 </TitledPane>

@@ -73,21 +73,21 @@
             <Label text="umiejscowienie" GridPane.columnIndex="2"/>
             <ComboBox fx:id="armPlacement" GridPane.columnIndex="3"/>
             <Label text="waga" GridPane.rowIndex="1"/>
-            <TextField fx:id="armWeight" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <TextField fx:id="weight" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
             <Label text="dostępność" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-            <ComboBox fx:id="armAccessibility" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+            <ComboBox fx:id="accessibility" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
             <Label text="cena" GridPane.rowIndex="2"/>
             <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="1">
                 <Label text="złoto"/>
-                <TextField fx:id="armGold"/>
+                <TextField fx:id="gold"/>
             </VBox>
             <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="2">
                 <Label text="srebro"/>
-                <TextField fx:id="armSilver"/>
+                <TextField fx:id="silver"/>
             </VBox>
             <VBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="3">
                 <Label text="miedź"/>
-                <TextField fx:id="armLead"/>
+                <TextField fx:id="lead"/>
             </VBox>
             <Label text="punkty pancerza" GridPane.rowIndex="3"/>
             <TextField fx:id="armStrength" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
@@ -128,7 +128,7 @@
                 <TextField fx:id="armAbl"/>
             </VBox>
             <Label text="cechy specjalne" GridPane.rowIndex="6"/>
-            <TextField fx:id="armSpecialFeatures" GridPane.rowIndex="6" GridPane.columnIndex="1" GridPane.columnSpan="4"
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="6" GridPane.columnIndex="1" GridPane.columnSpan="4"
                        maxWidth="Infinity" maxHeight="Infinity"/>
             <Button text="Usuń"
                     GridPane.rowIndex="7" GridPane.columnIndex="2"

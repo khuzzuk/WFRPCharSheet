@@ -67,4 +67,9 @@ public class Spell implements Named<String>, Persistable, Documented {
                 .add(getDescription())
                 .build();
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

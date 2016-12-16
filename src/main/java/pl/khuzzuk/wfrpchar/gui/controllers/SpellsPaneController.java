@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 //TODO extend something else since it has too much fields from ItemsListedController
 @Component
-public class SpellsPaneController extends ItemsListedController {
+public class SpellsPaneController extends EntitiesListedController {
     @FXML
     private ListView<String> ingredients;
     @FXML

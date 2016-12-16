@@ -3,7 +3,6 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
@@ -12,10 +11,8 @@ import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
-import java.net.URL;
 import java.util.Collection;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,11 +26,6 @@ public abstract class AbstractWeaponController extends AbstractFeaturedControlle
 
     Collection<ResourceType> resources;
     String baseType;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        super.initialize(location, resources);
-    }
 
     public void fillResourceBoxes(Collection<ResourceType> resourceTypes) {
         resources = resourceTypes;
@@ -60,18 +52,12 @@ public abstract class AbstractWeaponController extends AbstractFeaturedControlle
     }
 
     void loadToInternalEditor(AbstractWeapon<? extends FightingEquipment> weapon) {
+        super.loadToInternalEditor(weapon);
         baseType = weapon.getBaseType().getName();
         chooseBaseButton.setText(baseType);
-        name.setText(weapon.getName());
-        accessibility.getSelectionModel().select(weapon.getAccessibility().getName());
         primaryResource.getSelectionModel().select(weapon.getPrimaryResource().getName());
         secondaryResource.getSelectionModel().select(weapon.getSecondaryResource().getName());
-        Price basePrice = weapon.getBasePrice();
-        gold.setText(basePrice.getGold() + "");
-        silver.setText(basePrice.getSilver() + "");
-        lead.setText(basePrice.getLead() + "");
         EntitiesAdapter.sendToListView(determinantsView, weapon.getDeterminants());
-        specialFeatures.setText(weapon.getSpecialFeatures());
     }
 
     @FXML
@@ -79,5 +65,15 @@ public abstract class AbstractWeaponController extends AbstractFeaturedControlle
         super.clearEditor();
         primaryResource.getSelectionModel().clearSelection();
         secondaryResource.getSelectionModel().clearSelection();
+    }
+
+    @Override
+    void clear() {
+        super.clear();
+        chooseBaseButton.setText("brak");
+        primaryResource.getSelectionModel().clearSelection();
+        secondaryResource.getSelectionModel().clearSelection();
+        baseType = "";
+        determinantsView.getItems().clear();
     }
 }

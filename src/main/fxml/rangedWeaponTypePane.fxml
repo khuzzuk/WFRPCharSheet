@@ -76,24 +76,24 @@
             <TextField fx:id="rwTypeName"
                        GridPane.columnIndex="3"/>
             <Label text="Waga" GridPane.rowIndex="1"/>
-            <TextField fx:id="rwWeight"
+            <TextField fx:id="weight"
                        GridPane.columnIndex="1"
                        GridPane.rowIndex="1"/>
             <Label text="Cena" GridPane.rowIndex="2"/>
             <VBox GridPane.columnIndex="1"
                   GridPane.rowIndex="2">
                 <Label text="Złoto"/>
-                <TextField fx:id="rwGold"/>
+                <TextField fx:id="gold"/>
             </VBox>
             <VBox GridPane.columnIndex="2"
                   GridPane.rowIndex="2">
-                <Label text="Złoto"/>
-                <TextField fx:id="rwSilver"/>
+                <Label text="Srebro"/>
+                <TextField fx:id="silver"/>
             </VBox>
             <VBox GridPane.columnIndex="3"
                   GridPane.rowIndex="2">
-                <Label text="Złoto"/>
-                <TextField fx:id="rwLead"/>
+                <Label text="Miedź"/>
+                <TextField fx:id="lead"/>
             </VBox>
             <Label text="dostępność"
                    GridPane.columnIndex="2"
@@ -150,7 +150,7 @@
             </VBox>
             <Label text="cechy specjalne"
                    GridPane.rowIndex="6"/>
-            <TextArea fx:id="rwSpecialFeatures"
+            <TextArea fx:id="specialFeatures"
                       GridPane.columnIndex="1"
                       GridPane.columnSpan="2"
                       GridPane.rowIndex="6"/>
@@ -160,7 +160,7 @@
                     onAction="#remove"/>
             <Button text="Nowy" GridPane.columnIndex="3"
                     GridPane.rowIndex="7"
-                    maxWidth="Infinity"/>
+                    maxWidth="Infinity" onAction="#clear"/>
             <Button text="Zapisz" GridPane.columnIndex="4"
                     GridPane.rowIndex="7"
                     maxWidth="Infinity"

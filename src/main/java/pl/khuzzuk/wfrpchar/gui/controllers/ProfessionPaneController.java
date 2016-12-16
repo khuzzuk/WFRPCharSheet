@@ -28,6 +28,7 @@ public class ProfessionPaneController extends SkillViewController {
         getAction = guiPublisher::requestProfession;
         removeAction = guiPublisher::removeProfession;
         saveAction = this::saveProfession;
+        clearAction = this::clear;
         guiPublisher.requestProfessions();
     }
 
@@ -73,5 +74,12 @@ public class ProfessionPaneController extends SkillViewController {
     @FXML
     private void removeProfession() {
         EntitiesAdapter.removeSelected(professionsNextView);
+    }
+
+    @Override
+    void clear() {
+        super.clear();
+        professionClass.getSelectionModel().clearSelection();
+        professionsNextView.getItems().clear();
     }
 }

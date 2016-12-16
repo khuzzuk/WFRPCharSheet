@@ -5,6 +5,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 @Component
 @PropertySource("classpath:messages.properties")
@@ -31,6 +31,10 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         getAction = guiPublisher::requestHandWeapon;
+        clearAction = this::clear;
+        saveAction = this::saveWeapon;
+        removeAction = this::removeWeapon;
+        clearAction = this::clear;
         ComboBoxHandler.fill(EnumSet.allOf(Dices.class), dices);
         guiPublisher.requestHandWeapons();
     }
@@ -47,29 +51,21 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
 
     @FXML
     private void saveWeapon() {
-        guiPublisher.publish(weaponToLine(), messages.getProperty("weapons.hand.save"));
-    }
-
-    private String weaponToLine() {
-        if (name.getText().length() >= 3 && baseType.length() >= 3) {
-            List<String> fields = new ArrayList<>();
-            addWeaponTypeFields(fields);
-            fields.add(dices.getSelectionModel().getSelectedItem());
-            fields.add(rolls.getText());
-            fields.add("");
-            return fields.stream().collect(Collectors.joining(";"));
-        }
-        throw new IllegalStateException("Weapon not started Properly");
+        List<String> fields = new ArrayList<>();
+        addWeaponTypeFields(fields);
+        guiPublisher.publish(new CsvBuilder(fields)
+                .add(ComboBoxHandler.getEmptyIfNotPresent(dices))
+                .add(rolls.getText())
+                .add("").build(), messages.getProperty("weapons.hand.save"));
     }
 
     public void loadToEditor(AbstractHandWeapon<? extends WhiteWeaponType> weapon) {
         loadToInternalEditor(weapon);
     }
 
-    @FXML
-    private void removeWeapon() {
-        if (name.getText().length()>=3) {
-            guiPublisher.removeHandWeapon(name.getText());
+    private void removeWeapon(String name) {
+        if (name.length()>=3) {
+            guiPublisher.removeHandWeapon(name);
         }
     }
 

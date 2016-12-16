@@ -63,10 +63,12 @@ public class RacesPaneController extends SkillViewController {
         saveAction = this::saveRace;
         getAction = guiPublisher::requestRace;
         removeAction = guiPublisher::removeRace;
+        clearAction = this::clear;
         guiPublisher.requestRaces();
     }
 
     public void loadToEditor(Race race) {
+        clear();
         name.setText(race.getName());
         specialFeatures.setText(race.getSpecialFeatures());
         EntitiesAdapter.sendToListView(skillsView, race.getSkills());
@@ -107,5 +109,24 @@ public class RacesPaneController extends SkillViewController {
         fields.add(determinants);
         fields.add(skillsView.getItems().stream().collect(Collectors.joining("|")));
         guiPublisher.publish(fields.stream().collect(Collectors.joining(";")), messages.getProperty("race.save"));
+    }
+
+    @Override
+    void clear() {
+        super.clear();
+        speed.clear();
+        battle.clear();
+        charisma.clear();
+        will.clear();
+        control.clear();
+        intelligence.clear();
+        leaderSkills.clear();
+        dexterity.clear();
+        attacks.clear();
+        initiative.clear();
+        health.clear();
+        endurance.clear();
+        strength.clear();
+        shooting.clear();
     }
 }

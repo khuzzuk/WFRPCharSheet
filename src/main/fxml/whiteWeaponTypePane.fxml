@@ -85,7 +85,7 @@
             <TextField fx:id="name"
                        GridPane.columnIndex="1"/>
             <Label text="waga" GridPane.rowIndex="2"/>
-            <TextField fx:id="weightWW"
+            <TextField fx:id="weight"
                        GridPane.columnIndex="1"
                        GridPane.rowIndex="2"/>
             <Label text="cena" GridPane.rowIndex="3"/>
@@ -93,19 +93,19 @@
                   GridPane.columnIndex="1"
                   GridPane.rowIndex="3">
                 <Label text="złoto"/>
-                <TextField fx:id="goldWW"/>
+                <TextField fx:id="gold"/>
             </VBox>
             <VBox alignment="CENTER"
                   GridPane.columnIndex="2"
                   GridPane.rowIndex="3">
                 <Label text="srebro"/>
-                <TextField fx:id="silverWW"/>
+                <TextField fx:id="silver"/>
             </VBox>
             <VBox alignment="CENTER"
                   GridPane.columnIndex="3"
                   GridPane.rowIndex="3">
                 <Label text="miedź"/>
-                <TextField fx:id="leadWW"/>
+                <TextField fx:id="lead"/>
             </VBox>
             <Label text="dostępność"
                    GridPane.columnIndex="2"
@@ -140,7 +140,7 @@
             <TextField fx:id="typeNameWW"
                        GridPane.columnIndex="1"
                        GridPane.rowIndex="1"/>
-            <ComboBox fx:id="accessibilityBoxWW"
+            <ComboBox fx:id="accessibility"
                       prefWidth="150.0"
                       GridPane.columnIndex="3"
                       GridPane.hgrow="ALWAYS"/>
@@ -235,7 +235,7 @@
                 <Label text="narzędnik"/>
                 <TextField fx:id="langAblativeWW"/>
             </VBox>
-            <TextArea fx:id="specialFeaturesWW"
+            <TextArea fx:id="specialFeatures"
                       prefHeight="200.0" prefWidth="200.0"
                       GridPane.columnIndex="1"
                       GridPane.columnSpan="2"

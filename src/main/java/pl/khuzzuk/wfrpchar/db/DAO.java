@@ -82,6 +82,7 @@ public class DAO {
         for (U n : names) {
             Optional.ofNullable(getEntity(type, n)).ifPresent(entities::add);
         }
+        entities.remove(null);
         return entities;
     }
 
@@ -92,6 +93,7 @@ public class DAO {
         for (U n : names) {
             Optional.ofNullable(getEntity(type, n)).ifPresent(entities::add);
         }
+        entities.remove(null);
         return entities;
     }
 
