@@ -7,12 +7,13 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.ArrayList;
 
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Immutable
-public class Currency implements Named<String>, Persistable {
+public class Currency implements Named<String>, Persistable, Documented {
     @Id
     @GeneratedValue
     @Getter
@@ -39,4 +40,15 @@ public class Currency implements Named<String>, Persistable {
     @Setter
     @NonNull
     private float value;
+
+    @Override
+    public String toCsv() {
+        return new CsvBuilder(new ArrayList<>())
+                .add(name)
+                .add(gold)
+                .add(silver)
+                .add(lesser)
+                .add(value)
+                .build();
+    }
 }

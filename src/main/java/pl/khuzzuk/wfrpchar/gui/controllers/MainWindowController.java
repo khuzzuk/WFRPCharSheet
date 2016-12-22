@@ -81,4 +81,9 @@ public class MainWindowController implements Controller {
             guiPublisher.requestResetDB();
         }
     }
+
+    @FXML
+    private void onSaveAction() {
+        guiPublisher.saveDB();
+    }
 }

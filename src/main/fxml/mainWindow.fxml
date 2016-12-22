@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.SplitPane?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
           prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="pl.khuzzuk.wfrpchar.gui.controllers.MainWindowController">
@@ -23,8 +22,9 @@
         <RowConstraints/>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
     </rowConstraints>
-    <MenuBar prefHeight="25.0" prefWidth="242.0" GridPane.columnSpan="2147483647">
+    <MenuBar prefHeight="25.0" prefWidth="Infinity">
         <Menu mnemonicParsing="false" text="Plik">
+            <MenuItem id="menuItemSaveDB" mnemonicParsing="false" text="Zapisz bazę" onAction="#onSaveAction"/>
             <MenuItem id="menuItemClose" mnemonicParsing="false" text="Zamknij"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Edytuj">

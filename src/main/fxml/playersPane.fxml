@@ -343,12 +343,10 @@
                     <TextField fx:id="siblings"/>
                 </HBox>
             </VBox>
-            <HBox GridPane.rowIndex="11">
-                <Button text="Nowy" GridPane.rowIndex="12" GridPane.columnIndex="1" onAction="#clear"/>
-                <Button text="Zapisz" GridPane.rowIndex="12" GridPane.columnIndex="2"
-                        onAction="#save"/>
-                <Button text="Usuń" GridPane.rowIndex="12" GridPane.columnIndex="3"
-                        onAction="#remove"/>
+            <HBox GridPane.rowIndex="12">
+                <Button text="Nowy" onAction="#clear"/>
+                <Button text="Zapisz" onAction="#save"/>
+                <Button text="Usuń" onAction="#remove"/>
             </HBox>
         </GridPane>
     </ScrollPane>

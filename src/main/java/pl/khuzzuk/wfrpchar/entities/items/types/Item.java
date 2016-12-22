@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
+import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Price;
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "class", discriminatorType = DiscriminatorType.INTEGER)
 @DiscriminatorValue(value = "0")
 @NoArgsConstructor
-public abstract class Item implements Named<String>, Commodity, Persistable {
+public abstract class Item implements Named<String>, Commodity, Persistable, Documented {
     @Id
     @GeneratedValue
     @Getter

@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.gui.controllers;
 
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -87,6 +88,15 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
         clearAction = this::clear;
         initFieldsMap();
         fillComboBoxesWithEnums();
+        setBastardComponentsStatus(null, null, null);
+        placementBoxWW.getSelectionModel().selectedItemProperty().addListener(this::setBastardComponentsStatus);
+    }
+
+    private void setBastardComponentsStatus(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        boolean isVisible = newValue != null && newValue.equals("Półtoraręczny");
+        bastWhiteWeaponMods.values().forEach(t -> t.setVisible(isVisible));
+        strengthBastardLabelWW.setVisible(isVisible);
+        strengthBastardWW.setVisible(isVisible);
     }
 
     private void fillComboBoxesWithEnums() {

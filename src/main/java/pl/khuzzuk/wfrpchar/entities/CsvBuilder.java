@@ -15,6 +15,16 @@ public class CsvBuilder {
         return this;
     }
 
+    public CsvBuilder add(int number) {
+        fields.add(number + "");
+        return this;
+    }
+
+    public CsvBuilder add(float number) {
+        fields.add(number + "");
+        return this;
+    }
+
     public CsvBuilder add(Named<String> named) {
         fields.add(named != null ? named.getName() != null ? named.getName() : "" : "");
         return this;

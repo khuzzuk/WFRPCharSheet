@@ -50,6 +50,10 @@ public class DAOReactor {
     @DaoBean
     private MultiSubscriber<Message> multiSubscriber;
     @Inject
+    private DBInitializer dbInitializer;
+    @Inject
+    private DBDumper dbDumper;
+    @Inject
     @Named("messages")
     private Properties messages;
 
@@ -492,6 +496,7 @@ public class DAOReactor {
     @PostConstruct
     private void setReactors() {
         multiSubscriber.subscribe(messages.getProperty("database.reset"), this::resetDB);
+        multiSubscriber.subscribe(messages.getProperty("database.save"), dbDumper::saveToFiles);
 
         //get all queries
         multiSubscriber.subscribe(messages.getProperty("miscItemTypes.query"), this::getAllMiscItemsTypes);

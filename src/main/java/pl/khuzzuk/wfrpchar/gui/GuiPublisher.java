@@ -116,6 +116,10 @@ public class GuiPublisher {
         publisher.publish(new CommunicateMessage().setType(messages.getProperty("database.reset")));
     }
 
+    public void saveDB() {
+        publish(messages.getProperty("database.save"));
+    }
+
     public void requestMiscItemTypeLoad(String name) {
         textRequestPublisher.publish(name, messages.getProperty("miscItemTypes.query.specific"));
     }

@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @Immutable
 @ToString(doNotUseGetters = true, exclude = "id")
 @EqualsAndHashCode(exclude = "id")
-public class Character implements Named<String>, Persistable {
+public class Character implements Named<String>, Persistable, Documented {
     @Id
     @GeneratedValue
     @Getter
@@ -25,4 +25,9 @@ public class Character implements Named<String>, Persistable {
     @Setter
     @NaturalId
     private String name;
+
+    @Override
+    public String toCsv() {
+        return getName();
+    }
 }
