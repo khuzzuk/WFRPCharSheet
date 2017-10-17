@@ -106,11 +106,11 @@ public class GuiReactor {
 
     @PostConstruct
     private void setConsumers() {
-        bus.setReaction(namedWhiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeaponToEditor);
-        bus.setReaction(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
-        bus.setReaction(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
-        bus.setReaction(messages.getProperty("ammo.type.result.specific"), ammunitionTypesPaneController::loadToEditor);
-        bus.setReaction(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
+        bus.setGuiReaction(namedWhiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeaponToEditor);
+        bus.setGuiReaction(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
+        bus.setGuiReaction(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
+        bus.setGuiReaction(messages.getProperty("ammo.type.result.specific"), ammunitionTypesPaneController::loadToEditor);
+        bus.setGuiReaction(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
 
         //DeterminantsCreator start action
         bus.setReaction(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);

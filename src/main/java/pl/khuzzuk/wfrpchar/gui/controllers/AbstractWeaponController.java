@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class AbstractWeaponController extends AbstractFeaturedController {
+public abstract class AbstractWeaponController extends ItemWithBaseTypeController {
     @FXML
     ComboBox<String> secondaryResource;
     @FXML

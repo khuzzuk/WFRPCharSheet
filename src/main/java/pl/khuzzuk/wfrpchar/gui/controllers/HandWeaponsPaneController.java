@@ -62,6 +62,7 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
     }
 
     public void loadToEditor(AbstractHandWeapon<? extends WhiteWeaponType> weapon) {
+        ComboBoxHandler.selectOrEmpty(dices, weapon.getDices());
         loadToInternalEditor(weapon);
     }
 

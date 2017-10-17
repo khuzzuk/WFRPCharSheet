@@ -17,7 +17,7 @@ public abstract class ItemsListedController extends EntitiesListedController {
     ComboBox<String> accessibility;
     @FXML
     @Numeric
-    TextField gold; //TODO remove iGold, goldWW etc. from Types Controllers
+    TextField gold;
     @FXML
     @Numeric
     TextField silver;

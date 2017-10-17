@@ -1,16 +1,22 @@
 package pl.khuzzuk.wfrpchar.entities;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
 public class PriceTest {
-    @Test
-    public void addPrices() throws Exception {
-        Price first = new Price(1, 1, 1);
-        Price second = new Price(1, 1, 1);
-        Price expected = new Price(2, 2, 2);
+    @DataProvider(name = "pricesToAdd")
+    public static Object[][] pricesToAdd() {
+        return new Object[][]{{
+                new Price(1, 1, 1), new Price(1, 1, 1), new Price(2, 2, 2)}, {
+                new Price(0, 5, 0), new Price(0, 2, 0), new Price(0, 7, 0)
+        }};
+    }
+
+    @Test(dataProvider = "pricesToAdd")
+    public void addPrices(Price first, Price second, Price expected) throws Exception {
         Price actualPrice = first.add(second);
         assertTrue(actualPrice.equals(expected));
     }

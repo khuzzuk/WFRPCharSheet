@@ -32,6 +32,7 @@
                 <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
                 <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
                 <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
+                <RowConstraints maxHeight="Infinity" vgrow="ALWAYS"/>
             </rowConstraints>
             <padding>
                 <Insets right="10"/>
@@ -64,20 +65,24 @@
                 <Label text="miedź"/>
                 <TextField fx:id="lead"/>
             </VBox>
-            <Label text="modyfikatory" GridPane.rowIndex="3"/>
-            <ListView fx:id="determinantsView" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.rowSpan="2"/>
-            <Button text="dodaj" GridPane.rowIndex="3" GridPane.columnIndex="2" maxWidth="Infinity"
+            <Label text="cena końcowa" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Label fx:id="endGold" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <Label fx:id="endSilver" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+            <Label fx:id="endLead" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+            <Label text="modyfikatory" GridPane.rowIndex="4"/>
+            <ListView fx:id="determinantsView" GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.rowSpan="2"/>
+            <Button text="dodaj" GridPane.rowIndex="4" GridPane.columnIndex="2" maxWidth="Infinity"
                     onAction="#chooseDeterminant"/>
-            <Button text="usuń" GridPane.rowIndex="4" GridPane.columnIndex="2" maxWidth="Infinity"
+            <Button text="usuń" GridPane.rowIndex="5" GridPane.columnIndex="2" maxWidth="Infinity"
                     onAction="#removeDeterminant"/>
-            <Label text="cechy specjalne" GridPane.rowIndex="3" GridPane.columnIndex="3" GridPane.rowSpan="2"/>
-            <TextArea fx:id="specialFeatures" GridPane.rowIndex="4" GridPane.columnIndex="4"
+            <Label text="cechy specjalne" GridPane.rowIndex="4" GridPane.columnIndex="3" GridPane.rowSpan="2"/>
+            <TextArea fx:id="specialFeatures" GridPane.rowIndex="5" GridPane.columnIndex="4"
                       GridPane.columnSpan="2"
                       maxHeight="Infinity" maxWidth="Infinity"/>
-            <Button text="Usuń" GridPane.rowIndex="6" maxWidth="Infinity" onAction="#remove"/>
-            <Button text="Nowy" GridPane.rowIndex="6" GridPane.columnIndex="1" maxWidth="Infinity"
+            <Button text="Usuń" GridPane.rowIndex="7" maxWidth="Infinity" onAction="#remove"/>
+            <Button text="Nowy" GridPane.rowIndex="7" GridPane.columnIndex="1" maxWidth="Infinity"
                     onAction="#clearEditor"/>
-            <Button text="Zapisz" GridPane.rowIndex="6" GridPane.columnIndex="2" maxWidth="Infinity"
+            <Button text="Zapisz" GridPane.rowIndex="7" GridPane.columnIndex="2" maxWidth="Infinity"
                     onAction="#saveWeapon"/>
         </GridPane>
     </SplitPane>
