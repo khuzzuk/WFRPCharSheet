@@ -40,11 +40,14 @@ public class SpellsPaneController extends EntitiesListedController {
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
         ComboBoxHandler.fill(LoadingTimes.SET, loadingTimes);
-        guiPublisher.requestSpells();
-        getAction = guiPublisher::requestSpell;
-        removeAction = guiPublisher::removeSpell;
+        entityType = Spell.class;
+        getAllResponse = messages.getProperty("magic.spells.result");
+        getEntityTopic = messages.getProperty("magic.spells.query.specific");
+        removeEntityTopic = messages.getProperty("magic.spells.remove");
+        saveTopic = messages.getProperty("magic.spells.save");
         saveAction = this::saveSpell;
         clearAction = this::clear;
+        initItems();
     }
 
     public void clear() {
@@ -70,7 +73,7 @@ public class SpellsPaneController extends EntitiesListedController {
     }
 
     private void saveSpell() {
-        guiPublisher.publish(new CsvBuilder(new ArrayList<>())
+        saveItem(new CsvBuilder(new ArrayList<>())
                         .add(name.getText())
                         .add(LoadingTimes.forName(Optional.ofNullable(
                                 loadingTimes.getSelectionModel().getSelectedItem()).orElse("")).name())
@@ -78,8 +81,7 @@ public class SpellsPaneController extends EntitiesListedController {
                         .add(school.getText())
                         .add(level.getText())
                         .add(ListViewHandler.getFromList(ingredients))
-                        .add(specialFeatures.getText()).build(),
-                messages.getProperty("magic.spells.save"));
+                        .add(specialFeatures.getText()).build());
     }
 
     public void setSchool(String school) {
@@ -94,11 +96,11 @@ public class SpellsPaneController extends EntitiesListedController {
 
     @FXML
     private void chooseSchool() {
-        guiPublisher.publish(messages.getProperty("magic.spells.school.getAllTypes"));
+        bus.send(messages.getProperty("magic.spells.school.getAllTypes"));
     }
 
     @FXML
     private void chooseIngredient() {
-        guiPublisher.publish(messages.getProperty("magic.spells.ingredients.getAllTypes"));
+        bus.send(messages.getProperty("magic.spells.ingredients.getAllTypes"));
     }
 }

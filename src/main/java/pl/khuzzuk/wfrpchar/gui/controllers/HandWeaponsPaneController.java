@@ -30,43 +30,39 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        getAction = guiPublisher::requestHandWeapon;
+        entityType = AbstractHandWeapon.class;
+        getAllResponse = messages.getProperty("weapons.hand.result");
+        getEntityTopic = messages.getProperty("weapons.hand.query.specific");
+        removeEntityTopic = messages.getProperty("weapons.hand.remove");
+        saveTopic = messages.getProperty("weapons.hand.save");
         clearAction = this::clear;
         saveAction = this::saveWeapon;
-        removeAction = this::removeWeapon;
-        clearAction = this::clear;
         ComboBoxHandler.fill(EnumSet.allOf(Dices.class), dices);
-        guiPublisher.requestHandWeapons();
+        initItems();
     }
 
     @FXML
     private void chooseBaseType() {
-        guiPublisher.publish(messages.getProperty("weapons.hand.baseType.getAllTypes"));
+        bus.send(messages.getProperty("weapons.hand.baseType.getAllTypes"));
     }
 
     @FXML
     void chooseDeterminant() {
-        guiPublisher.publish(messages.getProperty("determinants.creator.show.hw"));
+        bus.send(messages.getProperty("determinants.creator.show.hw"));
     }
 
     @FXML
     private void saveWeapon() {
         List<String> fields = new ArrayList<>();
         addWeaponTypeFields(fields);
-        guiPublisher.publish(new CsvBuilder(fields)
+        saveItem(new CsvBuilder(fields)
                 .add(ComboBoxHandler.getEmptyIfNotPresent(dices))
                 .add(rolls.getText())
-                .add("").build(), messages.getProperty("weapons.hand.save"));
+                .add("").build());
     }
 
     public void loadToEditor(AbstractHandWeapon<? extends WhiteWeaponType> weapon) {
         loadToInternalEditor(weapon);
-    }
-
-    private void removeWeapon(String name) {
-        if (name.length()>=3) {
-            guiPublisher.removeHandWeapon(name);
-        }
     }
 
     @Override

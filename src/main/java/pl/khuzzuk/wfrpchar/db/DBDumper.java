@@ -23,6 +23,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -86,7 +87,7 @@ public class DBDumper {
         private BufferedWriter writer;
 
         private String getItems() {
-            return items.stream().map(Documented::toCsv).filter(s -> s != null).collect(Collectors.joining("\n"));
+            return items.stream().map(Documented::toCsv).filter(Objects::nonNull).collect(Collectors.joining("\n"));
         }
 
         private void save() {

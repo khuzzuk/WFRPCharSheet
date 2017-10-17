@@ -4,45 +4,51 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.wfrpchar.entities.Named;
-import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Properties;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public abstract class EntitiesListedController implements Controller {
     @FXML
     TextField name;
     @Inject
-    GuiPublisher guiPublisher;
+    Bus bus;
     @FXML
     TextArea specialFeatures;
     @Inject
     @javax.inject.Named("messages")
     Properties messages;
     Runnable saveAction;
-    Consumer<String> removeAction;
-    Consumer<String> getAction;
+    String removeEntityTopic;
+    String getEntityTopic;
+    String getAllResponse;
+    String saveTopic;
+    Class<?> entityType;
     Runnable clearAction;
 
     @FXML
     ListView<String> items;
 
+    void initItems() {
+        bus.setGuiReaction(getAllResponse, this::loadAll);
+        bus.send(messages.getProperty("database.getAll"), getAllResponse, entityType);
+    }
+
     @FXML
     private void getEntity() {
-        String selected = items.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            getAction.accept(selected);
-        }
+        Optional.ofNullable(items.getSelectionModel().getSelectedItem())
+                .ifPresent(selected -> bus.send(getEntityTopic, selected));
     }
 
     @FXML
     private void remove() {
         if (name.getText().length() >= 3) {
-            removeAction.accept(name.getText());
+            bus.send(removeEntityTopic, name.getText());
             clearAction.run();
         }
     }
@@ -52,6 +58,10 @@ public abstract class EntitiesListedController implements Controller {
         if (name.getText().length() >= 3) {
             saveAction.run();
         }
+    }
+
+    void saveItem(String line) {
+        bus.send(saveTopic, line);
     }
 
     @FXML
@@ -65,7 +75,7 @@ public abstract class EntitiesListedController implements Controller {
         clearAction.run();
     }
 
-    public void loadAll(Collection<? extends Named<String>> itemsList) {
+    public synchronized void loadAll(Collection<? extends Named<String>> itemsList) {
         items.getItems().clear();
         items.getItems().addAll(itemsList.stream()
                 .map(Named::getName).collect(Collectors.toList()));

@@ -6,10 +6,10 @@ import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.SubstanceType;
-import pl.khuzzuk.wfrpchar.gui.*;
-import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
+import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
+import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
+import pl.khuzzuk.wfrpchar.gui.Numeric;
 
-import javax.inject.Inject;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,26 +25,26 @@ public class ResourceTypesPaneController extends ItemsListedController implement
     @FXML
     private ComboBox<String> resType;
 
-    @Inject
-    @Publishers
-    private GuiPublisher guiPublisher;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
+        entityType = ResourceType.class;
+        saveTopic = messages.getProperty("resource.type.save");
         saveAction = () -> {
             List<String> fields = new LinkedList<>();
             fields.add(name.getText());
             fields.add(resStrength.getText());
             fields.add(resPrice.getText());
             fields.add(SubstanceType.forName(resType.getSelectionModel().getSelectedItem()).name());
-            guiPublisher.saveResourceType(fields.stream().collect(Collectors.joining(";")));
+            bus.send(messages.getProperty("resource.type.save"));
+            saveItem(fields.stream().collect(Collectors.joining(";")));
         };
-        removeAction = guiPublisher::removeResourceType;
-        getAction = guiPublisher::requestResourceType;
+        removeEntityTopic = messages.getProperty("resource.type.remove");
+        getEntityTopic = messages.getProperty("resource.type.query.specific");
+        getAllResponse = messages.getProperty("resource.type.result");
         clearAction = this::clear;
         ComboBoxHandler.fill(EnumSet.allOf(SubstanceType.class), resType);
-        guiPublisher.requestResourceTypes();
+        initItems();
     }
 
     public void loadAllResources(Collection<ResourceType> resources) {

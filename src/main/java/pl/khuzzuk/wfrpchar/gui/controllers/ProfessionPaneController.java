@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
+import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
@@ -23,17 +24,21 @@ public class ProfessionPaneController extends SkillViewController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        entityType = Profession.class;
         showDeterminantCreatorMsg = messages.getProperty("determinants.creator.show.pr");
         skillChooserMsg = messages.getProperty("professions.skills.getAllTypes");
-        getAction = guiPublisher::requestProfession;
-        removeAction = guiPublisher::removeProfession;
+        getAllResponse = messages.getProperty("professions.result");
+        removeEntityTopic = messages.getProperty("professions.remove");
+        saveTopic = messages.getProperty("professions.save");
         saveAction = this::saveProfession;
         clearAction = this::clear;
-        guiPublisher.requestProfessions();
+        initItems();
+        bus.setReaction(messages.getProperty("professions.class.result"), this::loadProfessionClasses);
+        bus.send(messages.getProperty("database.getAll"), messages.getProperty("professions.class.result"), ResourceType.class);
     }
 
     public void loadProfessionClasses(Collection<ProfessionClass> professionClasses) {
-        ComboBoxHandler.fill(professionClasses.stream().collect(Collectors.toSet()), professionClass);
+        ComboBoxHandler.fill(new HashSet<>(professionClasses), professionClass);
     }
 
     public void loadToEditor(Profession profession) {
@@ -47,7 +52,7 @@ public class ProfessionPaneController extends SkillViewController {
 
     @FXML
     private void showProfessionChooser() {
-        guiPublisher.publish(messages.getProperty("professions.next.getAllTypes"));
+        bus.send(messages.getProperty("professions.next.getAllTypes"));
     }
 
     public void addProfession(String profession) {
@@ -62,7 +67,7 @@ public class ProfessionPaneController extends SkillViewController {
         fields.add(professionsNextView.getItems().stream().collect(Collectors.joining("|")));
         fields.add(getDeterminantsFromList());
         fields.add(ComboBoxHandler.getEmptyIfNotPresent(professionClass));
-        guiPublisher.publish(fields.stream().collect(Collectors.joining(";")), messages.getProperty("professions.save"));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     private String getDeterminantsFromList() {

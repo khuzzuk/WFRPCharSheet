@@ -12,6 +12,7 @@ import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,9 +28,16 @@ public abstract class AbstractWeaponController extends AbstractFeaturedControlle
     Collection<ResourceType> resources;
     String baseType;
 
+    @Override
+    void initItems() {
+        super.initItems();
+        bus.setReaction(messages.getProperty("resource.type.result"), this::fillResourceBoxes);
+        bus.send(messages.getProperty("database.getAll"), messages.getProperty("resource.type.result"), ResourceType.class);
+    }
+
     public void fillResourceBoxes(Collection<ResourceType> resourceTypes) {
         resources = resourceTypes;
-        Set<ResourceType> toFill = resources.stream().collect(Collectors.toSet());
+        Set<ResourceType> toFill = new HashSet<>(resources);
         ComboBoxHandler.fill(toFill, primaryResource);
         ComboBoxHandler.fill(toFill, secondaryResource);
     }

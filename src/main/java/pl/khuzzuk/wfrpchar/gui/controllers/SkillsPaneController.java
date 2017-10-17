@@ -16,16 +16,19 @@ import java.util.stream.Collectors;
 public class SkillsPaneController extends AbstractFeaturedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        getAction = guiPublisher::requestSkill;
-        removeAction = guiPublisher::removeSkill;
+        entityType = Skill.class;
+        getAllResponse = messages.getProperty("skills.result");
+        getEntityTopic = messages.getProperty("skills.query.specific");
+        removeEntityTopic = messages.getProperty("skills.remove");
+        saveTopic = messages.getProperty("skills.save");
         saveAction = this::saveSkill;
         clearAction = this::clear;
-        guiPublisher.requestSkills();
+        initItems();
     }
 
     @FXML
     private void chooseDeterminant() {
-        guiPublisher.publish(messages.getProperty("determinants.creator.show.sk"));
+        bus.send(messages.getProperty("determinants.creator.show.sk"));
     }
 
     public void loadToEditor(Skill skill) {
@@ -39,8 +42,7 @@ public class SkillsPaneController extends AbstractFeaturedController {
         fields.add(name.getText());
         fields.add(specialFeatures.getText());
         fields.add(Determinant.determinantsToCsv(Determinant.parseFromGui(
-                determinantsView.getItems().stream().collect(Collectors.toList()))));
-        guiPublisher.publish(fields.stream().collect(Collectors.joining(";")),
-                messages.getProperty("skills.save"));
+                new ArrayList<>(determinantsView.getItems()))));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 }

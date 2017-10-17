@@ -47,11 +47,15 @@ public class RangedWeaponTypePaneController extends ItemsListedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        removeAction = guiPublisher::removeRangedTypeWeapon;
-        getAction = guiPublisher::requestRangedWeaponType;
+        entityType = RangedWeaponType.class;
+        getAllResponse = messages.getProperty("rangedWeapons.result");
+        getEntityTopic = messages.getProperty("rangedWeapons.query.specific");
+        removeEntityTopic = messages.getProperty("rangedWeapons.remove");
+        saveTopic = messages.getProperty("database.saveEquipment");
         saveAction = this::saveRangedWeaponType;
         clearAction = this::clear;
         ComboBoxHandler.fill(LoadingTimes.SET, rwLoadTime);
+        initItems();
     }
 
     public void loadRangedWeaponToEditor(RangedWeaponType rangedWeapon) {
@@ -77,7 +81,7 @@ public class RangedWeaponTypePaneController extends ItemsListedController {
     @FXML
     private void saveRangedWeaponType() {
         if (name.getText().length() < 3) return;
-        guiPublisher.saveItem(new CsvBuilder(new ArrayList<>())
+        saveItem(new CsvBuilder(new ArrayList<>())
                 .add(name.getText())
                 .add(weight.getText())
                 .add(getPriceFromFields())

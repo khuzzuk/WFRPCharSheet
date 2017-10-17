@@ -20,7 +20,7 @@ public abstract class SkillViewController extends AbstractFeaturedController {
 
     @FXML
     private void showSkillChooser() {
-        guiPublisher.publish(messages.getProperty(skillChooserMsg));
+        bus.send(messages.getProperty(skillChooserMsg));
     }
 
     void clear() {

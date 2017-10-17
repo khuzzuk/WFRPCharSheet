@@ -15,10 +15,14 @@ public class RangeWeaponsPaneController extends AbstractWeaponController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        removeAction = guiPublisher::removeRangedWeapon;
-        getAction = guiPublisher::requestRangedWeapon;
+        entityType = Gun.class;
+        getAllResponse = messages.getProperty("weapons.ranged.result");
+        getEntityTopic = messages.getProperty("weapons.ranged.query.specific");
+        removeEntityTopic = messages.getProperty("weapons.ranged.remove");
+        saveTopic = messages.getProperty("weapons.ranged.save");
+        saveAction = this::saveWeapon;
         clearAction = this::clear;
-        guiPublisher.requestRangedWeapons();
+        initItems();
     }
 
     public void loadToEditor(Gun gun) {
@@ -27,12 +31,12 @@ public class RangeWeaponsPaneController extends AbstractWeaponController {
 
     @FXML
     private void chooseBaseType() {
-        guiPublisher.publish(messages.getProperty("weapons.ranged.baseType.getAllTypes"));
+        bus.send(messages.getProperty("weapons.ranged.baseType.getAllTypes"));
     }
 
     @FXML
     private void chooseDeterminant() {
-        guiPublisher.publish(messages.getProperty("determinants.creator.show.rw"));
+        bus.send(messages.getProperty("determinants.creator.show.rw"));
     }
 
     @FXML
@@ -42,7 +46,6 @@ public class RangeWeaponsPaneController extends AbstractWeaponController {
         }
         List<String> fields = new ArrayList<>();
         addWeaponTypeFields(fields);
-        guiPublisher.publish(fields.stream().collect(Collectors.joining(";")),
-                messages.getProperty("weapons.ranged.save"));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 }

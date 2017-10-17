@@ -3,27 +3,20 @@ package pl.khuzzuk.wfrpchar.gui;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.entities.Race;
-import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
-import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
+import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.wfrpchar.gui.controllers.*;
-import pl.khuzzuk.wfrpchar.messaging.Message;
-import pl.khuzzuk.wfrpchar.messaging.ReactorBean;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.MultiContentSubscriber;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.MultiSubscriber;
-import pl.khuzzuk.wfrpchar.messaging.subscribers.Subscribers;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
 import java.util.Properties;
 
 @Component
-@ReactorBean
 @PropertySource("classpath:messages.properties")
 public class GuiReactor {
+    @Inject
+    private Bus bus;
     //TODO reduce this injects
     @Inject
     @MainWindowBean
@@ -81,14 +74,6 @@ public class GuiReactor {
     @Named("prDeterminantsCreatorController")
     private DeterminantCreatorController prDeterminantCreatorController;
     @Inject
-    @MainWindowBean
-    @Subscribers
-    private MultiSubscriber<Message> communicateSubscriber;
-    @Inject
-    @Subscribers
-    @MainWindowBean
-    private MultiContentSubscriber guiContentSubscriber;
-    @Inject
     @Named("messages")
     private Properties messages;
     @Value("${miscItemTypes.result}")
@@ -119,98 +104,60 @@ public class GuiReactor {
     @Value("${resource.type.result.specific}")
     private String resourceTypeResultSpecific;
 
-    private void sendResourcesTypes(Collection<ResourceType> resources) {
-        resourceTypesPaneController.loadAllResources(resources);
-        handWeaponsPaneController.fillResourceBoxes(resources);
-        rangeWeaponsPaneController.fillResourceBoxes(resources);
-        ammunitionPaneController.fillResourceBoxes(resources);
-        armorPaneController.fillResourceBoxes(resources);
-    }
-
-    private void sendProfessionClass(Collection<ProfessionClass> professionClasses) {
-        professionClassPaneController.loadAll(professionClasses);
-        professionPaneController.loadProfessionClasses(professionClasses);
-        playerPaneController.loadClasses(professionClasses);
-    }
-
-    private void sendRaces(Collection<Race> races) {
-        racesPaneController.loadAll(races);
-        playerPaneController.loadRaces(races);
-    }
-
     @PostConstruct
     private void setConsumers() {
-        guiContentSubscriber.subscribe(miscItemResult, itemTypesPaneController::loadAll);
-        guiContentSubscriber.subscribe(namedMiscItemResult, itemTypesPaneController::loadMiscItemToEditor);
-        guiContentSubscriber.subscribe(whiteWeaponsMsg, whiteWeaponTypePaneController::loadAll);
-        guiContentSubscriber.subscribe(namedWhiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeaponToEditor);
-        guiContentSubscriber.subscribe(rangedWeaponMsg, rangedWeaponTypePaneController::loadAll);
-        guiContentSubscriber.subscribe(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
-        guiContentSubscriber.subscribe(listOfArmorTypesResult, armorTypesPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("ammo.type.result"), ammunitionTypesPaneController::loadAll);
-        guiContentSubscriber.subscribe(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("ammo.type.result.specific"), ammunitionTypesPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("resource.type.result"), this::sendResourcesTypes);
-        guiContentSubscriber.subscribe(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
+        bus.setReaction(namedWhiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeaponToEditor);
+        bus.setReaction(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
+        bus.setReaction(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
+        bus.setReaction(messages.getProperty("ammo.type.result.specific"), ammunitionTypesPaneController::loadToEditor);
+        bus.setReaction(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
 
         //DeterminantsCreator start action
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.rw"), rwDeterminantCreatorController::show);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.ar"), arDeterminantCreatorController::show);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.am"), amDeterminantCreatorController::show);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.sk"), skDeterminantCreatorController::show);
-        communicateSubscriber.subscribe(messages.getProperty("determinants.creator.show.pr"), prDeterminantCreatorController::show);
+        bus.setReaction(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);
+        bus.setReaction(messages.getProperty("determinants.creator.show.rw"), rwDeterminantCreatorController::show);
+        bus.setReaction(messages.getProperty("determinants.creator.show.ar"), arDeterminantCreatorController::show);
+        bus.setReaction(messages.getProperty("determinants.creator.show.am"), amDeterminantCreatorController::show);
+        bus.setReaction(messages.getProperty("determinants.creator.show.sk"), skDeterminantCreatorController::show);
+        bus.setReaction(messages.getProperty("determinants.creator.show.pr"), prDeterminantCreatorController::show);
 
         //DeterminantsCreator end actions
-        guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.hw"), handWeaponsPaneController::addDeterminant);
-        guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.rw"), rangeWeaponsPaneController::addDeterminant);
-        guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.ar"), armorPaneController::addDeterminant);
-        guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.am"), ammunitionPaneController::addDeterminant);
-        guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.sk"), skillsPaneController::addDeterminant);
-        guiContentSubscriber.subscribe(messages.getProperty("determinants.creator.add.pr"), professionPaneController::addDeterminant);
+        bus.setReaction(messages.getProperty("determinants.creator.add.hw"), handWeaponsPaneController::addDeterminant);
+        bus.setReaction(messages.getProperty("determinants.creator.add.rw"), rangeWeaponsPaneController::addDeterminant);
+        bus.setReaction(messages.getProperty("determinants.creator.add.ar"), armorPaneController::addDeterminant);
+        bus.setReaction(messages.getProperty("determinants.creator.add.am"), ammunitionPaneController::addDeterminant);
+        bus.setReaction(messages.getProperty("determinants.creator.add.sk"), skillsPaneController::addDeterminant);
+        bus.setReaction(messages.getProperty("determinants.creator.add.pr"), professionPaneController::addDeterminant);
 
         //Base type choosers
-        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
-        guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.baseType.choice"), rangeWeaponsPaneController::setBaseType);
-        guiContentSubscriber.subscribe(messages.getProperty("armor.baseType.choice"), armorPaneController::setBaseType);
-        guiContentSubscriber.subscribe(messages.getProperty("professions.class.skills.choice"), professionClassPaneController::addSkill);
-        guiContentSubscriber.subscribe(messages.getProperty("professions.skills.choice"), professionPaneController::addSkill);
-        guiContentSubscriber.subscribe(messages.getProperty("professions.next.choice"), professionPaneController::addProfession);
-        guiContentSubscriber.subscribe(messages.getProperty("ammunition.baseType.choice"), ammunitionPaneController::setBaseType);
-        guiContentSubscriber.subscribe(messages.getProperty("race.skills.choice"), racesPaneController::addSkill);
-        guiContentSubscriber.subscribe(messages.getProperty("magic.spells.school.choice"), spellsPaneController::setSchool);
-        guiContentSubscriber.subscribe(messages.getProperty("magic.spells.ingredients.choice"), spellsPaneController::addIngredient);
-        guiContentSubscriber.subscribe(messages.getProperty("player.profession.choice"), playerPaneController::loadProfessionChoice);
-        guiContentSubscriber.subscribe(messages.getProperty("player.weapons.white.choice"), playerPaneController::loadWhiteWeaponChoice);
-        guiContentSubscriber.subscribe(messages.getProperty("player.weapons.ranged.choice"), playerPaneController::loadRangedWeaponChoice);
-        guiContentSubscriber.subscribe(messages.getProperty("player.armors.choice"), playerPaneController::loadArmorsChoice);
-        guiContentSubscriber.subscribe(messages.getProperty("player.equipment.choice"), playerPaneController::loadEquipment);
-        guiContentSubscriber.subscribe(messages.getProperty("player.skills.choice"), playerPaneController::loadSkill);
-        guiContentSubscriber.subscribe(messages.getProperty("player.spells.choice"), playerPaneController::loadSpell);
+        bus.setReaction(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
+        bus.setReaction(messages.getProperty("weapons.ranged.baseType.choice"), rangeWeaponsPaneController::setBaseType);
+        bus.setReaction(messages.getProperty("armor.baseType.choice"), armorPaneController::setBaseType);
+        bus.setReaction(messages.getProperty("professions.class.skills.choice"), professionClassPaneController::addSkill);
+        bus.setReaction(messages.getProperty("professions.skills.choice"), professionPaneController::addSkill);
+        bus.setReaction(messages.getProperty("professions.next.choice"), professionPaneController::addProfession);
+        bus.setReaction(messages.getProperty("ammunition.baseType.choice"), ammunitionPaneController::setBaseType);
+        bus.setReaction(messages.getProperty("race.skills.choice"), racesPaneController::addSkill);
+        bus.setReaction(messages.getProperty("magic.spells.school.choice"), spellsPaneController::setSchool);
+        bus.setReaction(messages.getProperty("magic.spells.ingredients.choice"), spellsPaneController::addIngredient);
+        bus.setReaction(messages.getProperty("player.profession.choice"), playerPaneController::loadProfessionChoice);
+        bus.setReaction(messages.getProperty("player.weapons.white.choice"), playerPaneController::loadWhiteWeaponChoice);
+        bus.setReaction(messages.getProperty("player.weapons.ranged.choice"), playerPaneController::loadRangedWeaponChoice);
+        bus.setReaction(messages.getProperty("player.armors.choice"), playerPaneController::loadArmorsChoice);
+        bus.setReaction(messages.getProperty("player.equipment.choice"), playerPaneController::loadEquipment);
+        bus.setReaction(messages.getProperty("player.skills.choice"), playerPaneController::loadSkill);
+        bus.setReaction(messages.getProperty("player.spells.choice"), playerPaneController::loadSpell);
 
         //regular queries
-        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result"), handWeaponsPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("weapons.hand.result.specific"), handWeaponsPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.result"), rangeWeaponsPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("weapons.ranged.result.specific"), rangeWeaponsPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("armor.result"), armorPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("armor.result.specific"), armorPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("ammunition.result"), ammunitionPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("ammunition.result.specific"), ammunitionPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("character.result"), playerPaneController::loadCharacters);
-        guiContentSubscriber.subscribe(messages.getProperty("skills.result"), skillsPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("skills.result.specific"), skillsPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("professions.class.result"), this::sendProfessionClass);
-        guiContentSubscriber.subscribe(messages.getProperty("professions.class.result.specific"), professionClassPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("professions.result"), professionPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("professions.result.specific"), professionPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("race.result"), this::sendRaces);
-        guiContentSubscriber.subscribe(messages.getProperty("race.result.specific"), racesPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("magic.schools.result"), magicSchoolsPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("magic.schools.result.specific"), magicSchoolsPaneController::loadToEditor);
-        guiContentSubscriber.subscribe(messages.getProperty("magic.spells.result"), spellsPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("magic.spells.result.specific"), spellsPaneController::loadSpell);
-        guiContentSubscriber.subscribe(messages.getProperty("player.result"), playerPaneController::loadAll);
-        guiContentSubscriber.subscribe(messages.getProperty("player.result.specific"), playerPaneController::loadPlayer);
+        bus.setGuiReaction(messages.getProperty("weapons.hand.result.specific"), handWeaponsPaneController::loadToEditor);
+        bus.setGuiReaction(messages.getProperty("weapons.ranged.result.specific"), rangeWeaponsPaneController::loadToEditor);
+        bus.setGuiReaction(messages.getProperty("armor.result.specific"), armorPaneController::loadToEditor);
+        bus.setGuiReaction(messages.getProperty("ammunition.result.specific"), ammunitionPaneController::loadToEditor);
+        bus.setGuiReaction(messages.getProperty("skills.result.specific"), skillsPaneController::loadToEditor);
+        bus.setGuiReaction(messages.getProperty("professions.class.result.specific"), professionClassPaneController::loadToEditor);
+        bus.setGuiReaction(messages.getProperty("professions.result.specific"), professionPaneController::loadToEditor);
+        bus.setGuiReaction(messages.getProperty("race.result.specific"), racesPaneController::loadToEditor);
+        bus.setGuiReaction(messages.getProperty("magic.schools.result.specific"), magicSchoolsPaneController::loadToEditor);
+        bus.setGuiReaction(messages.getProperty("magic.spells.result.specific"), spellsPaneController::loadSpell);
+        bus.setGuiReaction(messages.getProperty("player.result.specific"), playerPaneController::loadPlayer);
     }
 }

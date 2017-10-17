@@ -6,9 +6,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
-import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import javax.inject.Inject;
@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
 
 @NoArgsConstructor
 public class DeterminantCreatorController implements Controller {
+    @Inject
+    private Bus bus;
     @FXML
     private TextField description;
     @FXML
@@ -29,8 +31,6 @@ public class DeterminantCreatorController implements Controller {
     private Stage parent;
     private String showMsg;
     private String sendMsg;
-    @Inject
-    private GuiPublisher publisher;
 
     public DeterminantCreatorController(String showMsg, String sendMsg) {
         this.showMsg = showMsg;
@@ -48,7 +48,7 @@ public class DeterminantCreatorController implements Controller {
         String chosenType = type.getSelectionModel().getSelectedItem();
         if (chosenType != null) {
             String determinant = chosenType + ": " + strength.getText() + ": " + description.getText();
-            publisher.publish(determinant, sendMsg);
+            bus.send(sendMsg, determinant);
         }
         parent.hide();
     }

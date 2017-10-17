@@ -23,12 +23,15 @@ public class ProfessionClassPaneController extends SkillViewController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ComboBoxHandler.fill(EnumSet.allOf(DeterminantsType.class), baseDeterminantType);
+        entityType = ProfessionClass.class;
         skillChooserMsg = messages.getProperty("professions.class.skills.getAllTypes");
-        guiPublisher.requestProfessionClasses();
-        getAction = guiPublisher::requestProfessionClass;
-        removeAction = guiPublisher::removeProfessionClass;
+        getAllResponse = messages.getProperty("professions.class.result");
+        getEntityTopic = messages.getProperty("professions.class.query.specific");
+        removeEntityTopic = messages.getProperty("professions.class.remove");
+        saveTopic = messages.getProperty("professions.class.save");
         saveAction = this::saveClass;
         clearAction = this::clear;
+        initItems();
     }
 
     private void saveClass() {
@@ -39,7 +42,7 @@ public class ProfessionClassPaneController extends SkillViewController {
             fields.add(DeterminantsType.forName(baseDeterminantType.getSelectionModel().getSelectedItem()).name());
         }
         fields.add(skillsView.getItems().stream().collect(Collectors.joining("|")));
-        guiPublisher.publish(fields.stream().collect(Collectors.joining(";")), messages.getProperty("professions.class.save"));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     public void loadToEditor(ProfessionClass professionClass) {

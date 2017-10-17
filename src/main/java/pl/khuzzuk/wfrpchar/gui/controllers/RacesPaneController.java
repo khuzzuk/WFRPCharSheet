@@ -59,12 +59,14 @@ public class RacesPaneController extends SkillViewController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        entityType = Race.class;
         skillChooserMsg = messages.getProperty("race.skills.getAllTypes");
-        saveAction = this::saveRace;
-        getAction = guiPublisher::requestRace;
-        removeAction = guiPublisher::removeRace;
+        getAllResponse = messages.getProperty("race.result");
+        getEntityTopic = messages.getProperty("race.query.specific");
+        removeEntityTopic = messages.getProperty("race.remove");
+        saveTopic = messages.getProperty("race.save");
         clearAction = this::clear;
-        guiPublisher.requestRaces();
+        initItems();
     }
 
     public void loadToEditor(Race race) {
@@ -108,7 +110,7 @@ public class RacesPaneController extends SkillViewController {
                 shooting.getText() + "," + DeterminantsType.SHOOTING;
         fields.add(determinants);
         fields.add(skillsView.getItems().stream().collect(Collectors.joining("|")));
-        guiPublisher.publish(fields.stream().collect(Collectors.joining(";")), messages.getProperty("race.save"));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     @Override

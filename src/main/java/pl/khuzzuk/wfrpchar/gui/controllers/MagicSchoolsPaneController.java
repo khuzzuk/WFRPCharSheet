@@ -14,18 +14,21 @@ public class MagicSchoolsPaneController extends EntitiesListedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        getAction = guiPublisher::requestMagicSchool;
-        removeAction = guiPublisher::removeMagicSchool;
+        entityType = MagicSchool.class;
+        getAllResponse = messages.getProperty("magic.schools.result");
+        getEntityTopic = messages.getProperty("magic.schools.query.specific");
+        removeEntityTopic = messages.getProperty("magic.schools.remove");
+        saveTopic = messages.getProperty("magic.schools.save");
         saveAction = this::saveSchool;
         clearAction = super::clear;
-        guiPublisher.requestMagicSchools();
+        initItems();
     }
 
     private void saveSchool() {
-        guiPublisher.publish(new CsvBuilder(new ArrayList<>())
+        saveItem(new CsvBuilder(new ArrayList<>())
                 .add(name.getText())
                 .add(specialFeatures.getText())
-                .build(), messages.getProperty("magic.schools.save"));
+                .build());
     }
 
     public void loadToEditor(MagicSchool school) {

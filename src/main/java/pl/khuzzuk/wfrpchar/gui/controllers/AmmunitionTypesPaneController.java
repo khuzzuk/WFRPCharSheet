@@ -22,11 +22,14 @@ public class AmmunitionTypesPaneController extends ItemsListedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        guiPublisher.publish(messages.getProperty("ammo.type.query"));
-        getAction = guiPublisher::requestAmmunitionType;
-        removeAction = guiPublisher::removeAmmunitionType;
+        entityType = AmmunitionType.class;
+        getAllResponse = messages.getProperty("ammo.type.result");
+        getEntityTopic = messages.getProperty("ammo.type.query.specific");
+        removeEntityTopic = messages.getProperty("ammo.type.remove");
+        saveTopic = messages.getProperty("database.saveEquipment");
         saveAction = this::save;
         clearAction = this::clear;
+        initItems();
     }
 
     public void loadToEditor(AmmunitionType ammunitionType) {
@@ -44,8 +47,7 @@ public class AmmunitionTypesPaneController extends ItemsListedController {
         fields.add(strength.getText());
         fields.add("AMMO");
         fields.add("AMMO");
-        guiPublisher.publish(fields.stream().collect(Collectors.joining(";")),
-                messages.getProperty("database.saveEquipment"));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     @Override

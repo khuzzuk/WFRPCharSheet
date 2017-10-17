@@ -7,13 +7,13 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TitledPane;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
+import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.wfrpchar.gui.MainWindowBean;
-import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;
 import java.net.URL;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 @Component
@@ -60,14 +60,16 @@ public class MainWindowController implements Controller {
     @Inject
     private RangedWeaponTypePaneController rangedWeaponTypePaneController;
     @Inject
-    @Publishers
-    private GuiPublisher guiPublisher;
+    private Bus bus;
+    @Inject
+    @javax.inject.Named("messages")
+    Properties messages;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        guiPublisher.requestWhiteWeapons();
-        guiPublisher.requestRangedWeaponsTypes();
+        bus.send(messages.getProperty("whiteWeapons.query"));
+        bus.send(messages.getProperty("rangedWeapons.query"));
     }
 
     @FXML
@@ -78,12 +80,12 @@ public class MainWindowController implements Controller {
         alert.setContentText("Kontynuować?");
         Optional<ButtonType> chosenButton = alert.showAndWait();
         if (chosenButton.orElse(null) == ButtonType.OK) {
-            guiPublisher.requestResetDB();
+            bus.send(messages.getProperty("database.reset"));
         }
     }
 
     @FXML
     private void onSaveAction() {
-        guiPublisher.saveDB();
+        bus.send(messages.getProperty("database.save"));
     }
 }

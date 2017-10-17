@@ -16,10 +16,14 @@ public class ArmorPaneController extends AbstractWeaponController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        getAction = guiPublisher::requestArmor;
-        removeAction = guiPublisher::removeArmor;
+        entityType = Armor.class;
+        getAllResponse = messages.getProperty("armor.result");
+        getEntityTopic = messages.getProperty("armor.query.specific");
+        removeEntityTopic = messages.getProperty("armor.remove");
+        saveTopic = messages.getProperty("armor.save");
         clearAction = this::clear;
-        guiPublisher.requestArmor();
+        saveAction = this::saveWeapon;
+        initItems();
     }
 
     public void loadToEditor(Armor armor) {
@@ -28,18 +32,18 @@ public class ArmorPaneController extends AbstractWeaponController {
 
     @FXML
     private void chooseBaseType() {
-        guiPublisher.publish(messages.getProperty("armor.baseType.getAllTypes"));
+        bus.send(messages.getProperty("armor.baseType.getAllTypes"));
     }
 
     @FXML
     private void chooseDeterminant() {
-        guiPublisher.publish(messages.getProperty("determinants.creator.show.ar"));
+        bus.send(messages.getProperty("determinants.creator.show.ar"));
     }
 
     @FXML
     private void saveWeapon() {
         List<String> fields = new ArrayList<>();
         addWeaponTypeFields(fields);
-        guiPublisher.publish(fields.stream().collect(Collectors.joining(";")), messages.getProperty("armor.save"));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 }

@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.wfrpchar.gui.controllers.*;
 
 import javax.inject.Inject;
@@ -23,6 +24,8 @@ public class ScreensConfig {
     @Inject
     @Named("messages")
     private Properties messages;
+    @Inject
+    private Bus bus;
 
     @Bean
     @MainWindowBean
@@ -35,22 +38,21 @@ public class ScreensConfig {
     @Scope(value = "prototype")
     public <T extends pl.khuzzuk.wfrpchar.entities.Named<String>>
     LinkedEntityChooserController<T> equipmentTypeChooserController() {
-        return new LinkedEntityChooserController<>();
+        return new LinkedEntityChooserController<>(bus);
     }
 
     @Bean
     @Scope(value = "prototype")
     public <T extends pl.khuzzuk.wfrpchar.entities.Named<String>>
     LinkedStringChooserController<T> linkedStringChooserController() {
-        return new LinkedStringChooserController<>();
+        return new LinkedStringChooserController<>(bus);
     }
 
     private <T extends pl.khuzzuk.wfrpchar.entities.Named<String>>
-    LinkedEntityChooserController<T> getController(String subscripsion, String publishing) {
+    LinkedEntityChooserController<T> getController(String subscription, String publishing) {
         LinkedEntityChooserController<T> controller = equipmentTypeChooserController();
-        controller.setMessageType(subscripsion);
+        controller.setMsgType(subscription);
         controller.setChoiceReady(publishing);
-        controller.subscribe();
         return controller;
     }
 
@@ -58,9 +60,8 @@ public class ScreensConfig {
     LinkedStringChooserController<T> linkedStringChooserController(
             String subscription, String publishing) {
         LinkedStringChooserController<T> controller = linkedStringChooserController();
-        controller.setMessageType(subscription);
+        controller.setMsgType(subscription);
         controller.setChoiceReady(publishing);
-        controller.subscribe();
         return controller;
     }
 

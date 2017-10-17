@@ -15,10 +15,7 @@ import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.competency.Spell;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
-import pl.khuzzuk.wfrpchar.entities.items.Commodity;
-import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
-import pl.khuzzuk.wfrpchar.entities.items.ProtectiveWearings;
-import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.*;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.ListViewHandler;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
@@ -158,12 +155,20 @@ public class PlayerPaneController extends ItemsListedController {
         ComboBoxHandler.fill(Sex.SET, sex);
         ComboBoxHandler.fill(EyesColor.SET, eyes);
         ComboBoxHandler.fill(HairColor.SET, hair);
-        getAction = guiPublisher::requestPlayer;
-        removeAction = guiPublisher::removePlayer;
+        entityType = Player.class;
+        getAllResponse = messages.getProperty("player.result");
+        getEntityTopic = messages.getProperty("player.query.specific");
+        removeEntityTopic = messages.getProperty("player.remove");
+        saveTopic = messages.getProperty("player.save");
         saveAction = this::savePlayer;
         clearAction = this::clear;
-        guiPublisher.requestPlayers();
-        guiPublisher.requestCharacters();
+        initItems();
+        bus.setReaction(messages.getProperty("professions.class.result"), this::loadClasses);
+        bus.send(messages.getProperty("database.getAll"), messages.getProperty("professions.class.result"), ResourceType.class);
+        bus.setReaction(messages.getProperty("race.result"), this::loadClasses);
+        bus.send(messages.getProperty("database.getAll"), messages.getProperty("professions.class.result"), Race.class);
+        bus.setReaction(messages.getProperty("character.result"), this::loadCharacters);
+        bus.send(messages.getProperty("database.getAll"), messages.getProperty("character.result"), Character.class);
         initDeterminantsMap();
         initTableViews();
     }
@@ -383,7 +388,7 @@ public class PlayerPaneController extends ItemsListedController {
                 .add(father.getText())
                 .add(mother.getText())
                 .add(siblings.getText());
-        guiPublisher.savePlayer(builder.build());
+        saveItem(builder.build());
     }
 
     @SuppressWarnings("unchecked")
@@ -441,37 +446,37 @@ public class PlayerPaneController extends ItemsListedController {
 
     @FXML
     private void chooseProfession() {
-        guiPublisher.publish(messages.getProperty("player.profession.getAllTypes"));
+        bus.send(messages.getProperty("player.profession.getAllTypes"));
     }
 
     @FXML
     private void chooseHandWeapon() {
-        guiPublisher.publish(messages.getProperty("player.weapons.white.getAllTypes"));
+        bus.send(messages.getProperty("player.weapons.white.getAllTypes"));
     }
 
     @FXML
     private void chooseRangedWeapon() {
-        guiPublisher.publish(messages.getProperty("player.weapons.ranged.getAllTypes"));
+        bus.send(messages.getProperty("player.weapons.ranged.getAllTypes"));
     }
 
     @FXML
     private void chooseArmor() {
-        guiPublisher.publish(messages.getProperty("player.armors.getAllTypes"));
+        bus.send(messages.getProperty("player.armors.getAllTypes"));
     }
 
     @FXML
     private void chooseEquipment() {
-        guiPublisher.publish(messages.getProperty("player.equipment.getAllTypes"));
+        bus.send(messages.getProperty("player.equipment.getAllTypes"));
     }
 
     @FXML
     private void chooseSkill() {
-        guiPublisher.publish(messages.getProperty("player.skills.getAllTypes"));
+        bus.send(messages.getProperty("player.skills.getAllTypes"));
     }
 
     @FXML
     private void chooseSpell() {
-        guiPublisher.publish(messages.getProperty("player.spells.getAllTypes"));
+        bus.send(messages.getProperty("player.spells.getAllTypes"));
     }
 
     private String getDeterminantsFromFields() {

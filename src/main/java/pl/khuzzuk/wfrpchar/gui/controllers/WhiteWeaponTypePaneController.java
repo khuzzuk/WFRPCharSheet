@@ -82,14 +82,18 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        removeAction = guiPublisher::removeWhiteWeapon;
+        entityType = WhiteWeaponType.class;
+        getAllResponse = messages.getProperty("whiteWeapons.result");
+        getEntityTopic = messages.getProperty("whiteWeapons.query.specific");
+        removeEntityTopic = messages.getProperty("whiteWeapons.remove");
+        saveTopic = messages.getProperty("whiteWeapons.save");
         saveAction = this::saveWhiteWeaponType;
-        getAction = guiPublisher::requestWhiteWeaponType;
         clearAction = this::clear;
         initFieldsMap();
         fillComboBoxesWithEnums();
         setBastardComponentsStatus(null, null, null);
         placementBoxWW.getSelectionModel().selectedItemProperty().addListener(this::setBastardComponentsStatus);
+        initItems();
     }
 
     private void setBastardComponentsStatus(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -102,7 +106,7 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
     private void fillComboBoxesWithEnums() {
         ComboBoxHandler.fill(Accessibility.SET, accessibility);
         ComboBoxHandler.fill(Dices.SET, diceWW);
-        ComboBoxHandler.fill((Set) EnumSet.of(Placement.ONE_HAND, Placement.TWO_HANDS, Placement.BASTARD),
+        ComboBoxHandler.fill(EnumSet.of(Placement.ONE_HAND, Placement.TWO_HANDS, Placement.BASTARD),
                 placementBoxWW);
     }
 
@@ -175,7 +179,7 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
                     .collect(Collectors.joining("|"));
             fields.add(line);
         }
-        guiPublisher.saveItem(fields.stream().collect(Collectors.joining(";")));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     @Override

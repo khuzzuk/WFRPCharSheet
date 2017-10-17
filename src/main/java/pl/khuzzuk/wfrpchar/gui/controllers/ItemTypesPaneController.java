@@ -2,12 +2,11 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.types.EquipmentType;
 import pl.khuzzuk.wfrpchar.entities.items.types.MiscItem;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
-import pl.khuzzuk.wfrpchar.gui.GuiPublisher;
-import pl.khuzzuk.wfrpchar.messaging.publishers.Publishers;
 
 import javax.inject.Inject;
 import java.net.URL;
@@ -19,18 +18,20 @@ import java.util.stream.Collectors;
 @Component
 public class ItemTypesPaneController extends ItemsListedController {
     @Inject
-    @Publishers
-    private GuiPublisher publisher;
+    private Bus bus;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
+        entityType = MiscItem.class;
         saveAction = this::saveItem;
-        getAction = guiPublisher::requestMiscItemTypeLoad;
-        removeAction = guiPublisher::removeMiscItemType;
+        getEntityTopic = messages.getProperty("miscItemTypes.query.specific");
+        removeEntityTopic = messages.getProperty("miscItemTypes.remove");
+        getAllResponse = messages.getProperty("miscItemTypes.result");
+        saveTopic = messages.getProperty("database.saveEquipment");
         clearAction = this::clear;
         ComboBoxHandler.fill(Accessibility.SET, accessibility);
-        publisher.requestMiscItemType();
+        initItems();
     }
 
     public void loadMiscItemToEditor(MiscItem item) {
@@ -56,6 +57,6 @@ public class ItemTypesPaneController extends ItemsListedController {
         line.add(specialFeatures.getText());
         line.add("");
         line.add(EquipmentType.MISC_ITEM.name());
-        publisher.saveItem(line.stream().collect(Collectors.joining(";")));
+        saveItem(line.stream().collect(Collectors.joining(";")));
     }
 }

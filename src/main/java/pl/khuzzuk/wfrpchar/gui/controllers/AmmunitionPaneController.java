@@ -15,29 +15,31 @@ public class AmmunitionPaneController extends AbstractWeaponController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        guiPublisher.requestAmmunition();
-        getAction = guiPublisher::requestAmmunition;
-        removeAction = guiPublisher::removeAmmunition;
+        entityType = Ammunition.class;
+        getAllResponse = messages.getProperty("ammunition.result");
+        getEntityTopic = messages.getProperty("ammunition.query.specific");
+        removeEntityTopic = messages.getProperty("ammunition.remove");
+        saveTopic = messages.getProperty("ammunition.save");
         saveAction = this::saveAmmunition;
         clearAction = this::clear;
+        initItems();
     }
 
     @FXML
     private void chooseBaseType() {
-        guiPublisher.publish("ammunition.baseType.getAllTypes");
+        bus.send(messages.getProperty("ammunition.baseType.getAllTypes"));
     }
 
     @FXML
     private void chooseDeterminant() {
-        guiPublisher.publish(messages.getProperty("determinants.creator.show.am"));
+        bus.send(messages.getProperty("determinants.creator.show.am"));
     }
 
     @FXML
     private void saveAmmunition() {
         List<String> fields = new ArrayList<>();
         addWeaponTypeFields(fields);
-        guiPublisher.publish(fields.stream().collect(Collectors.joining(";")),
-                messages.getProperty("ammunition.save"));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     public void loadToEditor(Ammunition ammunition) {

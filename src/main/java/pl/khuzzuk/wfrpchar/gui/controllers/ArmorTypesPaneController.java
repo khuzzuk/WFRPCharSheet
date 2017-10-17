@@ -11,9 +11,10 @@ import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.ArmorPattern;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.ArmorType;
-import pl.khuzzuk.wfrpchar.gui.*;
+import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
+import pl.khuzzuk.wfrpchar.gui.MappingUtil;
+import pl.khuzzuk.wfrpchar.gui.Numeric;
 
-import javax.inject.Inject;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,8 +22,6 @@ import java.util.stream.Collectors;
 @Component
 public class ArmorTypesPaneController extends ItemsListedController {
     private static final String TYPE = "ARMOR";
-    @Inject
-    private GuiPublisher publisher;
     private Map<DeterminantsType, TextField> determinantsMap;
     private Map<LangElement, TextField> langElementsMap;
 
@@ -57,9 +56,12 @@ public class ArmorTypesPaneController extends ItemsListedController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        removeAction = guiPublisher::removeArmorType;
+        entityType = ArmorType.class;
+        removeEntityTopic = messages.getProperty("armorTypes.remove");
+        getEntityTopic = messages.getProperty("armorTypes.query.specific");
+        getAllResponse = messages.getProperty("armorTypes.result");
+        saveTopic = messages.getProperty("database.saveEquipment");
         saveAction = this::saveArmorType;
-        getAction = guiPublisher::requestArmorTypeLoad;
         clearAction = this::clear;
         ComboBoxHandler.fill(Accessibility.SET, accessibility);
         ComboBoxHandler.fill(EnumSet.allOf(ArmorPattern.class), armPattern);
@@ -68,7 +70,7 @@ public class ArmorTypesPaneController extends ItemsListedController {
                 Placement.LEGS, Placement.FEET),
                 armPlacement);
         initMaps();
-        publisher.requestArmorTypes();
+        initItems();
     }
 
     private void initMaps() {
@@ -121,7 +123,7 @@ public class ArmorTypesPaneController extends ItemsListedController {
                 armAbl.getText());
         fields.add(MappingUtil.getDeterminants(determinantsMap));
         fields.add(ArmorPattern.forName(armPattern.getSelectionModel().getSelectedItem()).name());
-        publisher.saveItem(fields.stream().collect(Collectors.joining(";")));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     @Override
