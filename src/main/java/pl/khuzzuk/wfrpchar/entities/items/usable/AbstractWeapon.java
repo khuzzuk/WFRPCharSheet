@@ -1,5 +1,9 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,18 +27,15 @@ import java.util.stream.Collectors;
 @Entity
 @DiscriminatorValue("1")
 @NoArgsConstructor
+@Getter
+@Setter
 public abstract class AbstractWeapon<T extends BattleEquipment>
         extends AbstractCommodity
         implements Weapon {
-    @Getter
-    @Setter
     @ManyToOne
     private ResourceType primaryResource;
-    @Getter
-    @Setter
     @ManyToOne
     private ResourceType secondaryResource;
-    @Setter
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "DET_REQ_MAP",
             joinColumns = {@JoinColumn(name = "EQ_ID")},
@@ -50,22 +51,26 @@ public abstract class AbstractWeapon<T extends BattleEquipment>
         throw new IllegalArgumentException("Can't get hand weapon from " + placement.name());
     }
 
+    @JsonIgnore
     public int getStrength() {
         return getBaseType().getStrength() *
                 (primaryResource.getStrengthMod() + secondaryResource.getStrengthMod() / 11);
     }
 
     @Override
+    @JsonIgnore
     public float getWeight() {
         return getBaseType().getWeight() * (primaryResource.getWeight() + secondaryResource.getWeight()/100f);
     }
 
     @Override
+    @JsonIgnore
     public String getTypeName() {
         return getBaseType().getTypeName();
     }
 
     @Override
+    @JsonIgnore
     public Price getPrice() {
         return getBaseType().getPrice().multiply(
                 (primaryResource.getPriceMod() + secondaryResource.getPriceMod() /100)/100)
@@ -78,11 +83,13 @@ public abstract class AbstractWeapon<T extends BattleEquipment>
     }
 
     @Override
+    @JsonIgnore
     public Set<Determinant> getBaseDeterminants() {
         return determinants;
     }
 
     @Override
+    @JsonIgnore
     @SuppressWarnings("unchecked")
     public Set<Determinant> getDeterminants() {
         return new CompositeSet<>(getBaseDeterminants(), getBaseType().getDeterminants());

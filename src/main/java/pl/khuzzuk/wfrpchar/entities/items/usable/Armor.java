@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
@@ -30,6 +31,7 @@ public class Armor extends AbstractWeapon<ArmorType> implements ProtectiveWearin
     }
 
     @Override
+    @JsonIgnore
     public Placement getPlacement() {
         return baseType.getPlacement();
     }

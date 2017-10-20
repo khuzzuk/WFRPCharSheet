@@ -171,6 +171,12 @@
                 <Label text="WW"/>
                 <TextField fx:id="battleModWW"/>
             </VBox>
+            <VBox alignment="CENTER"
+                  GridPane.columnIndex="2"
+                  GridPane.rowIndex="5">
+                <Label text="I"/>
+                <TextField fx:id="initModWW"/>
+            </VBox>
             <VBox alignment="CENTER" prefHeight="200.0"
                   prefWidth="100.0" GridPane.columnIndex="3"
                   GridPane.rowIndex="5">
@@ -183,28 +189,18 @@
                 <Label text="P"/>
                 <TextField fx:id="parryModWW"/>
             </VBox>
-            <VBox alignment="CENTER"
-                  GridPane.columnIndex="2"
-                  GridPane.rowIndex="5">
-                <Label text="I"/>
-                <TextField fx:id="initModWW"/>
-            </VBox>
             <Label text="modyfikatory jednoręcznie"
                    GridPane.rowIndex="6"/>
             <TextField fx:id="bastBattleModWW"
-                       editable="false"
                        GridPane.columnIndex="1"
                        GridPane.rowIndex="6"/>
             <TextField fx:id="bastInitModWW"
-                       editable="false"
                        GridPane.columnIndex="2"
                        GridPane.rowIndex="6"/>
             <TextField fx:id="bastOpParryModWW"
-                       editable="false"
                        GridPane.columnIndex="3"
                        GridPane.rowIndex="6"/>
             <TextField fx:id="bastParryModWW"
-                       editable="false"
                        GridPane.columnIndex="4"
                        GridPane.rowIndex="6"/>
             <VBox alignment="CENTER" prefHeight="200.0"

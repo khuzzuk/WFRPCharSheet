@@ -30,7 +30,7 @@ public class LinkedEntityChooserController<T extends Named<String>> implements C
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        bus.<Collection<T>>setReaction(msgType, c -> {
+        bus.<Collection<T>>setGuiReaction(msgType, c -> {
             EntitiesAdapter.sendToListViewUnchanged(items, c);
             parent.show();
         });

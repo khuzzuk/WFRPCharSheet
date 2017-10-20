@@ -86,7 +86,7 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
         getAllResponse = messages.getProperty("whiteWeapons.result");
         getEntityTopic = messages.getProperty("whiteWeapons.query.specific");
         removeEntityTopic = messages.getProperty("whiteWeapons.remove");
-        saveTopic = messages.getProperty("whiteWeapons.save");
+        saveTopic = messages.getProperty("database.saveEquipment");
         saveAction = this::saveWhiteWeaponType;
         clearAction = this::clear;
         initFieldsMap();
@@ -129,6 +129,7 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
     }
 
     public void loadWhiteWeaponToEditor(WhiteWeaponType weaponType) {
+        clear();
         name.setText(weaponType.getName());
         typeNameWW.setText(weaponType.getTypeName());
         accessibility.getSelectionModel().select(weaponType.getAccessibility().getName());

@@ -1,5 +1,7 @@
 package pl.khuzzuk.wfrpchar.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -40,5 +42,13 @@ public class ConfigManager {
     @Bean
     Bus bus() {
         return Bus.initializeBus(true);
+    }
+
+    @Bean
+    ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+        objectMapper.enableDefaultTyping();
+        return objectMapper;
     }
 }

@@ -1,5 +1,8 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,24 +21,17 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("0")
 @Table(name = "items_entities")
+@Getter
+@Setter
+@JsonIdentityInfo(property = "id", generator = ObjectIdGenerators.PropertyGenerator.class)
 public abstract class AbstractCommodity implements Commodity, Named<String>, Documented {
     @Id
     @GeneratedValue
-    @Getter
-    @Setter
     private long id;
-    @Getter
-    @Setter
     @NaturalId
     private String name;
-    @Getter
-    @Setter
     private Accessibility accessibility;
-    @Getter
-    @Setter
     private Price basePrice;
-    @Getter
-    @Setter
     private String specialFeatures;
 
     void fillCommodityFields(List<String> fields) {

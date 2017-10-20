@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -64,11 +65,13 @@ public class ResourceType implements Named<String>, Commodity, Persistable, Docu
     }
 
     @Override
+    @JsonIgnore
     public Price getPrice() {
         return new Price(1,0,0).multiply(((float)priceMod)/100);
     }
 
     @Override
+    @JsonIgnore
     public float getWeight() {
         //TODO add weigthmod to resources
         return 1;

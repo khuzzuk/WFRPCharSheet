@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
@@ -13,13 +14,11 @@ import java.util.Set;
 
 @Entity
 @DiscriminatorValue("5")
+@Getter
+@Setter
 public class BastardWeapon extends AbstractHandWeapon<BastardWeaponType> implements Bastard {
-    @Getter
     @ManyToOne
     private BastardWeaponType baseType;
-
-    @Getter
-    @Setter
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "DET_REQ_BAST_MAP",
             joinColumns = {@JoinColumn(name = "EQ_ID")},
@@ -27,16 +26,13 @@ public class BastardWeapon extends AbstractHandWeapon<BastardWeaponType> impleme
     private Set<Determinant> oneHandedDeterminants;
 
     @Override
-    public void setBaseType(BastardWeaponType baseType) {
-        this.baseType = baseType;
-    }
-
-    @Override
+    @JsonIgnore
     public int getOneHandedStrength() {
         return baseType != null ? baseType.getOneHandedStrength() : 0;
     }
 
     @Override
+    @JsonIgnore
     public Placement getPlacement() {
         return baseType.getPlacement();
     }

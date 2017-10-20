@@ -61,7 +61,7 @@ public class DAO {
     }
 
     @SuppressWarnings("unchecked")
-    <T extends Persistable & Named<U>, U extends Comparable<? super U>>
+    public <T extends Persistable & Named<U>, U extends Comparable<? super U>>
     Collection<T> getAllEntities(Class<T> entityType) {
         DAOTransactional<T, U> resolver = (DAOTransactional<T, U>) resolvers.get(entityType);
         return resolver.getAllItems();

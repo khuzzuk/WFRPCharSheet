@@ -1,8 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items.types;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -18,34 +17,33 @@ import javax.validation.constraints.NotNull;
 
 @DiscriminatorValue("4")
 @Entity
-@NoArgsConstructor
+@Getter
+@Setter
 public abstract class WhiteWeaponType extends WeaponType implements HandWeapon {
     @Enumerated(value = EnumType.STRING)
-    @NonNull
-    @Getter
-    @Setter
     Dices dices;
-    @NonNull
-    @Getter
-    @Setter
     int rolls;
 
     @Override
+    @JsonIgnore
     public int getBattleMod() {
         return Determinant.getSumForType(determinants, DeterminantsType.BATTLE);
     }
 
     @Override
+    @JsonIgnore
     public int getInitiativeMod() {
         return Determinant.getSumForType(determinants, DeterminantsType.INITIATIVE);
     }
 
     @Override
+    @JsonIgnore
     public int getParryMod() {
         return Determinant.getSumForType(determinants, DeterminantsType.PARRY);
     }
 
     @Override
+    @JsonIgnore
     public int getOpponentParryMod() {
         return Determinant.getSumForType(determinants, DeterminantsType.OPPONENT_PARRY);
     }

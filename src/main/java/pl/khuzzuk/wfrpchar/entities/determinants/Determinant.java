@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.determinants;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import pl.khuzzuk.wfrpchar.entities.Labelled;
 import pl.khuzzuk.wfrpchar.entities.Named;
@@ -39,6 +40,7 @@ public abstract class Determinant implements Labelled<DeterminantsType, String>,
         return determinants.stream().map(Determinant::toCSV).collect(Collectors.joining("|"));
     }
 
+    @JsonIgnore
     public int getActualValue() {
         int value = baseValue;
         for (Extension e : extensions) {
@@ -47,6 +49,7 @@ public abstract class Determinant implements Labelled<DeterminantsType, String>,
         return value;
     }
 
+    @JsonIgnore
     public int getProfessionExtensionCount() {
         return extensions.stream()
                 .filter(e -> e instanceof ProfessionExtension)
@@ -68,11 +71,13 @@ public abstract class Determinant implements Labelled<DeterminantsType, String>,
     }
 
     @Override
+    @JsonIgnore
     public DeterminantsType getLabel() {
         return type;
     }
 
     @Override
+    @JsonIgnore
     public String getRepresentation() {
         return "" + getActualValue();
     }
@@ -90,6 +95,7 @@ public abstract class Determinant implements Labelled<DeterminantsType, String>,
     }
 
     @Override
+    @JsonIgnore
     public String getName() {
         return toString();
     }

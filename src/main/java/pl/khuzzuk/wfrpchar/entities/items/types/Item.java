@@ -1,5 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items.types;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.Documented;
@@ -16,36 +18,24 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "class", discriminatorType = DiscriminatorType.INTEGER)
 @DiscriminatorValue(value = "0")
 @NoArgsConstructor
+@Data
+@JsonIdentityInfo(property = "id", generator = ObjectIdGenerators.PropertyGenerator.class)
 public abstract class Item implements Named<String>, Commodity, Persistable, Documented {
     @Id
     @GeneratedValue
-    @Getter
-    @Setter
     long id;
-    @Getter
-    @Setter
     @NonNull
     @NaturalId
     String name;
     @NonNull
-    @Getter
-    @Setter
     EquipmentType type;
-    @Getter
-    @Setter
     @NonNull
     float weight;
-    @Getter
-    @Setter
     @NonNull
     @Embedded
     Price price;
-    @Getter
-    @Setter
     @NonNull
     Accessibility accessibility;
-    @Getter
-    @Setter
     String specialFeatures;
 
     public abstract String toCsv();

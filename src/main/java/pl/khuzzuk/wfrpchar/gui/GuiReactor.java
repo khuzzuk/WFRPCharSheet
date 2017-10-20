@@ -129,23 +129,23 @@ public class GuiReactor {
         bus.setReaction(messages.getProperty("determinants.creator.add.pr"), professionPaneController::addDeterminant);
 
         //Base type choosers
-        bus.setReaction(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
-        bus.setReaction(messages.getProperty("weapons.ranged.baseType.choice"), rangeWeaponsPaneController::setBaseType);
-        bus.setReaction(messages.getProperty("armor.baseType.choice"), armorPaneController::setBaseType);
-        bus.setReaction(messages.getProperty("professions.class.skills.choice"), professionClassPaneController::addSkill);
-        bus.setReaction(messages.getProperty("professions.skills.choice"), professionPaneController::addSkill);
-        bus.setReaction(messages.getProperty("professions.next.choice"), professionPaneController::addProfession);
-        bus.setReaction(messages.getProperty("ammunition.baseType.choice"), ammunitionPaneController::setBaseType);
-        bus.setReaction(messages.getProperty("race.skills.choice"), racesPaneController::addSkill);
-        bus.setReaction(messages.getProperty("magic.spells.school.choice"), spellsPaneController::setSchool);
-        bus.setReaction(messages.getProperty("magic.spells.ingredients.choice"), spellsPaneController::addIngredient);
-        bus.setReaction(messages.getProperty("player.profession.choice"), playerPaneController::loadProfessionChoice);
-        bus.setReaction(messages.getProperty("player.weapons.white.choice"), playerPaneController::loadWhiteWeaponChoice);
-        bus.setReaction(messages.getProperty("player.weapons.ranged.choice"), playerPaneController::loadRangedWeaponChoice);
-        bus.setReaction(messages.getProperty("player.armors.choice"), playerPaneController::loadArmorsChoice);
-        bus.setReaction(messages.getProperty("player.equipment.choice"), playerPaneController::loadEquipment);
-        bus.setReaction(messages.getProperty("player.skills.choice"), playerPaneController::loadSkill);
-        bus.setReaction(messages.getProperty("player.spells.choice"), playerPaneController::loadSpell);
+        bus.setGuiReaction(messages.getProperty("weapons.hand.baseType.choice"), handWeaponsPaneController::setBaseType);
+        bus.setGuiReaction(messages.getProperty("weapons.ranged.baseType.choice"), rangeWeaponsPaneController::setBaseType);
+        bus.setGuiReaction(messages.getProperty("armor.baseType.choice"), armorPaneController::setBaseType);
+        bus.setGuiReaction(messages.getProperty("professions.class.skills.choice"), professionClassPaneController::addSkill);
+        bus.setGuiReaction(messages.getProperty("professions.skills.choice"), professionPaneController::addSkill);
+        bus.setGuiReaction(messages.getProperty("professions.next.choice"), professionPaneController::addProfession);
+        bus.setGuiReaction(messages.getProperty("ammunition.baseType.choice"), ammunitionPaneController::setBaseType);
+        bus.setGuiReaction(messages.getProperty("race.skills.choice"), racesPaneController::addSkill);
+        bus.setGuiReaction(messages.getProperty("magic.spells.school.choice"), spellsPaneController::setSchool);
+        bus.setGuiReaction(messages.getProperty("magic.spells.ingredients.choice"), spellsPaneController::addIngredient);
+        bus.setGuiReaction(messages.getProperty("player.profession.choice"), playerPaneController::loadProfessionChoice);
+        bus.setGuiReaction(messages.getProperty("player.weapons.white.choice"), playerPaneController::loadWhiteWeaponChoice);
+        bus.setGuiReaction(messages.getProperty("player.weapons.ranged.choice"), playerPaneController::loadRangedWeaponChoice);
+        bus.setGuiReaction(messages.getProperty("player.armors.choice"), playerPaneController::loadArmorsChoice);
+        bus.setGuiReaction(messages.getProperty("player.equipment.choice"), playerPaneController::loadEquipment);
+        bus.setGuiReaction(messages.getProperty("player.skills.choice"), playerPaneController::loadSkill);
+        bus.setGuiReaction(messages.getProperty("player.spells.choice"), playerPaneController::loadSpell);
 
         //regular queries
         bus.setGuiReaction(messages.getProperty("weapons.hand.result.specific"), handWeaponsPaneController::loadToEditor);

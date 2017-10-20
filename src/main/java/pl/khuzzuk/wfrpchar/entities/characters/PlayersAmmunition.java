@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.characters;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.db.DAO;
@@ -20,66 +21,72 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class PlayersAmmunition implements Ammo, Documented, Named<String> {
     @Id
     @GeneratedValue
-    @Getter
-    @Setter
     private long id;
-    @Getter
-    @Setter
     @ManyToOne
     private Ammunition ammunition;
-    @Getter
-    @Setter
     private int count;
 
     @Override
+    @JsonIgnore
     public int getStrength() {
         return ammunition.getStrength();
     }
 
     @Override
+    @JsonIgnore
     public String getName() {
         return ammunition.getName();
     }
 
     @Override
+    @JsonIgnore
     public Accessibility getAccessibility() {
         return ammunition.getAccessibility();
     }
 
     @Override
+    @JsonIgnore
     public Price getPrice() {
         return ammunition.getPrice();
     }
 
     @Override
+    @JsonIgnore
     public Set<Determinant> getDeterminants() {
         return ammunition.getDeterminants();
     }
 
     @Override
+    @JsonIgnore
     public String getSpecialFeatures() {
         return ammunition.getSpecialFeatures();
     }
 
     @Override
+    @JsonIgnore
     public void setDeterminants(Set<Determinant> determinants) {
         ammunition.setDeterminants(determinants);
     }
 
     @Override
+    @JsonIgnore
     public float getWeight() {
         return ammunition.getWeight();
     }
 
     @Override
+    @JsonIgnore
     public Placement getPlacement() {
         return ammunition.getPlacement();
     }
 
     @Override
+    @JsonIgnore
     public String getTypeName() {
         return ammunition.getTypeName();
     }
@@ -90,6 +97,7 @@ public class PlayersAmmunition implements Ammo, Documented, Named<String> {
     }
 
     @Override
+    @JsonIgnore
     public Collection<Determinant> getBaseDeterminants() {
         return ammunition.getBaseDeterminants();
     }

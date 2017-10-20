@@ -1,7 +1,9 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType;
 
@@ -12,17 +14,14 @@ import javax.persistence.ManyToOne;
 @Entity
 @DiscriminatorValue("3")
 @NoArgsConstructor
+@Getter
+@Setter
 public class OneHandedWeapon extends AbstractHandWeapon<OneHandedWeaponType> {
-    @Getter
     @ManyToOne
     private OneHandedWeaponType baseType;
 
     @Override
-    public void setBaseType(OneHandedWeaponType baseType) {
-        this.baseType = baseType;
-    }
-
-    @Override
+    @JsonIgnore
     public Placement getPlacement() {
         return baseType.getPlacement();
     }

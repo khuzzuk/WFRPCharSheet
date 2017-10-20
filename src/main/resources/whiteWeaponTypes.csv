@@ -1,6 +1,0 @@
-spec:name;weight;price;accessibility;specialFeatures;strength;type;placement;langElements;determinants;typeName;dice;rolls;[oneHandedStrenght];[oneHandedExtension]
-Miecz;0.75;0|5;COMMON;;0;WEAPON;ONE_HAND;|||Mieczem;;Miecz;K6;1
-Topór;0.85;0|7;COMMON;Tarcza -1 PP;0;WEAPON;ONE_HAND;|||Toporem;-10,OPPONENT_PARRY|-10,PARRY;Topór;K6;1
-Długi miecz;1.1;0|7|5;COMMON;;1;WEAPON;ONE_HAND;|||Długim mieczem;10,PARRY;Miecz;K6;1
-Półtorak;1.6;0|8;COMMON;Może beć używano jako broń jednoręczna;2;WEAPON;BASTARD;|||Półtorakiem;10,PARRY;Półtorak;K8;1;1;10,PARRY
-Maczuga;1;0|5|5;COMMON;;0;WEAPON;ONE_HAND;|||Maczugą;;Maczuga;K4;1

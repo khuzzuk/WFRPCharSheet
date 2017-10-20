@@ -1,5 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items.types;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import pl.khuzzuk.wfrpchar.entities.DeterminantContainer;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
@@ -8,6 +10,7 @@ import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.Wearable;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -18,32 +21,27 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public abstract class FightingEquipment extends Item implements Wearable, BattleEquipment {
-    @Getter
-    @Setter
     @Min(0)
     int strength;
     @NonNull
-    @Getter
-    @Setter
     Placement placement;
     @NonNull
-    @Setter
-    @Getter
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "DET_EQ_MAP",
             joinColumns = {@JoinColumn(name = "EQ_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
     Set<Determinant> determinants;
     @NonNull
-    @Setter
-    @Getter
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "TEXT", nullable = false)
     @JoinTable(name = "LAN_NAMES_MAP",
             joinColumns = {@JoinColumn(name = "ITEM_ID")})
     Map<LangElement, String> names;
 
+    @JsonIgnore
     String getLangToCsv() {
         return (names.get(LangElement.ADJECTIVE_MASC_SING) != null ? names.get(LangElement.ADJECTIVE_MASC_SING) : "") +
                 "|" +
@@ -54,6 +52,7 @@ public abstract class FightingEquipment extends Item implements Wearable, Battle
                 (names.get(LangElement.ABLATIVE) != null ? names.get(LangElement.ABLATIVE) : "");
     }
 
+    @JsonIgnore
     public Collection<Determinant> getDeterminantForType(DeterminantsType type) {
         return determinants.stream().filter(d -> d.getLabel() == type)
                 .collect(Collectors.toList());
@@ -66,11 +65,13 @@ public abstract class FightingEquipment extends Item implements Wearable, Battle
         determinants.add(determinant);
     }
 
+    @JsonIgnore
     public Collection<Determinant> getAllDeterminants() {
         return determinants != null ? determinants : Collections.emptyList();
     }
 
     @Override
+    @JsonIgnore
     public Collection<Determinant> getBaseDeterminants() {
         return getDeterminants();
     }

@@ -1,5 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
@@ -17,28 +19,32 @@ import java.util.stream.Collectors;
 
 @Entity
 @DiscriminatorValue("6")
+@Getter
+@Setter
 public class Gun extends AbstractWeapon<RangedWeaponType> implements RangedWeapon, Persistable {
-    @Getter
-    @Setter
     @ManyToOne
     private RangedWeaponType baseType;
 
     @Override
+    @JsonIgnore
     public int getShortRange() {
         return baseType != null ? baseType.getShortRange() : 0;
     }
 
     @Override
+    @JsonIgnore
     public int getEffectiveRange() {
         return baseType != null ? baseType.getEffectiveRange() : 0;
     }
 
     @Override
+    @JsonIgnore
     public int getMaximumRange() {
         return baseType != null ? baseType.getMaximumRange() : 0;
     }
 
     @Override
+    @JsonIgnore
     public LoadingTimes getReloadTime() {
         return baseType != null ? baseType.getReloadTime() : null;
     }
@@ -52,6 +58,7 @@ public class Gun extends AbstractWeapon<RangedWeaponType> implements RangedWeapo
     }
 
     @Override
+    @JsonIgnore
     public Placement getPlacement() {
         return baseType.getPlacement();
     }

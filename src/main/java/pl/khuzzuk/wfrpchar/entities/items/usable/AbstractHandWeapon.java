@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
@@ -38,21 +39,25 @@ public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends Abst
     }
 
     @Override
+    @JsonIgnore
     public int getBattleMod() {
         return Determinant.getSumForType(getBaseDeterminants(), DeterminantsType.BATTLE);
     }
 
     @Override
+    @JsonIgnore
     public int getInitiativeMod() {
         return Determinant.getSumForType(getBaseDeterminants(), DeterminantsType.INITIATIVE);
     }
 
     @Override
+    @JsonIgnore
     public int getParryMod() {
         return Determinant.getSumForType(getBaseDeterminants(), DeterminantsType.PARRY);
     }
 
     @Override
+    @JsonIgnore
     public int getOpponentParryMod() {
         return Determinant.getSumForType(getBaseDeterminants(), DeterminantsType.OPPONENT_PARRY);
     }

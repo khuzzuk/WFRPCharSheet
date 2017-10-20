@@ -1,4 +1,0 @@
-spec:name;weight;price;accessibility;specialFeatures;strength;type;placement
-Strzała;0.1;0|0|1;COMMON;;0;AMMO;AMMO
-Bełt;0.05;0|0|1;COMMON;;0;AMMO;AMMO
-Śrut;0.05;0|0|5;UNCOMMON;;0;AMMO;AMMO

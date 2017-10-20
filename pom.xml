@@ -184,6 +184,16 @@
             <version>${log4j.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
             <groupId>pl.khuzzuk</groupId>
             <artifactId>message-bus</artifactId>
             <version>1.5.0</version>

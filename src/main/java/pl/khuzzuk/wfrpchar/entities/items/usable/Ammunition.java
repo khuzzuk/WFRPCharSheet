@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
@@ -30,6 +31,7 @@ public class Ammunition extends AbstractWeapon<AmmunitionType> implements Battle
     }
 
     @Override
+    @JsonIgnore
     public Placement getPlacement() {
         return baseType.getPlacement();
     }
