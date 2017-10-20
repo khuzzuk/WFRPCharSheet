@@ -1,8 +1,8 @@
 package pl.khuzzuk.wfrpchar.entities.items.types;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
@@ -19,7 +19,6 @@ import javax.persistence.*;
 @DiscriminatorValue(value = "0")
 @NoArgsConstructor
 @Data
-@JsonIdentityInfo(property = "id", generator = ObjectIdGenerators.PropertyGenerator.class)
 public abstract class Item implements Named<String>, Commodity, Persistable, Documented {
     @Id
     @GeneratedValue

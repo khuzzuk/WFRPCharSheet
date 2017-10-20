@@ -51,20 +51,11 @@ public class RepoDumper {
         repo.setItems(items);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("repo.json"))) {
-            String content = mapper.writeValueAsString(repo.getTypes());
+            String content = mapper.writeValueAsString(repo);
             content = content.replaceAll("org.hibernate.collection.internal.PersistentSet", "java.util.HashSet");
             content = content.replaceAll("org.hibernate.collection.internal.PersistentMap", "java.util.HashMap");
             content = content.replaceAll("org.hibernate.collection.internal.PersistentBag", "java.util.ArrayList");
-            ManagedOne managedOne = new ManagedOne();
-            managedOne.name = "name";
-            managedOne.something = "something";
-            ManagedTwo managedTwo = new ManagedTwo();
-            managedTwo.name = "name";
-            managedTwo.something = "something";
-            managedOne.managedTwo = managedTwo;
-            managedTwo.managedOne = managedOne;
-            String temp = mapper.writeValueAsString(managedOne);
-            List<Item> repo2 = mapper.readValue(content, List.class);
+            Repo repo2 = mapper.readValue(content, Repo.class);
             writer.write(content);
         } catch (IOException e) {
 //            Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -73,17 +64,5 @@ public class RepoDumper {
 //            alert.showAndWait();
             e.printStackTrace();
         }
-    }
-
-    private class ManagedOne {
-        String name;
-        String something;
-        ManagedTwo managedTwo;
-    }
-
-    private class ManagedTwo {
-        String name;
-        String something;
-        ManagedOne managedOne;
     }
 }

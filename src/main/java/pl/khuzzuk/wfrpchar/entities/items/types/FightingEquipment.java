@@ -1,16 +1,13 @@
 package pl.khuzzuk.wfrpchar.entities.items.types;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import pl.khuzzuk.wfrpchar.entities.DeterminantContainer;
-import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.Wearable;
-import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;

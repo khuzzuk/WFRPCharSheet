@@ -1,11 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
@@ -23,7 +19,6 @@ import java.util.List;
 @Table(name = "items_entities")
 @Getter
 @Setter
-@JsonIdentityInfo(property = "id", generator = ObjectIdGenerators.PropertyGenerator.class)
 public abstract class AbstractCommodity implements Commodity, Named<String>, Documented {
     @Id
     @GeneratedValue
