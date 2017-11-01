@@ -21,6 +21,7 @@ public abstract class Determinant implements Labelled<DeterminantsType, String>,
     @GeneratedValue
     @Getter
     @Setter
+    @JsonIgnore
     private long id;
     @Getter
     @Setter

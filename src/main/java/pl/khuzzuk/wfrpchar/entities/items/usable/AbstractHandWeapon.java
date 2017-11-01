@@ -26,7 +26,6 @@ public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends Abst
     @Setter
     private int rolls;
 
-    public abstract T getBaseType();
 
     @Override
     public Dices getDices() {

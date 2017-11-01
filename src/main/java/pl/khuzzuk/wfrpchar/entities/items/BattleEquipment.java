@@ -2,7 +2,6 @@ package pl.khuzzuk.wfrpchar.entities.items;
 
 import pl.khuzzuk.wfrpchar.entities.DeterminantContainer;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
-import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 
 import java.util.Collection;
 

@@ -35,7 +35,7 @@ public abstract class AbstractWeaponController extends ItemWithBaseTypeControlle
         bus.send(messages.getProperty("database.getAll"), messages.getProperty("resource.type.result"), ResourceType.class);
     }
 
-    public void fillResourceBoxes(Collection<ResourceType> resourceTypes) {
+    public synchronized void fillResourceBoxes(Collection<ResourceType> resourceTypes) {
         resources = resourceTypes;
         Set<ResourceType> toFill = new HashSet<>(resources);
         ComboBoxHandler.fill(toFill, primaryResource);

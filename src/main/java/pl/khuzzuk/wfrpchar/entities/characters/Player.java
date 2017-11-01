@@ -1,5 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.characters;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,68 +29,48 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @ToString(exclude = "id")
+@Getter
+@Setter
 public class Player implements Named<String>, Persistable, Documented {
     @Id
-    @Getter
-    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Getter
-    @Setter
     @NaturalId
     private String name;
-    @Getter
-    @Setter
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private Race race;
-    @Getter
-    @Setter
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
     private ProfessionClass professionClass;
-    @Getter
-    @Setter
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
     private Profession currentProfession;
-    @Getter
-    @Setter
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<Profession> career;
-    @Getter
-    @Setter
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
     private Character character;
-    @Getter
-    @Setter
     private Appearance appearance;
-    @Getter
-    @Setter
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Determinant> determinants;
-    @Getter
-    @Setter
     @ManyToMany
+    @JsonIdentityReference(alwaysAsId = true)
     private List<Item> equipment;
-    @Getter
-    @Setter
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
     private List<AbstractCommodity> commodities;
-    @Getter
-    @Setter
     @ManyToMany
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<PlayersAmmunition> ammunition;
-    @Getter
-    @Setter
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<Skill> skills;
-    @Getter
-    @Setter
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<Spell> spells;
-    @Getter
-    @Setter
     private Price money;
-    @Getter
-    @Setter
     private PersonalHistory personalHistory;
 
     public static Player fromCsv(String[] fields, DAO dao) {
@@ -122,15 +104,6 @@ public class Player implements Named<String>, Persistable, Documented {
                 .map(s -> PlayersAmmunition.fromCsv(s.split(separator), dao)).collect(Collectors.toSet());
     }
 
-    private static String[] extend(String[] array) {
-        String[] out = new String[23];
-        for (int x=0; x<out.length; x++) {
-            out[x] = array.length <= x ? array[x] : null;
-        }
-        Arrays.copyOfRange(array, 0, 24);
-        return out;
-    }
-
     @Override
     public String toCsv() {
         return new CsvBuilder(new ArrayList<>())
@@ -152,6 +125,7 @@ public class Player implements Named<String>, Persistable, Documented {
                 .build();
     }
 
+    @JsonIgnore
     public Collection<HandWeapon> getHandWeapons() {
         return commodities.stream()
                 .filter(e -> e instanceof HandWeapon)
@@ -159,6 +133,7 @@ public class Player implements Named<String>, Persistable, Documented {
                 .collect(Collectors.toList());
     }
 
+    @JsonIgnore
     public Collection<RangedWeapon> getRangedWeapons() {
         return commodities.stream()
                 .filter(e -> e instanceof RangedWeapon)
@@ -166,6 +141,7 @@ public class Player implements Named<String>, Persistable, Documented {
                 .collect(Collectors.toList());
     }
 
+    @JsonIgnore
     public Collection<ProtectiveWearings> getArmors() {
         return commodities.stream()
                 .filter(e -> e instanceof ProtectiveWearings)

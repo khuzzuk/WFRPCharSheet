@@ -1,5 +1,8 @@
 package pl.khuzzuk.wfrpchar.entities.competency;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,31 +13,30 @@ import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.SkillContainer;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
+import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @ToString(of = "name")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        resolver = TypeIdResolver.class,
+        scope = ProfessionClass.class)
+@Getter
+@Setter
 public class ProfessionClass implements Named<String>, Persistable, Documented, SkillContainer {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue
     private long id;
-    @Getter
-    @Setter
     @NaturalId
     private String name;
-    @Getter
-    @Setter
     private String specialFeatures;
-    @Getter
-    @Setter
     private DeterminantsType primaryDeterminant;
-    @Getter
-    @Setter
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<Skill> skills;
 
     @Override

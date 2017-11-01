@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.characters;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,7 @@ public class PlayersAmmunition implements Ammo, Documented, Named<String> {
     @GeneratedValue
     private long id;
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private Ammunition ammunition;
     private int count;
 

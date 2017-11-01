@@ -1,5 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.competency;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
@@ -8,6 +10,7 @@ import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
+import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -16,6 +19,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        resolver = TypeIdResolver.class,
+        scope = Skill.class)
 public class Skill implements Named<String>, Persistable, Documented {
     @Getter
     @Setter

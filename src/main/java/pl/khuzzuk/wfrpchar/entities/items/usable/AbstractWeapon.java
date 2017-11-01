@@ -1,9 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +12,6 @@ import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.Weapon;
-import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 
 import javax.persistence.*;
 import java.util.List;
@@ -38,7 +35,6 @@ public abstract class AbstractWeapon<T extends BattleEquipment>
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
     private Set<Determinant> determinants;
 
-    @JsonIdentityInfo(property = "id", generator = ObjectIdGenerators.PropertyGenerator.class, scope = Item.class)
     @JsonIdentityReference(alwaysAsId = true)
     public abstract T getBaseType();
 

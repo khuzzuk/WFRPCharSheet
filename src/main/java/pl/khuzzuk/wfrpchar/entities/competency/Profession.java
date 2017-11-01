@@ -1,9 +1,9 @@
 package pl.khuzzuk.wfrpchar.entities.competency;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.entities.Documented;
@@ -37,10 +37,12 @@ public class Profession implements Named<String>, Persistable, Documented {
     @Getter
     @Setter
     @OneToMany(fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<Skill> skills;
     @Getter
     @Setter
     @OneToMany(fetch = FetchType.EAGER)
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<Profession> nextProfessions;
     @Getter
     @Setter
@@ -52,6 +54,7 @@ public class Profession implements Named<String>, Persistable, Documented {
     @Setter
     @Getter
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private ProfessionClass professionClass;
 
     @Override

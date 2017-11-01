@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.competency;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
@@ -31,6 +32,7 @@ public class Spell implements Named<String>, Persistable, Documented {
     @Getter
     @Setter
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private MagicSchool school;
     @Getter
     @Setter
@@ -38,6 +40,7 @@ public class Spell implements Named<String>, Persistable, Documented {
     @Getter
     @Setter
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<MiscItem> ingredients;
     @Getter
     @Setter

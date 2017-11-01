@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.determinants;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 
@@ -14,6 +15,7 @@ public abstract class Extension {
     @GeneratedValue
     @Getter
     @Setter
+    @JsonIgnore
     private long id;
     @Getter
     @Setter

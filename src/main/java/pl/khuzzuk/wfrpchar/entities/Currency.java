@@ -1,8 +1,11 @@
 package pl.khuzzuk.wfrpchar.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.NaturalId;
+import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,31 +16,26 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Immutable
+@Getter
+@Setter
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        resolver = TypeIdResolver.class,
+        scope = Currency.class)
 public class Currency implements Named<String>, Persistable, Documented {
     @Id
     @GeneratedValue
-    @Getter
-    @Setter
     private long id;
-    @Getter
-    @Setter
     @NonNull
     @NaturalId
     private String name;
-    @Getter
-    @Setter
     @NonNull
     private String gold;
-    @Getter
-    @Setter
     @NonNull
     private String silver;
-    @Getter
-    @Setter
     @NonNull
     private String lesser;
-    @Getter
-    @Setter
     @NonNull
     private float value;
 
