@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.wfrpchar.db.DAOConfig;
 import pl.khuzzuk.wfrpchar.gui.ScreensConfig;
-import pl.khuzzuk.wfrpchar.repo.Repo;
+import pl.khuzzuk.wfrpchar.repo.Repository;
 
 import javax.inject.Named;
 import java.io.BufferedReader;
@@ -29,6 +29,7 @@ public class ConfigManager {
     SessionFactory sessionFactory() {
         return new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
     }
+
     @Bean
     @Named("messages")
     Properties properties() {
@@ -57,7 +58,7 @@ public class ConfigManager {
 
     @Bean
     @Autowired
-    Repo getRepo(Bus bus, ObjectMapper objectMapper) throws IOException {
-        return objectMapper.readValue(new File("repo.json"), Repo.class);
+    Repository getRepo(ObjectMapper objectMapper) throws IOException {
+        return objectMapper.readValue(new File("repository.json"), Repository.class);
     }
 }

@@ -1,32 +1,26 @@
 package pl.khuzzuk.wfrpchar.repo;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.wfrpchar.db.DAO;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
+import java.util.Collection;
 import java.util.Properties;
 
 @Component
-public class RepoDumper {
+public class RepoBusController {
     @Autowired
-    private ObjectMapper mapper;
+    private RepoQueryResolver repoQueryResolver;
     @Autowired
     private Bus bus;
     @Autowired
     @Named("messages")
     private Properties messages;
-    @Autowired
-    private DAO dao;
 
     @PostConstruct
     private void init() {
-        bus.setReaction(messages.getProperty("database.save"), this::save);
-    }
-
-    private void save() {
+        bus.<Class<?>, Collection<?>>setResponse(messages.getProperty("database.getAll"), repoQueryResolver::get);
     }
 }

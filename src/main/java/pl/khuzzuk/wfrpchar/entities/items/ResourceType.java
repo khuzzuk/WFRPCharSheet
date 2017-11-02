@@ -1,6 +1,8 @@
 package pl.khuzzuk.wfrpchar.entities.items;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +12,7 @@ import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Price;
+import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,30 +21,23 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor
 @ToString(exclude = "id")
+@Getter
+@Setter
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        resolver = TypeIdResolver.class,
+        scope = ResourceType.class)
 public class ResourceType implements Named<String>, Commodity, Persistable, Documented {
     @Id
     @GeneratedValue
-    @Getter
-    @Setter
     private long id;
-    @Getter
-    @Setter
     @NaturalId
     private String name;
-    @Getter
-    @Setter
     private int strengthMod;
-    @Getter
-    @Setter
     private int priceMod;
-    @Getter
-    @Setter
     private SubstanceType substanceType;
-    @Getter
-    @Setter
     private Accessibility accessibility;
-    @Getter
-    @Setter
     private String specialFeatures;
 
     public static ResourceType getFromCsv(String[] fields) {

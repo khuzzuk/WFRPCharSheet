@@ -26,8 +26,10 @@ public abstract class AbstractWeapon<T extends BattleEquipment>
         extends AbstractCommodity
         implements Weapon {
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private ResourceType primaryResource;
     @ManyToOne
+    @JsonIdentityReference(alwaysAsId = true)
     private ResourceType secondaryResource;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "DET_REQ_MAP",
