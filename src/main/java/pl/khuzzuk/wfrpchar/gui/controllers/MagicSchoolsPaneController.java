@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 
 //TODO extend something else since it has too much fields from ItemsListedController
 @Component
-public class MagicSchoolsPaneController extends EntitiesListedController {
+public class MagicSchoolsPaneController extends EntitiesListedController<MagicSchool> {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
@@ -31,7 +31,8 @@ public class MagicSchoolsPaneController extends EntitiesListedController {
                 .build());
     }
 
-    public void loadToEditor(MagicSchool school) {
+    @Override
+    public void loadItem(MagicSchool school) {
         name.setText(school.getName());
         specialFeatures.setText(school.getDescription());
     }

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 //TODO extend something else since it has too much fields from ItemsListedController
 @Component
-public class SpellsPaneController extends EntitiesListedController {
+public class SpellsPaneController extends EntitiesListedController<Spell> {
     @FXML
     private ListView<String> ingredients;
     @FXML
@@ -60,7 +60,8 @@ public class SpellsPaneController extends EntitiesListedController {
         specialFeatures.clear();
     }
 
-    public void loadSpell(Spell spell) {
+    @Override
+    public void loadItem(Spell spell) {
         clear();
         name.setText(spell.getName());
         ComboBoxHandler.selectOrEmpty(loadingTimes, spell.getCastTime());

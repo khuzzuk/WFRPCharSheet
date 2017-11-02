@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.collections4.set.CompositeSet;
+import org.apache.commons.collections4.collection.CompositeCollection;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
@@ -14,6 +14,8 @@ import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.Weapon;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +37,7 @@ public abstract class AbstractWeapon<T extends BattleEquipment>
     @JoinTable(name = "DET_REQ_MAP",
             joinColumns = {@JoinColumn(name = "EQ_ID")},
             inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
-    private Set<Determinant> determinants;
+    private Set<Determinant> determinants = new HashSet<>();
 
     @JsonIdentityReference(alwaysAsId = true)
     public abstract T getBaseType();
@@ -84,11 +86,11 @@ public abstract class AbstractWeapon<T extends BattleEquipment>
         return determinants;
     }
 
-    @Override
     @JsonIgnore
     @SuppressWarnings("unchecked")
-    public Set<Determinant> getDeterminants() {
-        return new CompositeSet<>(getBaseDeterminants(), getBaseType().getDeterminants());
+    @Override
+    public Collection<Determinant> getAllDeterminants() {
+        return new CompositeCollection<>(getBaseDeterminants(), getBaseType().getDeterminants());
     }
 
     void fillWeaponCsvFields(List<String> fields) {

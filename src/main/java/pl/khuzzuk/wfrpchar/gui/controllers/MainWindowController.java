@@ -68,8 +68,6 @@ public class MainWindowController implements Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        bus.send(messages.getProperty("whiteWeapons.query"));
-        bus.send(messages.getProperty("rangedWeapons.query"));
     }
 
     @FXML

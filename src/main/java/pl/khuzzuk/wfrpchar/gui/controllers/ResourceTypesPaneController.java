@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class ResourceTypesPaneController extends ItemsListedController implements Controller {
+public class ResourceTypesPaneController extends ItemsListedController<ResourceType> implements Controller {
     @FXML
     @Numeric
     TextField resStrength;
@@ -51,7 +51,8 @@ public class ResourceTypesPaneController extends ItemsListedController implement
         EntitiesAdapter.sendToListView(items, resources);
     }
 
-    public void loadToEditor(ResourceType resource) {
+    @Override
+    public void loadItem(ResourceType resource) {
         name.setText(resource.getName());
         resStrength.setText(Integer.toString(resource.getStrengthMod()));
         resPrice.setText(Integer.toString(resource.getPriceMod()));

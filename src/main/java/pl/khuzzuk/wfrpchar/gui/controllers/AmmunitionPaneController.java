@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
-public class AmmunitionPaneController extends AbstractWeaponController {
+public class AmmunitionPaneController extends AbstractWeaponController<Ammunition> {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -42,7 +42,8 @@ public class AmmunitionPaneController extends AbstractWeaponController {
         saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
-    public void loadToEditor(Ammunition ammunition) {
+    @Override
+    public void loadItem(Ammunition ammunition) {
         loadToInternalEditor(ammunition);
     }
 }

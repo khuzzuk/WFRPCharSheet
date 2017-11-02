@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
-public class SkillsPaneController extends AbstractFeaturedController {
+public class SkillsPaneController extends AbstractFeaturedController<Skill> {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         entityType = Skill.class;
@@ -31,7 +31,8 @@ public class SkillsPaneController extends AbstractFeaturedController {
         bus.send(messages.getProperty("determinants.creator.show.sk"));
     }
 
-    public void loadToEditor(Skill skill) {
+    @Override
+    public void loadItem(Skill skill) {
         name.setText(skill.getName());
         specialFeatures.setText(skill.getSpecialFeatures());
         EntitiesAdapter.sendToListView(determinantsView, skill.getDeterminants());

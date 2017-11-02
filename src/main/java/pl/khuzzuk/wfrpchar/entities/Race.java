@@ -1,6 +1,7 @@
 package pl.khuzzuk.wfrpchar.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,5 +55,11 @@ public class Race implements Named<String>, Persistable, Documented, SkillContai
 
     public static Race fromCsv(String[] fields, DAO dao) {
         return SkillContainer.updateSkills(fromCsv(fields), fields, dao);
+    }
+
+    @Override
+    @JsonIgnore
+    public Collection<Determinant> getAllDeterminants() {
+        return determinants;
     }
 }

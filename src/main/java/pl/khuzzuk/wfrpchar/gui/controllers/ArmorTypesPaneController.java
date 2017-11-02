@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class ArmorTypesPaneController extends ItemsListedController {
+public class ArmorTypesPaneController extends ItemsListedController<ArmorType> {
     private static final String TYPE = "ARMOR";
     private Map<DeterminantsType, TextField> determinantsMap;
     private Map<LangElement, TextField> langElementsMap;
@@ -86,7 +86,8 @@ public class ArmorTypesPaneController extends ItemsListedController {
         langElementsMap.put(LangElement.ABLATIVE, armAbl);
     }
 
-    public void loadArmorTypeToEditor(ArmorType armor) {
+    @Override
+    public void loadItem(ArmorType armor) {
         name.setText(armor.getName());
         weight.setText(armor.getWeight() + "");
         accessibility.getSelectionModel().select(armor.getAccessibility().getName());

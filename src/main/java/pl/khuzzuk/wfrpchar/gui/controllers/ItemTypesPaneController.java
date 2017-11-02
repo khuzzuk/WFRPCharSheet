@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
-public class ItemTypesPaneController extends ItemsListedController {
+public class ItemTypesPaneController extends ItemsListedController<MiscItem> {
     @Inject
     private Bus bus;
 
@@ -34,7 +34,8 @@ public class ItemTypesPaneController extends ItemsListedController {
         initItems();
     }
 
-    public void loadMiscItemToEditor(MiscItem item) {
+    @Override
+    public void loadItem(MiscItem item) {
         name.setText(item.getName());
         weight.setText(item.getWeight() + "");
         specialFeatures.setText(item.getSpecialFeatures());

@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
-public class ProfessionClassPaneController extends SkillViewController {
+public class ProfessionClassPaneController extends SkillViewController<ProfessionClass> {
     @FXML
     private ComboBox<String> baseDeterminantType;
 
@@ -45,7 +45,8 @@ public class ProfessionClassPaneController extends SkillViewController {
         saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
-    public void loadToEditor(ProfessionClass professionClass) {
+    @Override
+    public void loadItem(ProfessionClass professionClass) {
         name.setText(professionClass.getName());
         specialFeatures.setText(professionClass.getSpecialFeatures());
         baseDeterminantType.getSelectionModel().select(professionClass.getPrimaryDeterminant().getName());

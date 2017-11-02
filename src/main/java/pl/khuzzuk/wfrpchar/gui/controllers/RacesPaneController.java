@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
-public class RacesPaneController extends SkillViewController {
+public class RacesPaneController extends SkillViewController<Race> {
     @FXML
     @Numeric
     TextField shooting;
@@ -69,7 +69,8 @@ public class RacesPaneController extends SkillViewController {
         initItems();
     }
 
-    public void loadToEditor(Race race) {
+    @Override
+    public void loadItem(Race race) {
         clear();
         name.setText(race.getName());
         specialFeatures.setText(race.getSpecialFeatures());

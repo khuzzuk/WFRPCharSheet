@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
-public class RangedWeaponTypePaneController extends ItemsListedController {
+public class RangedWeaponTypePaneController extends ItemsListedController<RangedWeaponType> {
     @FXML
     TextField rwTypeName;
     @FXML
@@ -58,7 +58,8 @@ public class RangedWeaponTypePaneController extends ItemsListedController {
         initItems();
     }
 
-    public void loadRangedWeaponToEditor(RangedWeaponType rangedWeapon) {
+    @Override
+    public void loadItem(RangedWeaponType rangedWeapon) {
         name.setText(rangedWeapon.getName());
         rwTypeName.setText(rangedWeapon.getTypeName());
         weight.setText("" + rangedWeapon.getWeight());

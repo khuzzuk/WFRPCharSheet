@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractCommodity;
 
-public abstract class ItemWithBaseTypeController extends AbstractFeaturedController {
+public abstract class ItemWithBaseTypeController<T> extends AbstractFeaturedController<T> {
     @FXML
     Label endGold;
     @FXML

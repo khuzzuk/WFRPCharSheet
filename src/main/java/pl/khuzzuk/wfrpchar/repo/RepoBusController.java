@@ -22,5 +22,6 @@ public class RepoBusController {
     @PostConstruct
     private void init() {
         bus.<Class<?>, Collection<?>>setResponse(messages.getProperty("database.getAll"), repoQueryResolver::get);
+        bus.<Criteria, pl.khuzzuk.wfrpchar.entities.Named<String>>setResponse(messages.getProperty("database.get.named"), repoQueryResolver::get);
     }
 }

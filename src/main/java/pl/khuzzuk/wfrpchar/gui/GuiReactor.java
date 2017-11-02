@@ -106,12 +106,6 @@ public class GuiReactor {
 
     @PostConstruct
     private void setConsumers() {
-        bus.setGuiReaction(namedWhiteWeaponsMsg, whiteWeaponTypePaneController::loadWhiteWeaponToEditor);
-        bus.setGuiReaction(namedRangedWeaponMsg, rangedWeaponTypePaneController::loadRangedWeaponToEditor);
-        bus.setGuiReaction(namedArmorTypeMsg, armorTypesPaneController::loadArmorTypeToEditor);
-        bus.setGuiReaction(messages.getProperty("ammo.type.result.specific"), ammunitionTypesPaneController::loadToEditor);
-        bus.setGuiReaction(resourceTypeResultSpecific, resourceTypesPaneController::loadToEditor);
-
         //DeterminantsCreator start action
         bus.setReaction(messages.getProperty("determinants.creator.show.hw"), hwDeterminantCreatorController::show);
         bus.setReaction(messages.getProperty("determinants.creator.show.rw"), rwDeterminantCreatorController::show);
@@ -146,18 +140,5 @@ public class GuiReactor {
         bus.setGuiReaction(messages.getProperty("player.equipment.choice"), playerPaneController::loadEquipment);
         bus.setGuiReaction(messages.getProperty("player.skills.choice"), playerPaneController::loadSkill);
         bus.setGuiReaction(messages.getProperty("player.spells.choice"), playerPaneController::loadSpell);
-
-        //regular queries
-        bus.setGuiReaction(messages.getProperty("weapons.hand.result.specific"), handWeaponsPaneController::loadToEditor);
-        bus.setGuiReaction(messages.getProperty("weapons.ranged.result.specific"), rangeWeaponsPaneController::loadToEditor);
-        bus.setGuiReaction(messages.getProperty("armor.result.specific"), armorPaneController::loadToEditor);
-        bus.setGuiReaction(messages.getProperty("ammunition.result.specific"), ammunitionPaneController::loadToEditor);
-        bus.setGuiReaction(messages.getProperty("skills.result.specific"), skillsPaneController::loadToEditor);
-        bus.setGuiReaction(messages.getProperty("professions.class.result.specific"), professionClassPaneController::loadToEditor);
-        bus.setGuiReaction(messages.getProperty("professions.result.specific"), professionPaneController::loadToEditor);
-        bus.setGuiReaction(messages.getProperty("race.result.specific"), racesPaneController::loadToEditor);
-        bus.setGuiReaction(messages.getProperty("magic.schools.result.specific"), magicSchoolsPaneController::loadToEditor);
-        bus.setGuiReaction(messages.getProperty("magic.spells.result.specific"), spellsPaneController::loadSpell);
-        bus.setGuiReaction(messages.getProperty("player.result.specific"), playerPaneController::loadPlayer);
     }
 }

@@ -59,6 +59,12 @@ public class PlayersAmmunition implements Ammo, Documented, Named<String> {
 
     @Override
     @JsonIgnore
+    public Collection<Determinant> getAllDeterminants() {
+        return ammunition.getAllDeterminants();
+    }
+
+    @Override
+    @JsonIgnore
     public Set<Determinant> getDeterminants() {
         return ammunition.getDeterminants();
     }

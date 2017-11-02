@@ -20,7 +20,6 @@ import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
 import java.util.Properties;
 
 import static pl.khuzzuk.wfrpchar.db.LineParser.getFrom;
@@ -472,27 +471,6 @@ public class DAOReactor {
     private void setReactors() {
         bus.setReaction(messages.getProperty("database.reset"), this::resetDB);
         bus.setReaction(messages.getProperty("database.save"), dbDumper::saveToFiles);
-
-        //get all queries
-        bus.<Class, Collection>setResponse(messages.getProperty("database.getAll"), dao::getAllEntities);
-        bus.setReaction(messages.getProperty("miscItemTypes.query"), this::getAllMiscItemsTypes);
-        bus.setReaction(messages.getProperty("whiteWeapons.query"), this::getAllWhiteWeaponsTypes);
-        bus.setReaction(messages.getProperty("rangedWeapons.query"), this::getAllRangedWeaponTypes);
-        bus.setReaction(messages.getProperty("armorTypes.query"), this::getAllArmorTypes);
-        bus.setReaction(messages.getProperty("ammo.type.query"), this::getAllAmmunitionTypes);
-        bus.setReaction(messages.getProperty("resource.type.query"), this::getAllResourceTypes);
-        bus.setReaction(messages.getProperty("weapons.hand.query"), this::getAllHandWeapons);
-        bus.setReaction(messages.getProperty("weapons.ranged.query"), this::getAllRangedWeapons);
-        bus.setReaction(messages.getProperty("armor.query"), this::getAllArmors);
-        bus.setReaction(messages.getProperty("ammunition.query"), this::getAllAmmunitions);
-        bus.setReaction(messages.getProperty("character.query"), this::getAllCharacters);
-        bus.setReaction(messages.getProperty("skills.query"), this::getAllSkills);
-        bus.setReaction(messages.getProperty("professions.class.query"), this::getAllProfessionClasses);
-        bus.setReaction(messages.getProperty("professions.query"), this::getAllProfessions);
-        bus.setReaction(messages.getProperty("race.query"), this::getAllRaces);
-        bus.setReaction(messages.getProperty("magic.schools.query"), this::getAllMagicSchools);
-        bus.setReaction(messages.getProperty("magic.spells.query"), this::getAllSpells);
-        bus.setReaction(messages.getProperty("player.query"), this::getAllPlayers);
 
         //get all linked entities queries
         bus.setReaction(messages.getProperty("weapons.hand.baseType.getAllTypes"), this::getAllWWBaseType);

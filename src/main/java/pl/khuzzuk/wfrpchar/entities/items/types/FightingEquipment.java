@@ -63,6 +63,7 @@ public abstract class FightingEquipment extends Item implements Wearable, Battle
     }
 
     @JsonIgnore
+    @Override
     public Collection<Determinant> getAllDeterminants() {
         return determinants != null ? determinants : Collections.emptyList();
     }

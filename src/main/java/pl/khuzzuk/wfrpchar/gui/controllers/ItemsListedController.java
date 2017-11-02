@@ -12,7 +12,7 @@ import pl.khuzzuk.wfrpchar.gui.Numeric;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public abstract class ItemsListedController extends EntitiesListedController {
+public abstract class ItemsListedController<T> extends EntitiesListedController<T> {
     @FXML
     ComboBox<String> accessibility;
     @FXML

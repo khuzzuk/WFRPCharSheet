@@ -8,12 +8,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public interface DeterminantContainer {
-    Set<Determinant> getDeterminants();
+    Collection<Determinant> getAllDeterminants();
+    Collection<Determinant> getDeterminants();
 
     void setDeterminants(Set<Determinant> determinants);
 
     default Collection<Determinant> getDeterminantForType(DeterminantsType type) {
-        return getDeterminants().stream().filter(d -> d.getLabel() == type)
+        return getAllDeterminants().stream().filter(d -> d.getLabel() == type)
                 .collect(Collectors.toList());
     }
 

@@ -7,7 +7,7 @@ import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public abstract class AbstractFeaturedController extends ItemsListedController {
+public abstract class AbstractFeaturedController<T> extends ItemsListedController<T> {
     @FXML
     ListView<String> determinantsView;
     String showDeterminantCreatorMsg;

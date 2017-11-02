@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class ProfessionPaneController extends SkillViewController {
+public class ProfessionPaneController extends SkillViewController<Profession> {
     @FXML
     private ComboBox<String> professionClass;
     @FXML
@@ -41,7 +41,8 @@ public class ProfessionPaneController extends SkillViewController {
         ComboBoxHandler.fill(new HashSet<>(professionClasses), professionClass);
     }
 
-    public void loadToEditor(Profession profession) {
+    @Override
+    public void loadItem(Profession profession) {
         name.setText(profession.getName());
         specialFeatures.setText(profession.getSpecialFeatures());
         EntitiesAdapter.sendToListView(determinantsView, profession.getDeterminants());

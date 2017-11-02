@@ -29,7 +29,7 @@ import static pl.khuzzuk.wfrpchar.gui.ComboBoxHandler.selectOrEmpty;
 import static pl.khuzzuk.wfrpchar.gui.ListViewHandler.shouldAddToList;
 
 @Component
-public class PlayerPaneController extends ItemsListedController {
+public class PlayerPaneController extends ItemsListedController<Player> {
     @FXML
     private TableView<Spell> spells;
     @FXML
@@ -282,7 +282,8 @@ public class PlayerPaneController extends ItemsListedController {
                         param.getValue().getDescription()));
     }
 
-    public void loadPlayer(Player player) {
+    @Override
+    public void loadItem(Player player) {
         clear();
         name.setText(player.getName());
         selectOrEmpty(race, player.getRace());

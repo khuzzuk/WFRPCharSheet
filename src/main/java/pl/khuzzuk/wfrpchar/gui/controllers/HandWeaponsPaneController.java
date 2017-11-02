@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 @Component
 @PropertySource("classpath:messages.properties")
-public class HandWeaponsPaneController extends AbstractWeaponController {
+public class HandWeaponsPaneController extends AbstractWeaponController<AbstractHandWeapon<? extends WhiteWeaponType>> {
     @Numeric
     @FXML
     TextField rolls;
@@ -61,7 +61,8 @@ public class HandWeaponsPaneController extends AbstractWeaponController {
                 .add("").build());
     }
 
-    public void loadToEditor(AbstractHandWeapon<? extends WhiteWeaponType> weapon) {
+    @Override
+    public void loadItem(AbstractHandWeapon<? extends WhiteWeaponType> weapon) {
         ComboBoxHandler.selectOrEmpty(dices, weapon.getDices());
         loadToInternalEditor(weapon);
     }

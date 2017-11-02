@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
-public abstract class SkillViewController extends AbstractFeaturedController {
+public abstract class SkillViewController<T> extends AbstractFeaturedController<T> {
     @FXML
     ListView<String> skillsView;
     String skillChooserMsg;

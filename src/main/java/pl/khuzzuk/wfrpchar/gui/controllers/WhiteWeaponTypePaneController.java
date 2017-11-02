@@ -23,7 +23,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class WhiteWeaponTypePaneController extends ItemsListedController {
+public class WhiteWeaponTypePaneController extends ItemsListedController<WhiteWeaponType> {
     private Map<DeterminantsType, TextField> whiteWeaponModifiers;
     private Map<DeterminantsType, TextField> bastWhiteWeaponMods;
     private Map<LangElement, TextField> whiteWeaponLangFields;
@@ -128,7 +128,8 @@ public class WhiteWeaponTypePaneController extends ItemsListedController {
         whiteWeaponLangFields.put(LangElement.ABLATIVE, langAblativeWW);
     }
 
-    public void loadWhiteWeaponToEditor(WhiteWeaponType weaponType) {
+    @Override
+    public void loadItem(WhiteWeaponType weaponType) {
         clear();
         name.setText(weaponType.getName());
         typeNameWW.setText(weaponType.getTypeName());

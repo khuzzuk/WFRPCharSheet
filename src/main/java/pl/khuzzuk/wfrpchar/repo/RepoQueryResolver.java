@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.Currency;
+import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.characters.Player;
 import pl.khuzzuk.wfrpchar.entities.competency.*;
@@ -18,12 +19,13 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Component
 public class RepoQueryResolver {
     @Autowired
     private Repository repository;
-    private Map<Class<?>, List<?>> groups;
+    private Map<Class<?>, List<? extends Named<String>>> groups;
 
     @PostConstruct
     private void init() {
@@ -51,5 +53,9 @@ public class RepoQueryResolver {
 
     <T> List<T> get(Class<T> by) {
         return (List<T>) groups.get(by);
+    }
+
+    Named<String> get(Criteria criteria) {
+        return groups.get(criteria.getType()).stream().filter(named -> named.getName().equals(criteria.getName())).findAny().orElseThrow(NoSuchElementException::new);
     }
 }

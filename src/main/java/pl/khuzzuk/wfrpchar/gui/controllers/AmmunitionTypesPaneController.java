@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
-public class AmmunitionTypesPaneController extends ItemsListedController {
+public class AmmunitionTypesPaneController extends ItemsListedController<AmmunitionType> {
     @Numeric
     @FXML
     TextField strength;
@@ -32,7 +32,8 @@ public class AmmunitionTypesPaneController extends ItemsListedController {
         initItems();
     }
 
-    public void loadToEditor(AmmunitionType ammunitionType) {
+    @Override
+    public void loadItem(AmmunitionType ammunitionType) {
         loadToInternalEditor(ammunitionType);
         strength.setText(ammunitionType.getStrength() + "");
     }
