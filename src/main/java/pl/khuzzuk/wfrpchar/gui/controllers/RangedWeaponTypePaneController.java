@@ -49,7 +49,6 @@ public class RangedWeaponTypePaneController extends ItemsListedController<Ranged
         super.initialize(location, resources);
         entityType = RangedWeaponType.class;
         getAllResponse = messages.getProperty("rangedWeapons.result");
-        getEntityTopic = messages.getProperty("rangedWeapons.query.specific");
         removeEntityTopic = messages.getProperty("rangedWeapons.remove");
         saveTopic = messages.getProperty("database.saveEquipment");
         saveAction = this::saveRangedWeaponType;

@@ -58,7 +58,6 @@ public class ArmorTypesPaneController extends ItemsListedController<ArmorType> {
         initializeValidation();
         entityType = ArmorType.class;
         removeEntityTopic = messages.getProperty("armorTypes.remove");
-        getEntityTopic = messages.getProperty("armorTypes.query.specific");
         getAllResponse = messages.getProperty("armorTypes.result");
         saveTopic = messages.getProperty("database.saveEquipment");
         saveAction = this::saveArmorType;

@@ -62,7 +62,6 @@ public class RacesPaneController extends SkillViewController<Race> {
         entityType = Race.class;
         skillChooserMsg = messages.getProperty("race.skills.getAllTypes");
         getAllResponse = messages.getProperty("race.result");
-        getEntityTopic = messages.getProperty("race.query.specific");
         removeEntityTopic = messages.getProperty("race.remove");
         saveTopic = messages.getProperty("race.save");
         clearAction = this::clear;

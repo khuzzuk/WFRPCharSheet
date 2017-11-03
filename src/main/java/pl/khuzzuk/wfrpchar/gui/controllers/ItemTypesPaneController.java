@@ -25,7 +25,6 @@ public class ItemTypesPaneController extends ItemsListedController<MiscItem> {
         initializeValidation();
         entityType = MiscItem.class;
         saveAction = this::saveItem;
-        getEntityTopic = messages.getProperty("miscItemTypes.query.specific");
         removeEntityTopic = messages.getProperty("miscItemTypes.remove");
         getAllResponse = messages.getProperty("miscItemTypes.result");
         saveTopic = messages.getProperty("database.saveEquipment");

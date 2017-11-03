@@ -24,7 +24,6 @@ public class AmmunitionTypesPaneController extends ItemsListedController<Ammunit
         super.initialize(location, resources);
         entityType = AmmunitionType.class;
         getAllResponse = messages.getProperty("ammo.type.result");
-        getEntityTopic = messages.getProperty("ammo.type.query.specific");
         removeEntityTopic = messages.getProperty("ammo.type.remove");
         saveTopic = messages.getProperty("database.saveEquipment");
         saveAction = this::save;

@@ -18,7 +18,6 @@ public class ArmorPaneController extends AbstractWeaponController<Armor> {
         super.initialize(location, resources);
         entityType = Armor.class;
         getAllResponse = messages.getProperty("armor.result");
-        getEntityTopic = messages.getProperty("armor.query.specific");
         removeEntityTopic = messages.getProperty("armor.remove");
         saveTopic = messages.getProperty("armor.save");
         clearAction = this::clear;

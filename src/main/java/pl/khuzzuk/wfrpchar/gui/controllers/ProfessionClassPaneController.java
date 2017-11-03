@@ -26,7 +26,6 @@ public class ProfessionClassPaneController extends SkillViewController<Professio
         entityType = ProfessionClass.class;
         skillChooserMsg = messages.getProperty("professions.class.skills.getAllTypes");
         getAllResponse = messages.getProperty("professions.class.result");
-        getEntityTopic = messages.getProperty("professions.class.query.specific");
         removeEntityTopic = messages.getProperty("professions.class.remove");
         saveTopic = messages.getProperty("professions.class.save");
         saveAction = this::saveClass;

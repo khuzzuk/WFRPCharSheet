@@ -18,7 +18,6 @@ public class SkillsPaneController extends AbstractFeaturedController<Skill> {
     public void initialize(URL location, ResourceBundle resources) {
         entityType = Skill.class;
         getAllResponse = messages.getProperty("skills.result");
-        getEntityTopic = messages.getProperty("skills.query.specific");
         removeEntityTopic = messages.getProperty("skills.remove");
         saveTopic = messages.getProperty("skills.save");
         saveAction = this::saveSkill;

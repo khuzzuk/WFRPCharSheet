@@ -17,7 +17,6 @@ public class AmmunitionPaneController extends AbstractWeaponController<Ammunitio
         super.initialize(location, resources);
         entityType = Ammunition.class;
         getAllResponse = messages.getProperty("ammunition.result");
-        getEntityTopic = messages.getProperty("ammunition.query.specific");
         removeEntityTopic = messages.getProperty("ammunition.remove");
         saveTopic = messages.getProperty("ammunition.save");
         saveAction = this::saveAmmunition;

@@ -42,7 +42,6 @@ public class SpellsPaneController extends EntitiesListedController<Spell> {
         ComboBoxHandler.fill(LoadingTimes.SET, loadingTimes);
         entityType = Spell.class;
         getAllResponse = messages.getProperty("magic.spells.result");
-        getEntityTopic = messages.getProperty("magic.spells.query.specific");
         removeEntityTopic = messages.getProperty("magic.spells.remove");
         saveTopic = messages.getProperty("magic.spells.save");
         saveAction = this::saveSpell;

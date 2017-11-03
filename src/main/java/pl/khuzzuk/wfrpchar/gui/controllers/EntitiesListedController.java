@@ -26,8 +26,8 @@ public abstract class EntitiesListedController<T> implements Controller {
     Properties messages;
     Runnable saveAction;
     String removeEntityTopic;
-    String getEntityTopic;
     private String getNamedEntityTopic;
+    private String removeTopic;
     String getAllResponse;
     String saveTopic;
     Class<?> entityType;
@@ -37,7 +37,8 @@ public abstract class EntitiesListedController<T> implements Controller {
     ListView<String> items;
 
     void initItems() {
-        getNamedEntityTopic = entityType.getName() + ".getNamed";
+        getNamedEntityTopic = entityType.getName() + ".get.named";
+        getAllResponse = entityType.getName() + ".get.all";
         bus.setGuiReaction(getAllResponse, this::loadAll);
         bus.setGuiReaction(getNamedEntityTopic, this::loadItem);
         bus.send(messages.getProperty("database.getAll"), getAllResponse, entityType);
@@ -53,7 +54,8 @@ public abstract class EntitiesListedController<T> implements Controller {
     @FXML
     private void remove() {
         if (name.getText().length() >= 3) {
-            bus.send(removeEntityTopic, name.getText());
+            bus.send(messages.getProperty("database.remove"), getAllResponse,
+                    Criteria.builder().type(entityType).name(name.getText()).build());
             clearAction.run();
         }
     }

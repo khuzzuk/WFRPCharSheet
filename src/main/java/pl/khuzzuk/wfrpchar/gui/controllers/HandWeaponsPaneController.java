@@ -32,7 +32,6 @@ public class HandWeaponsPaneController extends AbstractWeaponController<Abstract
         super.initialize(location, resources);
         entityType = AbstractHandWeapon.class;
         getAllResponse = messages.getProperty("weapons.hand.result");
-        getEntityTopic = messages.getProperty("weapons.hand.query.specific");
         removeEntityTopic = messages.getProperty("weapons.hand.remove");
         saveTopic = messages.getProperty("weapons.hand.save");
         clearAction = this::clear;

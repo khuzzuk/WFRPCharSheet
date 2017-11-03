@@ -58,4 +58,8 @@ public class RepoQueryResolver {
     Named<String> get(Criteria criteria) {
         return groups.get(criteria.getType()).stream().filter(named -> named.getName().equals(criteria.getName())).findAny().orElseThrow(NoSuchElementException::new);
     }
+
+    void remove(Criteria criteria) {
+        groups.get(criteria.getType()).removeIf(named -> named.getName().equals(criteria.getName()));
+    }
 }

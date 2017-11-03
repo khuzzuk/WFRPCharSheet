@@ -16,7 +16,6 @@ public class MagicSchoolsPaneController extends EntitiesListedController<MagicSc
         initializeValidation();
         entityType = MagicSchool.class;
         getAllResponse = messages.getProperty("magic.schools.result");
-        getEntityTopic = messages.getProperty("magic.schools.query.specific");
         removeEntityTopic = messages.getProperty("magic.schools.remove");
         saveTopic = messages.getProperty("magic.schools.save");
         saveAction = this::saveSchool;

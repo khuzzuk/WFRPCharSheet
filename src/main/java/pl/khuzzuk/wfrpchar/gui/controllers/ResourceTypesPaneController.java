@@ -40,7 +40,6 @@ public class ResourceTypesPaneController extends ItemsListedController<ResourceT
             saveItem(fields.stream().collect(Collectors.joining(";")));
         };
         removeEntityTopic = messages.getProperty("resource.type.remove");
-        getEntityTopic = messages.getProperty("resource.type.query.specific");
         getAllResponse = messages.getProperty("resource.type.result");
         clearAction = this::clear;
         ComboBoxHandler.fill(EnumSet.allOf(SubstanceType.class), resType);

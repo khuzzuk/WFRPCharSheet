@@ -84,7 +84,6 @@ public class WhiteWeaponTypePaneController extends ItemsListedController<WhiteWe
         initializeValidation();
         entityType = WhiteWeaponType.class;
         getAllResponse = messages.getProperty("whiteWeapons.result");
-        getEntityTopic = messages.getProperty("whiteWeapons.query.specific");
         removeEntityTopic = messages.getProperty("whiteWeapons.remove");
         saveTopic = messages.getProperty("database.saveEquipment");
         saveAction = this::saveWhiteWeaponType;

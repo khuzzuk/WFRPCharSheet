@@ -157,7 +157,6 @@ public class PlayerPaneController extends ItemsListedController<Player> {
         ComboBoxHandler.fill(HairColor.SET, hair);
         entityType = Player.class;
         getAllResponse = messages.getProperty("player.result");
-        getEntityTopic = messages.getProperty("player.query.specific");
         removeEntityTopic = messages.getProperty("player.remove");
         saveTopic = messages.getProperty("player.save");
         saveAction = this::savePlayer;

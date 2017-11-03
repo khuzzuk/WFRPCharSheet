@@ -17,7 +17,6 @@ public class RangeWeaponsPaneController extends AbstractWeaponController<Gun> {
         super.initialize(location, resources);
         entityType = Gun.class;
         getAllResponse = messages.getProperty("weapons.ranged.result");
-        getEntityTopic = messages.getProperty("weapons.ranged.query.specific");
         removeEntityTopic = messages.getProperty("weapons.ranged.remove");
         saveTopic = messages.getProperty("weapons.ranged.save");
         saveAction = this::saveWeapon;
