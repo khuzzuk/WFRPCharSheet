@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
-import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.entities.Character;
 import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 @ToString(exclude = "id")
 @Getter
 @Setter
-public class Player implements Named<String>, Persistable, Documented {
+public class Player implements Featured, Persistable, Documented {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -73,35 +72,21 @@ public class Player implements Named<String>, Persistable, Documented {
     private Price money;
     private PersonalHistory personalHistory;
 
-    public static Player fromCsv(String[] fields, DAO dao) {
+    public static Player fromCsv(String[] fields) {
         if (fields.length < 23) {
             throw new IllegalArgumentException("player lines have not enough fields, required 23, had " + fields.length);
         }
         Player player = new Player();
         player.setName(fields[0]);
-        player.setRace(dao.getEntity(Race.class, fields[1]));
-        player.setProfessionClass(dao.getEntity(ProfessionClass.class, fields[2]));
-        player.setCurrentProfession(dao.getEntity(Profession.class, fields[3]));
-        player.setCareer(dao.getEntities(Profession.class, fields[4].split("\\|")));
-        player.setCharacter(dao.getEntity(Character.class, fields[5]));
         player.setAppearance(Appearance.getFromCsv(Arrays.copyOfRange(fields, 6, 13)));
         player.setDeterminants(DeterminantFactory.createDeterminants(fields[13]));
-        player.setEquipment(dao.getEntitiesAsList(Item.class, fields[14].split("\\|")));
-        player.setCommodities(Documented.toList(fields[15], "|", AbstractCommodity.class, dao));
-        player.setAmmunition(convertAmmunition(fields[16].split("\\|"), ":", dao));
-        player.setSkills(dao.getEntities(Skill.class, fields[17].split("\\|")));
         player.setMoney(Price.parsePrice(fields[18]));
-        player.setSpells(Documented.toSet(fields[19], "|", Spell.class, dao));
         player.setPersonalHistory(PersonalHistory.fromCsv(Arrays.copyOfRange(fields, 20, 25)));
         return player;
     }
 
-    private static Set<PlayersAmmunition> convertAmmunition(String field[], String separator, DAO dao) {
-        if (field == null || field.length == 0 || field[0].length() == 0) {
-            return new HashSet<>();
-        }
-        return Arrays.stream(field)
-                .map(s -> PlayersAmmunition.fromCsv(s.split(separator), dao)).collect(Collectors.toSet());
+    private static Set<PlayersAmmunition> convertAmmunition(String field[], String separator) {
+        return new HashSet<>();
     }
 
     @Override
@@ -147,5 +132,16 @@ public class Player implements Named<String>, Persistable, Documented {
                 .filter(e -> e instanceof ProtectiveWearings)
                 .map(e -> (ProtectiveWearings) e)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @JsonIgnore
+    public String getSpecialFeatures() {
+        return appearance.getDescription();
+    }
+
+    @Override
+    public void setSpecialFeatures(String specialFeatures) {
+        appearance.setDescription(specialFeatures);
     }
 }

@@ -24,28 +24,29 @@ public class ItemTypesPaneController extends ItemsListedController<MiscItem> {
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
         entityType = MiscItem.class;
-        saveAction = this::saveItem;
         removeEntityTopic = messages.getProperty("miscItemTypes.remove");
         getAllResponse = messages.getProperty("miscItemTypes.result");
         saveTopic = messages.getProperty("database.saveEquipment");
         clearAction = this::clear;
-        ComboBoxHandler.fill(Accessibility.SET, accessibility);
+        ComboBoxHandler.fillWithEnums(Accessibility.SET, accessibility);
         initItems();
     }
 
     @Override
     public void loadItem(MiscItem item) {
+        super.loadItem(item);
         name.setText(item.getName());
         weight.setText(item.getWeight() + "");
         specialFeatures.setText(item.getSpecialFeatures());
         gold.setText(item.getPrice().getGold() + "");
         silver.setText(item.getPrice().getSilver() + "");
         lead.setText(item.getPrice().getLead() + "");
-        accessibility.getSelectionModel().select(item.getAccessibility().getName());
+        accessibility.getSelectionModel().select(item.getAccessibility());
     }
 
     @FXML
-    private void saveItem() {
+    @Override
+    void saveAction() {
         if (name.getText().length() < 3) {
             return;
         }
@@ -53,7 +54,7 @@ public class ItemTypesPaneController extends ItemsListedController<MiscItem> {
         line.add(name.getText());
         line.add(weight.getText());
         line.add(getPriceFromFields());
-        line.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
+        line.add(accessibility.getSelectionModel().getSelectedItem().name());
         line.add(specialFeatures.getText());
         line.add("");
         line.add(EquipmentType.MISC_ITEM.name());

@@ -24,9 +24,15 @@ public class RepoBusController {
     private void init() {
         bus.<Class<?>, Collection<?>>setResponse(messages.getProperty("database.getAll"), repoQueryResolver::get);
         bus.<Criteria, Named<String>>setResponse(messages.getProperty("database.get.named"), repoQueryResolver::get);
+
         bus.<Criteria, List<?>>setResponse(messages.getProperty("database.remove"), criteria -> {
             repoQueryResolver.remove(criteria);
             return repoQueryResolver.get(criteria.getType());
+        });
+
+        bus.<SaveItem<?>, List<?>>setResponse(messages.getProperty("database.save"), saveItem -> {
+            repoQueryResolver.add(saveItem);
+            return repoQueryResolver.get(saveItem.getType());
         });
     }
 }

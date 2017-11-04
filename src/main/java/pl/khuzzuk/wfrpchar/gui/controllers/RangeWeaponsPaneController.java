@@ -19,13 +19,13 @@ public class RangeWeaponsPaneController extends AbstractWeaponController<Gun> {
         getAllResponse = messages.getProperty("weapons.ranged.result");
         removeEntityTopic = messages.getProperty("weapons.ranged.remove");
         saveTopic = messages.getProperty("weapons.ranged.save");
-        saveAction = this::saveWeapon;
         clearAction = this::clear;
         initItems();
     }
 
     @Override
     public void loadItem(Gun gun) {
+        super.loadItem(gun);
         loadToInternalEditor(gun);
     }
 
@@ -40,7 +40,8 @@ public class RangeWeaponsPaneController extends AbstractWeaponController<Gun> {
     }
 
     @FXML
-    private void saveWeapon() {
+    @Override
+    void saveAction() {
         if (name.getText().length() < 3 || baseType.length() < 3) {
             return;
         }

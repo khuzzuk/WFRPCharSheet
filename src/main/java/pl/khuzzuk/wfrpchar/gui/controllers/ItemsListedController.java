@@ -3,6 +3,7 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import pl.khuzzuk.wfrpchar.entities.Featured;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
@@ -12,9 +13,9 @@ import pl.khuzzuk.wfrpchar.gui.Numeric;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public abstract class ItemsListedController<T> extends EntitiesListedController<T> {
+public abstract class ItemsListedController<T extends Featured> extends EntitiesListedController<T> {
     @FXML
-    ComboBox<String> accessibility;
+    ComboBox<Accessibility> accessibility;
     @FXML
     @Numeric
     TextField gold;
@@ -41,7 +42,7 @@ public abstract class ItemsListedController<T> extends EntitiesListedController<
 
     void loadToInternalEditor(Commodity commodity) {
         super.loadToInternalEditor(commodity);
-        accessibility.getSelectionModel().select(commodity.getAccessibility().getName());
+        accessibility.getSelectionModel().select(commodity.getAccessibility());
         //TODO remove this if and solve it differently. usable controllers extends this class but don't need weight field.
         if (weight != null)
             weight.setText(commodity.getWeight() + "");
@@ -54,7 +55,7 @@ public abstract class ItemsListedController<T> extends EntitiesListedController<
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        ComboBoxHandler.fill(Accessibility.SET, accessibility);
+        ComboBoxHandler.fillWithEnums(Accessibility.SET, accessibility);
     }
 
     String getPriceFromFields() {

@@ -23,4 +23,9 @@ public class TwoHandedWeapon extends AbstractHandWeapon<TwoHandedWeaponType> {
     public Placement getPlacement() {
         return baseType.getPlacement();
     }
+
+    @Override
+    public void setPlacement(Placement placement) {
+        throw new UnsupportedOperationException();
+    }
 }

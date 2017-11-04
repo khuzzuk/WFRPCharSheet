@@ -3,7 +3,6 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.types.AmmunitionType;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 
@@ -26,23 +25,24 @@ public class AmmunitionTypesPaneController extends ItemsListedController<Ammunit
         getAllResponse = messages.getProperty("ammo.type.result");
         removeEntityTopic = messages.getProperty("ammo.type.remove");
         saveTopic = messages.getProperty("database.saveEquipment");
-        saveAction = this::save;
         clearAction = this::clear;
         initItems();
     }
 
     @Override
     public void loadItem(AmmunitionType ammunitionType) {
+        super.loadItem(ammunitionType);
         loadToInternalEditor(ammunitionType);
         strength.setText(ammunitionType.getStrength() + "");
     }
 
-    private void save() {
+    @Override
+    void saveAction() {
         List<String> fields = new ArrayList<>();
         fields.add(name.getText());
         fields.add(weight.getText());
         fields.add(getPriceFromFields());
-        fields.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
+        fields.add(accessibility.getSelectionModel().getSelectedItem().name());
         fields.add(specialFeatures.getText());
         fields.add(strength.getText());
         fields.add("AMMO");

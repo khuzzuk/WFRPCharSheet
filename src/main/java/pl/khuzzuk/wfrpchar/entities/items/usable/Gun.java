@@ -62,4 +62,9 @@ public class Gun extends AbstractWeapon<RangedWeaponType> implements RangedWeapo
     public Placement getPlacement() {
         return baseType.getPlacement();
     }
+
+    @Override
+    public void setPlacement(Placement placement) {
+        throw new UnsupportedOperationException();
+    }
 }

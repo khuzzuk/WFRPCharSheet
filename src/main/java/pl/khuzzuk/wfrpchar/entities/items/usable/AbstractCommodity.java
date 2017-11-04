@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.entities.items.usable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
@@ -49,5 +50,27 @@ public abstract class AbstractCommodity implements Commodity, Named<String>, Doc
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    @JsonIgnore
+    public Price getPrice() {
+        return basePrice;
+    }
+
+    @Override
+    @JsonIgnore
+    public void setPrice(Price price) {
+        basePrice = price;
+    }
+
+    @Override
+    public float getWeight() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setWeight(float weight) {
+        throw new UnsupportedOperationException();
     }
 }

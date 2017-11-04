@@ -67,9 +67,19 @@ public class ResourceType implements Named<String>, Commodity, Persistable, Docu
     }
 
     @Override
+    public void setPrice(Price price) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     @JsonIgnore
     public float getWeight() {
         //TODO add weigthmod to resources
         return 1;
+    }
+
+    @Override
+    public void setWeight(float weight) {
+        throw new UnsupportedOperationException();
     }
 }

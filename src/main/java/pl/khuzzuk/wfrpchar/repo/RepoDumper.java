@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.messaging.Bus;
-import pl.khuzzuk.wfrpchar.db.DAO;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -19,8 +18,6 @@ public class RepoDumper {
     @Autowired
     @Named("messages")
     private Properties messages;
-    @Autowired
-    private DAO dao;
 
     @PostConstruct
     private void init() {

@@ -39,4 +39,9 @@ public class Ammunition extends AbstractWeapon<AmmunitionType> implements Battle
     public Placement getPlacement() {
         return baseType.getPlacement();
     }
+
+    @Override
+    public void setPlacement(Placement placement) {
+        throw new UnsupportedOperationException();
+    }
 }

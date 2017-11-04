@@ -5,8 +5,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import pl.khuzzuk.messaging.Bus;
+import pl.khuzzuk.wfrpchar.entities.Featured;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.repo.Criteria;
+import pl.khuzzuk.wfrpchar.repo.SaveItem;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -14,7 +16,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-public abstract class EntitiesListedController<T> implements Controller {
+public abstract class EntitiesListedController<T extends Featured> implements Controller {
     @FXML
     TextField name;
     @Inject
@@ -31,6 +33,7 @@ public abstract class EntitiesListedController<T> implements Controller {
     String getAllResponse;
     String saveTopic;
     Class<?> entityType;
+    T item;
     Runnable clearAction;
 
     @FXML
@@ -63,12 +66,22 @@ public abstract class EntitiesListedController<T> implements Controller {
     @FXML
     private void save() {
         if (name.getText().length() >= 3) {
-            saveAction.run();
+            saveAction();
         }
     }
 
+    abstract void saveAction();
+
     void saveItem(String line) {
         bus.send(saveTopic, line);
+    }
+
+    void saveNewItem(T item) {
+        bus.send(messages.getProperty("database.save"), getAllResponse, SaveItem.builder().type(entityType).entity(item).build());
+    }
+
+    void communicateDataChanges() {
+        bus.send(messages.getProperty("database.change"));
     }
 
     @FXML
@@ -92,5 +105,13 @@ public abstract class EntitiesListedController<T> implements Controller {
         name.setText(named.getName());
     }
 
-    abstract void loadItem(T item);
+    void loadItem(T item) {
+        clearAction.run();
+        this.item = item;
+    }
+
+    void fillItemWithValues(T item) {
+        item.setName(name.getText());
+        item.setSpecialFeatures(specialFeatures.getText());
+    }
 }

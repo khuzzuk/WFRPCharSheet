@@ -71,6 +71,7 @@ public class RacesPaneController extends SkillViewController<Race> {
     @Override
     public void loadItem(Race race) {
         clear();
+        super.loadItem(race);
         name.setText(race.getName());
         specialFeatures.setText(race.getSpecialFeatures());
         EntitiesAdapter.sendToListView(skillsView, race.getSkills());
@@ -90,7 +91,8 @@ public class RacesPaneController extends SkillViewController<Race> {
         shooting.setText("" + race.getDeterminantValueForType(DeterminantsType.SHOOTING));
     }
 
-    private void saveRace() {
+    @Override
+    void saveAction() {
         List<String> fields = new ArrayList<>();
         fields.add(name.getText());
         fields.add(specialFeatures.getText());

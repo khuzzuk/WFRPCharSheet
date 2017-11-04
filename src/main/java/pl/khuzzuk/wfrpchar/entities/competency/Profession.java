@@ -5,10 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
-import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.entities.Documented;
-import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
+import pl.khuzzuk.wfrpchar.entities.SkillContainer;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
-public class Profession implements Named<String>, Persistable, Documented {
+public class Profession implements Persistable, Documented, SkillContainer {
     @Id
     @GeneratedValue
     @Getter
@@ -78,39 +77,6 @@ public class Profession implements Named<String>, Persistable, Documented {
         profession.setNextProfessions(professions != null ? professions : new HashSet<>());
         profession.setDeterminants(DeterminantFactory.createDeterminants(fields[4]));
         return profession;
-    }
-
-    public static Profession build(String[] fields, DAO dao) {
-        return build(fields, getSkills(fields, dao), getProfessions(fields, dao));
-    }
-
-    public static Profession update(final Profession profession, String[] fields, DAO dao) {
-        profession.setSkills(getSkills(fields, dao));
-        profession.setNextProfessions(getProfessions(fields, dao));
-        profession.setProfessionClass(dao.getEntity(ProfessionClass.class, fields[5]));
-        return profession;
-    }
-
-    private static Set<Skill> getSkills(String[] fields, DAO dao) {
-        Set<Skill> skills = new HashSet<>();
-        if (fields[2].equals("")) {
-            return skills;
-        }
-        for (String name : fields[2].split("\\|")) {
-            skills.add(dao.getEntity(Skill.class, name));
-        }
-        return skills;
-    }
-
-    private static Set<Profession> getProfessions(String[] fields, DAO dao) {
-        Set<Profession> professions = new HashSet<>();
-        if (fields[3].equals("")) {
-            return professions;
-        }
-        for (String name : fields[3].split("\\|")) {
-            professions.add(dao.getEntity(Profession.class, name));
-        }
-        return professions;
     }
 
     @Override

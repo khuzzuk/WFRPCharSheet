@@ -30,15 +30,6 @@ public class ResourceTypesPaneController extends ItemsListedController<ResourceT
         initializeValidation();
         entityType = ResourceType.class;
         saveTopic = messages.getProperty("resource.type.save");
-        saveAction = () -> {
-            List<String> fields = new LinkedList<>();
-            fields.add(name.getText());
-            fields.add(resStrength.getText());
-            fields.add(resPrice.getText());
-            fields.add(SubstanceType.forName(resType.getSelectionModel().getSelectedItem()).name());
-            bus.send(messages.getProperty("resource.type.save"));
-            saveItem(fields.stream().collect(Collectors.joining(";")));
-        };
         removeEntityTopic = messages.getProperty("resource.type.remove");
         getAllResponse = messages.getProperty("resource.type.result");
         clearAction = this::clear;
@@ -52,10 +43,22 @@ public class ResourceTypesPaneController extends ItemsListedController<ResourceT
 
     @Override
     public void loadItem(ResourceType resource) {
+        super.loadItem(resource);
         name.setText(resource.getName());
         resStrength.setText(Integer.toString(resource.getStrengthMod()));
         resPrice.setText(Integer.toString(resource.getPriceMod()));
         resType.getSelectionModel().select(resource.getSubstanceType().getName());
+    }
+
+    @Override
+    void saveAction() {
+        List<String> fields = new LinkedList<>();
+        fields.add(name.getText());
+        fields.add(resStrength.getText());
+        fields.add(resPrice.getText());
+        fields.add(SubstanceType.forName(resType.getSelectionModel().getSelectedItem()).name());
+        bus.send(messages.getProperty("resource.type.save"));
+        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     @Override

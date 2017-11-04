@@ -35,4 +35,9 @@ public class Armor extends AbstractWeapon<ArmorType> implements ProtectiveWearin
     public Placement getPlacement() {
         return baseType.getPlacement();
     }
+
+    @Override
+    public void setPlacement(Placement placement) {
+        throw new UnsupportedOperationException();
+    }
 }

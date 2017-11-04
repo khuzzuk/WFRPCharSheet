@@ -159,7 +159,6 @@ public class PlayerPaneController extends ItemsListedController<Player> {
         getAllResponse = messages.getProperty("player.result");
         removeEntityTopic = messages.getProperty("player.remove");
         saveTopic = messages.getProperty("player.save");
-        saveAction = this::savePlayer;
         clearAction = this::clear;
         initItems();
         bus.setReaction(messages.getProperty("professions.class.result"), this::loadClasses);
@@ -284,6 +283,7 @@ public class PlayerPaneController extends ItemsListedController<Player> {
     @Override
     public void loadItem(Player player) {
         clear();
+        super.loadItem(player);
         name.setText(player.getName());
         selectOrEmpty(race, player.getRace());
         selectOrEmpty(character, player.getCharacter());
@@ -358,7 +358,8 @@ public class PlayerPaneController extends ItemsListedController<Player> {
         guiDeterminants.forEach((type, guiDeterminant) -> guiDeterminant.setCurrentValue(0 + ""));
     }
 
-    private void savePlayer() {
+    @Override
+    void saveAction() {
         CsvBuilder builder = new CsvBuilder(new ArrayList<>());
         builder.add(name.getText())
                 .add(ComboBoxHandler.getEmptyIfNotPresent(race))

@@ -83,7 +83,7 @@
             <Button text="Usuń" GridPane.rowIndex="6" maxWidth="Infinity" onAction="#remove"/>
             <Button text="Nowy" GridPane.rowIndex="6" GridPane.columnIndex="1" maxWidth="Infinity"/>
             <Button text="Zapisz" GridPane.rowIndex="6" GridPane.columnIndex="2" maxWidth="Infinity"
-                    onAction="#saveWeapon"/>
+                    onAction="#save"/>
         </GridPane>
     </SplitPane>
 </TitledPane>

@@ -1,10 +1,10 @@
 package pl.khuzzuk.wfrpchar.entities.competency;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
-import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.entities.items.types.MiscItem;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 @Entity
-public class Spell implements Named<String>, Persistable, Documented {
+public class Spell implements Featured, Persistable, Documented {
     @Getter
     @Setter
     @Id
@@ -46,14 +46,12 @@ public class Spell implements Named<String>, Persistable, Documented {
     @Setter
     private String description;
 
-    public static Spell fromCsv(String[] fields, DAO dao) {
+    public static Spell fromCsv(String[] fields) {
         Spell spell = new Spell();
         spell.setName(fields[0]);
         spell.setCastTime(LoadingTimes.valueOf(fields[1]));
         spell.setMagicCost(Integer.valueOf(fields[2]));
-        spell.setSchool(dao.getEntity(MagicSchool.class, fields[3]));
         spell.setLevel(Integer.valueOf(fields[4]));
-        spell.setIngredients(dao.getEntities(MiscItem.class, fields[5].split("\\|")));
         spell.setDescription(fields[6]);
         return spell;
     }
@@ -74,5 +72,16 @@ public class Spell implements Named<String>, Persistable, Documented {
     @Override
     public String toString() {
         return getName();
+    }
+
+    @Override
+    @JsonIgnore
+    public String getSpecialFeatures() {
+        return description;
+    }
+
+    @Override
+    public void setSpecialFeatures(String specialFeatures) {
+        description = specialFeatures;
     }
 }

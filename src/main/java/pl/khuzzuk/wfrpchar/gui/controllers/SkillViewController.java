@@ -2,9 +2,10 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import pl.khuzzuk.wfrpchar.entities.SkillContainer;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
-public abstract class SkillViewController<T> extends AbstractFeaturedController<T> {
+public abstract class SkillViewController<T extends SkillContainer> extends AbstractFeaturedController<T> {
     @FXML
     ListView<String> skillsView;
     String skillChooserMsg;

@@ -62,4 +62,13 @@ public class RepoQueryResolver {
     void remove(Criteria criteria) {
         groups.get(criteria.getType()).removeIf(named -> named.getName().equals(criteria.getName()));
     }
+
+    public void add(SaveItem<?> saveItem) {
+        addToList(groups.get(saveItem.getType()), saveItem.getEntity());
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> void addToList(List list, T element) {
+        list.add(element);
+    }
 }

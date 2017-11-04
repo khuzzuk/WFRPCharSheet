@@ -28,12 +28,12 @@ public class ProfessionClassPaneController extends SkillViewController<Professio
         getAllResponse = messages.getProperty("professions.class.result");
         removeEntityTopic = messages.getProperty("professions.class.remove");
         saveTopic = messages.getProperty("professions.class.save");
-        saveAction = this::saveClass;
         clearAction = this::clear;
         initItems();
     }
 
-    private void saveClass() {
+    @Override
+    void saveAction() {
         List<String> fields = new ArrayList<>();
         fields.add(name.getText());
         fields.add(specialFeatures.getText());
@@ -46,6 +46,7 @@ public class ProfessionClassPaneController extends SkillViewController<Professio
 
     @Override
     public void loadItem(ProfessionClass professionClass) {
+        super.loadItem(professionClass);
         name.setText(professionClass.getName());
         specialFeatures.setText(professionClass.getSpecialFeatures());
         baseDeterminantType.getSelectionModel().select(professionClass.getPrimaryDeterminant().getName());

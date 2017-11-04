@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.Documented;
-import pl.khuzzuk.wfrpchar.entities.Named;
+import pl.khuzzuk.wfrpchar.entities.Featured;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
         property = "id",
         resolver = TypeIdResolver.class,
         scope = Skill.class)
-public class Skill implements Named<String>, Persistable, Documented {
+public class Skill implements Featured, Persistable, Documented {
     @Getter
     @Setter
     @Id

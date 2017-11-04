@@ -19,7 +19,6 @@ public class AmmunitionPaneController extends AbstractWeaponController<Ammunitio
         getAllResponse = messages.getProperty("ammunition.result");
         removeEntityTopic = messages.getProperty("ammunition.remove");
         saveTopic = messages.getProperty("ammunition.save");
-        saveAction = this::saveAmmunition;
         clearAction = this::clear;
         initItems();
     }
@@ -35,7 +34,8 @@ public class AmmunitionPaneController extends AbstractWeaponController<Ammunitio
     }
 
     @FXML
-    private void saveAmmunition() {
+    @Override
+    void saveAction() {
         List<String> fields = new ArrayList<>();
         addWeaponTypeFields(fields);
         saveItem(fields.stream().collect(Collectors.joining(";")));
@@ -43,6 +43,7 @@ public class AmmunitionPaneController extends AbstractWeaponController<Ammunitio
 
     @Override
     public void loadItem(Ammunition ammunition) {
+        super.loadItem(ammunition);
         loadToInternalEditor(ammunition);
     }
 }

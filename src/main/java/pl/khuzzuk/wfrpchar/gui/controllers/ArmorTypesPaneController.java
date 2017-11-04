@@ -60,9 +60,8 @@ public class ArmorTypesPaneController extends ItemsListedController<ArmorType> {
         removeEntityTopic = messages.getProperty("armorTypes.remove");
         getAllResponse = messages.getProperty("armorTypes.result");
         saveTopic = messages.getProperty("database.saveEquipment");
-        saveAction = this::saveArmorType;
         clearAction = this::clear;
-        ComboBoxHandler.fill(Accessibility.SET, accessibility);
+        ComboBoxHandler.fillWithEnums(Accessibility.SET, accessibility);
         ComboBoxHandler.fill(EnumSet.allOf(ArmorPattern.class), armPattern);
         ComboBoxHandler.fill(EnumSet.of(Placement.CORPUS, Placement.HEAD,
                 Placement.BELT, Placement.HANDS,
@@ -87,9 +86,10 @@ public class ArmorTypesPaneController extends ItemsListedController<ArmorType> {
 
     @Override
     public void loadItem(ArmorType armor) {
+        super.loadItem(armor);
         name.setText(armor.getName());
         weight.setText(armor.getWeight() + "");
-        accessibility.getSelectionModel().select(armor.getAccessibility().getName());
+        accessibility.getSelectionModel().select(armor.getAccessibility());
         lead.setText(armor.getPrice().getLead() + "");
         silver.setText(armor.getPrice().getSilver() + "");
         gold.setText(armor.getPrice().getGold() + "");
@@ -104,7 +104,8 @@ public class ArmorTypesPaneController extends ItemsListedController<ArmorType> {
     }
 
     @FXML
-    private void saveArmorType() {
+    @Override
+    void saveAction() {
         if (name.getText().length() < 3) {
             return;
         }
@@ -112,7 +113,7 @@ public class ArmorTypesPaneController extends ItemsListedController<ArmorType> {
         fields.add(name.getText());
         fields.add(weight.getText());
         fields.add(getPriceFromFields());
-        fields.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
+        fields.add(accessibility.getSelectionModel().getSelectedItem().name());
         fields.add(specialFeatures.getText());
         fields.add(armStrength.getText());
         fields.add(TYPE);

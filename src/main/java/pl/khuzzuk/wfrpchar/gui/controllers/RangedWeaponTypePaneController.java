@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
-import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
@@ -51,7 +50,6 @@ public class RangedWeaponTypePaneController extends ItemsListedController<Ranged
         getAllResponse = messages.getProperty("rangedWeapons.result");
         removeEntityTopic = messages.getProperty("rangedWeapons.remove");
         saveTopic = messages.getProperty("database.saveEquipment");
-        saveAction = this::saveRangedWeaponType;
         clearAction = this::clear;
         ComboBoxHandler.fill(LoadingTimes.SET, rwLoadTime);
         initItems();
@@ -59,13 +57,14 @@ public class RangedWeaponTypePaneController extends ItemsListedController<Ranged
 
     @Override
     public void loadItem(RangedWeaponType rangedWeapon) {
+        super.loadItem(rangedWeapon);
         name.setText(rangedWeapon.getName());
         rwTypeName.setText(rangedWeapon.getTypeName());
         weight.setText("" + rangedWeapon.getWeight());
         gold.setText(rangedWeapon.getPrice().getGold() + "");
         silver.setText(rangedWeapon.getPrice().getSilver() + "");
         lead.setText(rangedWeapon.getPrice().getLead() + "");
-        accessibility.getSelectionModel().select(rangedWeapon.getAccessibility().getName());
+        accessibility.getSelectionModel().select(rangedWeapon.getAccessibility());
         specialFeatures.setText(rangedWeapon.getSpecialFeatures());
         rwStrength.setText(rangedWeapon.getStrength() + "");
         rwMinRange.setText(rangedWeapon.getShortRange() + "");
@@ -79,14 +78,14 @@ public class RangedWeaponTypePaneController extends ItemsListedController<Ranged
     }
 
     @FXML
-    private void saveRangedWeaponType() {
+    @Override
+    void saveAction() {
         if (name.getText().length() < 3) return;
         saveItem(new CsvBuilder(new ArrayList<>())
                 .add(name.getText())
                 .add(weight.getText())
                 .add(getPriceFromFields())
-                .add(Accessibility.forName(
-                accessibility.getSelectionModel().getSelectedItem()).name())
+                .add(accessibility.getSelectionModel().getSelectedItem().name())
                 .add(specialFeatures.getText())
                 .add(rwStrength.getText())
                 .add("RANGED_WEAPON")

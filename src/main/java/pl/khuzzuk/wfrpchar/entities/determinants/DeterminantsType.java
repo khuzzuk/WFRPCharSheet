@@ -52,6 +52,8 @@ public enum DeterminantsType implements Named<String> {
     }
 
     public Determinant getDeterminant() {
-        return supplier.get();
+        Determinant determinant = supplier.get();
+        determinant.setType(this);
+        return determinant;
     }
 }

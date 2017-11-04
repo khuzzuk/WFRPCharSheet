@@ -9,6 +9,8 @@ public interface BattleEquipment extends Commodity, DeterminantContainer {
 
     Placement getPlacement();
 
+    void setPlacement(Placement placement);
+
     int getStrength();
 
     String getTypeName();

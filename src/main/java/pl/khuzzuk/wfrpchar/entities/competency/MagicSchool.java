@@ -1,14 +1,12 @@
 package pl.khuzzuk.wfrpchar.entities.competency;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
-import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
-import pl.khuzzuk.wfrpchar.entities.Documented;
-import pl.khuzzuk.wfrpchar.entities.Named;
-import pl.khuzzuk.wfrpchar.entities.Persistable;
+import pl.khuzzuk.wfrpchar.entities.*;
 import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
 import javax.persistence.Entity;
@@ -22,7 +20,7 @@ import java.util.ArrayList;
         property = "id",
         resolver = TypeIdResolver.class,
         scope = MagicSchool.class)
-public class MagicSchool implements Named<String>, Persistable, Documented {
+public class MagicSchool implements Featured, Persistable, Documented {
     @Getter
     @Setter
     @Id
@@ -53,5 +51,16 @@ public class MagicSchool implements Named<String>, Persistable, Documented {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getSpecialFeatures() {
+        return description;
+    }
+
+    @Override
+    public void setSpecialFeatures(String specialFeatures) {
+        description = specialFeatures;
     }
 }

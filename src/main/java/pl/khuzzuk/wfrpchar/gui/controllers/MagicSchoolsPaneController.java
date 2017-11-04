@@ -18,12 +18,12 @@ public class MagicSchoolsPaneController extends EntitiesListedController<MagicSc
         getAllResponse = messages.getProperty("magic.schools.result");
         removeEntityTopic = messages.getProperty("magic.schools.remove");
         saveTopic = messages.getProperty("magic.schools.save");
-        saveAction = this::saveSchool;
         clearAction = super::clear;
         initItems();
     }
 
-    private void saveSchool() {
+    @Override
+    void saveAction() {
         saveItem(new CsvBuilder(new ArrayList<>())
                 .add(name.getText())
                 .add(specialFeatures.getText())
@@ -32,6 +32,7 @@ public class MagicSchoolsPaneController extends EntitiesListedController<MagicSc
 
     @Override
     public void loadItem(MagicSchool school) {
+        super.loadItem(school);
         name.setText(school.getName());
         specialFeatures.setText(school.getDescription());
     }

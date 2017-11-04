@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
-import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
@@ -51,10 +50,6 @@ public class Race implements Named<String>, Persistable, Documented, SkillContai
         race.setDeterminants(DeterminantFactory.createDeterminants(fields[2]));
         race.setSkills(new HashSet<>());
         return race;
-    }
-
-    public static Race fromCsv(String[] fields, DAO dao) {
-        return SkillContainer.updateSkills(fromCsv(fields), fields, dao);
     }
 
     @Override

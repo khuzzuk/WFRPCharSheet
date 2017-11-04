@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
+import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.types.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class AbstractWeaponController<T> extends ItemWithBaseTypeController<T> {
+public abstract class AbstractWeaponController<T extends AbstractWeapon<? extends BattleEquipment>> extends ItemWithBaseTypeController<T> {
     @FXML
     ComboBox<String> secondaryResource;
     @FXML
@@ -50,7 +51,7 @@ public abstract class AbstractWeaponController<T> extends ItemWithBaseTypeContro
     void addWeaponTypeFields(List<String> fields) {
         fields.add(name.getText());
         fields.add(getPriceFromFields());
-        fields.add(Accessibility.forName(accessibility.getSelectionModel().getSelectedItem()).name());
+        fields.add(accessibility.getSelectionModel().getSelectedItem().name());
         fields.add(specialFeatures.getText());
         fields.add(baseType);
         fields.add(primaryResource.getSelectionModel().getSelectedItem());

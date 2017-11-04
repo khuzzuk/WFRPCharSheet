@@ -30,7 +30,6 @@ public class ProfessionPaneController extends SkillViewController<Profession> {
         getAllResponse = messages.getProperty("professions.result");
         removeEntityTopic = messages.getProperty("professions.remove");
         saveTopic = messages.getProperty("professions.save");
-        saveAction = this::saveProfession;
         clearAction = this::clear;
         initItems();
         bus.setReaction(messages.getProperty("professions.class.result"), this::loadProfessionClasses);
@@ -43,6 +42,7 @@ public class ProfessionPaneController extends SkillViewController<Profession> {
 
     @Override
     public void loadItem(Profession profession) {
+        super.loadItem(profession);
         name.setText(profession.getName());
         specialFeatures.setText(profession.getSpecialFeatures());
         EntitiesAdapter.sendToListView(determinantsView, profession.getDeterminants());
@@ -60,7 +60,8 @@ public class ProfessionPaneController extends SkillViewController<Profession> {
         professionsNextView.getItems().add(profession);
     }
 
-    private void saveProfession() {
+    @Override
+    void saveAction() {
         List<String> fields = new ArrayList<>();
         fields.add(name.getText());
         fields.add(specialFeatures.getText());

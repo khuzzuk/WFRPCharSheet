@@ -2,9 +2,10 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractCommodity;
 
-public abstract class ItemWithBaseTypeController<T> extends AbstractFeaturedController<T> {
+public abstract class ItemWithBaseTypeController<T extends Commodity> extends AbstractFeaturedController<T> {
     @FXML
     Label endGold;
     @FXML

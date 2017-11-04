@@ -35,7 +35,6 @@ public class HandWeaponsPaneController extends AbstractWeaponController<Abstract
         removeEntityTopic = messages.getProperty("weapons.hand.remove");
         saveTopic = messages.getProperty("weapons.hand.save");
         clearAction = this::clear;
-        saveAction = this::saveWeapon;
         ComboBoxHandler.fill(EnumSet.allOf(Dices.class), dices);
         initItems();
     }
@@ -51,7 +50,8 @@ public class HandWeaponsPaneController extends AbstractWeaponController<Abstract
     }
 
     @FXML
-    private void saveWeapon() {
+    @Override
+    void saveAction() {
         List<String> fields = new ArrayList<>();
         addWeaponTypeFields(fields);
         saveItem(new CsvBuilder(fields)
@@ -62,6 +62,7 @@ public class HandWeaponsPaneController extends AbstractWeaponController<Abstract
 
     @Override
     public void loadItem(AbstractHandWeapon<? extends WhiteWeaponType> weapon) {
+        super.loadItem(weapon);
         ComboBoxHandler.selectOrEmpty(dices, weapon.getDices());
         loadToInternalEditor(weapon);
     }

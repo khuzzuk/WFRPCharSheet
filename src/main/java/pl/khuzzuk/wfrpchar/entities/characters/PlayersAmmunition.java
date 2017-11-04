@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Price;
@@ -94,6 +93,11 @@ public class PlayersAmmunition implements Ammo, Documented, Named<String> {
     }
 
     @Override
+    public void setPlacement(Placement placement) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     @JsonIgnore
     public String getTypeName() {
         return ammunition.getTypeName();
@@ -115,13 +119,37 @@ public class PlayersAmmunition implements Ammo, Documented, Named<String> {
         return getName() + ":" + getCount();
     }
 
-    public static PlayersAmmunition fromCsv(String[] fields, DAO dao) {
+    public static PlayersAmmunition fromCsv(String[] fields) {
         if (fields.length <= 1) {
             return null;
         }
         PlayersAmmunition ammunition = new PlayersAmmunition();
-        ammunition.setAmmunition(dao.getEntity(Ammunition.class, fields[0]));
         ammunition.setCount(Integer.parseInt(fields[1]));
         return ammunition;
+    }
+
+    @Override
+    public void setAccessibility(Accessibility accessibility) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setPrice(Price price) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setSpecialFeatures(String specialFeatures) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setName(String name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setWeight(float weight) {
+        throw new UnsupportedOperationException();
     }
 }

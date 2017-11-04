@@ -21,12 +21,12 @@ public class ArmorPaneController extends AbstractWeaponController<Armor> {
         removeEntityTopic = messages.getProperty("armor.remove");
         saveTopic = messages.getProperty("armor.save");
         clearAction = this::clear;
-        saveAction = this::saveWeapon;
         initItems();
     }
 
     @Override
     public void loadItem(Armor armor) {
+        super.loadItem(armor);
         loadToInternalEditor(armor);
     }
 
@@ -41,7 +41,8 @@ public class ArmorPaneController extends AbstractWeaponController<Armor> {
     }
 
     @FXML
-    private void saveWeapon() {
+    @Override
+    void saveAction() {
         List<String> fields = new ArrayList<>();
         addWeaponTypeFields(fields);
         saveItem(fields.stream().collect(Collectors.joining(";")));

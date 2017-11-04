@@ -99,7 +99,7 @@
             <Label text="ręczność" GridPane.columnIndex="2"
                    GridPane.halignment="RIGHT"
                    GridPane.rowIndex="1"/>
-            <ComboBox fx:id="placementBoxWW"
+            <ComboBox fx:id="placementBox"
                       prefWidth="150.0"
                       GridPane.columnIndex="3"
                       GridPane.rowIndex="1"/>
@@ -207,7 +207,7 @@
                   prefWidth="100.0" GridPane.columnIndex="1"
                   GridPane.rowIndex="7">
                 <Label text="przym. męski"/>
-                <TextField fx:id="langMascWW"/>
+                <TextField fx:id="langMasc"/>
             </VBox>
             <Label text="pozostałe nazwy"
                    GridPane.rowIndex="7"/>
@@ -215,19 +215,19 @@
                   prefWidth="100.0" GridPane.columnIndex="2"
                   GridPane.rowIndex="7">
                 <Label text="przym. żeński"/>
-                <TextField fx:id="langFemWW"/>
+                <TextField fx:id="langFem"/>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0"
                   prefWidth="100.0" GridPane.columnIndex="3"
                   GridPane.rowIndex="7">
                 <Label text="przym. nijaki"/>
-                <TextField fx:id="langNeutrWW"/>
+                <TextField fx:id="langNeutr"/>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0"
                   prefWidth="100.0" GridPane.columnIndex="4"
                   GridPane.rowIndex="7">
                 <Label text="narzędnik"/>
-                <TextField fx:id="langAblativeWW"/>
+                <TextField fx:id="langAblative"/>
             </VBox>
             <Label text="cechy specjalne"
                    GridPane.rowIndex="8"/>

@@ -36,4 +36,9 @@ public class BastardWeapon extends AbstractHandWeapon<BastardWeaponType> impleme
     public Placement getPlacement() {
         return baseType.getPlacement();
     }
+
+    @Override
+    public void setPlacement(Placement placement) {
+        throw new UnsupportedOperationException();
+    }
 }

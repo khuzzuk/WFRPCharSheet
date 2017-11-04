@@ -44,7 +44,6 @@ public class SpellsPaneController extends EntitiesListedController<Spell> {
         getAllResponse = messages.getProperty("magic.spells.result");
         removeEntityTopic = messages.getProperty("magic.spells.remove");
         saveTopic = messages.getProperty("magic.spells.save");
-        saveAction = this::saveSpell;
         clearAction = this::clear;
         initItems();
     }
@@ -62,6 +61,7 @@ public class SpellsPaneController extends EntitiesListedController<Spell> {
     @Override
     public void loadItem(Spell spell) {
         clear();
+        super.loadItem(spell);
         name.setText(spell.getName());
         ComboBoxHandler.selectOrEmpty(loadingTimes, spell.getCastTime());
         magicCost.setText(spell.getMagicCost() + "");
@@ -72,7 +72,8 @@ public class SpellsPaneController extends EntitiesListedController<Spell> {
         specialFeatures.setText(spell.getDescription());
     }
 
-    private void saveSpell() {
+    @Override
+    void saveAction() {
         saveItem(new CsvBuilder(new ArrayList<>())
                         .add(name.getText())
                         .add(LoadingTimes.forName(Optional.ofNullable(

@@ -4,8 +4,6 @@ import lombok.Getter;
 import pl.khuzzuk.wfrpchar.entities.Named;
 
 import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
 
 public enum Placement implements Named<String> {
     ONE_HAND("Jedna ręka"), TWO_HANDS("Dwie ręce"), BASTARD("Półtoraręczny"),

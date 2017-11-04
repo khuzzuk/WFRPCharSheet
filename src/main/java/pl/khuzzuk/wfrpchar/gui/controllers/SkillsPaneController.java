@@ -20,7 +20,6 @@ public class SkillsPaneController extends AbstractFeaturedController<Skill> {
         getAllResponse = messages.getProperty("skills.result");
         removeEntityTopic = messages.getProperty("skills.remove");
         saveTopic = messages.getProperty("skills.save");
-        saveAction = this::saveSkill;
         clearAction = this::clear;
         initItems();
     }
@@ -32,12 +31,14 @@ public class SkillsPaneController extends AbstractFeaturedController<Skill> {
 
     @Override
     public void loadItem(Skill skill) {
+        super.loadItem(skill);
         name.setText(skill.getName());
         specialFeatures.setText(skill.getSpecialFeatures());
         EntitiesAdapter.sendToListView(determinantsView, skill.getDeterminants());
     }
 
-    private void saveSkill() {
+    @Override
+    void saveAction() {
         List<String> fields = new ArrayList<>();
         fields.add(name.getText());
         fields.add(specialFeatures.getText());

@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
-import pl.khuzzuk.wfrpchar.db.DAO;
 import pl.khuzzuk.wfrpchar.entities.Documented;
-import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.SkillContainer;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -27,7 +25,7 @@ import java.util.Set;
         scope = ProfessionClass.class)
 @Getter
 @Setter
-public class ProfessionClass implements Named<String>, Persistable, Documented, SkillContainer {
+public class ProfessionClass implements Persistable, Documented, SkillContainer {
     @Id
     @GeneratedValue
     private long id;
@@ -50,9 +48,5 @@ public class ProfessionClass implements Named<String>, Persistable, Documented, 
         professionClass.setSpecialFeatures(fields[1]);
         professionClass.setPrimaryDeterminant(DeterminantsType.valueOf(fields[2]));
         return professionClass;
-    }
-
-    public static ProfessionClass fromCsv(String[] fields, DAO dao) {
-        return SkillContainer.updateSkills(fromCsv(fields), fields, dao);
     }
 }
