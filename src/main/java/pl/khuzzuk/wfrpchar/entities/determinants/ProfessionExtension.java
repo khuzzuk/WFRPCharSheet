@@ -1,16 +1,12 @@
 package pl.khuzzuk.wfrpchar.entities.determinants;
 
 import lombok.*;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Entity
-@DiscriminatorValue("1")
+@Getter
+@Setter
 public class ProfessionExtension extends Extension {
-    @Getter
-    @Setter
     @NonNull
     private int expSequence;
 

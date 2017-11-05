@@ -1,27 +1,16 @@
 package pl.khuzzuk.wfrpchar.entities;
 
 import lombok.*;
-import org.hibernate.annotations.Immutable;
-
-import javax.persistence.Embeddable;
 
 @RequiredArgsConstructor
-@Immutable
-@Embeddable
 @NoArgsConstructor
-@EqualsAndHashCode
+@Data
 public class Price {
     @NonNull
-    @Setter
-    @Getter
     private int gold;
     @NonNull
-    @Setter
-    @Getter
     private int silver;
     @NonNull
-    @Setter
-    @Getter
     private int lead;
 
     private Price(int sum) {

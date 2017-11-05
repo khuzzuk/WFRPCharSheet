@@ -2,57 +2,30 @@ package pl.khuzzuk.wfrpchar.entities.competency;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.SkillContainer;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Entity
-@NoArgsConstructor
+@Getter
+@Setter
 public class Profession implements Persistable, Documented, SkillContainer {
-    @Id
-    @GeneratedValue
-    @Getter
-    @Setter
     private long id;
-    @Getter
-    @Setter
-    @NaturalId
     private String name;
-    @Getter
-    @Setter
     private String specialFeatures;
-    @Getter
-    @Setter
-    @OneToMany(fetch = FetchType.EAGER)
     @JsonIdentityReference(alwaysAsId = true)
     private Set<Skill> skills;
-    @Getter
-    @Setter
-    @OneToMany(fetch = FetchType.EAGER)
     @JsonIdentityReference(alwaysAsId = true)
     private Set<Profession> nextProfessions;
-    @Getter
-    @Setter
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(name = "DET_PROF_MAP",
-            joinColumns = {@JoinColumn(name = "PROF_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
     private Set<Determinant> determinants;
-    @Setter
-    @Getter
-    @ManyToOne
     @JsonIdentityReference(alwaysAsId = true)
     private ProfessionClass professionClass;
 

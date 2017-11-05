@@ -9,7 +9,6 @@ import pl.khuzzuk.wfrpchar.gui.controllers.*;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
 import java.util.Properties;
 
 @Component
@@ -18,21 +17,6 @@ public class GuiReactor {
     @Inject
     private Bus bus;
     //TODO reduce this injects
-    @Inject
-    @MainWindowBean
-    private MainWindowController controller;
-    @Inject
-    private ItemTypesPaneController itemTypesPaneController;
-    @Inject
-    private ArmorTypesPaneController armorTypesPaneController;
-    @Inject
-    private RangedWeaponTypePaneController rangedWeaponTypePaneController;
-    @Inject
-    private WhiteWeaponTypePaneController whiteWeaponTypePaneController;
-    @Inject
-    private AmmunitionTypesPaneController ammunitionTypesPaneController;
-    @Inject
-    private ResourceTypesPaneController resourceTypesPaneController;
     @Inject
     private HandWeaponsPaneController handWeaponsPaneController;
     @Inject
@@ -49,8 +33,6 @@ public class GuiReactor {
     private ProfessionPaneController professionPaneController;
     @Inject
     private RacesPaneController racesPaneController;
-    @Inject
-    private MagicSchoolsPaneController magicSchoolsPaneController;
     @Inject
     private SpellsPaneController spellsPaneController;
     @Inject
@@ -77,25 +59,18 @@ public class GuiReactor {
     @Named("messages")
     private Properties messages;
     @Value("${miscItemTypes.result}")
-    @NotNull
     private String miscItemResult;
     @Value("${miscItemTypes.result.specific}")
-    @NotNull
     private String namedMiscItemResult;
     @Value("${whiteWeapons.result}")
-    @NotNull
     private String whiteWeaponsMsg;
     @Value("${whiteWeapons.result.specific}")
-    @NotNull
     private String namedWhiteWeaponsMsg;
     @Value("${rangedWeapons.result}")
-    @NotNull
     private String rangedWeaponMsg;
     @Value("${rangedWeapons.result.specific}")
-    @NotNull
     private String namedRangedWeaponMsg;
     @Value("${armorTypes.result}")
-    @NotNull
     private String listOfArmorTypesResult;
     @Value("${armorTypes.result.specific}")
     private String namedArmorTypeMsg;

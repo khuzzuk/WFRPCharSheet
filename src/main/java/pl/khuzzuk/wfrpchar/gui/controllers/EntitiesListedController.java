@@ -29,7 +29,6 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
     Runnable saveAction;
     String removeEntityTopic;
     private String getNamedEntityTopic;
-    private String removeTopic;
     String getAllResponse;
     String saveTopic;
     Class<?> entityType;

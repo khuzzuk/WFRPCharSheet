@@ -10,14 +10,10 @@ import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Entity
-@DiscriminatorValue("2")
 public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends AbstractWeapon<T> implements Named<String>, HandWeapon, Persistable {
 
     @Setter

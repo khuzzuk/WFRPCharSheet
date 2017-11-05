@@ -7,18 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.NaturalId;
 import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
 @NoArgsConstructor
 @ToString(exclude = "id")
 @Getter
@@ -29,31 +23,13 @@ import javax.persistence.Id;
         resolver = TypeIdResolver.class,
         scope = ResourceType.class)
 public class ResourceType implements Named<String>, Commodity, Persistable, Documented {
-    @Id
-    @GeneratedValue
     private long id;
-    @NaturalId
     private String name;
     private int strengthMod;
     private int priceMod;
     private SubstanceType substanceType;
     private Accessibility accessibility;
     private String specialFeatures;
-
-    public static ResourceType getFromCsv(String[] fields) {
-        ResourceType resource = new ResourceType();
-        resource.name = fields[0];
-        resource.strengthMod = Integer.parseInt(fields[1]);
-        resource.priceMod = Integer.parseInt(fields[2]);
-        resource.substanceType = SubstanceType.valueOf(fields[3]);
-        resource.accessibility = Accessibility.valueOf(fields[4]);
-        if (fields.length >= 6) {
-            resource.specialFeatures = fields[5];
-        } else {
-            resource.specialFeatures = "";
-        }
-        return resource;
-    }
 
     public String toCsv() {
         return  name + ";" + strengthMod + ";" + priceMod + ";" + substanceType.name() + ";" +

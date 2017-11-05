@@ -7,11 +7,6 @@ import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.ArmorPattern;
 import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-
-@Entity
-@DiscriminatorValue("9")
 public class ArmorType extends FightingEquipment implements BattleEquipment {
 
     @Getter

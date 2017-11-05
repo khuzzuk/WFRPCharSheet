@@ -2,23 +2,14 @@ package pl.khuzzuk.wfrpchar.entities.determinants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import javax.persistence.*;
 
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "EXT_TYPE", discriminatorType = DiscriminatorType.INTEGER)
-@DiscriminatorValue("0")
-@Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Getter
+@Setter
 public abstract class Extension {
-    @Id
-    @GeneratedValue
-    @Getter
-    @Setter
     @JsonIgnore
     private long id;
-    @Getter
-    @Setter
     @NonNull
     protected int modifier;
 

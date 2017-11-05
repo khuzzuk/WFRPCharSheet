@@ -9,18 +9,9 @@ import pl.khuzzuk.wfrpchar.entities.items.HandWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.rules.Dices;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
-
-@DiscriminatorValue("4")
-@Entity
 @Getter
 @Setter
 public abstract class WhiteWeaponType extends WeaponType implements HandWeapon {
-    @Enumerated(value = EnumType.STRING)
     Dices dices;
     int rolls;
 
@@ -49,7 +40,6 @@ public abstract class WhiteWeaponType extends WeaponType implements HandWeapon {
     }
 
     @Override
-    @NotNull
     public String toCsv() {
         getLangToCsv();
         return name + ";" +

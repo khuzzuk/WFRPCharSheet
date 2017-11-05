@@ -8,15 +8,11 @@ import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Entity
 @EqualsAndHashCode(callSuper = true)
-@DiscriminatorValue("8")
 @Getter
 @Setter
 public class RangedWeaponType extends WeaponType implements RangedWeapon, Persistable {

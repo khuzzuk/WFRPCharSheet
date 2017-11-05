@@ -13,32 +13,22 @@ import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.Weapon;
 
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@DiscriminatorValue("1")
 @NoArgsConstructor
 @Getter
 @Setter
 public abstract class AbstractWeapon<T extends BattleEquipment>
         extends AbstractCommodity
         implements Weapon {
-    @ManyToOne
     @JsonIdentityReference(alwaysAsId = true)
     private ResourceType primaryResource;
-    @ManyToOne
     @JsonIdentityReference(alwaysAsId = true)
     private ResourceType secondaryResource;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(name = "DET_REQ_MAP",
-            joinColumns = {@JoinColumn(name = "EQ_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
     private Set<Determinant> determinants = new HashSet<>();
-
     @JsonIdentityReference(alwaysAsId = true)
     public abstract T getBaseType();
 

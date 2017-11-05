@@ -1,16 +1,12 @@
 package pl.khuzzuk.wfrpchar.entities.determinants;
 
 import lombok.*;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 
-@Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
-@DiscriminatorValue("2")
+@Getter
+@Setter
 public class MiscExtension extends Extension {
-    @Getter
-    @Setter
     @NonNull
     private String description;
 

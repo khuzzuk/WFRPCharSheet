@@ -2,7 +2,6 @@ package pl.khuzzuk.wfrpchar.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,12 +22,6 @@ import java.util.Properties;
 @ComponentScan({"pl.khuzzuk.wfrpchar"})
 @Import({ScreensConfig.class})
 public class ConfigManager {
-    @Bean
-    @Named("factory")
-    SessionFactory sessionFactory() {
-        return new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
-    }
-
     @Bean
     @Named("messages")
     Properties properties() {

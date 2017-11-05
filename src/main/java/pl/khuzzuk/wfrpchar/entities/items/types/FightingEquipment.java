@@ -1,7 +1,10 @@
 package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
@@ -9,33 +12,17 @@ import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.Wearable;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@DiscriminatorValue("2")
-@Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 public abstract class FightingEquipment extends Item implements Wearable, BattleEquipment {
-    @Min(0)
     int strength;
-    @NonNull
     Placement placement;
-    @NonNull
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(name = "DET_EQ_MAP",
-            joinColumns = {@JoinColumn(name = "EQ_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "DET_ID")})
     Set<Determinant> determinants;
-    @NonNull
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Column(name = "TEXT", nullable = false)
-    @JoinTable(name = "LAN_NAMES_MAP",
-            joinColumns = {@JoinColumn(name = "ITEM_ID")})
     Map<LangElement, String> names;
 
     @JsonIgnore

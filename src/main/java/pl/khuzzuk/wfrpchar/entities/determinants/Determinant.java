@@ -5,36 +5,21 @@ import lombok.*;
 import pl.khuzzuk.wfrpchar.entities.Labelled;
 import pl.khuzzuk.wfrpchar.entities.Named;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-@Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
-@DiscriminatorValue("0")
+@Getter
+@Setter
 public abstract class Determinant implements Labelled<DeterminantsType, String>, Named<String> {
-    @Id
-    @GeneratedValue
-    @Getter
-    @Setter
     @JsonIgnore
     private long id;
-    @Getter
-    @Setter
     @NonNull
     private DeterminantsType type;
-    @Getter
-    @Setter
     @NonNull
     private int baseValue;
     @NonNull
-    @Getter
-    @Setter
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Extension> extensions = new ArrayList<>();
 
     public static String determinantsToCsv(Collection<Determinant> determinants) {
@@ -55,7 +40,7 @@ public abstract class Determinant implements Labelled<DeterminantsType, String>,
         return extensions.stream()
                 .filter(e -> e instanceof ProfessionExtension)
                 .map(e -> (ProfessionExtension) e)
-                .max((e1, e2) -> e1.getExpSequence() - e2.getExpSequence())
+                .max(Comparator.comparingInt(ProfessionExtension::getExpSequence))
                 .orElse(new ProfessionExtension()).getExpSequence();
     }
 

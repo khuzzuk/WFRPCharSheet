@@ -13,21 +13,13 @@ import pl.khuzzuk.wfrpchar.entities.items.Ammo;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.util.Collection;
 import java.util.Set;
 
-@Entity
 @Getter
 @Setter
 public class PlayersAmmunition implements Ammo, Documented, Named<String> {
-    @Id
-    @GeneratedValue
     private long id;
-    @ManyToOne
     @JsonIdentityReference(alwaysAsId = true)
     private Ammunition ammunition;
     private int count;
@@ -117,15 +109,6 @@ public class PlayersAmmunition implements Ammo, Documented, Named<String> {
     @Override
     public String toCsv() {
         return getName() + ":" + getCount();
-    }
-
-    public static PlayersAmmunition fromCsv(String[] fields) {
-        if (fields.length <= 1) {
-            return null;
-        }
-        PlayersAmmunition ammunition = new PlayersAmmunition();
-        ammunition.setCount(Integer.parseInt(fields[1]));
-        return ammunition;
     }
 
     @Override

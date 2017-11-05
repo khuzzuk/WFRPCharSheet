@@ -7,17 +7,10 @@ import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-
-@Entity
-@DiscriminatorValue("3")
 @NoArgsConstructor
 @Getter
 @Setter
 public class OneHandedWeapon extends AbstractHandWeapon<OneHandedWeaponType> {
-    @ManyToOne
     private OneHandedWeaponType baseType;
 
     @Override
