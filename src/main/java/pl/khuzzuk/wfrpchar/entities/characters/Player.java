@@ -24,11 +24,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@ToString(exclude = "id")
+@ToString
 @Getter
 @Setter
-public class Player implements Featured, Persistable, Documented {
-    private long id;
+public class Player implements Featured {
     private String name;
     @JsonIdentityReference(alwaysAsId = true)
     private Race race;
@@ -54,27 +53,6 @@ public class Player implements Featured, Persistable, Documented {
     private Set<Spell> spells;
     private Price money;
     private PersonalHistory personalHistory;
-
-    @Override
-    public String toCsv() {
-        return new CsvBuilder(new ArrayList<>())
-                .add(name)
-                .add(getRace())
-                .add(professionClass)
-                .add(currentProfession)
-                .add(Named.toCsv(career, "|"))
-                .add(character)
-                .add(appearance.toCsv())
-                .add(Determinant.determinantsToCsv(determinants))
-                .add(Named.toCsv(equipment, "|"))
-                .add(Named.toCsv(commodities, "|"))
-                .add(Documented.toCsv(ammunition, "|"))
-                .add(Named.toCsv(skills, "|"))
-                .add(money.toString())
-                .add(Named.toCsv(spells, "|"))
-                .add(personalHistory.toCsv())
-                .build();
-    }
 
     @JsonIgnore
     public Collection<HandWeapon> getHandWeapons() {

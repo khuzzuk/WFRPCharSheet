@@ -1,13 +1,16 @@
 package pl.khuzzuk.wfrpchar.entities.competency;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.SkillContainer;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
+import pl.khuzzuk.wfrpchar.entities.items.Commodity;
+import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,8 +20,12 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class Profession implements Persistable, Documented, SkillContainer {
-    private long id;
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.IntSequenceGenerator.class,
+        property = "id",
+        resolver = TypeIdResolver.class,
+        scope = Profession.class)
+public class Profession implements SkillContainer {
     private String name;
     private String specialFeatures;
     @JsonIdentityReference(alwaysAsId = true)
@@ -28,17 +35,6 @@ public class Profession implements Persistable, Documented, SkillContainer {
     private Set<Determinant> determinants;
     @JsonIdentityReference(alwaysAsId = true)
     private ProfessionClass professionClass;
-
-    @Override
-    public String toCsv() {
-        List<String> fields = new ArrayList<>();
-        fields.add(name);
-        fields.add(specialFeatures);
-        fields.add(skills.stream().map(Skill::getName).collect(Collectors.joining("|")));
-        fields.add(nextProfessions.stream().map(Profession::getName).collect(Collectors.joining("|")));
-        fields.add(Determinant.determinantsToCsv(determinants));
-        return fields.stream().collect(Collectors.joining(";"));
-    }
 
     public static Profession build(String[] fields,
                                    Set<Skill> skills,

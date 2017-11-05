@@ -55,6 +55,11 @@ public class ProfessionClassPaneController extends SkillViewController<Professio
         }
     }
 
+    @Override
+    ProfessionClass supplyNewItem() {
+        return new ProfessionClass();
+    }
+
     void clear() {
         super.clear();
         baseDeterminantType.getSelectionModel().clearSelection();

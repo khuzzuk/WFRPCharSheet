@@ -69,6 +69,8 @@ public class RepoQueryResolver {
 
     @SuppressWarnings("unchecked")
     private <T> void addToList(List list, T element) {
-        list.add(element);
+        if (!list.contains(element)) {
+            list.add(element);
+        }
     }
 }

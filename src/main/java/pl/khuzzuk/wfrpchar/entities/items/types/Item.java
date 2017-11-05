@@ -2,25 +2,20 @@ package pl.khuzzuk.wfrpchar.entities.items.types;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
-import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 
 @NoArgsConstructor
 @Data
-public abstract class Item implements Named<String>, Commodity, Persistable, Documented {
-    long id;
+public abstract class Item implements Named<String>, Commodity {
     String name;
     EquipmentType type;
     float weight;
     Price price;
     Accessibility accessibility;
     String specialFeatures;
-
-    public abstract String toCsv();
 
     @Override
     public boolean equals(Object o) {

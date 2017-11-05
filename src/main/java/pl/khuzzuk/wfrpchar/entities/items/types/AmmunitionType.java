@@ -9,12 +9,6 @@ public class AmmunitionType extends FightingEquipment implements Ammo {
     }
 
     @Override
-    public String toCsv() {
-        return name + ";" + weight + ";" + price.toString() + ";" + accessibility.name() + ";" +
-                specialFeatures + ";" + strength + ";" + type.name() + ";" + placement.name();
-    }
-
-    @Override
     @JsonIgnore
     public String getTypeName() {
         return name;

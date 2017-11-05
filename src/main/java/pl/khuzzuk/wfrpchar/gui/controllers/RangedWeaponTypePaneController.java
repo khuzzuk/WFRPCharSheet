@@ -77,6 +77,11 @@ public class RangedWeaponTypePaneController extends ItemsListedController<Ranged
         rwLangAblative.setText(rangedWeapon.getNames().get(LangElement.ABLATIVE));
     }
 
+    @Override
+    RangedWeaponType supplyNewItem() {
+        return new RangedWeaponType();
+    }
+
     @FXML
     @Override
     void saveAction() {

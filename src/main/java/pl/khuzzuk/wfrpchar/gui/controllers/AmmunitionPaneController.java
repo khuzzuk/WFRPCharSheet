@@ -46,4 +46,9 @@ public class AmmunitionPaneController extends AbstractWeaponController<Ammunitio
         super.loadItem(ammunition);
         loadToInternalEditor(ammunition);
     }
+
+    @Override
+    Ammunition supplyNewItem() {
+        return new Ammunition();
+    }
 }

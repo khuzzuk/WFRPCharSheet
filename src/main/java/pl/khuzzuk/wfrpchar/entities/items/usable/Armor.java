@@ -17,14 +17,6 @@ public class Armor extends AbstractWeapon<ArmorType> implements ProtectiveWearin
     private ArmorType baseType;
 
     @Override
-    public String toCsv() {
-        List<String> fields = new ArrayList<>();
-        fillCommodityFields(fields);
-        fillWeaponCsvFields(fields);
-        return fields.stream().collect(Collectors.joining(";"));
-    }
-
-    @Override
     @JsonIgnore
     public Placement getPlacement() {
         return baseType.getPlacement();

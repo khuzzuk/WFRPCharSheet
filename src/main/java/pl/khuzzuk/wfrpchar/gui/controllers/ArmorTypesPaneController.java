@@ -103,6 +103,11 @@ public class ArmorTypesPaneController extends ItemsListedController<ArmorType> {
         specialFeatures.setText(armor.getSpecialFeatures());
     }
 
+    @Override
+    ArmorType supplyNewItem() {
+        return new ArmorType();
+    }
+
     @FXML
     @Override
     void saveAction() {

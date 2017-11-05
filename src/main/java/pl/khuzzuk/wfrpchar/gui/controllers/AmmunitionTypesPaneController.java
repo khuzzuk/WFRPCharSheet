@@ -37,6 +37,11 @@ public class AmmunitionTypesPaneController extends ItemsListedController<Ammunit
     }
 
     @Override
+    AmmunitionType supplyNewItem() {
+        return new AmmunitionType();
+    }
+
+    @Override
     void saveAction() {
         List<String> fields = new ArrayList<>();
         fields.add(name.getText());

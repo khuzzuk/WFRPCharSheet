@@ -4,18 +4,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
-import pl.khuzzuk.wfrpchar.entities.Persistable;
-import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-public class RangedWeaponType extends WeaponType implements RangedWeapon, Persistable {
+public class RangedWeaponType extends WeaponType implements RangedWeapon {
     int shortRange;
     int effectiveRange;
     int maximumRange;
@@ -23,26 +17,5 @@ public class RangedWeaponType extends WeaponType implements RangedWeapon, Persis
 
     public RangedWeaponType() {
         type = EquipmentType.RANGED_WEAPON;
-    }
-
-    @Override
-    public String toCsv() {
-        List<String> elements = new LinkedList<>();
-        elements.add(name);
-        elements.add("" + weight);
-        elements.add(price.toString());
-        elements.add(accessibility.name());
-        elements.add(specialFeatures);
-        elements.add("" + strength);
-        elements.add(type.name());
-        elements.add(placement.name());
-        elements.add(getLangToCsv());
-        elements.add(Determinant.determinantsToCsv(determinants));
-        elements.add(typeName);
-        elements.add("" + shortRange);
-        elements.add("" + effectiveRange);
-        elements.add("" + maximumRange);
-        elements.add(reloadTime.name());
-        return elements.stream().collect(Collectors.joining(";"));
     }
 }

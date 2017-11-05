@@ -1,19 +1,28 @@
 package pl.khuzzuk.wfrpchar.entities.competency;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import pl.khuzzuk.wfrpchar.entities.*;
+import lombok.ToString;
+import pl.khuzzuk.wfrpchar.entities.Featured;
+import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
 import pl.khuzzuk.wfrpchar.entities.items.types.MiscItem;
+import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 @Getter
 @Setter
-public class Spell implements Featured, Persistable, Documented {
-    private long id;
+@ToString(of = "name")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.IntSequenceGenerator.class,
+        property = "id",
+        resolver = TypeIdResolver.class,
+        scope = Spell.class)
+public class Spell implements Featured {
     private String name;
     private LoadingTimes castTime;
     private int magicCost;
@@ -23,24 +32,6 @@ public class Spell implements Featured, Persistable, Documented {
     @JsonIdentityReference(alwaysAsId = true)
     private Set<MiscItem> ingredients;
     private String description;
-
-    @Override
-    public String toCsv() {
-        return new CsvBuilder(new ArrayList<>())
-                .add(getName())
-                .add(getCastTime().name())
-                .add(getMagicCost() + "")
-                .add(getSchool())
-                .add(getLevel() + "")
-                .add(Named.toCsv(getIngredients(), "|"))
-                .add(getDescription())
-                .build();
-    }
-
-    @Override
-    public String toString() {
-        return getName();
-    }
 
     @Override
     @JsonIgnore

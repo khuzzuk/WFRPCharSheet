@@ -18,21 +18,6 @@ public class ArmorType extends FightingEquipment implements BattleEquipment {
     }
 
     @Override
-    public String toCsv() {
-        return name + ";" +
-                weight + ";" +
-                price.toString() + ";" +
-                accessibility.name() + ";" +
-                specialFeatures + ";" +
-                strength + ";" +
-                type.name() + ";" +
-                placement.name() + ";" +
-                getLangToCsv() + ";" +
-                Determinant.determinantsToCsv(determinants) + ";" +
-                pattern.name();
-    }
-
-    @Override
     @JsonIgnore
     public String getTypeName() {
         //TODO add typeName to armorTypes

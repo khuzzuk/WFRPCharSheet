@@ -30,6 +30,11 @@ public class ArmorPaneController extends AbstractWeaponController<Armor> {
         loadToInternalEditor(armor);
     }
 
+    @Override
+    Armor supplyNewItem() {
+        return new Armor();
+    }
+
     @FXML
     private void chooseBaseType() {
         bus.send(messages.getProperty("armor.baseType.getAllTypes"));

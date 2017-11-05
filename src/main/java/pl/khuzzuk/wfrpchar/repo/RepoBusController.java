@@ -32,6 +32,7 @@ public class RepoBusController {
 
         bus.<SaveItem<?>, List<?>>setResponse(messages.getProperty("database.save"), saveItem -> {
             repoQueryResolver.add(saveItem);
+            bus.send(messages.getProperty("database.change"));
             return repoQueryResolver.get(saveItem.getType());
         });
     }

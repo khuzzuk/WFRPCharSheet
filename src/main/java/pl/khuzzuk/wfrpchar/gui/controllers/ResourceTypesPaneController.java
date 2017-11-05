@@ -51,6 +51,11 @@ public class ResourceTypesPaneController extends ItemsListedController<ResourceT
     }
 
     @Override
+    ResourceType supplyNewItem() {
+        return new ResourceType();
+    }
+
+    @Override
     void saveAction() {
         List<String> fields = new LinkedList<>();
         fields.add(name.getText());

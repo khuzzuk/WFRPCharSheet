@@ -36,4 +36,9 @@ public class MagicSchoolsPaneController extends EntitiesListedController<MagicSc
         name.setText(school.getName());
         specialFeatures.setText(school.getDescription());
     }
+
+    @Override
+    MagicSchool supplyNewItem() {
+        return new MagicSchool();
+    }
 }

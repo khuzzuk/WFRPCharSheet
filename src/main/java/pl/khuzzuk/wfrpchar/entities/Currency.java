@@ -12,12 +12,11 @@ import java.util.ArrayList;
 @Getter
 @Setter
 @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
+        generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "id",
         resolver = TypeIdResolver.class,
         scope = Currency.class)
-public class Currency implements Named<String>, Persistable, Documented {
-    private long id;
+public class Currency implements Named<String> {
     @NonNull
     private String name;
     @NonNull
@@ -28,15 +27,4 @@ public class Currency implements Named<String>, Persistable, Documented {
     private String lesser;
     @NonNull
     private float value;
-
-    @Override
-    public String toCsv() {
-        return new CsvBuilder(new ArrayList<>())
-                .add(name)
-                .add(gold)
-                .add(silver)
-                .add(lesser)
-                .add(value)
-                .build();
-    }
 }

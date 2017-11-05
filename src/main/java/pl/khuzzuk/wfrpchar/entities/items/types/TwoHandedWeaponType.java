@@ -6,9 +6,4 @@ public class TwoHandedWeaponType extends WhiteWeaponType {
     public TwoHandedWeaponType() {
         this.placement = Placement.TWO_HANDS;
     }
-
-    @Override
-    public String toCsv() {
-        return null;
-    }
 }

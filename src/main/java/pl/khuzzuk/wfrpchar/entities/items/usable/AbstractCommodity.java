@@ -3,7 +3,6 @@ package pl.khuzzuk.wfrpchar.entities.items.usable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
@@ -13,8 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public abstract class AbstractCommodity implements Commodity, Named<String>, Documented {
-    private long id;
+public abstract class AbstractCommodity implements Commodity, Named<String> {
     private String name;
     private Accessibility accessibility;
     private Price basePrice;

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class Gun extends AbstractWeapon<RangedWeaponType> implements RangedWeapon, Persistable {
+public class Gun extends AbstractWeapon<RangedWeaponType> implements RangedWeapon {
     private RangedWeaponType baseType;
 
     @Override
@@ -40,14 +40,6 @@ public class Gun extends AbstractWeapon<RangedWeaponType> implements RangedWeapo
     @JsonIgnore
     public LoadingTimes getReloadTime() {
         return baseType != null ? baseType.getReloadTime() : null;
-    }
-
-    @Override
-    public String toCsv() {
-        List<String> fields = new ArrayList<>();
-        fillCommodityFields(fields);
-        fillWeaponCsvFields(fields);
-        return fields.stream().collect(Collectors.joining(";"));
     }
 
     @Override

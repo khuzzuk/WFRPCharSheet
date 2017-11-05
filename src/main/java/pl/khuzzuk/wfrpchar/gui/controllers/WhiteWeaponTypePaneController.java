@@ -6,13 +6,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType;
+import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.MappingUtil;
@@ -24,7 +23,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
 
 @Component
 public class WhiteWeaponTypePaneController extends ItemTypePaneController<WhiteWeaponType> {
@@ -86,6 +85,25 @@ public class WhiteWeaponTypePaneController extends ItemTypePaneController<WhiteW
         initItems();
     }
 
+    void addConverters() {
+        super.addConverters();
+        addConverter(weight::getText, Item::setWeight, NumberUtils::toFloat);
+        addConverter(strengthBasicWW::getText, WhiteWeaponType::setStrength, NumberUtils::toInt);
+        addConverter(() -> getModifiers(whiteWeaponModifiers), WhiteWeaponType::setDeterminants);
+        addConverter(typeNameWW::getText, WhiteWeaponType::setTypeName);
+        addConverter(diceWW::getValue, WhiteWeaponType::setDices);
+        addConverter(rollsWW::getValue, WhiteWeaponType::setRolls, Double::intValue);
+
+        Predicate<WhiteWeaponType> bastardTest = weapon -> weapon instanceof BastardWeaponType;
+        addConverter(strengthBasicWW::getText,
+                (weapon, num) -> ((BastardWeaponType) weapon).setOneHandedStrength(num),
+                NumberUtils::toInt, bastardTest);
+        addConverter(() -> getModifiers(bastWhiteWeaponMods),
+                (weapon, determinants) -> ((BastardWeaponType) weapon).setOneHandedDeterminants(determinants),
+                determinants -> determinants, bastardTest);
+
+    }
+
     private void setBastardComponentsStatus(ObservableValue<? extends Placement> observable, Placement oldValue, Placement newValue) {
         boolean isVisible = newValue != null && newValue == Placement.BASTARD;
         bastWhiteWeaponMods.values().forEach(t -> t.setVisible(isVisible));
@@ -136,48 +154,22 @@ public class WhiteWeaponTypePaneController extends ItemTypePaneController<WhiteW
         }
     }
 
-    @FXML
+    @Override
+    WhiteWeaponType supplyNewItem() {
+        if (placementBox.getValue() == null) {
+            placementBox.getSelectionModel().select(Placement.ONE_HAND);
+        }
+        return WhiteWeaponType.getFromPlacement(placementBox.getValue());
+    }
+
     @Override
     void saveAction() {
         if (name.getText().length() == 0 || placementBox.getSelectionModel().isEmpty()) return;
         if (item.getName().equals(name.getText())) {
-            fillItemWithValues(item);
             communicateDataChanges();
         } else {
             WhiteWeaponType weaponType = WhiteWeaponType.getFromPlacement(placementBox.getValue());
-            fillItemWithValues(weaponType);
             saveNewItem(weaponType);
-        }
-    }
-
-    @Override
-    void fillItemWithValues(WhiteWeaponType item) {
-        super.fillItemWithValues(item);
-        item.setWeight(Float.parseFloat(weight.getText()));
-        item.setStrength(Integer.parseInt(strengthBasicWW.getText()));
-        item.setDeterminants(whiteWeaponModifiers.entrySet().stream()
-                .filter(entry -> StringUtils.isNoneBlank(entry.getValue().getText()))
-                .map(entry -> {
-                    Determinant determinant = entry.getKey().getDeterminant();
-                    determinant.setBaseValue(Integer.parseInt(entry.getValue().getText()));
-                    return determinant;
-                }).collect(Collectors.toSet()));
-        item.setTypeName(typeNameWW.getText());
-        item.setDices(diceWW.getValue());
-        item.setRolls((int) rollsWW.getValue());
-
-        if (item instanceof BastardWeaponType) {
-            BastardWeaponType bastardWeaponType = (BastardWeaponType) item;
-            if (NumberUtils.isParsable(strengthBasicWW.getText())) {
-                bastardWeaponType.setOneHandedStrength(Integer.parseInt(strengthBasicWW.getText()));
-            }
-            bastardWeaponType.setOneHandedDeterminants(bastWhiteWeaponMods.entrySet().stream()
-            .filter(entry -> NumberUtils.isParsable(entry.getValue().getText()))
-            .map(entry -> {
-                Determinant determinant = entry.getKey().getDeterminant();
-                determinant.setBaseValue(Integer.parseInt(entry.getValue().getText()));
-                return determinant;
-            }).collect(Collectors.toSet()));
         }
     }
 

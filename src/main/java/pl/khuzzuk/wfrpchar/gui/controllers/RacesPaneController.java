@@ -92,6 +92,11 @@ public class RacesPaneController extends SkillViewController<Race> {
     }
 
     @Override
+    Race supplyNewItem() {
+        return new Race();
+    }
+
+    @Override
     void saveAction() {
         List<String> fields = new ArrayList<>();
         fields.add(name.getText());

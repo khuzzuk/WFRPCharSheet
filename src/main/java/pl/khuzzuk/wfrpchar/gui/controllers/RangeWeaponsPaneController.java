@@ -29,6 +29,11 @@ public class RangeWeaponsPaneController extends AbstractWeaponController<Gun> {
         loadToInternalEditor(gun);
     }
 
+    @Override
+    Gun supplyNewItem() {
+        return new Gun();
+    }
+
     @FXML
     private void chooseBaseType() {
         bus.send(messages.getProperty("weapons.ranged.baseType.getAllTypes"));

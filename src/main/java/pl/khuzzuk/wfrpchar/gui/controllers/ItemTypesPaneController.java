@@ -44,6 +44,11 @@ public class ItemTypesPaneController extends ItemsListedController<MiscItem> {
         accessibility.getSelectionModel().select(item.getAccessibility());
     }
 
+    @Override
+    MiscItem supplyNewItem() {
+        return new MiscItem();
+    }
+
     @FXML
     @Override
     void saveAction() {

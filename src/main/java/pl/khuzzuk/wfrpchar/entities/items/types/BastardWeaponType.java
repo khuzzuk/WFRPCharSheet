@@ -17,10 +17,4 @@ public class BastardWeaponType extends WhiteWeaponType implements Bastard {
     public BastardWeaponType() {
         placement = Placement.BASTARD;
     }
-
-    @Override
-    public String toCsv() {
-        return super.toCsv() + ";" + oneHandedStrength +
-                ";" + Determinant.determinantsToCsv(oneHandedDeterminants);
-    }
 }

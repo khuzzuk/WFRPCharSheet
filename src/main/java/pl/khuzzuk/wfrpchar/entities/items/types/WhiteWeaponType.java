@@ -39,25 +39,6 @@ public abstract class WhiteWeaponType extends WeaponType implements HandWeapon {
         return Determinant.getSumForType(determinants, DeterminantsType.OPPONENT_PARRY);
     }
 
-    @Override
-    public String toCsv() {
-        getLangToCsv();
-        return name + ";" +
-                weight + ";" +
-                price.getGold() + "|" + price.getSilver() + "|" + price.getLead() + ";" +
-                accessibility + ";" +
-                specialFeatures + ";" +
-                strength + ";" +
-                type + ";" +
-                placement + ";" +
-                getLangToCsv() + ";" +
-                Determinant.determinantsToCsv(determinants) + ";" +
-                typeName + ";" +
-                dices + ";" +
-                rolls
-                ;
-    }
-
     public static WhiteWeaponType getFromPlacement(Placement placement) {
         switch (placement) {
             case ONE_HAND:

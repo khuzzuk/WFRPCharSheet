@@ -51,6 +51,11 @@ public class ProfessionPaneController extends SkillViewController<Profession> {
         professionClass.getSelectionModel().select(profession.getProfessionClass().getName());
     }
 
+    @Override
+    Profession supplyNewItem() {
+        return new Profession();
+    }
+
     @FXML
     private void showProfessionChooser() {
         bus.send(messages.getProperty("professions.next.getAllTypes"));

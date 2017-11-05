@@ -13,25 +13,19 @@ import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 import java.util.Collection;
 import java.util.Set;
 
-@ToString(exclude = "id")
+@ToString
 @Getter
 @Setter
 @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
+        generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "id",
         resolver = TypeIdResolver.class,
         scope = Race.class)
-public class Race implements Named<String>, Persistable, Documented, SkillContainer, DeterminantContainer {
-    private long id;
+public class Race implements Named<String>, SkillContainer, DeterminantContainer {
     private String name;
     private String specialFeatures;
     private Set<Determinant> determinants;
     private Set<Skill> skills;
-
-    @Override
-    public String toCsv() {
-        return name + ";" + specialFeatures + ";" + Determinant.determinantsToCsv(determinants) + ";" + Skill.collectionToCsv(skills);
-    }
 
     @Override
     @JsonIgnore

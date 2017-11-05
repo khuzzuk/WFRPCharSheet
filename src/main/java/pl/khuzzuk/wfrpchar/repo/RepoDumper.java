@@ -7,6 +7,9 @@ import pl.khuzzuk.messaging.Bus;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Properties;
 
 @Component
@@ -18,12 +21,19 @@ public class RepoDumper {
     @Autowired
     @Named("messages")
     private Properties messages;
+    @Autowired
+    private Repository repository;
 
     @PostConstruct
     private void init() {
-        bus.setReaction(messages.getProperty("database.save"), this::save);
+        bus.setReaction(messages.getProperty("database.change"), this::save);
     }
 
     private void save() {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("repository1.json"))) {
+            bufferedWriter.write(mapper.writeValueAsString(repository));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

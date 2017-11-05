@@ -73,6 +73,11 @@ public class SpellsPaneController extends EntitiesListedController<Spell> {
     }
 
     @Override
+    Spell supplyNewItem() {
+        return new Spell();
+    }
+
+    @Override
     void saveAction() {
         saveItem(new CsvBuilder(new ArrayList<>())
                         .add(name.getText())

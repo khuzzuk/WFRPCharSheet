@@ -4,16 +4,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import lombok.Getter;
 import pl.khuzzuk.messaging.Bus;
 import pl.khuzzuk.wfrpchar.entities.Featured;
 import pl.khuzzuk.wfrpchar.entities.Named;
+import pl.khuzzuk.wfrpchar.gui.GuiEntityConverter;
 import pl.khuzzuk.wfrpchar.repo.Criteria;
 import pl.khuzzuk.wfrpchar.repo.SaveItem;
 
 import javax.inject.Inject;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Properties;
+import java.net.URL;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public abstract class EntitiesListedController<T extends Featured> implements Controller {
@@ -32,11 +37,19 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
     String getAllResponse;
     String saveTopic;
     Class<?> entityType;
+    @Getter
     T item;
     Runnable clearAction;
+    List<GuiEntityConverter> converters = new ArrayList<>();
 
     @FXML
     ListView<String> items;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initializeValidation();
+        addConverters();
+    }
 
     void initItems() {
         getNamedEntityTopic = entityType.getName() + ".get.named";
@@ -65,7 +78,12 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
     @FXML
     private void save() {
         if (name.getText().length() >= 3) {
-            saveAction();
+            if (item == null || !name.getText().equals(item.getName())) {
+                item = supplyNewItem();
+            }
+            fillItemWithValues();
+            bus.send(messages.getProperty("database.save"), getAllResponse,
+                    SaveItem.builder().type(entityType).entity(item).build());
         }
     }
 
@@ -76,7 +94,6 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
     }
 
     void saveNewItem(T item) {
-        bus.send(messages.getProperty("database.save"), getAllResponse, SaveItem.builder().type(entityType).entity(item).build());
     }
 
     void communicateDataChanges() {
@@ -109,8 +126,29 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
         this.item = item;
     }
 
-    void fillItemWithValues(T item) {
-        item.setName(name.getText());
-        item.setSpecialFeatures(specialFeatures.getText());
+    void addConverters() {
+        addConverter(name::getText, Featured::setName);
+        addConverter(specialFeatures::getText, Featured::setSpecialFeatures);
+    }
+
+    @SuppressWarnings("unchecked")
+    <U> void addConverter(Supplier<U> valueFromController, BiConsumer<T, U> itemSetter) {
+        converters.add(new GuiEntityConverter(this::getItem, valueFromController, itemSetter));
+    }
+
+    @SuppressWarnings("unchecked")
+    <U, V> void addConverter(Supplier<U> valueFromController, BiConsumer<T, V> itemSetter, Function<U, V> mapper) {
+        converters.add(new GuiEntityConverter(this::getItem, valueFromController, itemSetter, mapper));
+    }
+
+    @SuppressWarnings("unchecked")
+    <U, V> void addConverter(Supplier<U> valueFromController, BiConsumer<T, V> itemSetter, Function<U, V> mapper, Predicate<T> filter) {
+        converters.add(new GuiEntityConverter(this::getItem, valueFromController, itemSetter, mapper, filter));
+    }
+
+    abstract T supplyNewItem();
+
+    void fillItemWithValues() {
+        converters.stream().filter(GuiEntityConverter::canConvert).forEach(GuiEntityConverter::fill);
     }
 }

@@ -6,6 +6,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import org.apache.commons.lang3.StringUtils;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
+import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.FightingEquipment;
 
@@ -13,6 +15,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class ItemTypePaneController<T extends FightingEquipment> extends CommodityPaneController<T> {
@@ -39,12 +42,26 @@ public abstract class ItemTypePaneController<T extends FightingEquipment> extend
     }
 
     @Override
-    void fillItemWithValues(T item) {
-        super.fillItemWithValues(item);
-        item.setPlacement(placementBox.getValue());
-        item.setNames(langFields.entrySet().stream()
+    void addConverters() {
+        super.addConverters();
+        addConverter(placementBox::getValue, FightingEquipment::setPlacement);
+        addConverter(this::getLangNames, FightingEquipment::setNames);
+    }
+
+    private Map<LangElement, String> getLangNames() {
+        return langFields.entrySet().stream()
                 .filter(entry -> StringUtils.isNoneBlank(entry.getValue().getText()))
-                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getText())));
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getText()));
+    }
+
+    Set<Determinant> getModifiers(Map<DeterminantsType, TextField> modifiers) {
+        return modifiers.entrySet().stream()
+                .filter(entry -> StringUtils.isNoneBlank(entry.getValue().getText()))
+                .map(entry -> {
+                    Determinant determinant = entry.getKey().getDeterminant();
+                    determinant.setBaseValue(Integer.parseInt(entry.getValue().getText()));
+                    return determinant;
+                }).collect(Collectors.toSet());
     }
 
     @Override

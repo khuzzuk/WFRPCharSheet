@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends AbstractWeapon<T> implements Named<String>, HandWeapon, Persistable {
+public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends AbstractWeapon<T> implements Named<String>, HandWeapon {
 
     @Setter
     private Dices dices;
@@ -55,25 +55,6 @@ public abstract class AbstractHandWeapon<T extends WhiteWeaponType> extends Abst
     @JsonIgnore
     public int getOpponentParryMod() {
         return Determinant.getSumForType(getBaseDeterminants(), DeterminantsType.OPPONENT_PARRY);
-    }
-
-    @Override
-    public String toCsv() {
-        List<String> fields = new ArrayList<>();
-        fillCommodityFields(fields);
-        fillWeaponCsvFields(fields);
-        if (dices != null) {
-            fields.add(dices.name());
-        } else {
-            fields.add("");
-        }
-        if (rolls != 0) {
-            fields.add(rolls + "");
-        } else {
-            fields.add("");
-        }
-        fields.add("");
-        return fields.stream().collect(Collectors.joining(";"));
     }
 
     public abstract void setBaseType(T baseType);

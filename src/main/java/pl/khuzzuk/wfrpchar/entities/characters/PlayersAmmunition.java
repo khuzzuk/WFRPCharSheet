@@ -1,10 +1,11 @@
 package pl.khuzzuk.wfrpchar.entities.characters;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
@@ -12,14 +13,19 @@ import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.Ammo;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Ammunition;
+import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
 import java.util.Collection;
 import java.util.Set;
 
 @Getter
 @Setter
-public class PlayersAmmunition implements Ammo, Documented, Named<String> {
-    private long id;
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.IntSequenceGenerator.class,
+        property = "id",
+        resolver = TypeIdResolver.class,
+        scope = PlayersAmmunition.class)
+public class PlayersAmmunition implements Ammo, Named<String> {
     @JsonIdentityReference(alwaysAsId = true)
     private Ammunition ammunition;
     private int count;
@@ -104,11 +110,6 @@ public class PlayersAmmunition implements Ammo, Documented, Named<String> {
     @JsonIgnore
     public Collection<Determinant> getBaseDeterminants() {
         return ammunition.getBaseDeterminants();
-    }
-
-    @Override
-    public String toCsv() {
-        return getName() + ":" + getCount();
     }
 
     @Override

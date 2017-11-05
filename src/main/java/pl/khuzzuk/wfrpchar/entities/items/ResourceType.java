@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import pl.khuzzuk.wfrpchar.entities.Documented;
 import pl.khuzzuk.wfrpchar.entities.Named;
-import pl.khuzzuk.wfrpchar.entities.Persistable;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
@@ -18,23 +16,17 @@ import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 @Getter
 @Setter
 @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
+        generator = ObjectIdGenerators.IntSequenceGenerator.class,
         property = "id",
         resolver = TypeIdResolver.class,
         scope = ResourceType.class)
-public class ResourceType implements Named<String>, Commodity, Persistable, Documented {
-    private long id;
+public class ResourceType implements Named<String>, Commodity {
     private String name;
     private int strengthMod;
     private int priceMod;
     private SubstanceType substanceType;
     private Accessibility accessibility;
     private String specialFeatures;
-
-    public String toCsv() {
-        return  name + ";" + strengthMod + ";" + priceMod + ";" + substanceType.name() + ";" +
-                accessibility.name() + ";" + specialFeatures;
-    }
 
     @Override
     @JsonIgnore

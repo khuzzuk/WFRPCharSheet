@@ -325,6 +325,11 @@ public class PlayerPaneController extends ItemsListedController<Player> {
         }
     }
 
+    @Override
+    Player supplyNewItem() {
+        return new Player();
+    }
+
     @FXML
     void clear() {
         name.clear();
@@ -379,8 +384,6 @@ public class PlayerPaneController extends ItemsListedController<Player> {
                         .collect(Collectors.joining("|")))
                 .add(getFightingEquipment().stream().map(Named::getName)
                         .collect(Collectors.joining("|")))
-                .add(ammunition.getItems().stream()
-                        .map(PlayersAmmunition::toCsv).collect(Collectors.joining("|")))
                 .add(ListViewHandler.getFromList(skills))
                 .add(getPriceFromFields())
                 .add(spells.getItems().stream().map(Named::getName).collect(Collectors.joining("|")))

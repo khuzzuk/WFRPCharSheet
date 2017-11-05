@@ -11,6 +11,7 @@ import pl.khuzzuk.wfrpchar.gui.FloatNumeric;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public abstract class ItemsListedController<T extends Featured> extends EntitiesListedController<T> {
@@ -32,7 +33,7 @@ public abstract class ItemsListedController<T extends Featured> extends Entities
     @FXML
     void clear() {
         super.clear();
-        weight.clear();
+        Optional.ofNullable(weight).ifPresent(TextField::clear);
         gold.clear();
         silver.clear();
         lead.clear();
@@ -54,7 +55,7 @@ public abstract class ItemsListedController<T extends Featured> extends Entities
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeValidation();
+        super.initialize(location, resources);
         ComboBoxHandler.fillWithEnums(Accessibility.SET, accessibility);
     }
 

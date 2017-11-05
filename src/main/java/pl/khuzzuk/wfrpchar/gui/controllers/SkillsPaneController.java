@@ -38,6 +38,11 @@ public class SkillsPaneController extends AbstractFeaturedController<Skill> {
     }
 
     @Override
+    Skill supplyNewItem() {
+        return new Skill();
+    }
+
+    @Override
     void saveAction() {
         List<String> fields = new ArrayList<>();
         fields.add(name.getText());

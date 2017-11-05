@@ -17,14 +17,6 @@ public class Ammunition extends AbstractWeapon<AmmunitionType> implements Battle
     private AmmunitionType baseType;
 
     @Override
-    public String toCsv() {
-        List<String> fields = new ArrayList<>();
-        fillCommodityFields(fields);
-        fillWeaponCsvFields(fields);
-        return fields.stream().collect(Collectors.joining(";"));
-    }
-
-    @Override
     @JsonIgnore
     public Placement getPlacement() {
         return baseType.getPlacement();

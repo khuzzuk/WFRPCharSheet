@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractHandWeapon;
+import pl.khuzzuk.wfrpchar.entities.items.usable.OneHandedWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 import pl.khuzzuk.wfrpchar.rules.Dices;
@@ -65,6 +66,12 @@ public class HandWeaponsPaneController extends AbstractWeaponController<Abstract
         super.loadItem(weapon);
         ComboBoxHandler.selectOrEmpty(dices, weapon.getDices());
         loadToInternalEditor(weapon);
+    }
+
+    @Override
+    AbstractHandWeapon<? extends WhiteWeaponType> supplyNewItem() {
+        //TODO change that! Use OneHandedWeapon.getFromPlacement() instaed, but placement is in base type.
+        return new OneHandedWeapon();
     }
 
     @Override
