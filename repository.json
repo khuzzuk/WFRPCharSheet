@@ -4,7 +4,7 @@
       "java.util.ArrayList",
       [
         {
-          "id": 8,
+          "id": 1,
           "name": "Prowiant dzienny",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -17,7 +17,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 9,
+          "id": 2,
           "name": "Koc",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -30,7 +30,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 10,
+          "id": 3,
           "name": "Płótno",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -43,7 +43,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 11,
+          "id": 4,
           "name": "Pas",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -56,7 +56,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 12,
+          "id": 5,
           "name": "Przybory krawieckie",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -69,7 +69,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 13,
+          "id": 6,
           "name": "Plecak",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -82,7 +82,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 14,
+          "id": 7,
           "name": "Beczka",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -95,7 +95,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 15,
+          "id": 8,
           "name": "Koszyk",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -108,7 +108,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 16,
+          "id": 9,
           "name": "Butelka",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -121,7 +121,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 17,
+          "id": 10,
           "name": "Wiadro",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -134,7 +134,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 18,
+          "id": 11,
           "name": "Skrzynia",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -147,7 +147,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 19,
+          "id": 12,
           "name": "Dzban",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -160,7 +160,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 20,
+          "id": 13,
           "name": "Kubek",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -173,7 +173,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 21,
+          "id": 14,
           "name": "Garnek",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -186,7 +186,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 22,
+          "id": 15,
           "name": "Półmisek",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -199,7 +199,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 23,
+          "id": 16,
           "name": "Bukłak",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -212,7 +212,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 24,
+          "id": 17,
           "name": "Łom",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -225,7 +225,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 25,
+          "id": 18,
           "name": "Łańcuch 3m",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -238,7 +238,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 26,
+          "id": 19,
           "name": "Młotek",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -251,7 +251,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 27,
+          "id": 20,
           "name": "Drabina 3m",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -264,7 +264,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 28,
+          "id": 21,
           "name": "Kilof",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -277,7 +277,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 29,
+          "id": 22,
           "name": "Tłuczek",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -290,7 +290,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 30,
+          "id": 23,
           "name": "Słup 3m",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -303,7 +303,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 31,
+          "id": 24,
           "name": "Taran",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -316,7 +316,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 32,
+          "id": 25,
           "name": "Lina 10m",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -329,7 +329,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 33,
+          "id": 26,
           "name": "Lina jedwabna 10m",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -342,7 +342,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 34,
+          "id": 27,
           "name": "Lina jedwabna pajęcza 10m",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -355,7 +355,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 35,
+          "id": 28,
           "name": "Łopata",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -368,7 +368,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 36,
+          "id": 29,
           "name": "Osełka",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -381,7 +381,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 37,
+          "id": 30,
           "name": "Lupa",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -394,7 +394,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 38,
+          "id": 31,
           "name": "Trucizna",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -407,7 +407,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 39,
+          "id": 32,
           "name": "Antidotum",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -420,7 +420,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 40,
+          "id": 33,
           "name": "Pusty flakonik",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -433,7 +433,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 41,
+          "id": 34,
           "name": "Mydło",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -446,7 +446,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 42,
+          "id": 35,
           "name": "Mapa",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -459,7 +459,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 43,
+          "id": 36,
           "name": "Zwój",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -472,7 +472,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 44,
+          "id": 37,
           "name": "Tusz",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -485,7 +485,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 45,
+          "id": 38,
           "name": "Pióro do pisania",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -498,7 +498,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 46,
+          "id": 39,
           "name": "Karta papierowa",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -511,7 +511,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 47,
+          "id": 40,
           "name": "Pergamin",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -524,7 +524,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 48,
+          "id": 41,
           "name": "Wosk pieczętny",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -537,7 +537,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 49,
+          "id": 42,
           "name": "Dzwonek",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -550,7 +550,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 50,
+          "id": 43,
           "name": "Kolczatka",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -563,7 +563,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 51,
+          "id": 44,
           "name": "Świeczka",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -576,7 +576,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 52,
+          "id": 45,
           "name": "Drewno opałowe (1 ognisko)",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -589,7 +589,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 53,
+          "id": 46,
           "name": "Hubka i krzesiwo",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -602,7 +602,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 54,
+          "id": 47,
           "name": "Haczyk wędkarski",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -615,7 +615,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 55,
+          "id": 48,
           "name": "Sieć wędkarska",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -628,7 +628,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 56,
+          "id": 49,
           "name": "Hak na line",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -641,7 +641,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 57,
+          "id": 50,
           "name": "Lampa",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -654,7 +654,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 58,
+          "id": 51,
           "name": "Latarnia",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -667,7 +667,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 59,
+          "id": 52,
           "name": "Zamek prosty",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -680,7 +680,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 60,
+          "id": 53,
           "name": "Zamek zwykly",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -693,7 +693,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 61,
+          "id": 54,
           "name": "Zamek dobry",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -706,7 +706,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 62,
+          "id": 55,
           "name": "Zamek specjalistyczny",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -719,7 +719,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 63,
+          "id": 56,
           "name": "Kajdany",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -732,7 +732,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 64,
+          "id": 57,
           "name": "Kajdany doskonałe",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -745,7 +745,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 65,
+          "id": 58,
           "name": "Lustro",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -758,7 +758,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 66,
+          "id": 59,
           "name": "Siodło",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -771,7 +771,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 67,
+          "id": 60,
           "name": "Gwizdek",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -784,7 +784,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 68,
+          "id": 61,
           "name": "Pierścień",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -797,7 +797,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 69,
+          "id": 62,
           "name": "Sanie",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -810,7 +810,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 70,
+          "id": 63,
           "name": "Luneta",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -823,7 +823,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 71,
+          "id": 64,
           "name": "Namiot",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -836,7 +836,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 72,
+          "id": 65,
           "name": "Szałas",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -849,7 +849,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 73,
+          "id": 66,
           "name": "Pochodnia",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -862,7 +862,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 74,
+          "id": 67,
           "name": "Klepsydra",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -875,7 +875,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 75,
+          "id": 68,
           "name": "Nafta 1l",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -888,7 +888,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 76,
+          "id": 69,
           "name": "Substancje łatwopalne",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -901,7 +901,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 77,
+          "id": 70,
           "name": "Zestaw alchemiczny",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -914,7 +914,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 78,
+          "id": 71,
           "name": "Narzędzia rzeźbiarskie",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -927,7 +927,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 79,
+          "id": 72,
           "name": "Narzędzia rzeźbiarskie mistrzowskie",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -940,7 +940,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 80,
+          "id": 73,
           "name": "Zestaw alpinistyczny",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -953,7 +953,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 81,
+          "id": 74,
           "name": "Zestaw do kamuflazu",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -966,7 +966,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 82,
+          "id": 75,
           "name": "Apteczka",
           "type": "MISC_ITEM",
           "weight": 0.0,
@@ -979,7 +979,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 83,
+          "id": 76,
           "name": "Siarka",
           "type": "MISC_ITEM",
           "weight": 0.1,
@@ -997,7 +997,7 @@
       "java.util.ArrayList",
       [
         {
-          "id": 97,
+          "id": 77,
           "name": "Strzała",
           "type": "AMMO",
           "weight": 0.1,
@@ -1020,7 +1020,7 @@
           ]
         },
         {
-          "id": 98,
+          "id": 78,
           "name": "Bełt",
           "type": "AMMO",
           "weight": 0.05,
@@ -1043,7 +1043,7 @@
           ]
         },
         {
-          "id": 99,
+          "id": 79,
           "name": "Śrut",
           "type": "AMMO",
           "weight": 0.05,
@@ -1071,7 +1071,7 @@
       "java.util.ArrayList",
       [
         {
-          "id": 96,
+          "id": 80,
           "name": "Skórzany kaptur",
           "type": "ARMOR",
           "weight": 0.1,
@@ -1102,7 +1102,7 @@
       "java.util.ArrayList",
       [
         {
-          "id": 95,
+          "id": 81,
           "name": "Krótki łuk",
           "type": "RANGED_WEAPON",
           "weight": 0.75,
@@ -1130,6 +1130,66 @@
           "effectiveRange": 32,
           "maximumRange": 150,
           "reloadTime": "WITH_SHOOTING"
+        },
+        {
+          "id": 82,
+          "name": "Długi łuk",
+          "type": "RANGED_WEAPON",
+          "weight": 1.25,
+          "price": {
+            "gold": 9,
+            "silver": 0,
+            "lead": 0
+          },
+          "accessibility": "COMMON",
+          "specialFeatures": "",
+          "strength": 1,
+          "placement": "TWO_HANDS",
+          "determinants": [
+            "java.util.HashSet",
+            []
+          ],
+          "names": [
+            "java.util.HashMap",
+            {
+              "ABLATIVE": "Długim łukiem"
+            }
+          ],
+          "typeName": "łuk",
+          "shortRange": 32,
+          "effectiveRange": 64,
+          "maximumRange": 300,
+          "reloadTime": "WITH_SHOOTING"
+        },
+        {
+          "id": 83,
+          "name": "Kusza jednoręczna",
+          "type": "RANGED_WEAPON",
+          "weight": 0.75,
+          "price": {
+            "gold": 12,
+            "silver": 0,
+            "lead": 0
+          },
+          "accessibility": "COMMON",
+          "specialFeatures": "",
+          "strength": 0,
+          "placement": "TWO_HANDS",
+          "determinants": [
+            "java.util.HashSet",
+            []
+          ],
+          "names": [
+            "java.util.HashMap",
+            {
+              "ABLATIVE": "Kuszą"
+            }
+          ],
+          "typeName": "kusza",
+          "shortRange": 16,
+          "effectiveRange": 32,
+          "maximumRange": 100,
+          "reloadTime": "ROUND"
         }
       ]
     ],
@@ -1213,7 +1273,7 @@
         [
           "pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType",
           {
-            "id": 87,
+            "id": 86,
             "name": "Długi miecz",
             "type": "WEAPON",
             "weight": 1.1,
@@ -1256,7 +1316,7 @@
         [
           "pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType",
           {
-            "id": 89,
+            "id": 87,
             "name": "Półtorak",
             "type": "WEAPON",
             "weight": 1.6,
@@ -1312,8 +1372,8 @@
                 [
                   "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
                   {
-                    "type": "INITIATIVE",
-                    "baseValue": -10,
+                    "type": "PARRY",
+                    "baseValue": 10,
                     "extensions": [
                       "java.util.ArrayList",
                       []
@@ -1323,8 +1383,8 @@
                 [
                   "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
                   {
-                    "type": "PARRY",
-                    "baseValue": 10,
+                    "type": "INITIATIVE",
+                    "baseValue": -10,
                     "extensions": [
                       "java.util.ArrayList",
                       []
@@ -1338,7 +1398,7 @@
         [
           "pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType",
           {
-            "id": 94,
+            "id": 88,
             "name": "Maczuga",
             "type": "WEAPON",
             "weight": 1.0,
@@ -1369,7 +1429,7 @@
         [
           "pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType",
           {
-            "id": 100,
+            "id": 89,
             "name": "Sztylet",
             "type": "WEAPON",
             "weight": 0.1,
@@ -1423,7 +1483,7 @@
         [
           "pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType",
           {
-            "id": 103,
+            "id": 90,
             "name": "Korbacz",
             "type": "WEAPON",
             "weight": 1.25,
@@ -1466,7 +1526,7 @@
         [
           "pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType",
           {
-            "id": 105,
+            "id": 91,
             "name": "Improwizowana",
             "type": "WEAPON",
             "weight": 1.0,
@@ -1496,7 +1556,7 @@
                 [
                   "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
                   {
-                    "type": "PARRY",
+                    "type": "OPPONENT_PARRY",
                     "baseValue": 10,
                     "extensions": [
                       "java.util.ArrayList",
@@ -1507,7 +1567,7 @@
                 [
                   "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
                   {
-                    "type": "OPPONENT_PARRY",
+                    "type": "PARRY",
                     "baseValue": 10,
                     "extensions": [
                       "java.util.ArrayList",
@@ -1531,7 +1591,7 @@
         [
           "pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType",
           {
-            "id": 109,
+            "id": 92,
             "name": "Topór obosieczny",
             "type": "WEAPON",
             "weight": 1.0,
@@ -1550,7 +1610,7 @@
                 [
                   "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
                   {
-                    "type": "OPPONENT_PARRY",
+                    "type": "PARRY",
                     "baseValue": -10,
                     "extensions": [
                       "java.util.ArrayList",
@@ -1561,7 +1621,7 @@
                 [
                   "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
                   {
-                    "type": "PARRY",
+                    "type": "OPPONENT_PARRY",
                     "baseValue": -10,
                     "extensions": [
                       "java.util.ArrayList",
@@ -1596,7 +1656,7 @@
         [
           "pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType",
           {
-            "id": 113,
+            "id": 93,
             "name": "Włócznia",
             "type": "WEAPON",
             "weight": 1.0,
@@ -1626,8 +1686,8 @@
                 [
                   "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
                   {
-                    "type": "PARRY",
-                    "baseValue": -10,
+                    "type": "INITIATIVE",
+                    "baseValue": 10,
                     "extensions": [
                       "java.util.ArrayList",
                       []
@@ -1637,8 +1697,8 @@
                 [
                   "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
                   {
-                    "type": "INITIATIVE",
-                    "baseValue": 10,
+                    "type": "PARRY",
+                    "baseValue": -10,
                     "extensions": [
                       "java.util.ArrayList",
                       []
@@ -1661,7 +1721,7 @@
         [
           "pl.khuzzuk.wfrpchar.entities.items.types.OneHandedWeaponType",
           {
-            "id": 117,
+            "id": 94,
             "name": "Rapier",
             "type": "WEAPON",
             "weight": 0.5,
@@ -1680,8 +1740,8 @@
                 [
                   "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
                   {
-                    "type": "INITIATIVE",
-                    "baseValue": 20,
+                    "type": "OPPONENT_PARRY",
+                    "baseValue": -10,
                     "extensions": [
                       "java.util.ArrayList",
                       []
@@ -1702,8 +1762,8 @@
                 [
                   "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
                   {
-                    "type": "OPPONENT_PARRY",
-                    "baseValue": -10,
+                    "type": "INITIATIVE",
+                    "baseValue": 20,
                     "extensions": [
                       "java.util.ArrayList",
                       []
@@ -1729,7 +1789,7 @@
       "java.util.ArrayList",
       [
         {
-          "id": 121,
+          "id": 1,
           "name": "Skóra",
           "strengthMod": 25,
           "priceMod": 20,
@@ -1738,7 +1798,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 122,
+          "id": 2,
           "name": "Drewno",
           "strengthMod": 33,
           "priceMod": 25,
@@ -1747,7 +1807,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 123,
+          "id": 3,
           "name": "Żelazo",
           "strengthMod": 100,
           "priceMod": 100,
@@ -1756,7 +1816,7 @@
           "specialFeatures": ""
         },
         {
-          "id": 124,
+          "id": 4,
           "name": "Stal",
           "strengthMod": 120,
           "priceMod": 125,
@@ -1772,7 +1832,7 @@
       "java.util.ArrayList",
       [
         {
-          "id": 131,
+          "id": 95,
           "name": "Kołczan strzał",
           "accessibility": "COMMON",
           "basePrice": {
@@ -1781,9 +1841,13 @@
             "lead": 0
           },
           "specialFeatures": "",
-          "primaryResource": 122,
-          "secondaryResource": 122,
-          "baseType": 97
+          "primaryResource": 2,
+          "secondaryResource": 2,
+          "determinants": [
+            "java.util.HashSet",
+            []
+          ],
+          "baseType": 77
         }
       ]
     ],
@@ -1804,12 +1868,12 @@
     "java.util.ArrayList",
     [
       {
-        "id": 349,
+        "id": 1,
         "name": "Wojenna",
         "description": "podstawowa"
       },
       {
-        "id": 350,
+        "id": 2,
         "name": "Elementalna",
         "description": "żywiołów"
       }
@@ -1819,16 +1883,16 @@
     "java.util.ArrayList",
     [
       {
-        "id": 351,
+        "id": 1,
         "name": "Kula ognia",
         "castTime": "ROUND",
         "magicCost": 1,
-        "school": 350,
+        "school": 2,
         "level": 1,
         "ingredients": [
           "java.util.HashSet",
           [
-            83
+            76
           ]
         ],
         "description": "Tworzy kulę ognia zadająco k5 obrażeń"
@@ -1839,7 +1903,7 @@
     "java.util.ArrayList",
     [
       {
-        "id": 132,
+        "id": 1,
         "name": "Akrobatyka",
         "determinants": [
           "java.util.HashSet",
@@ -1860,7 +1924,7 @@
         "specialFeatures": "Pozwala na specjalne akcje związane ze zręcznością"
       },
       {
-        "id": 134,
+        "id": 2,
         "name": "Aktorstwo",
         "determinants": [
           "java.util.HashSet",
@@ -1869,7 +1933,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 135,
+        "id": 3,
         "name": "Astronomia",
         "determinants": [
           "java.util.HashSet",
@@ -1878,7 +1942,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 136,
+        "id": 4,
         "name": "Bardzo silny",
         "determinants": [
           "java.util.HashSet",
@@ -1887,7 +1951,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 137,
+        "id": 5,
         "name": "Bardzo szybki",
         "determinants": [
           "java.util.HashSet",
@@ -1896,7 +1960,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 138,
+        "id": 6,
         "name": "Bardzo wytrzymały",
         "determinants": [
           "java.util.HashSet",
@@ -1905,7 +1969,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 139,
+        "id": 7,
         "name": "Bijatyka",
         "determinants": [
           "java.util.HashSet",
@@ -1914,7 +1978,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 140,
+        "id": 8,
         "name": "Błazonowanie",
         "determinants": [
           "java.util.HashSet",
@@ -1923,7 +1987,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 141,
+        "id": 9,
         "name": "Blefowanie",
         "determinants": [
           "java.util.HashSet",
@@ -1932,7 +1996,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 142,
+        "id": 10,
         "name": "Błyskotliwość",
         "determinants": [
           "java.util.HashSet",
@@ -1941,7 +2005,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 143,
+        "id": 11,
         "name": "Brzuchomówstwo",
         "determinants": [
           "java.util.HashSet",
@@ -1950,7 +2014,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 144,
+        "id": 12,
         "name": "Bystry wzrok",
         "determinants": [
           "java.util.HashSet",
@@ -1959,7 +2023,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 145,
+        "id": 13,
         "name": "Celne strzelanie",
         "determinants": [
           "java.util.HashSet",
@@ -1968,7 +2032,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 146,
+        "id": 14,
         "name": "Celny cios",
         "determinants": [
           "java.util.HashSet",
@@ -1977,7 +2041,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 147,
+        "id": 15,
         "name": "Charakteryzacja",
         "determinants": [
           "java.util.HashSet",
@@ -1986,7 +2050,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 148,
+        "id": 16,
         "name": "Chemia",
         "determinants": [
           "java.util.HashSet",
@@ -1995,7 +2059,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 149,
+        "id": 17,
         "name": "Chiromancja",
         "determinants": [
           "java.util.HashSet",
@@ -2004,7 +2068,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 150,
+        "id": 18,
         "name": "Chirurgia",
         "determinants": [
           "java.util.HashSet",
@@ -2013,7 +2077,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 151,
+        "id": 19,
         "name": "Cichy chód na wsi",
         "determinants": [
           "java.util.HashSet",
@@ -2022,7 +2086,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 152,
+        "id": 20,
         "name": "Cichy chód w mieście",
         "determinants": [
           "java.util.HashSet",
@@ -2031,7 +2095,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 153,
+        "id": 21,
         "name": "Człowiek-guma",
         "determinants": [
           "java.util.HashSet",
@@ -2040,7 +2104,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 154,
+        "id": 22,
         "name": "Czuły słuch",
         "determinants": [
           "java.util.HashSet",
@@ -2049,7 +2113,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 155,
+        "id": 23,
         "name": "Czytanie z warg",
         "determinants": [
           "java.util.HashSet",
@@ -2058,7 +2122,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 156,
+        "id": 24,
         "name": "Czytanie/pisanie",
         "determinants": [
           "java.util.HashSet",
@@ -2067,7 +2131,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 157,
+        "id": 25,
         "name": "Dyplomacja",
         "determinants": [
           "java.util.HashSet",
@@ -2076,7 +2140,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 158,
+        "id": 26,
         "name": "Defraudacja",
         "determinants": [
           "java.util.HashSet",
@@ -2085,7 +2149,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 159,
+        "id": 27,
         "name": "Doliniarstwo",
         "determinants": [
           "java.util.HashSet",
@@ -2094,7 +2158,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 160,
+        "id": 28,
         "name": "Empatia",
         "determinants": [
           "java.util.HashSet",
@@ -2103,7 +2167,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 161,
+        "id": 29,
         "name": "Etykieta",
         "determinants": [
           "java.util.HashSet",
@@ -2112,7 +2176,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 162,
+        "id": 30,
         "name": "Farmacja",
         "determinants": [
           "java.util.HashSet",
@@ -2121,7 +2185,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 163,
+        "id": 31,
         "name": "Gadanina",
         "determinants": [
           "java.util.HashSet",
@@ -2130,7 +2194,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 164,
+        "id": 32,
         "name": "Gawędziarstwo",
         "determinants": [
           "java.util.HashSet",
@@ -2139,7 +2203,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 165,
+        "id": 33,
         "name": "Geniusz arytmetyczny",
         "determinants": [
           "java.util.HashSet",
@@ -2148,7 +2212,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 166,
+        "id": 34,
         "name": "Gotowanie",
         "determinants": [
           "java.util.HashSet",
@@ -2157,7 +2221,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 167,
+        "id": 35,
         "name": "Górnictwo",
         "determinants": [
           "java.util.HashSet",
@@ -2166,7 +2230,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 168,
+        "id": 36,
         "name": "Heraldyka",
         "determinants": [
           "java.util.HashSet",
@@ -2175,7 +2239,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 169,
+        "id": 37,
         "name": "Hipnoza",
         "determinants": [
           "java.util.HashSet",
@@ -2184,7 +2248,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 170,
+        "id": 38,
         "name": "Historia",
         "determinants": [
           "java.util.HashSet",
@@ -2193,7 +2257,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 171,
+        "id": 39,
         "name": "Inżynieria",
         "determinants": [
           "java.util.HashSet",
@@ -2202,7 +2266,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 172,
+        "id": 40,
         "name": "Jeździectwo",
         "determinants": [
           "java.util.HashSet",
@@ -2211,7 +2275,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 173,
+        "id": 41,
         "name": "Język tajemny – demoniczny",
         "determinants": [
           "java.util.HashSet",
@@ -2220,7 +2284,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 174,
+        "id": 42,
         "name": "Język tajemny – druidyczny",
         "determinants": [
           "java.util.HashSet",
@@ -2229,7 +2293,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 175,
+        "id": 43,
         "name": "Język tajemny – elfi",
         "determinants": [
           "java.util.HashSet",
@@ -2238,7 +2302,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 176,
+        "id": 44,
         "name": "Język tajemny – krasnoludzki",
         "determinants": [
           "java.util.HashSet",
@@ -2247,7 +2311,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 177,
+        "id": 45,
         "name": "Język tajemny – magiczny",
         "determinants": [
           "java.util.HashSet",
@@ -2256,7 +2320,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 178,
+        "id": 46,
         "name": "Język tajemny – Stary Slann",
         "determinants": [
           "java.util.HashSet",
@@ -2265,7 +2329,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 179,
+        "id": 47,
         "name": "Jubilerstwo",
         "determinants": [
           "java.util.HashSet",
@@ -2274,7 +2338,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 180,
+        "id": 48,
         "name": "Kamieniarstwo",
         "determinants": [
           "java.util.HashSet",
@@ -2283,7 +2347,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 181,
+        "id": 49,
         "name": "Kartografia",
         "determinants": [
           "java.util.HashSet",
@@ -2292,7 +2356,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 182,
+        "id": 50,
         "name": "Komedianctwo",
         "determinants": [
           "java.util.HashSet",
@@ -2301,7 +2365,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 183,
+        "id": 51,
         "name": "Kowalstwo",
         "determinants": [
           "java.util.HashSet",
@@ -2310,7 +2374,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 184,
+        "id": 52,
         "name": "Krasomówstwo",
         "determinants": [
           "java.util.HashSet",
@@ -2319,7 +2383,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 185,
+        "id": 53,
         "name": "Krawiectwo",
         "determinants": [
           "java.util.HashSet",
@@ -2328,7 +2392,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 186,
+        "id": 54,
         "name": "Kryptografia",
         "determinants": [
           "java.util.HashSet",
@@ -2337,7 +2401,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 187,
+        "id": 55,
         "name": "Leczenie chorób",
         "determinants": [
           "java.util.HashSet",
@@ -2346,7 +2410,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 188,
+        "id": 56,
         "name": "Leczenie ran",
         "determinants": [
           "java.util.HashSet",
@@ -2355,7 +2419,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 189,
+        "id": 57,
         "name": "Łowiectwo",
         "determinants": [
           "java.util.HashSet",
@@ -2364,7 +2428,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 190,
+        "id": 58,
         "name": "Medytacja",
         "determinants": [
           "java.util.HashSet",
@@ -2373,7 +2437,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 191,
+        "id": 59,
         "name": "Metalurgia",
         "determinants": [
           "java.util.HashSet",
@@ -2382,7 +2446,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 192,
+        "id": 60,
         "name": "Mimika",
         "determinants": [
           "java.util.HashSet",
@@ -2391,7 +2455,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 193,
+        "id": 61,
         "name": "Mocna głowa",
         "determinants": [
           "java.util.HashSet",
@@ -2400,7 +2464,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 194,
+        "id": 62,
         "name": "Monetoznawstwo",
         "determinants": [
           "java.util.HashSet",
@@ -2409,7 +2473,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 195,
+        "id": 63,
         "name": "Muzykalność",
         "determinants": [
           "java.util.HashSet",
@@ -2418,7 +2482,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 196,
+        "id": 64,
         "name": "Naśladownictwo",
         "determinants": [
           "java.util.HashSet",
@@ -2427,7 +2491,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 197,
+        "id": 65,
         "name": "Oburęczność",
         "determinants": [
           "java.util.HashSet",
@@ -2436,7 +2500,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 198,
+        "id": 66,
         "name": "Odporność na choroby",
         "determinants": [
           "java.util.HashSet",
@@ -2445,7 +2509,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 199,
+        "id": 67,
         "name": "Odporność na trucizny",
         "determinants": [
           "java.util.HashSet",
@@ -2454,7 +2518,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 200,
+        "id": 68,
         "name": "Ogłuszenie",
         "determinants": [
           "java.util.HashSet",
@@ -2463,7 +2527,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 201,
+        "id": 69,
         "name": "Opanowanie runów",
         "determinants": [
           "java.util.HashSet",
@@ -2472,7 +2536,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 202,
+        "id": 70,
         "name": "Opieka nad zwierzętami",
         "determinants": [
           "java.util.HashSet",
@@ -2481,7 +2545,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 203,
+        "id": 71,
         "name": "Otwieranie zamków",
         "determinants": [
           "java.util.HashSet",
@@ -2490,7 +2554,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 204,
+        "id": 72,
         "name": "Piwowarstwo",
         "determinants": [
           "java.util.HashSet",
@@ -2499,7 +2563,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 205,
+        "id": 73,
         "name": "Pływanie",
         "determinants": [
           "java.util.HashSet",
@@ -2508,7 +2572,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 206,
+        "id": 74,
         "name": "Połykanie ognia",
         "determinants": [
           "java.util.HashSet",
@@ -2517,7 +2581,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 207,
+        "id": 75,
         "name": "Posłuch u zwierząt",
         "determinants": [
           "java.util.HashSet",
@@ -2526,7 +2590,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 208,
+        "id": 76,
         "name": "Powożenie",
         "determinants": [
           "java.util.HashSet",
@@ -2535,7 +2599,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 209,
+        "id": 77,
         "name": "Prawo",
         "determinants": [
           "java.util.HashSet",
@@ -2544,7 +2608,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 210,
+        "id": 78,
         "name": "Przekonywanie",
         "determinants": [
           "java.util.HashSet",
@@ -2553,7 +2617,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 211,
+        "id": 79,
         "name": "Przekupstwo",
         "determinants": [
           "java.util.HashSet",
@@ -2562,7 +2626,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 212,
+        "id": 80,
         "name": "Rozbrajanie",
         "determinants": [
           "java.util.HashSet",
@@ -2571,7 +2635,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 213,
+        "id": 81,
         "name": "Rozpoznawanie magicznych przedmiotów",
         "determinants": [
           "java.util.HashSet",
@@ -2580,7 +2644,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 214,
+        "id": 82,
         "name": "Rozpoznawanie ożywienców",
         "determinants": [
           "java.util.HashSet",
@@ -2589,7 +2653,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 215,
+        "id": 83,
         "name": "Rozpoznawanie roślin",
         "determinants": [
           "java.util.HashSet",
@@ -2598,7 +2662,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 216,
+        "id": 84,
         "name": "Rozpoznawanie runów",
         "determinants": [
           "java.util.HashSet",
@@ -2607,7 +2671,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 217,
+        "id": 85,
         "name": "Różdżkarstwo",
         "determinants": [
           "java.util.HashSet",
@@ -2616,7 +2680,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 218,
+        "id": 86,
         "name": "Rybactwo",
         "determinants": [
           "java.util.HashSet",
@@ -2625,7 +2689,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 219,
+        "id": 87,
         "name": "Rzucanie czarów",
         "determinants": [
           "java.util.HashSet",
@@ -2634,7 +2698,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 220,
+        "id": 88,
         "name": "Sekretne znaki druidów",
         "determinants": [
           "java.util.HashSet",
@@ -2643,7 +2707,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 221,
+        "id": 89,
         "name": "Sekretne znaki drwali",
         "determinants": [
           "java.util.HashSet",
@@ -2652,7 +2716,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 222,
+        "id": 90,
         "name": "Sekretne znaki kłusownikow",
         "determinants": [
           "java.util.HashSet",
@@ -2661,7 +2725,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 223,
+        "id": 91,
         "name": "Sekretne znaki krasnoludzkiej gildii inżynierów",
         "determinants": [
           "java.util.HashSet",
@@ -2670,7 +2734,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 224,
+        "id": 92,
         "name": "Sekretne znaki złodziei",
         "determinants": [
           "java.util.HashSet",
@@ -2679,7 +2743,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 225,
+        "id": 93,
         "name": "Sekretne znaki zwiadowcy",
         "determinants": [
           "java.util.HashSet",
@@ -2688,7 +2752,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 226,
+        "id": 94,
         "name": "Serketny język – bitewny",
         "determinants": [
           "java.util.HashSet",
@@ -2697,7 +2761,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 227,
+        "id": 95,
         "name": "Serketny język – gildii",
         "determinants": [
           "java.util.HashSet",
@@ -2706,7 +2770,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 228,
+        "id": 96,
         "name": "Serketny język – klasyczny",
         "determinants": [
           "java.util.HashSet",
@@ -2715,7 +2779,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 229,
+        "id": 97,
         "name": "Serketny język – rangerów",
         "determinants": [
           "java.util.HashSet",
@@ -2724,7 +2788,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 230,
+        "id": 98,
         "name": "Serketny język – złodziei",
         "determinants": [
           "java.util.HashSet",
@@ -2733,7 +2797,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 231,
+        "id": 99,
         "name": "Sfragistyka",
         "determinants": [
           "java.util.HashSet",
@@ -2742,7 +2806,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 232,
+        "id": 100,
         "name": "Silny Cios",
         "determinants": [
           "java.util.HashSet",
@@ -2751,7 +2815,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 233,
+        "id": 101,
         "name": "Siłacz",
         "determinants": [
           "java.util.HashSet",
@@ -2760,7 +2824,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 234,
+        "id": 102,
         "name": "Skoczność",
         "determinants": [
           "java.util.HashSet",
@@ -2769,7 +2833,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 235,
+        "id": 103,
         "name": "Specjalna broń – artyleria",
         "determinants": [
           "java.util.HashSet",
@@ -2778,7 +2842,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 236,
+        "id": 104,
         "name": "Specjalna broń – balista",
         "determinants": [
           "java.util.HashSet",
@@ -2787,7 +2851,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 237,
+        "id": 105,
         "name": "Specjalna broń – bicz",
         "determinants": [
           "java.util.HashSet",
@@ -2796,7 +2860,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 238,
+        "id": 106,
         "name": "Specjalna broń – bomby",
         "determinants": [
           "java.util.HashSet",
@@ -2805,7 +2869,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 239,
+        "id": 107,
         "name": "Specjalna broń – długi łuk",
         "determinants": [
           "java.util.HashSet",
@@ -2814,7 +2878,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 240,
+        "id": 108,
         "name": "Specjalna broń – dmuchawka",
         "determinants": [
           "java.util.HashSet",
@@ -2823,7 +2887,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 241,
+        "id": 109,
         "name": "Specjalna broń – drzewcowa",
         "determinants": [
           "java.util.HashSet",
@@ -2832,7 +2896,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 242,
+        "id": 110,
         "name": "Specjalna broń – dwuręczna",
         "determinants": [
           "java.util.HashSet",
@@ -2841,7 +2905,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 243,
+        "id": 111,
         "name": "Specjalna broń – katapulta",
         "determinants": [
           "java.util.HashSet",
@@ -2850,7 +2914,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 244,
+        "id": 112,
         "name": "Specjalna broń – korbacz",
         "determinants": [
           "java.util.HashSet",
@@ -2859,7 +2923,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 245,
+        "id": 113,
         "name": "Specjalna broń – kusza pistoletowa",
         "determinants": [
           "java.util.HashSet",
@@ -2868,7 +2932,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 246,
+        "id": 114,
         "name": "Specjalna broń – kusza samopowtarzalna",
         "determinants": [
           "java.util.HashSet",
@@ -2877,7 +2941,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 247,
+        "id": 115,
         "name": "Specjalna broń – lanca",
         "determinants": [
           "java.util.HashSet",
@@ -2886,7 +2950,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 248,
+        "id": 116,
         "name": "Specjalna broń – lasso",
         "determinants": [
           "java.util.HashSet",
@@ -2895,7 +2959,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 249,
+        "id": 117,
         "name": "Specjalna broń – nóż rzucany",
         "determinants": [
           "java.util.HashSet",
@@ -2904,7 +2968,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 250,
+        "id": 118,
         "name": "Specjalna broń – palna",
         "determinants": [
           "java.util.HashSet",
@@ -2913,7 +2977,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 251,
+        "id": 119,
         "name": "Specjalna broń – parująca",
         "determinants": [
           "java.util.HashSet",
@@ -2922,7 +2986,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 252,
+        "id": 120,
         "name": "Specjalna broń – proca",
         "determinants": [
           "java.util.HashSet",
@@ -2931,7 +2995,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 253,
+        "id": 121,
         "name": "Specjalna broń – rapier",
         "determinants": [
           "java.util.HashSet",
@@ -2940,7 +3004,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 254,
+        "id": 122,
         "name": "Specjalna broń – rzucana",
         "determinants": [
           "java.util.HashSet",
@@ -2949,7 +3013,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 255,
+        "id": 123,
         "name": "Specjalna broń – sieć",
         "determinants": [
           "java.util.HashSet",
@@ -2958,7 +3022,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 256,
+        "id": 124,
         "name": "Specjalna broń – szermiercza",
         "determinants": [
           "java.util.HashSet",
@@ -2967,7 +3031,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 257,
+        "id": 125,
         "name": "Specjalna broń – uliczna",
         "determinants": [
           "java.util.HashSet",
@@ -2976,7 +3040,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 258,
+        "id": 126,
         "name": "Specjalna broń – zapalająca",
         "determinants": [
           "java.util.HashSet",
@@ -2985,7 +3049,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 259,
+        "id": 127,
         "name": "Specjalna broń: lasso",
         "determinants": [
           "java.util.HashSet",
@@ -2994,7 +3058,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 260,
+        "id": 128,
         "name": "Stolarstwo",
         "determinants": [
           "java.util.HashSet",
@@ -3003,7 +3067,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 261,
+        "id": 129,
         "name": "Szacowanie",
         "determinants": [
           "java.util.HashSet",
@@ -3012,7 +3076,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 262,
+        "id": 130,
         "name": "Szaleńczy atak",
         "determinants": [
           "java.util.HashSet",
@@ -3021,7 +3085,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 263,
+        "id": 131,
         "name": "Szczęscie",
         "determinants": [
           "java.util.HashSet",
@@ -3030,7 +3094,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 264,
+        "id": 132,
         "name": "Szkutnictwo",
         "determinants": [
           "java.util.HashSet",
@@ -3039,7 +3103,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 265,
+        "id": 133,
         "name": "Szósty zmysł",
         "determinants": [
           "java.util.HashSet",
@@ -3048,7 +3112,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 266,
+        "id": 134,
         "name": "Sztuka",
         "determinants": [
           "java.util.HashSet",
@@ -3057,7 +3121,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 267,
+        "id": 135,
         "name": "Sztuka przetrwania",
         "determinants": [
           "java.util.HashSet",
@@ -3066,7 +3130,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 268,
+        "id": 136,
         "name": "Szulerstwo",
         "determinants": [
           "java.util.HashSet",
@@ -3075,7 +3139,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 269,
+        "id": 137,
         "name": "Szybki refleks",
         "determinants": [
           "java.util.HashSet",
@@ -3084,7 +3148,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 270,
+        "id": 138,
         "name": "Szyderstwo",
         "determinants": [
           "java.util.HashSet",
@@ -3093,7 +3157,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 271,
+        "id": 139,
         "name": "Śledzenie",
         "determinants": [
           "java.util.HashSet",
@@ -3102,7 +3166,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 272,
+        "id": 140,
         "name": "Śpiew",
         "determinants": [
           "java.util.HashSet",
@@ -3111,7 +3175,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 273,
+        "id": 141,
         "name": "Taniec",
         "determinants": [
           "java.util.HashSet",
@@ -3120,7 +3184,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 274,
+        "id": 142,
         "name": "Targowanie się",
         "determinants": [
           "java.util.HashSet",
@@ -3129,7 +3193,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 275,
+        "id": 143,
         "name": "Teologia",
         "determinants": [
           "java.util.HashSet",
@@ -3138,7 +3202,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 276,
+        "id": 144,
         "name": "Torturowanie",
         "determinants": [
           "java.util.HashSet",
@@ -3147,7 +3211,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 277,
+        "id": 145,
         "name": "Tresura",
         "determinants": [
           "java.util.HashSet",
@@ -3156,7 +3220,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 278,
+        "id": 146,
         "name": "Tropienie",
         "determinants": [
           "java.util.HashSet",
@@ -3165,7 +3229,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 279,
+        "id": 147,
         "name": "Tworzenie magicznych pergaminów",
         "determinants": [
           "java.util.HashSet",
@@ -3174,7 +3238,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 280,
+        "id": 148,
         "name": "Ucieczka",
         "determinants": [
           "java.util.HashSet",
@@ -3183,7 +3247,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 281,
+        "id": 149,
         "name": "Ukrywanie sie na wsi",
         "determinants": [
           "java.util.HashSet",
@@ -3192,7 +3256,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 282,
+        "id": 150,
         "name": "Ukrywanie sie w mieście",
         "determinants": [
           "java.util.HashSet",
@@ -3201,7 +3265,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 283,
+        "id": 151,
         "name": "Uniki",
         "determinants": [
           "java.util.HashSet",
@@ -3210,7 +3274,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 284,
+        "id": 152,
         "name": "Urok osobisty",
         "determinants": [
           "java.util.HashSet",
@@ -3219,7 +3283,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 285,
+        "id": 153,
         "name": "Uwodzenie",
         "determinants": [
           "java.util.HashSet",
@@ -3228,7 +3292,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 286,
+        "id": 154,
         "name": "Uzdolnienia językowe",
         "determinants": [
           "java.util.HashSet",
@@ -3237,7 +3301,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 287,
+        "id": 155,
         "name": "Warzenie trucizn",
         "determinants": [
           "java.util.HashSet",
@@ -3246,7 +3310,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 288,
+        "id": 156,
         "name": "Widzenie w ciemnościach",
         "determinants": [
           "java.util.HashSet",
@@ -3255,7 +3319,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 289,
+        "id": 157,
         "name": "Wiedza Druidyczna I",
         "determinants": [
           "java.util.HashSet",
@@ -3264,7 +3328,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 290,
+        "id": 158,
         "name": "Wiedza Druidyczna II",
         "determinants": [
           "java.util.HashSet",
@@ -3273,7 +3337,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 291,
+        "id": 159,
         "name": "Wiedza Druidyczna III",
         "determinants": [
           "java.util.HashSet",
@@ -3282,7 +3346,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 292,
+        "id": 160,
         "name": "Wiedza Druidyczna IV",
         "determinants": [
           "java.util.HashSet",
@@ -3291,7 +3355,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 293,
+        "id": 161,
         "name": "Wiedza Druidyczna V",
         "determinants": [
           "java.util.HashSet",
@@ -3300,7 +3364,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 294,
+        "id": 162,
         "name": "Wiedza Druidyczna VI",
         "determinants": [
           "java.util.HashSet",
@@ -3309,7 +3373,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 295,
+        "id": 163,
         "name": "Wiedza Druidyczna VII",
         "determinants": [
           "java.util.HashSet",
@@ -3318,7 +3382,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 296,
+        "id": 164,
         "name": "Wiedza Druidyczna VIII",
         "determinants": [
           "java.util.HashSet",
@@ -3327,7 +3391,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 297,
+        "id": 165,
         "name": "Wiedza Druidyczna IX",
         "determinants": [
           "java.util.HashSet",
@@ -3336,7 +3400,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 298,
+        "id": 166,
         "name": "Wiedza o demonach",
         "determinants": [
           "java.util.HashSet",
@@ -3345,7 +3409,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 299,
+        "id": 167,
         "name": "Wiedza o magicznych pergaminach",
         "determinants": [
           "java.util.HashSet",
@@ -3354,7 +3418,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 300,
+        "id": 168,
         "name": "Wiedza o rzekach",
         "determinants": [
           "java.util.HashSet",
@@ -3363,7 +3427,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 301,
+        "id": 169,
         "name": "Wiosłowanie",
         "determinants": [
           "java.util.HashSet",
@@ -3372,7 +3436,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 302,
+        "id": 170,
         "name": "Woltyżerka",
         "determinants": [
           "java.util.HashSet",
@@ -3381,7 +3445,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 303,
+        "id": 171,
         "name": "Wróżenie",
         "determinants": [
           "java.util.HashSet",
@@ -3390,7 +3454,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 304,
+        "id": 172,
         "name": "Wspinaczka",
         "determinants": [
           "java.util.HashSet",
@@ -3399,7 +3463,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 305,
+        "id": 173,
         "name": "Wyczucie kierunku",
         "determinants": [
           "java.util.HashSet",
@@ -3408,7 +3472,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 306,
+        "id": 174,
         "name": "Wyczucie magicznego alarmu",
         "determinants": [
           "java.util.HashSet",
@@ -3417,7 +3481,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 307,
+        "id": 175,
         "name": "Wykrywanie istot magicznych",
         "determinants": [
           "java.util.HashSet",
@@ -3426,7 +3490,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 308,
+        "id": 176,
         "name": "Wykrywanie magicznych przedmiotów",
         "determinants": [
           "java.util.HashSet",
@@ -3435,7 +3499,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 309,
+        "id": 177,
         "name": "Wykrywanie magii",
         "determinants": [
           "java.util.HashSet",
@@ -3444,7 +3508,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 310,
+        "id": 178,
         "name": "Wykrywanie pulapek",
         "determinants": [
           "java.util.HashSet",
@@ -3453,7 +3517,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 311,
+        "id": 179,
         "name": "Wytwarzanie eliksirów",
         "determinants": [
           "java.util.HashSet",
@@ -3462,7 +3526,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 312,
+        "id": 180,
         "name": "Wyzwalanie się z wiezów",
         "determinants": [
           "java.util.HashSet",
@@ -3471,7 +3535,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 313,
+        "id": 181,
         "name": "Zapasy",
         "determinants": [
           "java.util.HashSet",
@@ -3480,7 +3544,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 314,
+        "id": 182,
         "name": "Zastawianie pułapek",
         "determinants": [
           "java.util.HashSet",
@@ -3489,7 +3553,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 315,
+        "id": 183,
         "name": "Zastraszanie",
         "determinants": [
           "java.util.HashSet",
@@ -3498,7 +3562,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 316,
+        "id": 184,
         "name": "Zielarstwo",
         "determinants": [
           "java.util.HashSet",
@@ -3507,7 +3571,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 317,
+        "id": 185,
         "name": "Znajomość dodatkowego języka",
         "determinants": [
           "java.util.HashSet",
@@ -3516,7 +3580,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 318,
+        "id": 186,
         "name": "Zwinne palce",
         "determinants": [
           "java.util.HashSet",
@@ -3525,7 +3589,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 319,
+        "id": 187,
         "name": "Żebractwo",
         "determinants": [
           "java.util.HashSet",
@@ -3534,7 +3598,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 320,
+        "id": 188,
         "name": "Żeglowanie",
         "determinants": [
           "java.util.HashSet",
@@ -3543,7 +3607,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 321,
+        "id": 189,
         "name": "Żegluga",
         "determinants": [
           "java.util.HashSet",
@@ -3552,7 +3616,7 @@
         "specialFeatures": ""
       },
       {
-        "id": 322,
+        "id": 190,
         "name": "Żonglerka",
         "determinants": [
           "java.util.HashSet",
@@ -3566,7 +3630,7 @@
     "java.util.ArrayList",
     [
       {
-        "id": 323,
+        "id": 1,
         "name": "Wojownik",
         "specialFeatures": "",
         "primaryDeterminant": "BATTLE",
@@ -3576,7 +3640,7 @@
         ]
       },
       {
-        "id": 324,
+        "id": 2,
         "name": "Ranger",
         "specialFeatures": "",
         "primaryDeterminant": "SHOOTING",
@@ -3586,7 +3650,7 @@
         ]
       },
       {
-        "id": 325,
+        "id": 3,
         "name": "Złodziej",
         "specialFeatures": "",
         "primaryDeterminant": "DEXTERITY",
@@ -3596,7 +3660,7 @@
         ]
       },
       {
-        "id": 326,
+        "id": 4,
         "name": "Uczony",
         "specialFeatures": "",
         "primaryDeterminant": "INTELLIGENCE",
@@ -3611,18 +3675,18 @@
     "java.util.ArrayList",
     [
       {
-        "id": 327,
+        "id": 1,
         "name": "Aptekarz",
         "specialFeatures": "",
         "skills": [
           "java.util.HashSet",
           [
-            148,
-            162,
-            187,
-            287,
-            199,
-            188
+            16,
+            30,
+            55,
+            155,
+            67,
+            56
           ]
         ],
         "nextProfessions": [
@@ -3632,25 +3696,6 @@
         "determinants": [
           "java.util.HashSet",
           [
-            [
-              "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
-              {
-                "type": "INTELLIGENCE",
-                "baseValue": 0,
-                "extensions": [
-                  "java.util.ArrayList",
-                  [
-                    [
-                      "pl.khuzzuk.wfrpchar.entities.determinants.ProfessionExtension",
-                      {
-                        "expSequence": 1,
-                        "modifier": 10
-                      }
-                    ]
-                  ]
-                ]
-              }
-            ],
             [
               "pl.khuzzuk.wfrpchar.entities.determinants.AbsoluteDeterminant",
               {
@@ -3673,6 +3718,25 @@
             [
               "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
               {
+                "type": "INTELLIGENCE",
+                "baseValue": 0,
+                "extensions": [
+                  "java.util.ArrayList",
+                  [
+                    [
+                      "pl.khuzzuk.wfrpchar.entities.determinants.ProfessionExtension",
+                      {
+                        "expSequence": 1,
+                        "modifier": 10
+                      }
+                    ]
+                  ]
+                ]
+              }
+            ],
+            [
+              "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
+              {
                 "type": "DEXTERITY",
                 "baseValue": 0,
                 "extensions": [
@@ -3691,7 +3755,7 @@
             ]
           ]
         ],
-        "professionClass": 326
+        "professionClass": 4
       }
     ]
   ],
@@ -3699,23 +3763,23 @@
     "java.util.ArrayList",
     [
       {
-        "id": 3,
+        "id": 1,
         "name": "Praworządny"
       },
       {
-        "id": 4,
+        "id": 2,
         "name": "Dobry"
       },
       {
-        "id": 5,
+        "id": 3,
         "name": "Neutralny"
       },
       {
-        "id": 6,
+        "id": 4,
         "name": "Zły"
       },
       {
-        "id": 7,
+        "id": 5,
         "name": "Chaotyczny"
       }
     ]
@@ -3745,7 +3809,7 @@
     "java.util.ArrayList",
     [
       {
-        "id": 334,
+        "id": 1,
         "name": "Człowiek",
         "specialFeatures": "",
         "determinants": [
@@ -3754,7 +3818,7 @@
             [
               "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
               {
-                "type": "INITIATIVE",
+                "type": "WILL",
                 "baseValue": 30,
                 "extensions": [
                   "java.util.ArrayList",
@@ -3776,7 +3840,7 @@
             [
               "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
               {
-                "type": "WILL",
+                "type": "INTELLIGENCE",
                 "baseValue": 30,
                 "extensions": [
                   "java.util.ArrayList",
@@ -3796,32 +3860,10 @@
               }
             ],
             [
-              "pl.khuzzuk.wfrpchar.entities.determinants.AbsoluteDeterminant",
-              {
-                "type": "DURABILITY",
-                "baseValue": 1,
-                "extensions": [
-                  "java.util.ArrayList",
-                  []
-                ]
-              }
-            ],
-            [
               "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
               {
-                "type": "INTELLIGENCE",
+                "type": "DEXTERITY",
                 "baseValue": 30,
-                "extensions": [
-                  "java.util.ArrayList",
-                  []
-                ]
-              }
-            ],
-            [
-              "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
-              {
-                "type": "SHOOTING",
-                "baseValue": 20,
                 "extensions": [
                   "java.util.ArrayList",
                   []
@@ -3842,7 +3884,7 @@
             [
               "pl.khuzzuk.wfrpchar.entities.determinants.AbsoluteDeterminant",
               {
-                "type": "STRENGTH",
+                "type": "DURABILITY",
                 "baseValue": 1,
                 "extensions": [
                   "java.util.ArrayList",
@@ -3853,8 +3895,8 @@
             [
               "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
               {
-                "type": "DEXTERITY",
-                "baseValue": 30,
+                "type": "SHOOTING",
+                "baseValue": 20,
                 "extensions": [
                   "java.util.ArrayList",
                   []
@@ -3864,7 +3906,7 @@
             [
               "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
               {
-                "type": "LEADER_SKILLS",
+                "type": "INITIATIVE",
                 "baseValue": 30,
                 "extensions": [
                   "java.util.ArrayList",
@@ -3886,8 +3928,19 @@
             [
               "pl.khuzzuk.wfrpchar.entities.determinants.AbsoluteDeterminant",
               {
-                "type": "SPEED",
-                "baseValue": 2,
+                "type": "STRENGTH",
+                "baseValue": 1,
+                "extensions": [
+                  "java.util.ArrayList",
+                  []
+                ]
+              }
+            ],
+            [
+              "pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant",
+              {
+                "type": "LEADER_SKILLS",
+                "baseValue": 30,
                 "extensions": [
                   "java.util.ArrayList",
                   []
@@ -3899,6 +3952,17 @@
               {
                 "type": "CONTROL",
                 "baseValue": 20,
+                "extensions": [
+                  "java.util.ArrayList",
+                  []
+                ]
+              }
+            ],
+            [
+              "pl.khuzzuk.wfrpchar.entities.determinants.AbsoluteDeterminant",
+              {
+                "type": "SPEED",
+                "baseValue": 2,
                 "extensions": [
                   "java.util.ArrayList",
                   []

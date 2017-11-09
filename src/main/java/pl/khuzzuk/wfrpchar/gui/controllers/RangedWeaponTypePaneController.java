@@ -3,26 +3,22 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Component;
-import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
-import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.LoadingTimes;
+import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.EnumSet;
 import java.util.ResourceBundle;
 
 @Component
-public class RangedWeaponTypePaneController extends ItemsListedController<RangedWeaponType> {
+public class RangedWeaponTypePaneController extends FightingEquipmentPaneController<RangedWeaponType> {
     @FXML
     TextField rwTypeName;
-    @FXML
-    @Numeric
-    TextField rwStrength;
     @FXML
     @Numeric
     TextField rwMinRange;
@@ -33,15 +29,7 @@ public class RangedWeaponTypePaneController extends ItemsListedController<Ranged
     @Numeric
     TextField rwMaxRange;
     @FXML
-    ComboBox<String> rwLoadTime;
-    @FXML
-    TextField rwLangMasc;
-    @FXML
-    TextField rwLangFem;
-    @FXML
-    TextField rwLangNeutr;
-    @FXML
-    TextField rwLangAblative;
+    ComboBox<LoadingTimes> rwLoadTime;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,30 +39,30 @@ public class RangedWeaponTypePaneController extends ItemsListedController<Ranged
         removeEntityTopic = messages.getProperty("rangedWeapons.remove");
         saveTopic = messages.getProperty("database.saveEquipment");
         clearAction = this::clear;
-        ComboBoxHandler.fill(LoadingTimes.SET, rwLoadTime);
+        ComboBoxHandler.fillWithEnums(LoadingTimes.SET, rwLoadTime);
+        ComboBoxHandler.fillWithEnums(EnumSet.of(Placement.TWO_HANDS, Placement.ONE_HAND), placementBox);
+        addMappingDeterminants();
         initItems();
     }
 
     @Override
     public void loadItem(RangedWeaponType rangedWeapon) {
         super.loadItem(rangedWeapon);
-        name.setText(rangedWeapon.getName());
         rwTypeName.setText(rangedWeapon.getTypeName());
-        weight.setText("" + rangedWeapon.getWeight());
-        gold.setText(rangedWeapon.getPrice().getGold() + "");
-        silver.setText(rangedWeapon.getPrice().getSilver() + "");
-        lead.setText(rangedWeapon.getPrice().getLead() + "");
-        accessibility.getSelectionModel().select(rangedWeapon.getAccessibility());
-        specialFeatures.setText(rangedWeapon.getSpecialFeatures());
-        rwStrength.setText(rangedWeapon.getStrength() + "");
         rwMinRange.setText(rangedWeapon.getShortRange() + "");
         rwMedRange.setText(rangedWeapon.getEffectiveRange() + "");
         rwMaxRange.setText(rangedWeapon.getMaximumRange() + "");
-        rwLoadTime.getSelectionModel().select(rangedWeapon.getReloadTime().getName());
-        rwLangMasc.setText(rangedWeapon.getNames().get(LangElement.ADJECTIVE_MASC_SING));
-        rwLangFem.setText(rangedWeapon.getNames().get(LangElement.ADJECTIVE_FEM_SING));
-        rwLangNeutr.setText(rangedWeapon.getNames().get(LangElement.ADJECTIVE_NEUTR_SING));
-        rwLangAblative.setText(rangedWeapon.getNames().get(LangElement.ABLATIVE));
+        rwLoadTime.getSelectionModel().select(rangedWeapon.getReloadTime());
+    }
+
+    @Override
+    void addConverters() {
+        super.addConverters();
+        addConverter(rwTypeName::getText, RangedWeaponType::setTypeName);
+        addConverter(rwMinRange::getText, RangedWeaponType::setShortRange, NumberUtils::toInt);
+        addConverter(rwMedRange::getText, RangedWeaponType::setEffectiveRange, NumberUtils::toInt);
+        addConverter(rwMaxRange::getText, RangedWeaponType::setMaximumRange, NumberUtils::toInt);
+        addConverter(rwLoadTime::getValue, RangedWeaponType::setReloadTime);
     }
 
     @Override
@@ -85,37 +73,11 @@ public class RangedWeaponTypePaneController extends ItemsListedController<Ranged
     @FXML
     @Override
     void saveAction() {
-        if (name.getText().length() < 3) return;
-        saveItem(new CsvBuilder(new ArrayList<>())
-                .add(name.getText())
-                .add(weight.getText())
-                .add(getPriceFromFields())
-                .add(accessibility.getSelectionModel().getSelectedItem().name())
-                .add(specialFeatures.getText())
-                .add(rwStrength.getText())
-                .add("RANGED_WEAPON")
-                .add("TWO_HANDS")
-                .add(Optional.ofNullable(rwLangMasc.getText()).orElse("") + "|" +
-                Optional.ofNullable(rwLangFem.getText()).orElse("") + "|" +
-                Optional.ofNullable(rwLangNeutr.getText()).orElse("") + "|" +
-                Optional.ofNullable(rwLangAblative.getText()).orElse(""))
-                .add("") //determinants
-                .add(rwTypeName.getText())
-                .add(rwMinRange.getText())
-                .add(rwMedRange.getText())
-                .add(rwMaxRange.getText())
-                .add(LoadingTimes.forName(rwLoadTime.getSelectionModel().getSelectedItem()).name())
-                .build());
     }
 
     @Override
     void clear() {
         super.clear();
-        rwStrength.clear();
-        rwLangMasc.clear();
-        rwLangFem.clear();
-        rwLangNeutr.clear();
-        rwLangAblative.clear();
         rwTypeName.clear();
         rwMinRange.clear();
         rwMedRange.clear();

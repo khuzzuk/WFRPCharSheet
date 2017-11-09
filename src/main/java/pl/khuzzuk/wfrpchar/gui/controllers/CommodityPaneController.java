@@ -1,5 +1,6 @@
 package pl.khuzzuk.wfrpchar.gui.controllers;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 
@@ -8,6 +9,17 @@ public abstract class CommodityPaneController<T extends Commodity> extends Items
     void addConverters() {
         super.addConverters();
         addConverter(() -> Price.parsePrice(getPriceFromFields()), Commodity::setPrice);
+        addConverter(weight::getText, Commodity::setWeight, NumberUtils::toFloat);
         addConverter(accessibility::getValue, Commodity::setAccessibility);
+    }
+
+    @Override
+    void loadItem(T item) {
+        super.loadItem(item);
+        accessibility.getSelectionModel().select(item.getAccessibility());
+        gold.setText(item.getPrice().getGold() + "");
+        silver.setText(item.getPrice().getSilver() + "");
+        lead.setText(item.getPrice().getLead() + "");
+        weight.setText(item.getWeight() + "");
     }
 }

@@ -9,6 +9,9 @@ import java.lang.reflect.Field;
 
 public interface Controller extends Initializable {
 
+    /**
+     * {@link EntitiesListedController} will call it for example
+     */
     default void initializeValidation() {
         Field[] fields = this.getClass().getDeclaredFields();
         for (Field f : fields) {

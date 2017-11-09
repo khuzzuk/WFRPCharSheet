@@ -1,14 +1,12 @@
 package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import org.apache.commons.lang3.StringUtils;
 import pl.khuzzuk.wfrpchar.entities.LangElement;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
-import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.FightingEquipment;
 
 import java.net.URL;
@@ -19,8 +17,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class ItemTypePaneController<T extends FightingEquipment> extends CommodityPaneController<T> {
-    @FXML
-    ComboBox<Placement> placementBox;
     @FXML
     TextField langMasc;
     @FXML
@@ -42,9 +38,14 @@ public abstract class ItemTypePaneController<T extends FightingEquipment> extend
     }
 
     @Override
+    void loadItem(T item) {
+        super.loadItem(item);
+        item.getNames().forEach((lang, val) -> langFields.get(lang).setText(val));
+    }
+
+    @Override
     void addConverters() {
         super.addConverters();
-        addConverter(placementBox::getValue, FightingEquipment::setPlacement);
         addConverter(this::getLangNames, FightingEquipment::setNames);
     }
 
@@ -67,7 +68,6 @@ public abstract class ItemTypePaneController<T extends FightingEquipment> extend
     @Override
     void clear() {
         super.clear();
-        placementBox.getSelectionModel().clearSelection();
         langFields.values().forEach(TextInputControl::clear);
     }
 }

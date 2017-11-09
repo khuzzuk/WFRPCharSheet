@@ -124,8 +124,13 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
     void loadItem(T item) {
         clearAction.run();
         this.item = item;
+        name.setText(item.getName());
+        specialFeatures.setText(item.getName());
     }
 
+    /**
+     * It will be called from {@link EntitiesListedController}.
+     */
     void addConverters() {
         addConverter(name::getText, Featured::setName);
         addConverter(specialFeatures::getText, Featured::setSpecialFeatures);

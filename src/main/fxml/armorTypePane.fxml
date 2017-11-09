@@ -71,7 +71,7 @@
             <Label text="nazwa"/>
             <TextField fx:id="name" GridPane.columnIndex="1"/>
             <Label text="umiejscowienie" GridPane.columnIndex="2"/>
-            <ComboBox fx:id="armPlacement" GridPane.columnIndex="3"/>
+            <ComboBox fx:id="placementBox" GridPane.columnIndex="3"/>
             <Label text="waga" GridPane.rowIndex="1"/>
             <TextField fx:id="weight" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
             <Label text="dostępność" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
@@ -90,7 +90,7 @@
                 <TextField fx:id="lead"/>
             </VBox>
             <Label text="punkty pancerza" GridPane.rowIndex="3"/>
-            <TextField fx:id="armStrength" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <TextField fx:id="strength" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
             <Label text="wzór" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
             <ComboBox fx:id="armPattern" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
             <Label text="modyfikatory" GridPane.rowIndex="4"/>
@@ -113,19 +113,19 @@
             <Label text="pozostałe nazwy" GridPane.rowIndex="5"/>
             <VBox alignment="CENTER" GridPane.rowIndex="5" GridPane.columnIndex="1">
                 <Label text="przym. męski"/>
-                <TextField fx:id="armMasc"/>
+                <TextField fx:id="langMasc"/>
             </VBox>
             <VBox alignment="CENTER" GridPane.rowIndex="5" GridPane.columnIndex="2">
                 <Label text="przym. żeński"/>
-                <TextField fx:id="armFem"/>
+                <TextField fx:id="langFem"/>
             </VBox>
             <VBox alignment="CENTER" GridPane.rowIndex="5" GridPane.columnIndex="3">
                 <Label text="przym. nijaki"/>
-                <TextField fx:id="armNeutr"/>
+                <TextField fx:id="langNeutr"/>
             </VBox>
             <VBox alignment="CENTER" GridPane.rowIndex="5" GridPane.columnIndex="4">
                 <Label text="narzędnik"/>
-                <TextField fx:id="armAbl"/>
+                <TextField fx:id="langAblative"/>
             </VBox>
             <Label text="cechy specjalne" GridPane.rowIndex="6"/>
             <TextArea fx:id="specialFeatures" GridPane.rowIndex="6" GridPane.columnIndex="1" GridPane.columnSpan="4"

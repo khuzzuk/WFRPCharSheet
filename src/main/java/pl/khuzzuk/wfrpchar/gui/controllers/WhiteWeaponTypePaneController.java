@@ -7,11 +7,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.Placement;
 import pl.khuzzuk.wfrpchar.entities.items.types.BastardWeaponType;
-import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 import pl.khuzzuk.wfrpchar.entities.items.types.WhiteWeaponType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.MappingUtil;
@@ -26,16 +26,11 @@ import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
 @Component
-public class WhiteWeaponTypePaneController extends ItemTypePaneController<WhiteWeaponType> {
-    private Map<DeterminantsType, TextField> whiteWeaponModifiers;
+public class WhiteWeaponTypePaneController extends FightingEquipmentPaneController<WhiteWeaponType> {
     private Map<DeterminantsType, TextField> bastWhiteWeaponMods;
 
     @FXML
     TextField typeNameWW;
-    @FXML
-    @Numeric
-    TextField strengthBasicWW;
-
     @FXML
     @Numeric
     TextField strengthBastardWW;
@@ -70,7 +65,6 @@ public class WhiteWeaponTypePaneController extends ItemTypePaneController<WhiteW
     @FXML
     Slider rollsWW;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -82,20 +76,21 @@ public class WhiteWeaponTypePaneController extends ItemTypePaneController<WhiteW
         fillComboBoxesWithEnums();
         setBastardComponentsStatus(null, null, null);
         placementBox.getSelectionModel().selectedItemProperty().addListener(this::setBastardComponentsStatus);
+        addMappingDeterminants(Pair.of(DeterminantsType.BATTLE, battleModWW),
+                Pair.of(DeterminantsType.INITIATIVE, initModWW),
+                Pair.of(DeterminantsType.PARRY, parryModWW),
+                Pair.of(DeterminantsType.OPPONENT_PARRY, opponentParryModWW));
         initItems();
     }
 
     void addConverters() {
         super.addConverters();
-        addConverter(weight::getText, Item::setWeight, NumberUtils::toFloat);
-        addConverter(strengthBasicWW::getText, WhiteWeaponType::setStrength, NumberUtils::toInt);
-        addConverter(() -> getModifiers(whiteWeaponModifiers), WhiteWeaponType::setDeterminants);
         addConverter(typeNameWW::getText, WhiteWeaponType::setTypeName);
         addConverter(diceWW::getValue, WhiteWeaponType::setDices);
         addConverter(rollsWW::getValue, WhiteWeaponType::setRolls, Double::intValue);
 
         Predicate<WhiteWeaponType> bastardTest = weapon -> weapon instanceof BastardWeaponType;
-        addConverter(strengthBasicWW::getText,
+        addConverter(strengthBastardWW::getText,
                 (weapon, num) -> ((BastardWeaponType) weapon).setOneHandedStrength(num),
                 NumberUtils::toInt, bastardTest);
         addConverter(() -> getModifiers(bastWhiteWeaponMods),
@@ -118,11 +113,6 @@ public class WhiteWeaponTypePaneController extends ItemTypePaneController<WhiteW
     }
 
     private void initFieldsMap() {
-        whiteWeaponModifiers = new HashMap<>();
-        whiteWeaponModifiers.put(DeterminantsType.BATTLE, battleModWW);
-        whiteWeaponModifiers.put(DeterminantsType.INITIATIVE, initModWW);
-        whiteWeaponModifiers.put(DeterminantsType.PARRY, parryModWW);
-        whiteWeaponModifiers.put(DeterminantsType.OPPONENT_PARRY, opponentParryModWW);
         bastWhiteWeaponMods = new HashMap<>();
         bastWhiteWeaponMods.put(DeterminantsType.BATTLE, bastBattleModWW);
         bastWhiteWeaponMods.put(DeterminantsType.INITIATIVE, bastInitModWW);
@@ -133,20 +123,9 @@ public class WhiteWeaponTypePaneController extends ItemTypePaneController<WhiteW
     @Override
     public void loadItem(WhiteWeaponType weaponType) {
         super.loadItem(weaponType);
-        name.setText(weaponType.getName());
         typeNameWW.setText(weaponType.getTypeName());
-        accessibility.getSelectionModel().select(weaponType.getAccessibility());
-        placementBox.getSelectionModel().select(weaponType.getPlacement());
         diceWW.getSelectionModel().select(weaponType.getDices());
         rollsWW.adjustValue(weaponType.getRolls());
-        weight.setText("" + weaponType.getWeight());
-        gold.setText("" + weaponType.getPrice().getGold());
-        silver.setText("" + weaponType.getPrice().getSilver());
-        lead.setText("" + weaponType.getPrice().getLead());
-        strengthBasicWW.setText("" + weaponType.getStrength());
-        weaponType.getDeterminants().forEach(d -> MappingUtil.mapDeterminant(d, whiteWeaponModifiers));
-        weaponType.getNames().forEach((lang, val) -> langFields.get(lang).setText(val));
-        specialFeatures.setText(weaponType.getSpecialFeatures());
         if (weaponType instanceof BastardWeaponType) {
             BastardWeaponType bastard = (BastardWeaponType) weaponType;
             strengthBastardWW.setText("" + bastard.getOneHandedStrength());
@@ -176,8 +155,6 @@ public class WhiteWeaponTypePaneController extends ItemTypePaneController<WhiteW
     @Override
     void clear() {
         super.clear();
-        strengthBasicWW.clear();
-        whiteWeaponModifiers.values().forEach(TextField::clear);
         typeNameWW.clear();
         diceWW.getSelectionModel().clearSelection();
         rollsWW.adjustValue(0);

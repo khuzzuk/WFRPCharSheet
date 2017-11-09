@@ -131,7 +131,7 @@
                   GridPane.halignment="CENTER"
                   GridPane.rowIndex="4">
                 <Label text="podstawowe"/>
-                <TextField fx:id="strengthBasicWW"/>
+                <TextField fx:id="strength"/>
                 <Label fx:id="strengthBastardLabelWW"
                        text="jednoręcznie"/>
                 <TextField fx:id="strengthBastardWW"

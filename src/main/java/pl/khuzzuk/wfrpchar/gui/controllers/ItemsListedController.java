@@ -47,9 +47,6 @@ public abstract class ItemsListedController<T extends Featured> extends Entities
         //TODO remove this if and solve it differently. usable controllers extends this class but don't need weight field.
         if (weight != null)
             weight.setText(commodity.getWeight() + "");
-        gold.setText(commodity.getPrice().getGold() + "");
-        silver.setText(commodity.getPrice().getSilver() + "");
-        lead.setText(commodity.getPrice().getLead() + "");
         specialFeatures.setText(commodity.getSpecialFeatures());
     }
 
