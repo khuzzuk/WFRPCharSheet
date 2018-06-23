@@ -2,22 +2,27 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import pl.khuzzuk.wfrpchar.entities.DeterminantContainer;
 import pl.khuzzuk.wfrpchar.entities.Featured;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
 import java.net.URL;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-public abstract class AbstractFeaturedController<T extends Featured> extends ItemsListedController<T> {
+public abstract class AbstractFeaturedController<T extends DeterminantContainer & Featured> extends ItemsListedController<T> {
     @FXML
-    ListView<String> determinantsView;
+    ListView<Determinant> determinantsView;
     String showDeterminantCreatorMsg;
 
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
     }
 
-    public void addDeterminant(String determinant) {
+    public void addDeterminant(Determinant determinant) {
         determinantsView.getItems().add(determinant);
     }
 
@@ -31,9 +36,24 @@ public abstract class AbstractFeaturedController<T extends Featured> extends Ite
         EntitiesAdapter.removeSelected(determinantsView);
     }
 
+    @Override
+    void loadItem(T item) {
+        super.loadItem(item);
+        Optional.ofNullable(determinantsView).ifPresent(view ->
+                EntitiesAdapter.sendToListViewUnchanged(view, item.getDeterminants()));
+    }
+
+    @Override
+    void addConverters() {
+        super.addConverters();
+        Optional.ofNullable(determinantsView)
+                .ifPresent(view -> addConverter(view::getItems, DeterminantContainer::setDeterminants, HashSet::new));
+    }
+
     @FXML
-    void clearEditor() {
+    @Override
+    void clear() {
         super.clear();
-        determinantsView.getItems().clear();
+        Optional.ofNullable(determinantsView).map(ListView::getItems).ifPresent(List::clear);
     }
 }

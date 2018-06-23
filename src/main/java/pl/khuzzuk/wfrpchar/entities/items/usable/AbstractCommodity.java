@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class AbstractCommodity implements Commodity, Named<String> {
     private String name;
     private Accessibility accessibility;
-    private Price basePrice;
+    private Price basePrice; // Additional price to calculated - it usualy is like basePrice + (baseType.price * resource.priceMultiplier)
     private String specialFeatures;
 
     void fillCommodityFields(List<String> fields) {

@@ -2,6 +2,7 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import org.springframework.stereotype.Component;
+import pl.khuzzuk.wfrpchar.entities.items.types.RangedWeaponType;
 import pl.khuzzuk.wfrpchar.entities.items.usable.Gun;
 
 import java.net.URL;
@@ -16,17 +17,8 @@ public class RangeWeaponsPaneController extends AbstractWeaponController<Gun> {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         entityType = Gun.class;
-        getAllResponse = messages.getProperty("weapons.ranged.result");
-        removeEntityTopic = messages.getProperty("weapons.ranged.remove");
-        saveTopic = messages.getProperty("weapons.ranged.save");
-        clearAction = this::clear;
+        baseEntityType = RangedWeaponType.class;
         initItems();
-    }
-
-    @Override
-    public void loadItem(Gun gun) {
-        super.loadItem(gun);
-        loadToInternalEditor(gun);
     }
 
     @Override
@@ -42,16 +34,5 @@ public class RangeWeaponsPaneController extends AbstractWeaponController<Gun> {
     @FXML
     private void chooseDeterminant() {
         bus.send(messages.getProperty("determinants.creator.show.rw"));
-    }
-
-    @FXML
-    @Override
-    void saveAction() {
-        if (name.getText().length() < 3 || baseType.length() < 3) {
-            return;
-        }
-        List<String> fields = new ArrayList<>();
-        addWeaponTypeFields(fields);
-        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 }

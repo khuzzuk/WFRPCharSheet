@@ -2,21 +2,19 @@ package pl.khuzzuk.wfrpchar.entities.competency;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import pl.khuzzuk.wfrpchar.entities.Persistable;
+import pl.khuzzuk.wfrpchar.entities.DeterminantContainer;
 import pl.khuzzuk.wfrpchar.entities.SkillContainer;
 import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
-import pl.khuzzuk.wfrpchar.entities.items.Commodity;
 import pl.khuzzuk.wfrpchar.repo.TypeIdResolver;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -25,7 +23,7 @@ import java.util.stream.Collectors;
         property = "id",
         resolver = TypeIdResolver.class,
         scope = Profession.class)
-public class Profession implements SkillContainer {
+public class Profession implements SkillContainer, DeterminantContainer {
     private String name;
     private String specialFeatures;
     @JsonIdentityReference(alwaysAsId = true)
@@ -64,5 +62,11 @@ public class Profession implements SkillContainer {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    @JsonIgnore
+    public Collection<Determinant> getAllDeterminants() {
+        return determinants;
     }
 }

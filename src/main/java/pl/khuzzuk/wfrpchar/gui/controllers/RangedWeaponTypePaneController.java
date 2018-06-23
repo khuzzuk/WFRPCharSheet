@@ -35,10 +35,6 @@ public class RangedWeaponTypePaneController extends FightingEquipmentPaneControl
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         entityType = RangedWeaponType.class;
-        getAllResponse = messages.getProperty("rangedWeapons.result");
-        removeEntityTopic = messages.getProperty("rangedWeapons.remove");
-        saveTopic = messages.getProperty("database.saveEquipment");
-        clearAction = this::clear;
         ComboBoxHandler.fillWithEnums(LoadingTimes.SET, rwLoadTime);
         ComboBoxHandler.fillWithEnums(EnumSet.of(Placement.TWO_HANDS, Placement.ONE_HAND), placementBox);
         addMappingDeterminants();
@@ -68,11 +64,6 @@ public class RangedWeaponTypePaneController extends FightingEquipmentPaneControl
     @Override
     RangedWeaponType supplyNewItem() {
         return new RangedWeaponType();
-    }
-
-    @FXML
-    @Override
-    void saveAction() {
     }
 
     @Override

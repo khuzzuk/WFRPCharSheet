@@ -31,15 +31,11 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
     @Inject
     @javax.inject.Named("messages")
     Properties messages;
-    Runnable saveAction;
-    String removeEntityTopic;
     private String getNamedEntityTopic;
-    String getAllResponse;
-    String saveTopic;
+    private String getAllResponse;
     Class<?> entityType;
     @Getter
     T item;
-    Runnable clearAction;
     List<GuiEntityConverter> converters = new ArrayList<>();
 
     @FXML
@@ -71,7 +67,7 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
         if (name.getText().length() >= 3) {
             bus.send(messages.getProperty("database.remove"), getAllResponse,
                     Criteria.builder().type(entityType).name(name.getText()).build());
-            clearAction.run();
+            clear();
         }
     }
 
@@ -87,19 +83,6 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
         }
     }
 
-    abstract void saveAction();
-
-    void saveItem(String line) {
-        bus.send(saveTopic, line);
-    }
-
-    void saveNewItem(T item) {
-    }
-
-    void communicateDataChanges() {
-        bus.send(messages.getProperty("database.change"));
-    }
-
     @FXML
     void clear() {
         name.clear();
@@ -108,7 +91,7 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
 
     @FXML
     private void newItem() {
-        clearAction.run();
+        clear();
     }
 
     public synchronized void loadAll(Collection<? extends Named<String>> itemsList) {
@@ -117,12 +100,8 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
                 .map(Named::getName).collect(Collectors.toList()));
     }
 
-    void loadToInternalEditor(Named<String> named) {
-        name.setText(named.getName());
-    }
-
     void loadItem(T item) {
-        clearAction.run();
+        clear();
         this.item = item;
         name.setText(item.getName());
         specialFeatures.setText(item.getName());
@@ -153,7 +132,7 @@ public abstract class EntitiesListedController<T extends Featured> implements Co
 
     abstract T supplyNewItem();
 
-    void fillItemWithValues() {
+    private void fillItemWithValues() {
         converters.stream().filter(GuiEntityConverter::canConvert).forEach(GuiEntityConverter::fill);
     }
 }

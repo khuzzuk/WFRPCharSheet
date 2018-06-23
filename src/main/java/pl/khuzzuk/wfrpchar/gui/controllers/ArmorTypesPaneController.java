@@ -17,10 +17,7 @@ import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import java.net.URL;
 import java.util.EnumSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 @Component
 public class ArmorTypesPaneController extends FightingEquipmentPaneController<ArmorType> {
@@ -37,18 +34,14 @@ public class ArmorTypesPaneController extends FightingEquipmentPaneController<Ar
     @Numeric
     TextField armParryMod;
     @FXML
-    private ComboBox<String> armPattern;
+    private ComboBox<ArmorPattern> armPattern;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         entityType = ArmorType.class;
-        removeEntityTopic = messages.getProperty("armorTypes.remove");
-        getAllResponse = messages.getProperty("armorTypes.result");
-        saveTopic = messages.getProperty("database.saveEquipment");
-        clearAction = this::clear;
         ComboBoxHandler.fillWithEnums(Accessibility.SET, accessibility);
-        ComboBoxHandler.fill(EnumSet.allOf(ArmorPattern.class), armPattern);
+        ComboBoxHandler.fillWithEnums(EnumSet.allOf(ArmorPattern.class), armPattern);
         ComboBoxHandler.fillWithEnums(EnumSet.of(Placement.CORPUS, Placement.HEAD,
                 Placement.BELT, Placement.HANDS,
                 Placement.LEGS, Placement.FEET),
@@ -64,28 +57,18 @@ public class ArmorTypesPaneController extends FightingEquipmentPaneController<Ar
     void addConverters() {
         super.addConverters();
         addConverter(weight::getText, Commodity::setWeight, NumberUtils::toFloat);
+        addConverter(armPattern::getValue, ArmorType::setPattern);
     }
 
     @Override
     public void loadItem(ArmorType armor) {
         super.loadItem(armor);
-        armPattern.getSelectionModel().select(armor.getPattern().getName());
+        armPattern.getSelectionModel().select(armor.getPattern());
     }
 
     @Override
     ArmorType supplyNewItem() {
         return new ArmorType();
-    }
-
-    @FXML
-    @Override
-    void saveAction() {
-        if (name.getText().length() < 3) {
-            return;
-        }
-        List<String> fields = new LinkedList<>();
-        fields.add(ArmorPattern.forName(armPattern.getSelectionModel().getSelectedItem()).name());
-        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     @Override

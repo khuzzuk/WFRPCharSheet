@@ -6,49 +6,37 @@ import javafx.scene.control.ListView;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
-import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantFactory;
-import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
 import java.net.URL;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.ResourceBundle;
 
 @Component
 public class ProfessionPaneController extends SkillViewController<Profession> {
     @FXML
-    private ComboBox<String> professionClass;
+    private ComboBox<ProfessionClass> professionClass;
     @FXML
-    private ListView<String> professionsNextView;
+    private ListView<Profession> professionsNextView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         entityType = Profession.class;
         showDeterminantCreatorMsg = messages.getProperty("determinants.creator.show.pr");
         skillChooserMsg = messages.getProperty("professions.skills.getAllTypes");
-        getAllResponse = messages.getProperty("professions.result");
-        removeEntityTopic = messages.getProperty("professions.remove");
-        saveTopic = messages.getProperty("professions.save");
-        clearAction = this::clear;
         initItems();
-        bus.setReaction(messages.getProperty("professions.class.result"), this::loadProfessionClasses);
-        bus.send(messages.getProperty("database.getAll"), messages.getProperty("professions.class.result"), ResourceType.class);
-    }
-
-    public void loadProfessionClasses(Collection<ProfessionClass> professionClasses) {
-        ComboBoxHandler.fill(new HashSet<>(professionClasses), professionClass);
+        bus.<Collection<ProfessionClass>>setReaction(messages.getProperty("professions.class.result"),
+                professionClasses -> ComboBoxHandler.fillWithEnums(professionClasses, professionClass));
+        bus.send(messages.getProperty("database.getAll"), messages.getProperty("professions.class.result"), ProfessionClass.class);
     }
 
     @Override
     public void loadItem(Profession profession) {
         super.loadItem(profession);
-        name.setText(profession.getName());
-        specialFeatures.setText(profession.getSpecialFeatures());
-        EntitiesAdapter.sendToListView(determinantsView, profession.getDeterminants());
-        EntitiesAdapter.sendToListView(skillsView, profession.getSkills());
-        EntitiesAdapter.sendToListView(professionsNextView, profession.getNextProfessions());
-        professionClass.getSelectionModel().select(profession.getProfessionClass().getName());
+        professionsNextView.getItems().addAll(profession.getNextProfessions());
+        professionClass.getSelectionModel().select(profession.getProfessionClass());
     }
 
     @Override
@@ -56,31 +44,20 @@ public class ProfessionPaneController extends SkillViewController<Profession> {
         return new Profession();
     }
 
+    @Override
+    void addConverters() {
+        super.addConverters();
+        addConverter(professionClass::getValue, Profession::setProfessionClass);
+        addConverter(professionsNextView::getItems, Profession::setNextProfessions, HashSet::new);
+    }
+
     @FXML
     private void showProfessionChooser() {
         bus.send(messages.getProperty("professions.next.getAllTypes"));
     }
 
-    public void addProfession(String profession) {
+    public void addProfession(Profession profession) {
         professionsNextView.getItems().add(profession);
-    }
-
-    @Override
-    void saveAction() {
-        List<String> fields = new ArrayList<>();
-        fields.add(name.getText());
-        fields.add(specialFeatures.getText());
-        fields.add(skillsView.getItems().stream().collect(Collectors.joining("|")));
-        fields.add(professionsNextView.getItems().stream().collect(Collectors.joining("|")));
-        fields.add(getDeterminantsFromList());
-        fields.add(ComboBoxHandler.getEmptyIfNotPresent(professionClass));
-        saveItem(fields.stream().collect(Collectors.joining(";")));
-    }
-
-    private String getDeterminantsFromList() {
-        return determinantsView.getItems().stream()
-                .map(DeterminantFactory::getProfessionDeterminant)
-                .collect(Collectors.joining("|"));
     }
 
     @FXML

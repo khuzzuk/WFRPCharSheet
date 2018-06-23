@@ -17,10 +17,6 @@ public class SkillsPaneController extends AbstractFeaturedController<Skill> {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         entityType = Skill.class;
-        getAllResponse = messages.getProperty("skills.result");
-        removeEntityTopic = messages.getProperty("skills.remove");
-        saveTopic = messages.getProperty("skills.save");
-        clearAction = this::clear;
         initItems();
     }
 
@@ -30,25 +26,7 @@ public class SkillsPaneController extends AbstractFeaturedController<Skill> {
     }
 
     @Override
-    public void loadItem(Skill skill) {
-        super.loadItem(skill);
-        name.setText(skill.getName());
-        specialFeatures.setText(skill.getSpecialFeatures());
-        EntitiesAdapter.sendToListView(determinantsView, skill.getDeterminants());
-    }
-
-    @Override
     Skill supplyNewItem() {
         return new Skill();
-    }
-
-    @Override
-    void saveAction() {
-        List<String> fields = new ArrayList<>();
-        fields.add(name.getText());
-        fields.add(specialFeatures.getText());
-        fields.add(Determinant.determinantsToCsv(Determinant.parseFromGui(
-                new ArrayList<>(determinantsView.getItems()))));
-        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 }

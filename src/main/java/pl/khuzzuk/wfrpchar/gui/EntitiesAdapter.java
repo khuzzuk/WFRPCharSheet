@@ -18,7 +18,7 @@ public class EntitiesAdapter {
         list.getItems().addAll(elements);
     }
 
-    public static void removeSelected(ListView<String> view) {
+    public static void removeSelected(ListView<?> view) {
         if (view.getSelectionModel().getSelectedIndex() > -1) {
             view.getItems().remove(view.getSelectionModel().getSelectedIndex());
         }

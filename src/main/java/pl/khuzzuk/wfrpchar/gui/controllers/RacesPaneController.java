@@ -2,16 +2,18 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Race;
+import pl.khuzzuk.wfrpchar.entities.determinants.AbsoluteDeterminant;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
+import pl.khuzzuk.wfrpchar.entities.determinants.PercentageDeterminant;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -61,20 +63,12 @@ public class RacesPaneController extends SkillViewController<Race> {
     public void initialize(URL location, ResourceBundle resources) {
         entityType = Race.class;
         skillChooserMsg = messages.getProperty("race.skills.getAllTypes");
-        getAllResponse = messages.getProperty("race.result");
-        removeEntityTopic = messages.getProperty("race.remove");
-        saveTopic = messages.getProperty("race.save");
-        clearAction = this::clear;
         initItems();
     }
 
     @Override
     public void loadItem(Race race) {
-        clear();
         super.loadItem(race);
-        name.setText(race.getName());
-        specialFeatures.setText(race.getSpecialFeatures());
-        EntitiesAdapter.sendToListView(skillsView, race.getSkills());
         speed.setText("" + race.getDeterminantValueForType(DeterminantsType.SPEED));
         battle.setText("" + race.getDeterminantValueForType(DeterminantsType.BATTLE));
         charisma.setText("" + race.getDeterminantValueForType(DeterminantsType.CHARISMA));
@@ -92,32 +86,49 @@ public class RacesPaneController extends SkillViewController<Race> {
     }
 
     @Override
-    Race supplyNewItem() {
-        return new Race();
+    void addConverters() {
+        super.addConverters();
+        addConverter(this::getDeterminants, Race::setDeterminants);
+    }
+
+    private Set<Determinant> getDeterminants() {
+        Set<Determinant> determinants = new HashSet<>();
+        determinants.add(getAbsoluteDeterminant(DeterminantsType.SPEED, NumberUtils.toInt(speed.getText())));
+        determinants.add(getAbsoluteDeterminant(DeterminantsType.ATTACKS, NumberUtils.toInt(attacks.getText())));
+        determinants.add(getAbsoluteDeterminant(DeterminantsType.HEALTH, NumberUtils.toInt(health.getText())));
+        determinants.add(getAbsoluteDeterminant(DeterminantsType.DURABILITY, NumberUtils.toInt(endurance.getText())));
+        determinants.add(getAbsoluteDeterminant(DeterminantsType.STRENGTH, NumberUtils.toInt(strength.getText())));
+
+        determinants.add(getPercentageDeterminant(DeterminantsType.BATTLE, NumberUtils.toInt(battle.getText())));
+        determinants.add(getPercentageDeterminant(DeterminantsType.CHARISMA, NumberUtils.toInt(charisma.getText())));
+        determinants.add(getPercentageDeterminant(DeterminantsType.WILL, NumberUtils.toInt(will.getText())));
+        determinants.add(getPercentageDeterminant(DeterminantsType.CONTROL, NumberUtils.toInt(control.getText())));
+        determinants.add(getPercentageDeterminant(DeterminantsType.INTELLIGENCE, NumberUtils.toInt(intelligence.getText())));
+        determinants.add(getPercentageDeterminant(DeterminantsType.LEADER_SKILLS, NumberUtils.toInt(leaderSkills.getText())));
+        determinants.add(getPercentageDeterminant(DeterminantsType.DEXTERITY, NumberUtils.toInt(dexterity.getText())));
+        determinants.add(getPercentageDeterminant(DeterminantsType.INITIATIVE, NumberUtils.toInt(initiative.getText())));
+        determinants.add(getPercentageDeterminant(DeterminantsType.SHOOTING, NumberUtils.toInt(shooting.getText())));
+        return determinants;
+    }
+
+    private Determinant getAbsoluteDeterminant(DeterminantsType type, int value) {
+        AbsoluteDeterminant instance = new AbsoluteDeterminant();
+        instance.setType(type);
+        instance.setBaseValue(value);
+        instance.setExtensions(new ArrayList<>());
+        return instance;
+    }
+
+    private Determinant getPercentageDeterminant(DeterminantsType type, int value) {
+        PercentageDeterminant instance = new PercentageDeterminant();
+        instance.setType(type);
+        instance.setBaseValue(value);
+        return instance;
     }
 
     @Override
-    void saveAction() {
-        List<String> fields = new ArrayList<>();
-        fields.add(name.getText());
-        fields.add(specialFeatures.getText());
-        String determinants = speed.getText() + "," + DeterminantsType.SPEED + "|" +
-                battle.getText() + "," + DeterminantsType.BATTLE + "|" +
-                charisma.getText() + "," + DeterminantsType.CHARISMA + "|" +
-                will.getText() + "," + DeterminantsType.WILL + "|" +
-                control.getText() + "," + DeterminantsType.CONTROL + "|" +
-                intelligence.getText() + "," + DeterminantsType.INTELLIGENCE + "|" +
-                leaderSkills.getText() + "," + DeterminantsType.LEADER_SKILLS + "|" +
-                dexterity.getText() + "," + DeterminantsType.DEXTERITY + "|" +
-                attacks.getText() + "," + DeterminantsType.ATTACKS + "|" +
-                initiative.getText() + "," + DeterminantsType.INITIATIVE + "|" +
-                health.getText() + "," + DeterminantsType.HEALTH + "|" +
-                endurance.getText() + "," + DeterminantsType.DURABILITY + "|" +
-                strength.getText() + "," + DeterminantsType.STRENGTH + "|" +
-                shooting.getText() + "," + DeterminantsType.SHOOTING;
-        fields.add(determinants);
-        fields.add(skillsView.getItems().stream().collect(Collectors.joining("|")));
-        saveItem(fields.stream().collect(Collectors.joining(";")));
+    Race supplyNewItem() {
+        return new Race();
     }
 
     @Override

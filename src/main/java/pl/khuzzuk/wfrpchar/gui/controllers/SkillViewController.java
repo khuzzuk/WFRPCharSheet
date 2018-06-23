@@ -2,12 +2,16 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import pl.khuzzuk.wfrpchar.entities.DeterminantContainer;
 import pl.khuzzuk.wfrpchar.entities.SkillContainer;
+import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 
-public abstract class SkillViewController<T extends SkillContainer> extends AbstractFeaturedController<T> {
+import java.util.HashSet;
+
+public abstract class SkillViewController<T extends SkillContainer & DeterminantContainer> extends AbstractFeaturedController<T> {
     @FXML
-    ListView<String> skillsView;
+    ListView<Skill> skillsView;
     String skillChooserMsg;
 
     @FXML
@@ -15,7 +19,7 @@ public abstract class SkillViewController<T extends SkillContainer> extends Abst
         EntitiesAdapter.removeSelected(skillsView);
     }
 
-    public void addSkill(String skill) {
+    public void addSkill(Skill skill) {
         skillsView.getItems().add(skill);
     }
 
@@ -24,8 +28,20 @@ public abstract class SkillViewController<T extends SkillContainer> extends Abst
         bus.send(messages.getProperty(skillChooserMsg));
     }
 
+    @Override
+    void loadItem(T item) {
+        super.loadItem(item);
+        skillsView.getItems().addAll(item.getSkills());
+    }
+
+    @Override
+    void addConverters() {
+        super.addConverters();
+        addConverter(skillsView::getItems, SkillContainer::setSkills, HashSet::new);
+    }
+
     void clear() {
-        super.clearEditor();
+        super.clear();
         skillsView.getItems().clear();
     }
 }

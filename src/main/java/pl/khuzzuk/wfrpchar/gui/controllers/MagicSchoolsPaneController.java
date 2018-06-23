@@ -15,26 +15,7 @@ public class MagicSchoolsPaneController extends EntitiesListedController<MagicSc
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
         entityType = MagicSchool.class;
-        getAllResponse = messages.getProperty("magic.schools.result");
-        removeEntityTopic = messages.getProperty("magic.schools.remove");
-        saveTopic = messages.getProperty("magic.schools.save");
-        clearAction = super::clear;
         initItems();
-    }
-
-    @Override
-    void saveAction() {
-        saveItem(new CsvBuilder(new ArrayList<>())
-                .add(name.getText())
-                .add(specialFeatures.getText())
-                .build());
-    }
-
-    @Override
-    public void loadItem(MagicSchool school) {
-        super.loadItem(school);
-        name.setText(school.getName());
-        specialFeatures.setText(school.getDescription());
     }
 
     @Override

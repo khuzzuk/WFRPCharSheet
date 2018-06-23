@@ -69,9 +69,6 @@ public class WhiteWeaponTypePaneController extends FightingEquipmentPaneControll
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         entityType = WhiteWeaponType.class;
-        getAllResponse = messages.getProperty("whiteWeapons.result");
-        removeEntityTopic = messages.getProperty("whiteWeapons.remove");
-        clearAction = this::clear;
         initFieldsMap();
         fillComboBoxesWithEnums();
         setBastardComponentsStatus(null, null, null);
@@ -139,17 +136,6 @@ public class WhiteWeaponTypePaneController extends FightingEquipmentPaneControll
             placementBox.getSelectionModel().select(Placement.ONE_HAND);
         }
         return WhiteWeaponType.getFromPlacement(placementBox.getValue());
-    }
-
-    @Override
-    void saveAction() {
-        if (name.getText().length() == 0 || placementBox.getSelectionModel().isEmpty()) return;
-        if (item.getName().equals(name.getText())) {
-            communicateDataChanges();
-        } else {
-            WhiteWeaponType weaponType = WhiteWeaponType.getFromPlacement(placementBox.getValue());
-            saveNewItem(weaponType);
-        }
     }
 
     @Override

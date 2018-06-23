@@ -3,77 +3,70 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
-import pl.khuzzuk.wfrpchar.entities.items.Accessibility;
 import pl.khuzzuk.wfrpchar.entities.items.BattleEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
-import pl.khuzzuk.wfrpchar.entities.items.types.FightingEquipment;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractWeapon;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
-import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
+import pl.khuzzuk.wfrpchar.gui.GuiEntityConverter;
+import pl.khuzzuk.wfrpchar.repo.Criteria;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public abstract class AbstractWeaponController<T extends AbstractWeapon<? extends BattleEquipment>> extends ItemWithBaseTypeController<T> {
     @FXML
-    ComboBox<String> secondaryResource;
+    ComboBox<ResourceType> secondaryResource;
     @FXML
-    ComboBox<String> primaryResource;
+    ComboBox<ResourceType> primaryResource;
     @FXML
     Button chooseBaseButton;
 
     Collection<ResourceType> resources;
-    String baseType;
+    BattleEquipment baseType;
+    Class<? extends BattleEquipment> baseEntityType;
+    private String setBaseTypeMessage;
+    private String getBaseTypeMessage;
 
     @Override
     void initItems() {
         super.initItems();
+        setBaseTypeMessage = entityType.getName() + "baseType.set";
+        getBaseTypeMessage = baseEntityType.getName() + ".get.named";
         bus.setReaction(messages.getProperty("resource.type.result"), this::fillResourceBoxes);
+        bus.<BattleEquipment>setReaction(setBaseTypeMessage, baseType -> this.baseType = baseType);
         bus.send(messages.getProperty("database.getAll"), messages.getProperty("resource.type.result"), ResourceType.class);
     }
 
-    public synchronized void fillResourceBoxes(Collection<ResourceType> resourceTypes) {
+    private synchronized void fillResourceBoxes(Collection<ResourceType> resourceTypes) {
         resources = resourceTypes;
         Set<ResourceType> toFill = new HashSet<>(resources);
-        ComboBoxHandler.fill(toFill, primaryResource);
-        ComboBoxHandler.fill(toFill, secondaryResource);
+        ComboBoxHandler.fillWithEnums(toFill, primaryResource);
+        ComboBoxHandler.fillWithEnums(toFill, secondaryResource);
     }
 
     public void setBaseType(String type) {
-        baseType = type;
+        bus.send(getBaseTypeMessage, setBaseTypeMessage, Criteria.builder().name(type).type(baseEntityType).build());
         chooseBaseButton.setText(type);
     }
 
-    void addWeaponTypeFields(List<String> fields) {
-        fields.add(name.getText());
-        fields.add(getPriceFromFields());
-        fields.add(accessibility.getSelectionModel().getSelectedItem().name());
-        fields.add(specialFeatures.getText());
-        fields.add(baseType);
-        fields.add(primaryResource.getSelectionModel().getSelectedItem());
-        fields.add(secondaryResource.getSelectionModel().getSelectedItem());
-        fields.add(Determinant.determinantsToCsv(Determinant.parseFromGui(
-                determinantsView.getItems().stream().collect(Collectors.toList()))));
+    @Override
+    @SuppressWarnings("unchecked")
+    void addConverters() {
+        super.addConverters();
+        converters.add(new GuiEntityConverter(this::getItem, () -> baseType,
+                (o, o2) -> ((AbstractWeapon) o).setBaseType((BattleEquipment) o2)));
+        addConverter(primaryResource::getValue, AbstractWeapon::setPrimaryResource);
+        addConverter(secondaryResource::getValue, AbstractWeapon::setSecondaryResource);
     }
 
-    void loadToInternalEditor(AbstractWeapon<? extends FightingEquipment> weapon) {
-        super.loadToInternalEditor(weapon);
-        baseType = weapon.getBaseType().getName();
-        chooseBaseButton.setText(baseType);
-        primaryResource.getSelectionModel().select(weapon.getPrimaryResource().getName());
-        secondaryResource.getSelectionModel().select(weapon.getSecondaryResource().getName());
-        EntitiesAdapter.sendToListView(determinantsView, weapon.getDeterminants());
-    }
-
-    @FXML
-    void clearEditor() {
-        super.clearEditor();
-        primaryResource.getSelectionModel().clearSelection();
-        secondaryResource.getSelectionModel().clearSelection();
+    @Override
+    void loadItem(T weapon) {
+        super.loadItem(weapon);
+        baseType = weapon.getBaseType();
+        chooseBaseButton.setText(baseType.getName());
+        primaryResource.getSelectionModel().select(weapon.getPrimaryResource());
+        secondaryResource.getSelectionModel().select(weapon.getSecondaryResource());
     }
 
     @Override
@@ -82,7 +75,7 @@ public abstract class AbstractWeaponController<T extends AbstractWeapon<? extend
         chooseBaseButton.setText("brak");
         primaryResource.getSelectionModel().clearSelection();
         secondaryResource.getSelectionModel().clearSelection();
-        baseType = "";
+        baseType = null;
         determinantsView.getItems().clear();
     }
 }

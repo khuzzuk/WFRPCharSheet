@@ -2,11 +2,11 @@ package pl.khuzzuk.wfrpchar.entities.characters;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import pl.khuzzuk.wfrpchar.entities.Character;
-import pl.khuzzuk.wfrpchar.entities.*;
+import pl.khuzzuk.wfrpchar.entities.Featured;
+import pl.khuzzuk.wfrpchar.entities.Price;
+import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
 import pl.khuzzuk.wfrpchar.entities.competency.Skill;
@@ -18,7 +18,6 @@ import pl.khuzzuk.wfrpchar.entities.items.RangedWeapon;
 import pl.khuzzuk.wfrpchar.entities.items.types.Item;
 import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractCommodity;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +26,8 @@ import java.util.stream.Collectors;
 @ToString
 @Getter
 @Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Player implements Featured {
     private String name;
     @JsonIdentityReference(alwaysAsId = true)
@@ -39,6 +40,7 @@ public class Player implements Featured {
     private Set<Profession> career;
     @JsonIdentityReference(alwaysAsId = true)
     private Character character;
+    @NonNull
     private Appearance appearance;
     private Set<Determinant> determinants;
     @JsonIdentityReference(alwaysAsId = true)
@@ -52,6 +54,7 @@ public class Player implements Featured {
     @JsonIdentityReference(alwaysAsId = true)
     private Set<Spell> spells;
     private Price money;
+    @NonNull
     private PersonalHistory personalHistory;
 
     @JsonIgnore

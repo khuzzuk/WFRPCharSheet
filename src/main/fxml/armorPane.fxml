@@ -81,7 +81,7 @@
                       maxHeight="Infinity" maxWidth="Infinity"/>
             <Button text="Usuń" GridPane.rowIndex="7" maxWidth="Infinity" onAction="#remove"/>
             <Button text="Nowy" GridPane.rowIndex="7" GridPane.columnIndex="1" maxWidth="Infinity"
-                    onAction="#clearEditor"/>
+                    onAction="#clear"/>
             <Button text="Zapisz" GridPane.rowIndex="7" GridPane.columnIndex="2" maxWidth="Infinity"
                     onAction="#save"/>
         </GridPane>

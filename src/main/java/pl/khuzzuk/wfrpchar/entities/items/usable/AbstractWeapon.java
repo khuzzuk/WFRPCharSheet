@@ -32,6 +32,8 @@ public abstract class AbstractWeapon<T extends BattleEquipment>
     @JsonIdentityReference(alwaysAsId = true)
     public abstract T getBaseType();
 
+    public abstract void setBaseType(T baseType);
+
     public static AbstractHandWeapon getFromPlacement(Placement placement) {
         if (placement == Placement.ONE_HAND) {
             return new OneHandedWeapon();

@@ -4,20 +4,23 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.apache.commons.collections4.collection.CompositeCollection;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.Character;
-import pl.khuzzuk.wfrpchar.entities.CsvBuilder;
 import pl.khuzzuk.wfrpchar.entities.Named;
+import pl.khuzzuk.wfrpchar.entities.Price;
 import pl.khuzzuk.wfrpchar.entities.Race;
 import pl.khuzzuk.wfrpchar.entities.characters.*;
 import pl.khuzzuk.wfrpchar.entities.competency.Profession;
 import pl.khuzzuk.wfrpchar.entities.competency.ProfessionClass;
+import pl.khuzzuk.wfrpchar.entities.competency.Skill;
 import pl.khuzzuk.wfrpchar.entities.competency.Spell;
+import pl.khuzzuk.wfrpchar.entities.determinants.Determinant;
 import pl.khuzzuk.wfrpchar.entities.determinants.DeterminantsType;
 import pl.khuzzuk.wfrpchar.entities.items.*;
+import pl.khuzzuk.wfrpchar.entities.items.types.Item;
+import pl.khuzzuk.wfrpchar.entities.items.usable.AbstractCommodity;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
-import pl.khuzzuk.wfrpchar.gui.ListViewHandler;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 import pl.khuzzuk.wfrpchar.rules.Sex;
 
@@ -25,7 +28,6 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static pl.khuzzuk.wfrpchar.gui.ComboBoxHandler.selectOrEmpty;
 import static pl.khuzzuk.wfrpchar.gui.ListViewHandler.shouldAddToList;
 
 @Component
@@ -45,9 +47,9 @@ public class PlayerPaneController extends ItemsListedController<Player> {
     @FXML
     private TableView<PlayersAmmunition> ammunition;
     @FXML
-    private ListView<String> skills;
+    private ListView<Skill> skills;
     @FXML
-    private ListView<String> professionsHistory;
+    private ListView<Profession> professionsHistory;
     @FXML
     private Button profession;
     @FXML
@@ -129,11 +131,11 @@ public class PlayerPaneController extends ItemsListedController<Player> {
     @Numeric
     TextField charisma;
     @FXML
-    private ComboBox<String> professionClass;
+    private ComboBox<ProfessionClass> professionClass;
     @FXML
-    private ComboBox<String> hair;
+    private ComboBox<HairColor> hair;
     @FXML
-    private ComboBox<String> eyes;
+    private ComboBox<EyesColor> eyes;
     @FXML
     @Numeric
     TextField height;
@@ -141,25 +143,22 @@ public class PlayerPaneController extends ItemsListedController<Player> {
     @Numeric
     TextField age;
     @FXML
-    private ComboBox<String> character;
+    private ComboBox<Character> character;
     @FXML
-    private ComboBox<String> sex;
+    private ComboBox<Sex> sex;
     @FXML
-    private ComboBox<String> race;
+    private ComboBox<Race> race;
 
     private Map<DeterminantsType, GuiDeterminant> guiDeterminants;
+    private Profession playersProfession;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeValidation();
-        ComboBoxHandler.fill(Sex.SET, sex);
-        ComboBoxHandler.fill(EyesColor.SET, eyes);
-        ComboBoxHandler.fill(HairColor.SET, hair);
+        ComboBoxHandler.fillWithEnums(Sex.SET, sex);
+        ComboBoxHandler.fillWithEnums(EyesColor.SET, eyes);
+        ComboBoxHandler.fillWithEnums(HairColor.SET, hair);
         entityType = Player.class;
-        getAllResponse = messages.getProperty("player.result");
-        removeEntityTopic = messages.getProperty("player.remove");
-        saveTopic = messages.getProperty("player.save");
-        clearAction = this::clear;
         initItems();
         bus.setReaction(messages.getProperty("professions.class.result"), this::loadClasses);
         bus.send(messages.getProperty("database.getAll"), messages.getProperty("professions.class.result"), ResourceType.class);
@@ -282,27 +281,24 @@ public class PlayerPaneController extends ItemsListedController<Player> {
 
     @Override
     public void loadItem(Player player) {
-        clear();
         super.loadItem(player);
-        name.setText(player.getName());
-        selectOrEmpty(race, player.getRace());
-        selectOrEmpty(character, player.getCharacter());
-        selectOrEmpty(professionClass, player.getProfessionClass());
-        Optional.ofNullable(player.getCurrentProfession()).ifPresent(p ->
-                profession.setText(p.getName()));
-        professionsHistory.getItems().clear();
-        Optional.ofNullable(player.getCareer()).ifPresent(c ->
-                professionsHistory.getItems().addAll(c.stream().map(Profession::getName)
-                        .collect(Collectors.toList())));
+        race.getSelectionModel().select(player.getRace());
+        character.getSelectionModel().select(player.getCharacter());
+        professionClass.getSelectionModel().select(player.getProfessionClass());
+        Optional.ofNullable(player.getCurrentProfession()).ifPresent(p -> {
+            playersProfession = p;
+            profession.setText(p.getName());
+        });
+
+        Optional.ofNullable(player.getCareer()).ifPresent(c -> professionsHistory.getItems().addAll(c));
         Appearance appearance = player.getAppearance();
         if (appearance != null) {
-            selectOrEmpty(sex, appearance.getSex());
+            sex.getSelectionModel().select(appearance.getSex());
+            eyes.getSelectionModel().select(appearance.getEyesColor());
+            hair.getSelectionModel().select(appearance.getHairColor());
             age.setText("" + appearance.getAge());
             height.setText("" + appearance.getHeight());
             weight.setText("" + appearance.getWeight());
-            selectOrEmpty(eyes, appearance.getEyesColor());
-            selectOrEmpty(hair, appearance.getHairColor());
-            specialFeatures.setText(appearance.getDescription());
         }
         player.getDeterminants().forEach(d ->
                 guiDeterminants.get(d.getType()).setCurrentValue(d.getBaseValue() + ""));
@@ -310,11 +306,8 @@ public class PlayerPaneController extends ItemsListedController<Player> {
         ammunition.getItems().addAll(player.getAmmunition());
         rangedWeapons.getItems().addAll(player.getRangedWeapons());
         armors.getItems().addAll(player.getArmors());
-        skills.getItems().addAll(player.getSkills().stream().map(Named::getName).collect(Collectors.toList()));
+        skills.getItems().addAll(player.getSkills());
         spells.getItems().addAll(player.getSpells());
-        gold.setText(player.getMoney().getGold() + "");
-        silver.setText(player.getMoney().getSilver() + "");
-        lead.setText(player.getMoney().getLead() + "");
         PersonalHistory playerHistory = player.getPersonalHistory();
         if (playerHistory != null) {
             history.setText(playerHistory.getHistory());
@@ -327,19 +320,14 @@ public class PlayerPaneController extends ItemsListedController<Player> {
 
     @Override
     Player supplyNewItem() {
-        return new Player();
+        return new Player(new Appearance(), new PersonalHistory());
     }
 
     @FXML
     void clear() {
-        name.clear();
         age.clear();
         height.clear();
         weight.clear();
-        specialFeatures.clear();
-        gold.clear();
-        silver.clear();
-        lead.clear();
         history.clear();
         birthplace.clear();
         father.clear();
@@ -364,60 +352,59 @@ public class PlayerPaneController extends ItemsListedController<Player> {
     }
 
     @Override
-    void saveAction() {
-        CsvBuilder builder = new CsvBuilder(new ArrayList<>());
-        builder.add(name.getText())
-                .add(ComboBoxHandler.getEmptyIfNotPresent(race))
-                .add(ComboBoxHandler.getEmptyIfNotPresent(professionClass))
-                .add(profession.getText().equals("brak") ? "" : profession.getText())
-                .add(getItemsToCsv(professionsHistory))
-                .add(ComboBoxHandler.getEmptyIfNotPresent(character))
-                .add(Sex.forName(sex.getSelectionModel().getSelectedItem()).name())
-                .add(age.getText())
-                .add(height.getText())
-                .add(weight.getText())
-                .add(EyesColor.forName(eyes.getSelectionModel().getSelectedItem()).name())
-                .add(HairColor.forName(hair.getSelectionModel().getSelectedItem()).name())
-                .add(specialFeatures.getText())
-                .add(getDeterminantsFromFields())
-                .add(equipment.getItems().stream().map(Named::getName)
-                        .collect(Collectors.joining("|")))
-                .add(getFightingEquipment().stream().map(Named::getName)
-                        .collect(Collectors.joining("|")))
-                .add(ListViewHandler.getFromList(skills))
-                .add(getPriceFromFields())
-                .add(spells.getItems().stream().map(Named::getName).collect(Collectors.joining("|")))
-                .add(history.getText())
-                .add(birthplace.getText())
-                .add(father.getText())
-                .add(mother.getText())
-                .add(siblings.getText());
-        saveItem(builder.build());
+    void addConverters() {
+        super.addConverters();
+        addConverter(race::getValue, Player::setRace);
+        addConverter(professionClass::getValue, Player::setProfessionClass);
+        addConverter(() -> playersProfession, Player::setCurrentProfession);
+        addConverter(professionsHistory::getItems, Player::setCareer, HashSet::new);
+        addConverter(character::getValue, Player::setCharacter);
+        addConverter(sex::getValue, (p, value) -> p.getAppearance().setSex(value));
+        addConverter(age::getText, (p, value) -> p.getAppearance().setAge(value), NumberUtils::toInt);
+        addConverter(height::getText, (p, value) -> p.getAppearance().setHeight(value), NumberUtils::toInt);
+        addConverter(weight::getText, (p, value) -> p.getAppearance().setWeight(value), NumberUtils::toInt);
+        addConverter(eyes::getValue, (p, value) -> p.getAppearance().setEyesColor(value));
+        addConverter(hair::getValue, (p, value) -> p.getAppearance().setHairColor(value));
+        addConverter(this::getDeterminantsFromFields, Player::setDeterminants);
+        addConverter(equipment::getItems, Player::setEquipment,
+                values -> values.stream().map(commodity -> (Item) commodity).collect(Collectors.toList()));
+        addConverter(this::getFightingEquipment, Player::setCommodities);
+        addConverter(skills::getItems, Player::setSkills, HashSet::new);
+        addConverter(() -> Price.parsePrice(getPriceFromFields()), Player::setMoney);
+        addConverter(spells::getItems, Player::setSpells, HashSet::new);
+        addConverter(history::getText, (p, value) -> p.getPersonalHistory().setHistory(value));
+        addConverter(birthplace::getText, (p, value) -> p.getPersonalHistory().setBirthplace(value));
+        addConverter(father::getText, (p, value) -> p.getPersonalHistory().setFather(value));
+        addConverter(mother::getText, (p, value) -> p.getPersonalHistory().setMother(value));
+        addConverter(siblings::getText, (p, value) -> p.getPersonalHistory().setSiblings(value));
     }
 
-    @SuppressWarnings("unchecked")
-    private Collection<Named<String>> getFightingEquipment() {
-        return new CompositeCollection(
-                weapons.getItems(), rangedWeapons.getItems(), armors.getItems());
+    private List<AbstractCommodity> getFightingEquipment() {
+        List<AbstractCommodity> commodities = new ArrayList<>();
+        weapons.getItems().stream().map(item -> (AbstractCommodity) item).forEach(commodities::add);
+        rangedWeapons.getItems().stream().map(item -> (AbstractCommodity) item).forEach(commodities::add);
+        armors.getItems().stream().map(item -> (AbstractCommodity) item).forEach(commodities::add);
+        return commodities;
     }
 
     public void loadCharacters(Collection<Character> characters) {
-        ComboBoxHandler.fill(characters, character);
+        ComboBoxHandler.fillWithEnums(characters, character);
     }
 
     public void loadRaces(Collection<Race> races) {
-        ComboBoxHandler.fill(races, race);
+        ComboBoxHandler.fillWithEnums(races, race);
     }
 
     public void loadClasses(Collection<ProfessionClass> classes) {
-        ComboBoxHandler.fill(classes, professionClass);
+        ComboBoxHandler.fillWithEnums(classes, professionClass);
     }
 
-    public void loadProfessionChoice(String name) {
-        if (shouldAddToList(name, professionsHistory)) {
-            professionsHistory.getItems().add(name);
+    public void loadProfessionChoice(Profession professionToLoad) {
+        if (shouldAddToList(professionToLoad, professionsHistory)) {
+            professionsHistory.getItems().add(professionToLoad);
         }
-        profession.setText(name);
+        profession.setText(professionToLoad.getName());
+        playersProfession = professionToLoad;
     }
 
     public void loadWhiteWeaponChoice(HandWeapon handWeapon) {
@@ -436,7 +423,7 @@ public class PlayerPaneController extends ItemsListedController<Player> {
         equipment.getItems().add(commodity);
     }
 
-    public void loadSkill(String skill) {
+    public void loadSkill(Skill skill) {
         if (shouldAddToList(skill, skills)) {
             skills.getItems().add(skill);
         }
@@ -483,14 +470,10 @@ public class PlayerPaneController extends ItemsListedController<Player> {
         bus.send(messages.getProperty("player.spells.getAllTypes"));
     }
 
-    private String getDeterminantsFromFields() {
-        List<String> determinants = new ArrayList<>(16);
-        guiDeterminants.forEach((t, g) -> determinants.add(g.toString(t)));
-        return determinants.stream().collect(Collectors.joining("|"));
-    }
-
-    private String getItemsToCsv(ListView<String> listView) {
-        return listView.getItems().stream().collect(Collectors.joining("|"));
+    private Set<Determinant> getDeterminantsFromFields() {
+        Set<Determinant> determinants = new HashSet<>(16);
+        guiDeterminants.forEach((t, g) -> determinants.add(g.build(t)));
+        return determinants;
     }
 
     private class GuiDeterminant {
@@ -504,8 +487,10 @@ public class PlayerPaneController extends ItemsListedController<Player> {
             baseValue.setValue(value);
         }
 
-        private String toString(DeterminantsType type) {
-            return baseValue.getValue() + "," + type.name();
+        private Determinant build(DeterminantsType type) {
+            Determinant determinant = type.getDeterminant();
+            determinant.setBaseValue(NumberUtils.toInt(baseValue.get()));
+            return determinant;
         }
     }
 }

@@ -30,13 +30,6 @@ public class ComboBoxHandler {
                 return enums.stream().filter(e -> e.getName().equals(string)).findAny().orElse(enums.iterator().next());
             }
         });
-//        comboBox.setCellFactory(param -> new ListCell<T>() {
-//            @Override
-//            protected void updateItem(T item, boolean empty) {
-//                super.updateItem(item, empty);
-//                setGraphic(new Text(empty ? "" : item.getName()));
-//            }
-//        });
     }
 
     public static String getEmptyIfNotPresent(ComboBox<String> list) {

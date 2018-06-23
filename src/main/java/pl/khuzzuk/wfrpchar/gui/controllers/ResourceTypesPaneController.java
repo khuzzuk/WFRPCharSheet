@@ -3,19 +3,19 @@ package pl.khuzzuk.wfrpchar.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Component;
 import pl.khuzzuk.wfrpchar.entities.items.ResourceType;
 import pl.khuzzuk.wfrpchar.entities.items.SubstanceType;
 import pl.khuzzuk.wfrpchar.gui.ComboBoxHandler;
-import pl.khuzzuk.wfrpchar.gui.EntitiesAdapter;
 import pl.khuzzuk.wfrpchar.gui.Numeric;
 
 import java.net.URL;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.EnumSet;
+import java.util.ResourceBundle;
 
 @Component
-public class ResourceTypesPaneController extends ItemsListedController<ResourceType> implements Controller {
+public class ResourceTypesPaneController extends CommodityPaneController<ResourceType> implements Controller {
     @FXML
     @Numeric
     TextField resStrength;
@@ -23,47 +23,35 @@ public class ResourceTypesPaneController extends ItemsListedController<ResourceT
     @Numeric
     TextField resPrice;
     @FXML
-    private ComboBox<String> resType;
+    private ComboBox<SubstanceType> resType;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeValidation();
+        super.initialize(location, resources);
         entityType = ResourceType.class;
-        saveTopic = messages.getProperty("resource.type.save");
-        removeEntityTopic = messages.getProperty("resource.type.remove");
-        getAllResponse = messages.getProperty("resource.type.result");
-        clearAction = this::clear;
-        ComboBoxHandler.fill(EnumSet.allOf(SubstanceType.class), resType);
+        ComboBoxHandler.fillWithEnums(EnumSet.allOf(SubstanceType.class), resType);
         initItems();
-    }
-
-    public void loadAllResources(Collection<ResourceType> resources) {
-        EntitiesAdapter.sendToListView(items, resources);
     }
 
     @Override
     public void loadItem(ResourceType resource) {
         super.loadItem(resource);
-        name.setText(resource.getName());
         resStrength.setText(Integer.toString(resource.getStrengthMod()));
         resPrice.setText(Integer.toString(resource.getPriceMod()));
-        resType.getSelectionModel().select(resource.getSubstanceType().getName());
+        resType.getSelectionModel().select(resource.getSubstanceType());
+    }
+
+    @Override
+    void addConverters() {
+        super.addConverters();
+        addConverter(resStrength::getText, ResourceType::setStrengthMod, NumberUtils::toInt);
+        addConverter(resPrice::getText, ResourceType::setPriceMod, NumberUtils::toInt);
+        addConverter(resType::getValue, ResourceType::setSubstanceType);
     }
 
     @Override
     ResourceType supplyNewItem() {
         return new ResourceType();
-    }
-
-    @Override
-    void saveAction() {
-        List<String> fields = new LinkedList<>();
-        fields.add(name.getText());
-        fields.add(resStrength.getText());
-        fields.add(resPrice.getText());
-        fields.add(SubstanceType.forName(resType.getSelectionModel().getSelectedItem()).name());
-        bus.send(messages.getProperty("resource.type.save"));
-        saveItem(fields.stream().collect(Collectors.joining(";")));
     }
 
     @Override
